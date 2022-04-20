@@ -1,0 +1,44 @@
+@keyframes fade-out {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
+
+.start-message-wrapper {
+    height: 100%;
+    width: 100%;
+}
+
+.start-message-wrapper h3 {
+    position: absolute;
+    color: white;
+    text-align: center;
+    margin: 0;
+}
+
+#press-key {
+    width: 100%;
+    font-size: 40px;
+    top: 20%;
+}
+
+.keys {
+    width: auto;
+    font-size: 30px;
+    top: 91%;
+}
+
+#d {
+    left: 17%;
+}
+
+#f {
+    left: 38%;
+}
+
+#j {
+    right: 39%;
+}
+
+#k {
+    right: 17%;
+}

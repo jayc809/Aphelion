@@ -1,0 +1,15 @@
+.score-wrapper {
+    height: 100%;
+    width: 100%;
+}
+
+.score-wrapper h3 {
+    position: absolute;
+    color: white;
+    text-align: center;
+    font-size: 35px;
+    margin: 0;
+    top: 20px;
+    right: 20px;
+    letter-spacing: 4px;
+}

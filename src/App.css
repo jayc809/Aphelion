@@ -1,38 +1,43 @@
-.App {
-  text-align: center;
+@font-face {
+    font-family: 'Futura';
+    src: url("./styles/Futura-Light/Futura-Light.eot");
+    src: url("./styles/Futura-Light/Futura-Light.eot?#iefix") format("embedded-opentype"),
+        url("./styles/Futura-Light/Futura-Light.woff2") format("woff2"),
+        url("./styles/Futura-Light/Futura-Light.woff") format("woff"),
+        url("./styles/Futura-Light/Futura-Light.ttf") format("truetype"),
+        url("./styles/Futura-Light/Futura-Light.svg") format("svg");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+    background-color: black;
+    display:flex;
+    margin:0;
+    padding:0;
+    font-family: "Futura";
+    letter-spacing: 1.5px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.component {
+    height: 100%;
+    width: 100%;
+    position: absolute;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+#start-message {
+    z-index: 100;
 }
 
-.App-link {
-  color: #61dafb;
+#score {
+    z-index: 80;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#video {
+    z-index: 0;
+}
+
+#platform {
+    z-index: 10;
 }

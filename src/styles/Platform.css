@@ -1,0 +1,52 @@
+.platform-parent {
+    height: 100%;
+    width: 100%;
+}
+
+.platform-base {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    object-fit: fill;
+    z-index: 0;
+}
+
+.platform-line {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    object-fit: fill;
+    z-index: 10;
+}
+
+.platform-left {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    object-fit: fill;
+    z-index: 1;
+}
+
+.platform-middle-left {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    object-fit: fill;
+    z-index: 2;
+}
+
+.platform-middle-right {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    object-fit: fill;
+    z-index: 3;
+}
+
+.platform-right {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    object-fit: fill;
+    z-index: 4;
+}
