@@ -1,5 +1,5 @@
 @font-face {
-    font-family: 'Futura';
+    font-family: 'Futura-Light';
     src: url("./styles/Futura-Light/Futura-Light.eot");
     src: url("./styles/Futura-Light/Futura-Light.eot?#iefix") format("embedded-opentype"),
         url("./styles/Futura-Light/Futura-Light.woff2") format("woff2"),
@@ -11,14 +11,41 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'Futura-Light-Italic';
+    src: url("./styles/Futura-Light-Italic/Futura-Light-Italic.eot");
+    src: url("./styles/Futura-Light-Italic/Futura-Light-Italic.eot?#iefix") format("embedded-opentype"),
+        url("./styles/Futura-Light-Italic/Futura-Light-Italic.woff2") format("woff2"),
+        url("./styles/Futura-Light-Italic/Futura-Light-Italic.woff") format("woff"),
+        url("./styles/Futura-Light-Italic/Futura-Light-Italic.ttf") format("truetype"),
+        url("./styles/Futura-Light-Italic/Futura-Light-Italic.svg") format("svg");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Futura-Medium-Italic';
+    src: url("./styles/Futura-Medium-Italic/Futura-Medium-Italic.eot");
+    src: url("./styles/Futura-Medium-Italic/Futura-Medium-Italic.eot?#iefix") format("embedded-opentype"),
+        url("./styles/Futura-Medium-Italic/Futura-Medium-Italic.woff2") format("woff2"),
+        url("./styles/Futura-Medium-Italic/Futura-Medium-Italic.woff") format("woff"),
+        url("./styles/Futura-Medium-Italic/Futura-Medium-Italic.ttf") format("truetype"),
+        url("./styles/Futura-Medium-Italic/Futura-Medium-Italic.svg") format("svg");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
 body {
-    /* background-color: black; */
-    display:flex;
-    margin:0;
-    padding:0;
-    font-family: "Futura";
+    background-color: black;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    font-family: "Futura-Light";
     letter-spacing: 1.5px;
-    overflow: hidden
+    overflow: hidden;
+    cursor: none;
 }
 
 .component {
@@ -32,6 +59,10 @@ body {
 }
 
 #score {
+    z-index: 80;
+}
+
+#combo {
     z-index: 80;
 }
 

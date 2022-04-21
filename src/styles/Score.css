@@ -7,9 +7,10 @@
     position: absolute;
     color: white;
     text-align: center;
-    font-size: 35px;
+    font-family: "Futura-Light-Italic";
+    font-size: 40px;
     margin: 0;
     top: 20px;
     right: 20px;
-    letter-spacing: 4px;
+    letter-spacing: 3px;
 }

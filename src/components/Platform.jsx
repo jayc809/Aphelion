@@ -8,9 +8,9 @@ import platformMiddleRight from "../images/platform-middle-right.png"
 import platformRight from "../images/platform-right.png"
 
 
-const Platform = ({handleDown, handleUp}) => {
+const Platform = () => {
 
-    const opacityWhenDown = 0.18
+    const opacityWhenDown = 0.15
 
     const [dPressed, setDPressed] = useState(false)
     const [fPressed, setFPressed] = useState(false)
@@ -21,45 +21,35 @@ const Platform = ({handleDown, handleUp}) => {
         const key = e.key
         switch (key) {
             case "d":
-                // console.log("d down")
                 setDPressed(true)
                 break
             case "f":
-                // console.log("f down")
                 setFPressed(true)
                 break
             case "j":
-                // console.log("j down")
                 setJPressed(true)
                 break
             case "k":
-                // console.log("k down")
                 setKPressed(true)
                 break
         }
-        handleDown(key)
     }
     const handleUpLocal = (e) => {
         const key = e.key
         switch (key) {
             case "d":
-                // console.log("d up")
                 setDPressed(false)
                 break
             case "f":
-                // console.log("f up")
                 setFPressed(false)
                 break
             case "j":
-                // console.log("j up")
                 setJPressed(false)
                 break
             case "k":
-                // console.log("k up")
                 setKPressed(false)
                 break
         }
-        handleUp(key)
     }
 
     useEffect(() => {
@@ -69,7 +59,7 @@ const Platform = ({handleDown, handleUp}) => {
             window.removeEventListener('keydown', handleDownLocal)
             window.removeEventListener('keyup', handleUpLocal)
         }
-    }, [handleDownLocal, handleUpLocal]);
+    }, [handleDownLocal, handleUpLocal])
 
     return (
         <div className="platform-parent">
