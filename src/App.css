@@ -12,12 +12,13 @@
 }
 
 body {
-    background-color: black;
+    /* background-color: black; */
     display:flex;
     margin:0;
     padding:0;
     font-family: "Futura";
     letter-spacing: 1.5px;
+    overflow: hidden
 }
 
 .component {
@@ -34,10 +35,15 @@ body {
     z-index: 80;
 }
 
-#video {
-    z-index: 0;
+#tile {
+    z-index: 50;
 }
 
 #platform {
     z-index: 10;
 }
+
+#video {
+    z-index: 0;
+}
+

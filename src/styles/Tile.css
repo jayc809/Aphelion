@@ -1,4 +1,75 @@
+.tile-wrapper {
+    height: 100%;
+    width: 100%;
+}
+
 .tile {
-    width: 200px;
+    position: absolute;
+    margin: 0;
+}
+
+.tile img {
+    height: 100%;
+    width: 100%;
     object-fit: contain;
+}
+
+@keyframes move-left {
+    from {
+        width: 1.5vw;
+        left: 46.1%;
+        top: 40%;
+        opacity: 0.8;
+    }
+    to {
+        width: 16vw;
+        left: 15%;
+        top: 100%;
+        opacity: 1;
+    }
+}
+
+@keyframes move-middle-left {
+    from {
+        width: 1.5vw;
+        left: 48.3%;
+        top: 40%;
+        opacity: 0.8;
+    }
+    to {
+        width: 16vw;
+        left: 32.8%;
+        top: 100%;
+        opacity: 1;
+    }
+}
+
+@keyframes move-middle-right {
+    from {
+        width: 1.5vw;
+        right: 48.3%;
+        top: 40%;
+        opacity: 0.8;
+    }
+    to {
+        width: 16vw;
+        right: 32.8%;
+        top: 100%;
+        opacity: 1;
+    }
+}
+
+@keyframes move-right {
+    from {
+        width: 1.5vw;
+        right: 46.1%;
+        top: 40%;
+        opacity: 0.8;
+    }
+    to {
+        width: 16vw;
+        right: 15%;
+        top: 100%;
+        opacity: 1;
+    }
 }

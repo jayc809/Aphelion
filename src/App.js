@@ -5,6 +5,7 @@ import Platform from "./components/Platform"
 import Video from "./components/Video"
 import StartMessage from './components/StartMessage'
 import Score from './components/Score'
+import TileTest from "./components/TileTest"
 import { useEffect } from "react"
 const testVideoId = "3DrYQMK4hJE"
 const orangeVideoId = "3DrYQMK4hJE"
@@ -56,20 +57,45 @@ function App() {
 
   return (
     <div id="screen" ref={screenRef}>
+
       <div className="component" id="start-message">
         <StartMessage showStartMessage={showStartMessage}/>
       </div>
+
       <div className="component" id="score">
         <Score score={currScore}/>
       </div>
+      
+
+      
+      <div className="component" id="tile">
+        <Tile type="left"/>
+      </div>
+
+      <div className="component" id="tile">
+        <Tile type="middleLeft"/>
+      </div>
+
+      <div className="component" id="tile">
+        <Tile type="middleRight"/>
+      </div>
+
+      <div className="component" id="tile">
+        <Tile type="right"/>
+      </div> 
+
+
+
       <div className="component" id="platform"> 
         <Platform handleDown={handleDown} handleUp={handleUp}/> 
       </div>
+
       <div className="component" id="video"> 
         <Video videoId={testVideoId}/>
       </div>
+
     </div>
-  );
+  )
 }
 
 export default App;

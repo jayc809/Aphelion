@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import "../styles/Platform.css"
-import platformBase from "../images/platform-base-2.png"
+import platformBase from "../images/platform-base.png"
 import platformLine from "../images/platform-line.png"
 import platformLeft from "../images/platform-left.png"
 import platformMiddleLeft from "../images/platform-middle-left.png"
@@ -10,7 +10,7 @@ import platformRight from "../images/platform-right.png"
 
 const Platform = ({handleDown, handleUp}) => {
 
-    const opacityWhenDown = 0.15
+    const opacityWhenDown = 0.18
 
     const [dPressed, setDPressed] = useState(false)
     const [fPressed, setFPressed] = useState(false)
