@@ -14,7 +14,7 @@ const StartMessage = () => {
         return () => {
             window.removeEventListener('keypress', handlePress)
         }
-    });
+    }, []);
 
     return (
         <div className="start-message-wrapper" style={{animation: show ? "" : "fade-out 1s forwards"}}>

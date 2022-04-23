@@ -68,6 +68,10 @@ function App() {
     return () => clearTimeout(mouseTimer)
   }, [handleMouseMove])
 
+  const updateProgress = (player) => {
+    // console.log(player.getCurrentTime())
+  }
+
   useEffect(() => {
     handleScreenResize()
     window.addEventListener("resize", handleScreenResize)
@@ -95,9 +99,9 @@ function App() {
 
 
       
-      <div className="component" id="tile">
+      {/* <div className="component" id="tile">
         <Tile type="left" updateScore={updateScore}/>
-      </div>
+      </div> */}
 
       {/* <div className="component" id="tile">
         <Tile type="middleLeft"/>
@@ -118,7 +122,7 @@ function App() {
       </div>
 
       <div className="component" id="video"> 
-        <Video videoId={testVideoId}/>
+        <Video videoId={testVideoId} updateProgress={updateProgress}/>
       </div>
 
     </div>
