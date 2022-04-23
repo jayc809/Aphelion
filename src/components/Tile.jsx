@@ -6,34 +6,47 @@ const Tile = ({type, updateScore}) => {
 
     const tileRef = useRef(null)
     const tileSpeed = 1
-    const repeatTimes = 1
+    const repeatTimes = 1000
     const timingFunction = "cubic-bezier(0.4, 0.1, 0.7, 0.4)"
-    const currFrame = useRef(0)
+    const currFrameRef = useRef(0)
+    const positionIntervalRef = useRef(null)
     const rerenderRate = 50
     const totalFrames = tileSpeed / (50 / 1000)
     const [show, setShow] = useState(true)
     const perfect = 1, great = 2, good = 3
 
     const getPosition = () => {
-        currFrame.current += 1
-        // console.log(currFrame.current + " out of " + totalFrames)
-        if (currFrame.current >= totalFrames) {
-            currFrame.current = 0
-            setShow(false)
+        console.log(currFrameRef.current)
+        if (currFrameRef.current >= totalFrames) {
             updateScore("miss")
+            initializePositionInterval()
         }
+        if (currFrameRef.current == 0) {
+            setShow(true)
+        }
+        currFrameRef.current += 1
+    }
+
+    const initializePositionInterval = () => {
+        clearInterval(positionIntervalRef.current)
+        positionIntervalRef.current = setInterval(getPosition, rerenderRate)
+        currFrameRef.current = 0
     }
 
     const handleHit = (key) => {
-        const accuracy = Math.abs(currFrame.current - (totalFrames * 0.8))
-        if (accuracy <= perfect) {
+        const accuracy = Math.abs(currFrameRef.current - (totalFrames * 0.8))
+        const hit = () => {
             setShow(false)
+            initializePositionInterval()
+        }
+        if (accuracy <= perfect) {
+            hit()
             updateScore("perfect")
         } else if (accuracy <= great) {
-            setShow(false)
+            hit()
             updateScore("great")
         } else if (accuracy <= good) {
-            setShow(false)
+            hit()
             updateScore("good")
         } 
     }
@@ -80,28 +93,26 @@ const Tile = ({type, updateScore}) => {
                 tile.style.animation = `move-right ${tileSpeed + "s"} ${repeatTimes} ${timingFunction}`
                 break
         }
-        const positionFinder = setInterval(getPosition, rerenderRate)
+        initializePositionInterval()
         window.addEventListener("keypress", handlePress)
-
         return () => {
-            clearInterval(positionFinder)
+            clearInterval(positionIntervalRef.current)
             window.removeEventListener("keypress", handlePress)
         }
-    })
+    }, [])
 
-    if (show) {
-        return (
-            <div className="tile-wrapper">
-                <div className="tile" ref={tileRef}>
-                    <img src={tileImage} alt="tile"/>
-                </div>
+    return (
+        <div className="tile-wrapper">
+            <div className="tile" ref={tileRef}>
+                <img 
+                    src={tileImage} 
+                    alt="tile"
+                    style={{opacity: show ? 1 : 0}}
+                />
             </div>
-        )
-    } else {
-        return (
-            <div ref={tileRef} ></div>
-        )
-    }
+        </div>
+    )
+    
 }
 
 export default Tile
