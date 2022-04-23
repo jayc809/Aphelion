@@ -1,21 +1,31 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
+import ReactPlayer from 'react-player'
 import videoPlaceholder from "../images/video-placeholder.png"
 import "../styles/Video.css"
 
 const Video = ({videoId}) => {
 
-    const [play, setPlay] = React.useState(false);
-    const url = play ? 
-    `https://www.youtube.com/embed/${videoId}?autoplay=1&disablekb=1&rel=0` : 
-    `https://www.youtube.com/embed/${videoId}?disablekb=1&rel=0`
+    const [play, setPlay] = useState(false)
+    const playerRef = useRef(null)
     const blackScreenRef = useRef(null)
 
     useEffect(() => {
-        window.addEventListener("keypress", handlePress)
-        return () => {
-            window.removeEventListener("keypress", handlePress)
+        if (!play) {
+            window.addEventListener("keypress", handlePress)
+            return () => {
+                window.removeEventListener("keypress", handlePress)
+            }
         }
-    });
+        const infoUpdater = setInterval(updateInfo, 100)
+        return () => {
+            clearInterval(infoUpdater)
+        }
+    })
+
+    const updateInfo = () => {
+        const player = playerRef.current
+        console.log(player.getCurrentTime())
+    }
 
     const handlePress = () => {
         const blackScreen = blackScreenRef.current
@@ -30,11 +40,13 @@ const Video = ({videoId}) => {
             <div className="clip-bottom"></div>
             <div className="video-wrapper">
                 <div className="black-screen" ref={blackScreenRef}></div>
-                <iframe 
+                <ReactPlayer 
                     className="video"
-                    title="main-video"
-                    src={url}
-                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    url={`https://www.youtube.com/watch?v=${videoId}`}
+                    playing={play}
+                    width="100%"
+                    height="200%"
+                    ref={playerRef}
                 />
             {/* <img src={videoPlaceholder} className="video-placeholder" alt="" /> */}
         </div>

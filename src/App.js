@@ -7,7 +7,7 @@ import StartMessage from './components/StartMessage'
 import Score from './components/Score'
 import Combo from './components/Combo'
 import { useEffect } from "react"
-const testVideoId = "3DrYQMK4hJE"
+const testVideoId = "IKKar5SS29E" 
 const orangeVideoId = "3DrYQMK4hJE"
 const blueVideoId = "IKKar5SS29E" 
 
