@@ -12,44 +12,61 @@ const blueVideoId = "IKKar5SS29E"
 
 function GameView() {
 
-  console.log("rerendered GameView")
+  // console.log("rerendered GameView")
 
-  const nextScore = useRef(0)
-  const [currScore, setCurrScore] = useState(0)
-  const [currCombo, setCurrCombo] = useState(0)
+  //initialize
+  useEffect(() => {
+    handleScreenResize()
+    window.addEventListener("resize", handleScreenResize)
+    window.addEventListener("mousemove", handleMouseMove)
+    window.addEventListener("mouseup", handleMouseUp)
+    return () => {
+      window.removeEventListener("resize", handleScreenResize)
+      window.removeEventListener("mousemove", handleMouseMove)
+      window.addEventListener("mouseup", handleMouseUp)
+    }
+  }, [])
 
-  const updateScore = (accuracy) => {
+  //score and combo
+  const scoreRef = useRef(null)
+  const setScoreRef = useRef(null)
+  const onScoreMount = (score, setScore) => {
+    scoreRef.current = score
+    setScoreRef.current = setScore
+  }
+  const comboRef = useRef(null)
+  const setComboRef = useRef(null)
+  const onComboMount = (combo, setCombo) => {
+    comboRef.current = combo
+    setComboRef.current = setCombo
+  }
+  const updateScoreAndCombo = (accuracy) => {
+    const incrementScore = (amount) => {
+      scoreRef.current += amount
+      setScoreRef.current(scoreRef.current)
+    }
+    const incrementCombo = () => {
+      comboRef.current += 1
+      setComboRef.current(comboRef.current)
+    }
     switch (accuracy) {
       case "perfect":  
-        nextScore.current += 100
-        setCurrCombo(currCombo + 1)
+        incrementScore(100)
+        incrementCombo()
         break
       case "great":  
-        nextScore.current += 80
-        setCurrCombo(currCombo + 1)
+        incrementScore(80)
+        incrementCombo()
         break
       case "good":  
-        nextScore.current += 60
-        setCurrCombo(currCombo + 1)
+        incrementScore(60)
+        incrementCombo()
         break
       case "miss":  
-        setCurrCombo(0)
+        setComboRef.current(0)
         break
     }
   }
-
-  useEffect(() => {
-    const incrementer = setInterval(() => {
-      if (nextScore.current > currScore) {
-        setCurrScore(currScore + parseInt((nextScore.current - currScore) / 7) + 1)
-      } else {
-        setCurrScore(nextScore.current)
-      }
-    }, 50)
-    return () => {
-      clearInterval(incrementer)
-    }
-  }, [updateScore])
 
   const screenRef = useRef(null)
   const handleScreenResize = () => {
@@ -69,31 +86,25 @@ function GameView() {
     return () => clearTimeout(mouseTimer)
   }, [handleMouseMove])
 
-  let beatmapIndexLocal = null
-  let setBeatmapIndexLocal= null
+  const beatmapIndexRef = useRef(null)
+  const setBeatmapIndexRef= useRef(null)
   const onTileGeneratorMount = (beatmapIndex, setBeatmapIndex) => {
-    beatmapIndexLocal = beatmapIndex
-    setBeatmapIndexLocal = setBeatmapIndex
+    beatmapIndexRef.current = beatmapIndex
+    setBeatmapIndexRef.current = setBeatmapIndex
   }
 
   const updateProgress = (player) => {
     // console.log(player.getCurrentTime())
-    beatmapIndexLocal += 1
-    if (beatmapIndexLocal > beatmap.current.length - 1) {
-      beatmapIndexLocal = 0
+    beatmapIndexRef.current += 1
+    if (beatmapIndexRef.current > beatmap.current.length - 1) {
+      beatmapIndexRef.current = 0
     }
-    setBeatmapIndexLocal(beatmapIndexLocal)
+    setBeatmapIndexRef.current(beatmapIndexRef.current)
   }
 
-  useEffect(() => {
-    handleScreenResize()
-    window.addEventListener("resize", handleScreenResize)
-    window.addEventListener("mousemove", handleMouseMove)
-    return () => {
-      window.removeEventListener("resize", handleScreenResize)
-      window.removeEventListener("mousemove", handleMouseMove)
-    }
-  })
+  const handleMouseUp = () => {
+    updateScoreAndCombo("good")
+  }
 
   const bpm = useRef(182)
   const beatmap = useRef([1, 2, 3, 4, 1, 3, 2, 4, 2, 3, 4, 1, 2, 3, 4, 3, 1 ,3, 4, 4])
@@ -106,15 +117,15 @@ function GameView() {
       </div>
 
       <div className="component" id="score">
-        <Score score={currScore}/>
+        <Score onMount={onScoreMount}/>
       </div>
 
       <div className="component" id="combo">
-        <Combo combo={currCombo}/>
+        <Combo onMount={onComboMount}/>
       </div>
 
       <div className="component" id="tile-generator">
-        <TileGenerator beatmap={beatmap} onMount={onTileGeneratorMount} updateScore={updateScore}/>
+        <TileGenerator beatmap={beatmap} onMount={onTileGeneratorMount}/>
       </div>
 
       <div className="component" id="platform"> 

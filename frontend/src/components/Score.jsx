@@ -1,13 +1,33 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import "../styles/Score.css"
 
-const Score = ({ score }) => {
+const Score = ({ onMount }) => {
 
-    const formatScore = () => String(score).padStart(12, '0')
+    const [score, setScore] = useState(0)
+    const [scoreText, setScoreText] = useState(0)
+    
+    useEffect(() => {
+        onMount(score, setScore)
+    }, [])
+
+    useEffect(() => {
+        const incrementer = setInterval(() => {
+          if (score > scoreText) {
+            setScoreText(scoreText + parseInt((score - scoreText) / 7) + 1)
+          } else {
+            setScoreText(score)
+          }
+        }, 50)
+        return () => {
+          clearInterval(incrementer)
+        }
+      }, [score, scoreText])
+
+    const formatScoreText = () => String(scoreText).padStart(12, '0')
 
     return (
         <div className="score-wrapper">
-            <h3>{formatScore()}</h3>
+            <h3>{formatScoreText()}</h3>
         </div>
     )
 }
