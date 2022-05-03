@@ -3,16 +3,19 @@ import ReactPlayer from 'react-player'
 import videoPlaceholder from "../images/video-placeholder.png"
 import "../styles/Video.css"
 
-const Video = ({videoId, updateProgress}) => {
+const Video = ({videoId, updateProgress, bpm}) => {
 
     const [play, setPlay] = useState(false)
     const infoUpdaterRef = useRef(null)
     const playerRef = useRef(null)
     const blackScreenRef = useRef(null)
+    const updateRate = 1000 * 60 / bpm.current
 
     useEffect(() => {
         window.addEventListener("keypress", handlePress)
-        infoUpdaterRef.current = setInterval(() => updateInfo(), 100)
+        infoUpdaterRef.current = setInterval(() => {
+            updateInfo()
+        }, updateRate)
         return () => {
             window.removeEventListener("keypress", handlePress)
             clearInterval(infoUpdaterRef.current)
@@ -43,8 +46,8 @@ const Video = ({videoId, updateProgress}) => {
                     width="100%"
                     height="200%"
                     ref={playerRef}
-                    onEnded={console.log("video ended")}
-                    onError={console.log("video error")}
+                    // onEnded={console.log("video ended")}
+                    // onError={console.log("video error")}
                 />
             {/* <img src={videoPlaceholder} className="video-placeholder" alt="" /> */}
         </div>

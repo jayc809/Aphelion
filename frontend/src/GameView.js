@@ -1,17 +1,18 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import "./App.css"
-import Tile from "./components/Tile"
 import Platform from "./components/Platform"
 import Video from "./components/Video"
 import StartMessage from './components/StartMessage'
 import Score from './components/Score'
 import Combo from './components/Combo'
-import { useEffect } from "react"
+import TileGenerator from './components/TileGenerator'
 const testVideoId = "IKKar5SS29E" 
 const orangeVideoId = "3DrYQMK4hJE"
 const blueVideoId = "IKKar5SS29E" 
 
-function App() {
+function GameView() {
+
+  console.log("rerendered GameView")
 
   const nextScore = useRef(0)
   const [currScore, setCurrScore] = useState(0)
@@ -68,8 +69,20 @@ function App() {
     return () => clearTimeout(mouseTimer)
   }, [handleMouseMove])
 
+  let beatmapIndexLocal = null
+  let setBeatmapIndexLocal= null
+  const onTileGeneratorMount = (beatmapIndex, setBeatmapIndex) => {
+    beatmapIndexLocal = beatmapIndex
+    setBeatmapIndexLocal = setBeatmapIndex
+  }
+
   const updateProgress = (player) => {
     // console.log(player.getCurrentTime())
+    beatmapIndexLocal += 1
+    if (beatmapIndexLocal > beatmap.current.length - 1) {
+      beatmapIndexLocal = 0
+    }
+    setBeatmapIndexLocal(beatmapIndexLocal)
   }
 
   useEffect(() => {
@@ -81,6 +94,9 @@ function App() {
       window.removeEventListener("mousemove", handleMouseMove)
     }
   })
+
+  const bpm = useRef(182)
+  const beatmap = useRef([1, 2, 3, 4, 1, 3, 2, 4, 2, 3, 4, 1, 2, 3, 4, 3, 1 ,3, 4, 4])
 
   return (
     <div id="screen" ref={screenRef} style={{cursor: mouseMoved ? "default" : "none"}}>
@@ -97,36 +113,20 @@ function App() {
         <Combo combo={currCombo}/>
       </div>
 
-
-      
-      {/* <div className="component" id="tile">
-        <Tile type="left" updateScore={updateScore}/>
-      </div> */}
-
-      {/* <div className="component" id="tile">
-        <Tile type="middleLeft"/>
+      <div className="component" id="tile-generator">
+        <TileGenerator beatmap={beatmap} onMount={onTileGeneratorMount} updateScore={updateScore}/>
       </div>
-
-      <div className="component" id="tile">
-        <Tile type="middleRight"/>
-      </div>
-
-      <div className="component" id="tile">
-        <Tile type="right"/>
-      </div>  */}
-
-
 
       <div className="component" id="platform"> 
         <Platform/> 
       </div>
 
       <div className="component" id="video"> 
-        <Video videoId={testVideoId} updateProgress={updateProgress}/>
+        <Video videoId={testVideoId} updateProgress={updateProgress} bpm={bpm}/>
       </div>
 
     </div>
   )
 }
 
-export default App;
+export default GameView;
