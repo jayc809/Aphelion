@@ -14,7 +14,7 @@ function GameView() {
 
   // console.log("rerendered GameView")
 
-  //initialize
+  //initialization
   useEffect(() => {
     handleScreenResize()
     window.addEventListener("resize", handleScreenResize)
@@ -27,7 +27,7 @@ function GameView() {
     }
   }, [])
 
-  //score and combo
+  //update score and combo
   const scoreRef = useRef(null)
   const setScoreRef = useRef(null)
   const onScoreMount = (score, setScore) => {
@@ -40,6 +40,7 @@ function GameView() {
     comboRef.current = combo
     setComboRef.current = setCombo
   }
+
   const updateScoreAndCombo = (accuracy) => {
     const incrementScore = (amount) => {
       scoreRef.current += amount
@@ -68,6 +69,7 @@ function GameView() {
     }
   }
 
+  //resize window and hide crusor
   const screenRef = useRef(null)
   const handleScreenResize = () => {
     const screen = screenRef.current
@@ -86,6 +88,9 @@ function GameView() {
     return () => clearTimeout(mouseTimer)
   }, [handleMouseMove])
 
+  //update video related processes
+  const bpm = useRef(182)
+  const beatmap = useRef([1, 2, 3, 4, 1, 3, 2, 4, 2, 3, 4, 1, 2, 3, 4, 3, 1 ,3, 4, 4])
   const beatmapIndexRef = useRef(null)
   const setBeatmapIndexRef= useRef(null)
   const onTileGeneratorMount = (beatmapIndex, setBeatmapIndex) => {
@@ -102,12 +107,11 @@ function GameView() {
     setBeatmapIndexRef.current(beatmapIndexRef.current)
   }
 
-  const handleMouseUp = () => {
-    updateScoreAndCombo("good")
-  }
 
-  const bpm = useRef(182)
-  const beatmap = useRef([1, 2, 3, 4, 1, 3, 2, 4, 2, 3, 4, 1, 2, 3, 4, 3, 1 ,3, 4, 4])
+  //tests
+  const handleMouseUp = () => {
+    // updateScoreAndCombo("good")
+  }
 
   return (
     <div id="screen" ref={screenRef} style={{cursor: mouseMoved ? "default" : "none"}}>
