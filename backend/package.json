@@ -1,0 +1,26 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "devStart": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  },
+  "dependencies": {
+    "express": "^4.18.1",
+    "fft-js": "^0.0.12",
+    "music-tempo": "^1.0.3",
+    "node-fetch": "2.0",
+    "to-arraybuffer": "^1.0.1",
+    "web-audio-api": "^0.2.2",
+    "xmlhttprequest": "^1.8.0",
+    "ytdl-core": "^4.11.0"
+  }
+}
