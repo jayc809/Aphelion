@@ -18,7 +18,7 @@ const Tile = ({ type, updateScore, state}) => {
 
     //initializations
 
-    // handle state changes
+    // handle lifecycle state changes
     useEffect(() => {
         switch (state) {
             case 1: 

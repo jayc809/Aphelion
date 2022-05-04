@@ -3,19 +3,19 @@ import ReactPlayer from 'react-player'
 import videoPlaceholder from "../images/video-placeholder.png"
 import "../styles/Video.css"
 
-const Video = ({videoId, updateProgress, bpm}) => {
+const Video = ({videoId, updateProgress, beatmap}) => {
 
     const [play, setPlay] = useState(false)
     const infoUpdaterRef = useRef(null)
     const playerRef = useRef(null)
     const blackScreenRef = useRef(null)
-    const updateRate = 1000 * 60 / bpm.current
+    const musicHasStarted = useRef(false)
 
     useEffect(() => {
         window.addEventListener("keypress", handlePress)
         infoUpdaterRef.current = setInterval(() => {
             updateInfo()
-        }, updateRate)
+        }, beatmap.refreshRate)
         return () => {
             window.removeEventListener("keypress", handlePress)
             clearInterval(infoUpdaterRef.current)
@@ -23,7 +23,16 @@ const Video = ({videoId, updateProgress, bpm}) => {
     }, [])
 
     const updateInfo = () => {
-        updateProgress(playerRef.current)
+        const currTime = playerRef.current.getCurrentTime()
+        if (!musicHasStarted.current && 
+            currTime >= beatmap.startTime - beatmap.refreshTolerance && 
+            currTime <= beatmap.startTime + beatmap.refreshTolerance) {
+            musicHasStarted.current = true
+            console.log("music start")
+        }
+        if (musicHasStarted.current) {
+            updateProgress(currTime)
+        }
     }
 
     const handlePress = () => {

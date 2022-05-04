@@ -89,8 +89,14 @@ function GameView() {
   }, [handleMouseMove])
 
   //update video related processes
-  const bpm = useRef(182)
-  const beatmap = useRef([1, 2, 3, 4, 1, 3, 2, 4, 2, 3, 4, 1, 2, 3, 4, 3, 1 ,3, 4, 4])
+
+  const beatmap = useRef({
+    bpm: 182,
+    startTime: 1.1377777777777778,
+    refreshRate: 10,
+    refreshTolerance: 0.005,
+    beatmap: []
+  })
   const beatmapIndexRef = useRef(null)
   const setBeatmapIndexRef= useRef(null)
   const onTileGeneratorMount = (beatmapIndex, setBeatmapIndex) => {
@@ -98,13 +104,15 @@ function GameView() {
     setBeatmapIndexRef.current = setBeatmapIndex
   }
 
-  const updateProgress = (player) => {
+  const updateProgress = (currTime) => {
     // console.log(player.getCurrentTime())
-    beatmapIndexRef.current += 1
-    if (beatmapIndexRef.current > beatmap.current.length - 1) {
-      beatmapIndexRef.current = 0
+    if (currTime) {
+      beatmapIndexRef.current += 1
+      if (beatmapIndexRef.current > beatmap.current.beatmap.length - 1) {
+        beatmapIndexRef.current = 0
+      }
+      setBeatmapIndexRef.current(beatmapIndexRef.current)
     }
-    setBeatmapIndexRef.current(beatmapIndexRef.current)
   }
 
 
@@ -137,7 +145,7 @@ function GameView() {
       </div>
 
       <div className="component" id="video"> 
-        <Video videoId={testVideoId} updateProgress={updateProgress} bpm={bpm}/>
+        <Video videoId={testVideoId} updateProgress={updateProgress} beatmap={beatmap.current}/>
       </div>
 
     </div>

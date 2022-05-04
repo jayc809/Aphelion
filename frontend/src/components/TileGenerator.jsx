@@ -29,7 +29,7 @@ const TileGenerator = ({ beatmap, onMount, updateScore }) => {
 
     return (
         <div className="tile-generator-wrapper">
-            <h1 className="beat-counter" style={{color: "white"}}>{beatmapIndex}</h1>
+            {/* <h1 className="beat-counter" style={{color: "white"}}>{beatmapIndex}</h1> */}
             <Tile type={"left"} updateScore={updateScore} state={tileState}/>
         </div>
     )
