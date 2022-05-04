@@ -119,12 +119,19 @@ app.get("/videoBPM", (req, res) => {
             }
         }
     }
-    const analyzeBPM = (audioData) => {
+    const getBPM = (audioData) => {
         const mt = new MusicTempo(audioData)
         return mt.tempo
     } 
-    const analyzeFFT = (audioData, buffer, startIndex, bpm) => {
+    const getBeatTime = (audioData, buffer, startIndex, bpm) => {
         const beats = []
+        for (let sample = startIndex; sample < audioData.length - 2048; sample += parseInt(buffer.sampleRate * 60 / bpm)) {
+            beats.push(sample / 44100)
+        }
+        return beats
+    }
+    const getFFTMap = (audioData, buffer, startIndex, bpm) => {
+        const fftMap = []
         for (let sample = startIndex; sample < audioData.length - 2048; sample += parseInt(buffer.sampleRate * 60 / bpm)) {
             const interval = audioData.slice(sample, sample + 2048)
             const phasors= fft(interval)
@@ -134,17 +141,58 @@ app.get("/videoBPM", (req, res) => {
                 return {frequency: f, magnitude: magnitudes[i]}
             })
             const metaSorted = meta.sort((a, b) => b.magnitude - a.magnitude)
-            beats.push(metaSorted.slice(0, 4))
+            fftMap.push(metaSorted.slice(0, 4))
         }
-        return beats
+        return fftMap 
+    }
+    const getBeatmap = (fftMap, beatTime) => {
+        const frequencies = []
+        for (let i = 0; i < fftMap.length; i += 1) {
+            for (let j = 0; j < fftMap[i].length; j += 1) {
+                frequencies.push(fftMap[i][j].frequency)
+            }
+        }
+        const frequenciesSorted = frequencies.sort((a, b) => a - b)
+        const quartiles = [
+            frequenciesSorted[parseInt(frequenciesSorted.length * 0.25)],
+            frequenciesSorted[parseInt(frequenciesSorted.length * 0.5)],
+            frequenciesSorted[parseInt(frequenciesSorted.length * 0.75)]
+        ]
+        const beatmap = []
+        for (let i = 0; i < fftMap.length; i += 1) {
+            const time = beatTime[i]
+            const top4 = fftMap[i]
+            let type = null
+            if (top4[0].frequency <= quartiles[0]) {
+                type = "left"
+            } else if (top4[0].frequency <= quartiles[1]) {
+                type = "middle-left"
+            } else if (top4[0].frequency <= quartiles[2]) {
+                type = "middle-right"
+            } else {
+                type = "right"
+            } 
+            beatmap.push({
+                time: time, 
+                type: type
+            })
+        }
+        return beatmap
     }
     const analyzeAudio = (buffer) => {
         const audioData = getAudioData(buffer)
         const startIndex = getAudioStartIndex(audioData)
         const startTime = startIndex / buffer.sampleRate
-        const bpm = analyzeBPM(audioData)
-        const beats = analyzeFFT(audioData, buffer, startIndex, bpm) 
-        console.log(beats.length)
+        const bpm = getBPM(audioData)
+        const beatTime = getBeatTime(audioData, buffer, startIndex, bpm)
+        const fftMap= getFFTMap(audioData, buffer, startIndex, bpm) 
+        const beatmap = getBeatmap(fftMap, beatTime)
+        res.json({
+            bpm: bpm,
+            startTime: startTime,
+            // beatTime: beatTime,
+            beatmap: beatmap
+        })
     }
 })
  

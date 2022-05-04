@@ -1,13 +1,13 @@
 import './App.css'
 import GameView from "./GameView"
-import YTDownloadTest from './components/YTDownloadTest'
+import AnalyzerView from './AnalyzerView'
 
 function App() {
 
   return (
     <div id="app">
-      {/* <YTDownloadTest/> */}
-      <GameView/>
+      <AnalyzerView/>
+      {/* <GameView/> */}
     </div>
   )
 }
