@@ -54,6 +54,12 @@ const Video = ({ videoId, updateBeatNumber, beatmapObj, tileSpeed, getAllowStart
         }
     }
 
+    const handleEnd = () => {
+        const blackScreen = blackScreenRef.current
+        blackScreen.style.animation = "none"
+        blackScreen.style.opacity = 1
+    }
+
     return (
         <div className="video-parent">
             <div className="clip-top"></div>
@@ -67,6 +73,7 @@ const Video = ({ videoId, updateBeatNumber, beatmapObj, tileSpeed, getAllowStart
                     width="100%"
                     height="200%"
                     onReady={handlePlayerReady}
+                    onEnded={handleEnd}
                     // onEnded={console.log("video ended")}
                     // onError={console.log("video error")}
                 />
