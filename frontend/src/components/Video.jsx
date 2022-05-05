@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import ReactPlayer from 'react-player'
 import "../styles/Video.css"
 
-const Video = ({ videoId, updateBeatmapIndex, beatmapObj, tileSpeed }) => {
+const Video = ({ videoId, updateBeatmapIndex, beatmapObj, tileSpeed, getAllowStart, handleAllowStart }) => {
 
     const [playAudio, setPlayAudio] = useState(false)
     const [playVideo, setPlayVideo] = useState(false)
@@ -35,13 +35,23 @@ const Video = ({ videoId, updateBeatmapIndex, beatmapObj, tileSpeed }) => {
     }
 
     const handlePress = () => {
-        const blackScreen = blackScreenRef.current
-        setPlayAudio(true)
-        setTimeout(() => {
-            setPlayVideo(true)
-            setTimeout(() => blackScreen.style.animation = "fade-out 3s forwards", 1000)
-        }, tileSpeed * 1000)
-        window.removeEventListener("keypress", handlePress, false)
+        if (getAllowStart()) {
+            const blackScreen = blackScreenRef.current
+            setPlayAudio(true)
+            setTimeout(() => {
+                setPlayVideo(true)
+                setTimeout(() => blackScreen.style.animation = "fade-out 3s forwards", 1000)
+            }, tileSpeed * 1000 - 10)
+            window.removeEventListener("keypress", handlePress, false)
+        }
+    }
+
+    const numPlayersReady = useRef(0)
+    const handlePlayerReady = () => {
+        numPlayersReady.current += 1
+        if (numPlayersReady.current == 2) {
+            handleAllowStart()
+        }
     }
 
     return (
@@ -56,6 +66,7 @@ const Video = ({ videoId, updateBeatmapIndex, beatmapObj, tileSpeed }) => {
                     playing={playVideo}
                     width="100%"
                     height="200%"
+                    onReady={handlePlayerReady}
                     // onEnded={console.log("video ended")}
                     // onError={console.log("video error")}
                 />
@@ -65,6 +76,7 @@ const Video = ({ videoId, updateBeatmapIndex, beatmapObj, tileSpeed }) => {
                     muted={true}
                     playing={playAudio}
                     ref={audioRef}
+                    onReady={handlePlayerReady}
                     // onEnded={console.log("video ended")}
                     // onError={console.log("video error")}
                 />

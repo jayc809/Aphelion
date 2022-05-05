@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import "../styles/StartMessage.css"
 
-const StartMessage = () => {
+const StartMessage = ({ getAllowStart }) => {
 
     const [show, setShow] = useState(true)
     const handlePress = () => {
-        setShow(false)
-        window.removeEventListener('keypress', handlePress)
+        if (getAllowStart()) { 
+            setShow(false)
+            window.removeEventListener('keypress', handlePress)
+        }
     }
 
     useEffect(() => {

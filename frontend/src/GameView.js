@@ -19,11 +19,9 @@ const GameView = ({ setView, beatmapObj }) => {
     handleScreenResize()
     window.addEventListener("resize", handleScreenResize)
     window.addEventListener("mousemove", handleMouseMove)
-    window.addEventListener("mouseup", handleMouseUp)
     return () => {
       window.removeEventListener("resize", handleScreenResize)
       window.removeEventListener("mousemove", handleMouseMove)
-      window.addEventListener("mouseup", handleMouseUp)
     }
   }, [])
 
@@ -98,7 +96,7 @@ const GameView = ({ setView, beatmapObj }) => {
   }
   const updateBeatmapIndex = (currTime) => {
     // console.log(player.getCurrentTime())
-    if (currTime >= beatmapObj.beatTime[beatNumberRef.current + 1] - beatmapObj.refreshTolerance &&
+    if (currTime >= beatmapObj.beatTime[beatNumberRef.current + 1] - 2 * beatmapObj.refreshTolerance &&
         currTime <= beatmapObj.beatTime[beatNumberRef.current + 1] + beatmapObj.refreshTolerance) {
       beatNumberRef.current += 1
       if (beatNumberRef.current > beatmapObj.beatTime.length - 1) {
@@ -108,17 +106,19 @@ const GameView = ({ setView, beatmapObj }) => {
     }
   }
 
-
-  //tests
-  const handleMouseUp = () => {
-    // updateScoreAndCombo("good")
+  const allowStart = useRef(false)
+  const handleAllowStart = () => {
+    allowStart.current = true
+  }
+  const getAllowStart = () => {
+    return allowStart.current
   }
 
   return (
     <div id="screen" ref={screenRef} style={{cursor: mouseMoved ? "default" : "none"}}>
 
       <div className="component" id="start-message">
-        <StartMessage/>
+        <StartMessage getAllowStart={getAllowStart}/>
       </div>
 
       <div className="component" id="score">
@@ -138,7 +138,14 @@ const GameView = ({ setView, beatmapObj }) => {
       </div>
 
       <div className="component" id="video"> 
-        <Video videoId={testVideoId} updateBeatmapIndex={updateBeatmapIndex} beatmapObj={beatmapObj} tileSpeed={tileSpeed}/>
+        <Video 
+          videoId={testVideoId} 
+          updateBeatmapIndex={updateBeatmapIndex} 
+          beatmapObj={beatmapObj} 
+          tileSpeed={tileSpeed}
+          getAllowStart={getAllowStart}
+          handleAllowStart={handleAllowStart}
+        />
       </div>
 
     </div>

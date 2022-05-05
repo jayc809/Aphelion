@@ -2,38 +2,34 @@ import React, { useEffect, useRef, useState } from 'react'
 import "../styles/Tile.css"
 import tileImage from "../images/tile.png"
 
-const Tile = ({ type, updateScore, state, tileSpeed}) => {
+const Tile = ({ type, updateScore, tileSpeed, targetBeatNumber, onMount, onMiss}) => {
 
     const tileRef = useRef(null)
-
     const timingFunction = "cubic-bezier(0.4, 0.1, 0.7, 0.4)"
-
-    const [stateLocal, setStateLocal] = useState(state)
-
-    const accuracy = {perfect: 1, great: 2, good: 3}
+    const [state, setState] = useState(1)
 
     //initializations
-
-    // handle lifecycle state changes
     useEffect(() => {
-        setStateLocal(state)
-        switch (stateLocal) {
-            case 1: 
-                //tile is moving
-                loadTile(type)
+        if (type != "placeholder") {
+            onMount(type, targetBeatNumber, setState)
+        }
+    }, [])
+
+    useEffect(() => {
+        switch (state) {
+            case 1:
+                loadTile()
                 break
             case 2:
-                //tile has been tapped
-                tapTile(type)
+                tapTile()
                 break
-            case 3: 
-                //tile is inactive
+            case 3:
                 unloadTile()
                 break
         }
     }, [state])
 
-    const loadTile = (type) => {
+    const loadTile = () => {
         const tile = tileRef.current
         if (type == "placeholder") {
             tile.style.opacity = 0
@@ -42,10 +38,8 @@ const Tile = ({ type, updateScore, state, tileSpeed}) => {
         }
     }
 
-    const tapTile = (type) => {
-        const tile = tileRef.current
-        tile.style.animation = "none"
-        tile.style.opacity = 0
+    const tapTile = () => {
+        setState(3)
     }
 
     const unloadTile = () => {
@@ -54,9 +48,14 @@ const Tile = ({ type, updateScore, state, tileSpeed}) => {
         tile.style.opacity = 0
     }
 
+    const handleMiss = () => {
+        onMiss(type, targetBeatNumber)
+        setState(3)
+    }
+
     return (
         <div className="tile-wrapper">
-            <div className="tile" ref={tileRef} onAnimationEnd={() => {setStateLocal(3)}}>
+            <div className="tile" ref={tileRef} onAnimationEnd={handleMiss}>
                 <img 
                     src={tileImage} 
                     alt="tile"
