@@ -88,7 +88,8 @@ const GameView = ({ setView, beatmapObj }) => {
     return () => clearTimeout(mouseTimer)
   }, [handleMouseMove])
 
-  //update video related processes
+  //control tile generator
+  const tileSpeed = 1.3
   const beatNumberRef = useRef(null)
   const setBeatNumberRef= useRef(null)
   const onTileGeneratorMount = (beatNumber, setBeatNumber) => {
@@ -129,7 +130,7 @@ const GameView = ({ setView, beatmapObj }) => {
       </div>
 
       <div className="component" id="tile-generator">
-        <TileGenerator beatmapObj={beatmapObj} onMount={onTileGeneratorMount}/>
+        <TileGenerator beatmapObj={beatmapObj} onMount={onTileGeneratorMount} tileSpeed={tileSpeed}/>
       </div>
 
       <div className="component" id="platform"> 
@@ -137,7 +138,7 @@ const GameView = ({ setView, beatmapObj }) => {
       </div>
 
       <div className="component" id="video"> 
-        <Video videoId={testVideoId} updateBeatmapIndex={updateBeatmapIndex} beatmapObj={beatmapObj}/>
+        <Video videoId={testVideoId} updateBeatmapIndex={updateBeatmapIndex} beatmapObj={beatmapObj} tileSpeed={tileSpeed}/>
       </div>
 
     </div>

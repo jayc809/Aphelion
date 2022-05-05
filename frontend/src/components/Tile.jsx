@@ -2,11 +2,10 @@ import React, { useEffect, useRef, useState } from 'react'
 import "../styles/Tile.css"
 import tileImage from "../images/tile.png"
 
-const Tile = ({ type, updateScore, state}) => {
+const Tile = ({ type, updateScore, state, tileSpeed}) => {
 
     const tileRef = useRef(null)
 
-    const tileSpeed = 1
     const timingFunction = "cubic-bezier(0.4, 0.1, 0.7, 0.4)"
 
     const [stateLocal, setStateLocal] = useState(state)

@@ -2,18 +2,19 @@ import React, { useEffect, useState, useRef } from 'react'
 import ReactPlayer from 'react-player'
 import "../styles/Video.css"
 
-const Video = ({ videoId, updateBeatmapIndex, beatmapObj }) => {
+const Video = ({ videoId, updateBeatmapIndex, beatmapObj, tileSpeed }) => {
 
-    const [play, setPlay] = useState(false)
+    const [playAudio, setPlayAudio] = useState(false)
+    const [playVideo, setPlayVideo] = useState(false)
     const infoUpdaterRef = useRef(null)
-    const playerRef = useRef(null)
+    const audioRef = useRef(null)
     const blackScreenRef = useRef(null)
     const musicHasStarted = useRef(false)
 
     useEffect(() => {
         window.addEventListener("keypress", handlePress)
         infoUpdaterRef.current = setInterval(() => {
-            updateInfo()
+            updateAudioInfo()
         }, beatmapObj.refreshRate)
         return () => {
             window.removeEventListener("keypress", handlePress)
@@ -21,13 +22,12 @@ const Video = ({ videoId, updateBeatmapIndex, beatmapObj }) => {
         }
     }, [])
 
-    const updateInfo = () => {
-        const currTime = playerRef.current.getCurrentTime()
+    const updateAudioInfo = () => {
+        const currTime = audioRef.current.getCurrentTime()
         if (!musicHasStarted.current && 
             currTime >= beatmapObj.startTime - beatmapObj.refreshTolerance && 
             currTime <= beatmapObj.startTime + beatmapObj.refreshTolerance) {
             musicHasStarted.current = true
-            console.log("music start")
         }
         if (musicHasStarted.current) {
             updateBeatmapIndex(currTime)
@@ -36,8 +36,11 @@ const Video = ({ videoId, updateBeatmapIndex, beatmapObj }) => {
 
     const handlePress = () => {
         const blackScreen = blackScreenRef.current
-        setTimeout(() => blackScreen.style.animation = "fade-out 3s forwards", 1000)
-        setPlay(true)
+        setPlayAudio(true)
+        setTimeout(() => {
+            setPlayVideo(true)
+            setTimeout(() => blackScreen.style.animation = "fade-out 3s forwards", 1000)
+        }, tileSpeed * 1000)
         window.removeEventListener("keypress", handlePress, false)
     }
 
@@ -50,10 +53,18 @@ const Video = ({ videoId, updateBeatmapIndex, beatmapObj }) => {
                 <ReactPlayer 
                     className="video"
                     url={`https://www.youtube.com/watch?v=${videoId}`}
-                    playing={play}
+                    playing={playVideo}
                     width="100%"
                     height="200%"
-                    ref={playerRef}
+                    // onEnded={console.log("video ended")}
+                    // onError={console.log("video error")}
+                />
+                <ReactPlayer 
+                    className="audio"
+                    url={`https://www.youtube.com/watch?v=${videoId}`}
+                    muted={true}
+                    playing={playAudio}
+                    ref={audioRef}
                     // onEnded={console.log("video ended")}
                     // onError={console.log("video error")}
                 />

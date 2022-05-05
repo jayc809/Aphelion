@@ -6,6 +6,7 @@
 .tile {
     position: absolute;
     margin: 0;
+    opacity: 0;
 }
 
 .tile img {
