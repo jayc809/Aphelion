@@ -62,6 +62,7 @@ const GameView = ({ setView, beatmapObj }) => {
         incrementCombo()
         break
       case "miss":  
+        comboRef.current = 0
         setComboRef.current(0)
         break
     }
@@ -94,8 +95,12 @@ const GameView = ({ setView, beatmapObj }) => {
     beatNumberRef.current = beatNumber
     setBeatNumberRef.current = setBeatNumber
   }
-  const updateBeatmapIndex = (currTime) => {
-    // console.log(player.getCurrentTime())
+  const currVideoTime = useRef(0)
+  const getCurrVideoTime = () => {
+    return currVideoTime.current
+  }
+  const updateBeatNumber = (currTime) => {
+    currVideoTime.current = currTime
     if (currTime >= beatmapObj.beatTime[beatNumberRef.current + 1] - 2 * beatmapObj.refreshTolerance &&
         currTime <= beatmapObj.beatTime[beatNumberRef.current + 1] + beatmapObj.refreshTolerance) {
       beatNumberRef.current += 1
@@ -130,7 +135,14 @@ const GameView = ({ setView, beatmapObj }) => {
       </div>
 
       <div className="component" id="tile-generator">
-        <TileGenerator beatmapObj={beatmapObj} onMount={onTileGeneratorMount} tileSpeed={tileSpeed}/>
+        <TileGenerator 
+          beatmapObj={beatmapObj} 
+          onMount={onTileGeneratorMount} 
+          tileSpeed={tileSpeed} 
+          updateScoreAndCombo={updateScoreAndCombo}
+          getAllowStart={getAllowStart}
+          getCurrVideoTime={getCurrVideoTime}
+        />
       </div>
 
       <div className="component" id="platform"> 
@@ -140,7 +152,7 @@ const GameView = ({ setView, beatmapObj }) => {
       <div className="component" id="video"> 
         <Video 
           videoId={testVideoId} 
-          updateBeatmapIndex={updateBeatmapIndex} 
+          updateBeatNumber={updateBeatNumber} 
           beatmapObj={beatmapObj} 
           tileSpeed={tileSpeed}
           getAllowStart={getAllowStart}

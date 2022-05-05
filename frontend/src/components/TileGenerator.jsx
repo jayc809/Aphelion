@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import Tile from "./Tile"
 import "../styles/TileGenerator.css"
 
-const TileGenerator = ({ beatmapObj, onMount, tileSpeed }) => {
+const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, getAllowStart, getCurrVideoTime }) => {
 
     const [beatNumber, setBeatNumber] = useState(0)
     const [currentTiles, setCurrentTiles] = useState(
@@ -41,23 +41,22 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed }) => {
         currentTilesRef.current = currentTiles
     }, [currentTiles])
 
-
-
-
     const handlePress = (e) => {
-        switch (e.key) {
-            case "d":
-                startTapAnimation("left")
-                break
-            case "f":
-                startTapAnimation("middle-left")
-                break
-            case "j":
-                startTapAnimation("middle-right")
-                break
-            case "k":
-                startTapAnimation("right")
-                break
+        if (getAllowStart()) {
+            switch (e.key) {
+                case "d":
+                    onTileTap("left")
+                    break
+                case "f":
+                    onTileTap("middle-left")
+                    break
+                case "j":
+                    onTileTap("middle-right")
+                    break
+                case "k":
+                    onTileTap("right")
+                    break
+            }
         }
     }
     //sets up a dictionary of setStates for each tile mounted
@@ -71,10 +70,11 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed }) => {
     const onTileMiss = (type, targetBeatNumber) => {
         const key = String(targetBeatNumber) + type
         missedTiles.current.push(key)
+        updateScoreAndCombo("miss")
     }
     //finds the closest tile of type and starts animation using setState
     const tappedTiles = useRef([])
-    const startTapAnimation = (type) => {
+    const onTileTap = (type) => {
         let closestTileBeatNumber = null
         //makes a copy of currentTiles
         const tiles = JSON.parse(JSON.stringify(currentTilesRef.current))
@@ -92,9 +92,27 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed }) => {
         if (closestTileBeatNumber != null) {
             //runs the animation
             tileSetStates.current[String(closestTileBeatNumber) + type](2)
+            //calculate accuracy and update score and combo
+            const accuracy = getTileAccuracy(closestTileBeatNumber)
+            updateScoreAndCombo(accuracy)
         }
     }
-
+    const getTileAccuracy = (beatNumber) => {
+        const processTimeOffset = 0.08
+        const currTime = getCurrVideoTime()
+        const targetTime = beatmapObj.beatTime[beatNumber - 1] + tileSpeed + processTimeOffset
+        const accuracyUnit = tileSpeed / 14
+        const timeDifference = Math.abs(currTime - targetTime)
+        if (timeDifference <= accuracyUnit) {
+            return "perfect"
+        } else if (timeDifference <= 2 * accuracyUnit) {
+            return "great"
+        } else if (timeDifference <= 3 * accuracyUnit) {
+            return "good"
+        } else {
+            return "miss"
+        }
+    }
 
     return (
         <div className="tile-generator-wrapper">

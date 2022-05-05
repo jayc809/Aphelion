@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import ReactPlayer from 'react-player'
 import "../styles/Video.css"
 
-const Video = ({ videoId, updateBeatmapIndex, beatmapObj, tileSpeed, getAllowStart, handleAllowStart }) => {
+const Video = ({ videoId, updateBeatNumber, beatmapObj, tileSpeed, getAllowStart, handleAllowStart }) => {
 
     const [playAudio, setPlayAudio] = useState(false)
     const [playVideo, setPlayVideo] = useState(false)
@@ -30,7 +30,7 @@ const Video = ({ videoId, updateBeatmapIndex, beatmapObj, tileSpeed, getAllowSta
             musicHasStarted.current = true
         }
         if (musicHasStarted.current) {
-            updateBeatmapIndex(currTime)
+            updateBeatNumber(currTime)
         }
     }
 
@@ -42,7 +42,7 @@ const Video = ({ videoId, updateBeatmapIndex, beatmapObj, tileSpeed, getAllowSta
                 setPlayVideo(true)
                 setTimeout(() => blackScreen.style.animation = "fade-out 3s forwards", 1000)
             }, tileSpeed * 1000 - 10)
-            window.removeEventListener("keypress", handlePress, false)
+            window.removeEventListener("keypress", handlePress)
         }
     }
 
