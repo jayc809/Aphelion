@@ -1,6 +1,7 @@
 import './App.css'
 import GameView from "./GameView"
 import AnalyzerView from './AnalyzerView'
+import TestView from "./TestView"
 import { useRef, useState } from 'react'
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           "game": <GameView setView={setView} beatmapObj={beatmapObjRef.current}/>
         } [view]
       }
+      {/* <TestView/> */}
     </div>
   )
 }

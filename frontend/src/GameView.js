@@ -89,21 +89,21 @@ const GameView = ({ setView, beatmapObj }) => {
   }, [handleMouseMove])
 
   //update video related processes
-  const beatmapIndexRef = useRef(null)
-  const setBeatmapIndexRef= useRef(null)
-  const onTileGeneratorMount = (beatmapIndex, setBeatmapIndex) => {
-    beatmapIndexRef.current = beatmapIndex
-    setBeatmapIndexRef.current = setBeatmapIndex
+  const beatNumberRef = useRef(null)
+  const setBeatNumberRef= useRef(null)
+  const onTileGeneratorMount = (beatNumber, setBeatNumber) => {
+    beatNumberRef.current = beatNumber
+    setBeatNumberRef.current = setBeatNumber
   }
   const updateBeatmapIndex = (currTime) => {
     // console.log(player.getCurrentTime())
-    if (currTime >= beatmapObj.beatTime[beatmapIndexRef.current + 1] - beatmapObj.refreshTolerance &&
-        currTime <= beatmapObj.beatTime[beatmapIndexRef.current + 1] + beatmapObj.refreshTolerance) {
-      beatmapIndexRef.current += 1
-      if (beatmapIndexRef.current > beatmapObj.beatmap.length - 1) {
-        beatmapIndexRef.current = 0
+    if (currTime >= beatmapObj.beatTime[beatNumberRef.current + 1] - beatmapObj.refreshTolerance &&
+        currTime <= beatmapObj.beatTime[beatNumberRef.current + 1] + beatmapObj.refreshTolerance) {
+      beatNumberRef.current += 1
+      if (beatNumberRef.current > beatmapObj.beatTime.length - 1) {
+        console.log("exceeded betTime length")
       }
-      setBeatmapIndexRef.current(beatmapIndexRef.current)
+      setBeatNumberRef.current(beatNumberRef.current)
     }
   }
 

@@ -160,7 +160,6 @@ app.get("/videoBPM", (req, res) => {
         ]
         const beatmap = []
         for (let i = 0; i < fftMap.length; i += 1) {
-            const time = beatTime[i]
             const top4 = fftMap[i]
             let type = null
             if (top4[0].frequency <= quartiles[0]) {
@@ -173,8 +172,10 @@ app.get("/videoBPM", (req, res) => {
                 type = "right"
             } 
             beatmap.push({
-                time: time, 
-                type: type
+                beatNumber: i + 1, 
+                type: type,
+                state: 1,
+                id: i + 1
             })
         }
         return beatmap

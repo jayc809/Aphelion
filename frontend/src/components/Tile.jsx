@@ -9,10 +9,7 @@ const Tile = ({ type, updateScore, state}) => {
     const tileSpeed = 1
     const timingFunction = "cubic-bezier(0.4, 0.1, 0.7, 0.4)"
 
-    const currFrameRef = useRef(0)
-    const positionIntervalRef = useRef(null)
-    const rerenderRate = 50
-    const totalFrames = tileSpeed / (50 / 1000)
+    const [stateLocal, setStateLocal] = useState(state)
 
     const accuracy = {perfect: 1, great: 2, good: 3}
 
@@ -20,7 +17,8 @@ const Tile = ({ type, updateScore, state}) => {
 
     // handle lifecycle state changes
     useEffect(() => {
-        switch (state) {
+        setStateLocal(state)
+        switch (stateLocal) {
             case 1: 
                 //tile is moving
                 loadTile(type)
@@ -38,7 +36,11 @@ const Tile = ({ type, updateScore, state}) => {
 
     const loadTile = (type) => {
         const tile = tileRef.current
-        tile.style.animation = `move-${type} ${tileSpeed + "s"} ${timingFunction}`
+        if (type == "placeholder") {
+            tile.style.opacity = 0
+        } else {
+            tile.style.animation = `move-${type} ${tileSpeed + "s"} ${timingFunction}`
+        }
     }
 
     const tapTile = (type) => {
@@ -55,7 +57,7 @@ const Tile = ({ type, updateScore, state}) => {
 
     return (
         <div className="tile-wrapper">
-            <div className="tile" ref={tileRef}>
+            <div className="tile" ref={tileRef} onAnimationEnd={() => {setStateLocal(3)}}>
                 <img 
                     src={tileImage} 
                     alt="tile"
