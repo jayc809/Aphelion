@@ -10,7 +10,7 @@ const testVideoId = "IKKar5SS29E"
 const orangeVideoId = "3DrYQMK4hJE"
 const blueVideoId = "IKKar5SS29E" 
 
-function GameView() {
+const GameView = ({ setView, beatmapObj }) => {
 
   // console.log("rerendered GameView")
 
@@ -89,26 +89,18 @@ function GameView() {
   }, [handleMouseMove])
 
   //update video related processes
-
-  const beatmap = useRef({
-    bpm: 182,
-    startTime: 1.1377777777777778,
-    refreshRate: 10,
-    refreshTolerance: 0.005,
-    beatmap: []
-  })
   const beatmapIndexRef = useRef(null)
   const setBeatmapIndexRef= useRef(null)
   const onTileGeneratorMount = (beatmapIndex, setBeatmapIndex) => {
     beatmapIndexRef.current = beatmapIndex
     setBeatmapIndexRef.current = setBeatmapIndex
   }
-
-  const updateProgress = (currTime) => {
+  const updateBeatmapIndex = (currTime) => {
     // console.log(player.getCurrentTime())
-    if (currTime) {
+    if (currTime >= beatmapObj.beatTime[beatmapIndexRef.current + 1] - beatmapObj.refreshTolerance &&
+        currTime <= beatmapObj.beatTime[beatmapIndexRef.current + 1] + beatmapObj.refreshTolerance) {
       beatmapIndexRef.current += 1
-      if (beatmapIndexRef.current > beatmap.current.beatmap.length - 1) {
+      if (beatmapIndexRef.current > beatmapObj.beatmap.length - 1) {
         beatmapIndexRef.current = 0
       }
       setBeatmapIndexRef.current(beatmapIndexRef.current)
@@ -137,15 +129,15 @@ function GameView() {
       </div>
 
       <div className="component" id="tile-generator">
-        <TileGenerator beatmap={beatmap} onMount={onTileGeneratorMount}/>
+        <TileGenerator beatmapObj={beatmapObj} onMount={onTileGeneratorMount}/>
       </div>
 
       <div className="component" id="platform"> 
-        <Platform/> 
+        <Platform/>
       </div>
 
       <div className="component" id="video"> 
-        <Video videoId={testVideoId} updateProgress={updateProgress} beatmap={beatmap.current}/>
+        <Video videoId={testVideoId} updateBeatmapIndex={updateBeatmapIndex} beatmapObj={beatmapObj}/>
       </div>
 
     </div>
