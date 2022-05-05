@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react'
 import ReactPlayer from 'react-player'
-import videoPlaceholder from "../images/video-placeholder.png"
 import "../styles/Video.css"
 
-const Video = ({videoId, updateProgress, beatmap}) => {
+const Video = ({ videoId, updateBeatmapIndex, beatmapObj }) => {
 
     const [play, setPlay] = useState(false)
     const infoUpdaterRef = useRef(null)
@@ -15,7 +14,7 @@ const Video = ({videoId, updateProgress, beatmap}) => {
         window.addEventListener("keypress", handlePress)
         infoUpdaterRef.current = setInterval(() => {
             updateInfo()
-        }, beatmap.refreshRate)
+        }, beatmapObj.refreshRate)
         return () => {
             window.removeEventListener("keypress", handlePress)
             clearInterval(infoUpdaterRef.current)
@@ -25,13 +24,13 @@ const Video = ({videoId, updateProgress, beatmap}) => {
     const updateInfo = () => {
         const currTime = playerRef.current.getCurrentTime()
         if (!musicHasStarted.current && 
-            currTime >= beatmap.startTime - beatmap.refreshTolerance && 
-            currTime <= beatmap.startTime + beatmap.refreshTolerance) {
+            currTime >= beatmapObj.startTime - beatmapObj.refreshTolerance && 
+            currTime <= beatmapObj.startTime + beatmapObj.refreshTolerance) {
             musicHasStarted.current = true
             console.log("music start")
         }
         if (musicHasStarted.current) {
-            updateProgress(currTime)
+            updateBeatmapIndex(currTime)
         }
     }
 
@@ -58,7 +57,6 @@ const Video = ({videoId, updateProgress, beatmap}) => {
                     // onEnded={console.log("video ended")}
                     // onError={console.log("video error")}
                 />
-            {/* <img src={videoPlaceholder} className="video-placeholder" alt="" /> */}
         </div>
         </div>
     );

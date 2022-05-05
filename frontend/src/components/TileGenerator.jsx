@@ -15,16 +15,19 @@ const TileGenerator = ({ beatmap, onMount, updateScore }) => {
         }
     }, [])
 
+    // [{beat: 1, type: "left"}, {beat: 2, type: "left"}]
+
     useEffect(() => {
-        if (beatmapIndex % 10 == 0) {
-            setTileState(3)
-        } else if (tileState != 2) {
-            setTileState(1)
-        }
+        console.log("beat: " + beatmapIndex)
+        // if (beatmapIndex % 10 == 0) {
+        //     setTileState(3)
+        // } else if (tileState != 2) {
+        //     setTileState(1)
+        // }
     }, [beatmapIndex])
 
     const handlePress = (e) => {
-        setTileState(2)
+        // setTileState(2)
     }
 
     return (

@@ -190,7 +190,7 @@ app.get("/videoBPM", (req, res) => {
         res.json({
             bpm: bpm,
             startTime: startTime,
-            // beatTime: beatTime,
+            beatTime: beatTime,
             beatmap: beatmap
         })
     }
