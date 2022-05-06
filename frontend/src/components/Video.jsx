@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import ReactPlayer from 'react-player'
 import "../styles/Video.css"
 
-const Video = ({ videoId, updateBeatNumber, beatmapObj, tileSpeed, getAllowStart, onAllowStart, onVideoEnd }) => {
+const Video = ({ updateBeatNumber, beatmapObj, tileSpeed, getAllowStart, onAllowStart, onVideoEnd }) => {
 
     const [playAudio, setPlayAudio] = useState(false)
     const [playVideo, setPlayVideo] = useState(false)
@@ -70,7 +70,7 @@ const Video = ({ videoId, updateBeatNumber, beatmapObj, tileSpeed, getAllowStart
                 <div className="black-screen" ref={blackScreenRef}></div>
                 <ReactPlayer 
                     className="video"
-                    url={`https://www.youtube.com/watch?v=${videoId}`}
+                    url={beatmapObj.videoUrl}
                     playing={playVideo}
                     width="100%"
                     height="200%"
@@ -81,7 +81,7 @@ const Video = ({ videoId, updateBeatNumber, beatmapObj, tileSpeed, getAllowStart
                 />
                 <ReactPlayer 
                     className="audio"
-                    url={`https://www.youtube.com/watch?v=${videoId}`}
+                    url={beatmapObj.videoUrl}
                     muted={true}
                     playing={playAudio}
                     ref={audioRef}

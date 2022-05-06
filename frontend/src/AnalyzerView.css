@@ -1,0 +1,22 @@
+.analyzer-view-wrapper {
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+}
+
+.progress-text {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 10;
+    margin: 20px;
+    font-size: 40px;
+}
+
+.start-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 100;
+}

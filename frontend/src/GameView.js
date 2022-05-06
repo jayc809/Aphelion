@@ -58,17 +58,17 @@ const GameView = ({ setView, setResultsObjRef, beatmapObj }) => {
     }
     switch (accuracy) {
       case "perfect":  
-        incrementScore(100)
+        incrementScore(parseInt(100 * (1 + comboRef.current / 100)))
         incrementCombo()
         break
       case "great":  
         allPerfectRef.current = false
-        incrementScore(80)
+        incrementScore(parseInt(80 * (1 + comboRef.current / 100)))
         incrementCombo()
         break
       case "good":  
         allPerfectRef.current = false
-        incrementScore(60)
+        incrementScore(parseInt(60 * (1 + comboRef.current / 100)))
         incrementCombo()
         break
       case "miss": 
@@ -77,10 +77,6 @@ const GameView = ({ setView, setResultsObjRef, beatmapObj }) => {
         setComboRef.current(0)
         break
     }
-    console.log("highest: " + highestComboRef.current)
-    console.log("total: " + totalComboRef.current)
-    console.log("all perfect: " + allPerfectRef.current)
-
   }
 
   //resize window and hide crusor
@@ -217,7 +213,6 @@ const GameView = ({ setView, setResultsObjRef, beatmapObj }) => {
         showVideo ? 
         <div className="component" id="video"> 
           <Video 
-            videoId={testVideoId} 
             updateBeatNumber={updateBeatNumber} 
             beatmapObj={beatmapObj} 
             tileSpeed={tileSpeed}
