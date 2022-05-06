@@ -15,18 +15,25 @@
     object-fit: contain;
 }
 
+@keyframes increase-opacity {
+    from {
+        opacity: 0
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 @keyframes move-left {
     from {
         width: 1.5vw;
         left: 46.1%;
         top: 40%;
-        opacity: 0.8;
     }
     to {
         width: 16vw;
         left: 15%;
         top: 100%;
-        opacity: 1;
     }
 }
 
@@ -35,13 +42,11 @@
         width: 1.5vw;
         left: 48.3%;
         top: 40%;
-        opacity: 0.8;
     }
     to {
         width: 16vw;
         left: 32.8%;
         top: 100%;
-        opacity: 1;
     }
 }
 
@@ -50,13 +55,11 @@
         width: 1.5vw;
         right: 48.3%;
         top: 40%;
-        opacity: 0.8;
     }
     to {
         width: 16vw;
         right: 32.8%;
         top: 100%;
-        opacity: 1;
     }
 }
 
@@ -65,12 +68,10 @@
         width: 1.5vw;
         right: 46.1%;
         top: 40%;
-        opacity: 0.8;
     }
     to {
         width: 16vw;
         right: 15%;
         top: 100%;
-        opacity: 1;
     }
 }

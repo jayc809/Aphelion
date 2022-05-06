@@ -51,7 +51,7 @@ const GameView = ({ setView, setResultsObjRef, beatmapObj }) => {
     const incrementCombo = () => {
       comboRef.current += 1
       totalComboRef.current += 1
-      if (comboRef.current > highestComboRef) {
+      if (comboRef.current > highestComboRef.current) {
         highestComboRef.current = comboRef.current
       }
       setComboRef.current(comboRef.current)
@@ -77,6 +77,10 @@ const GameView = ({ setView, setResultsObjRef, beatmapObj }) => {
         setComboRef.current(0)
         break
     }
+    console.log("highest: " + highestComboRef.current)
+    console.log("total: " + totalComboRef.current)
+    console.log("all perfect: " + allPerfectRef.current)
+
   }
 
   //resize window and hide crusor

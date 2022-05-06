@@ -5,7 +5,8 @@ import tileImage from "../images/tile.png"
 const Tile = ({ type, tileSpeed, targetBeatNumber, onMount, onMiss}) => {
 
     const tileRef = useRef(null)
-    const timingFunction = "cubic-bezier(0.4, 0.1, 0.7, 0.4)"
+    const timingFunctionMove = "cubic-bezier(0.4, 0.1, 0.7, 0.4)"
+    const timingFunctionOpacity = "cubic-bezier(0.0, 0.7, 0.0, 0.9)"
     const [state, setState] = useState(1)
 
     //initializations
@@ -34,7 +35,7 @@ const Tile = ({ type, tileSpeed, targetBeatNumber, onMount, onMiss}) => {
         if (type == "placeholder") {
             tile.style.opacity = 0
         } else {
-            tile.style.animation = `move-${type} ${tileSpeed + "s"} ${timingFunction}`
+            tile.style.animation = `move-${type} ${tileSpeed + "s"} ${timingFunctionMove}, increase-opacity ${tileSpeed + "s"} ${timingFunctionOpacity}`
         }
     }
 
