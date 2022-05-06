@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import ReactPlayer from 'react-player'
 import "../styles/Video.css"
 
-const Video = ({ videoId, updateBeatNumber, beatmapObj, tileSpeed, getAllowStart, handleAllowStart }) => {
+const Video = ({ videoId, updateBeatNumber, beatmapObj, tileSpeed, getAllowStart, onAllowStart, onVideoEnd }) => {
 
     const [playAudio, setPlayAudio] = useState(false)
     const [playVideo, setPlayVideo] = useState(false)
@@ -50,7 +50,7 @@ const Video = ({ videoId, updateBeatNumber, beatmapObj, tileSpeed, getAllowStart
     const handlePlayerReady = () => {
         numPlayersReady.current += 1
         if (numPlayersReady.current == 2) {
-            handleAllowStart()
+            onAllowStart()
         }
     }
 
@@ -58,6 +58,8 @@ const Video = ({ videoId, updateBeatNumber, beatmapObj, tileSpeed, getAllowStart
         const blackScreen = blackScreenRef.current
         blackScreen.style.animation = "none"
         blackScreen.style.opacity = 1
+        clearInterval(infoUpdaterRef.current)
+        onVideoEnd()
     }
 
     return (
