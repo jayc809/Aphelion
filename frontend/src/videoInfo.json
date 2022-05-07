@@ -1,0 +1,1713 @@
+{
+    "kind": "youtube#searchListResponse",
+    "etag": "lBn4EXxovZIXBdJscjzFs_-57Ks",
+    "nextPageToken": "CDIQAA",
+    "regionCode": "US",
+    "pageInfo": {
+      "totalResults": 147939,
+      "resultsPerPage": 50
+    },
+    "items": [
+      {
+        "kind": "youtube#searchResult",
+        "etag": "L-FuF6F5FNGcQnsLyUCU5uYg_NE",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "IKKar5SS29E"
+        },
+        "snippet": {
+          "publishedAt": "2021-04-13T13:30:17Z",
+          "channelId": "UC5CwaMl1eIgY8h02uZw7u8A",
+          "title": "GHOST / 星街すいせい(official)",
+          "description": "「GHOST」 作詞：星街すいせい 作曲：佐藤厚仁(Dream Monster) 編曲：佐藤厚仁(Dream Monster) Electric Guitar,Acoustic ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/IKKar5SS29E/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/IKKar5SS29E/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/IKKar5SS29E/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Suisei Channel",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-04-13T13:30:17Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "dkWw0q2a4dNXP_FAVqaF28OYtWo",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "r3noFBWeTR0"
+        },
+        "snippet": {
+          "publishedAt": "2021-08-01T05:00:12Z",
+          "channelId": "UCIcfmIAFek2rWwhQMMnis9Q",
+          "title": "Hoshimachi Suisei and IRyS Sing GHOST / 星街すいせい",
+          "description": "Saw how nicely Suisei and IRyS' visuals were and putting them next to each other made those full-screen moments even more ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/r3noFBWeTR0/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/r3noFBWeTR0/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/r3noFBWeTR0/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Tyler Not Taylor - Hololive Mashups",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-08-01T05:00:12Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "n7yyn6EWHs3v6aaRYH47C_lkcHQ",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "uzEEffCJOjs"
+        },
+        "snippet": {
+          "publishedAt": "2021-08-01T01:00:26Z",
+          "channelId": "UC8rcEBzJSleTkf_-agPM20g",
+          "title": "【IRyS】GHOST / 星街すいせい【COVER】",
+          "description": "「GHOST」 ◇Original & Lyric：星街すいせい（ https://twitter.com/suisei_hosimati \u200b） ◇Composer & Arranger：佐藤厚仁 ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/uzEEffCJOjs/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/uzEEffCJOjs/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/uzEEffCJOjs/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "IRyS Ch. hololive-EN",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-08-01T01:00:26Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "vvbOdkiHUPTT4TEmt7yrEeolTH8",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "0TAEbHHIDyM"
+        },
+        "snippet": {
+          "publishedAt": "2021-04-23T23:54:28Z",
+          "channelId": "UCKjQY-Llp3FCkLH7chp8ubA",
+          "title": "The8BitDrummer - Drum Cover of “Ghost” by Hoshimachi Suisei!",
+          "description": "Disclaimer: I am not affiliated with The8BitDrummer, I just wanted to upload this clip of Jerod drumming to “GHOST.” Song Link: ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/0TAEbHHIDyM/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/0TAEbHHIDyM/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/0TAEbHHIDyM/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "SusStew Clips",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-04-23T23:54:28Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "MXru42U45zfPYs8RaD5s8Tstsq4",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "g44cUcprdDc"
+        },
+        "snippet": {
+          "publishedAt": "2021-09-12T07:15:01Z",
+          "channelId": "UCg01Smi7glerZAYWjV7tScA",
+          "title": "Suisei puts Ghost on Tales of Arise Intro【HOLOLIVE | Hoshimachi Suisei】",
+          "description": "Source: https://www.youtube.com/watch?v=5h6vPoa-gD8 [Hoshimachi Suisei] Channel: ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/g44cUcprdDc/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/g44cUcprdDc/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/g44cUcprdDc/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "DoDonnie",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-09-12T07:15:01Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "0WPuAodOiPj-t_xfGPZA5F6cFhc",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "xnqLZlFFBco"
+        },
+        "snippet": {
+          "publishedAt": "2021-06-02T04:01:36Z",
+          "channelId": "UCRbsmnDTHD9-4pEIuG7zYRw",
+          "title": "GHOST / Hoshimachi Suisei (English Cover) 【rachie】",
+          "description": "Become a Patron and help support the channel! ♥ https://www.patreon.com/splendiferachie Vtubers are strange. It's like we exist ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/xnqLZlFFBco/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/xnqLZlFFBco/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/xnqLZlFFBco/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "splendiferachie",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-06-02T04:01:36Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "bsiwvJt00a-gRcWw9hxkP2f9kNU",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "gQYOF0s4LOE"
+        },
+        "snippet": {
+          "publishedAt": "2021-07-01T15:16:40Z",
+          "channelId": "UCdYasML-aI7-WDCzoKtHFMg",
+          "title": "Hoshimachi Suisei - GHOST／星街すいせい | Hololive Sings",
+          "description": "Hoshimachi Suisei sings GHOST Source ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/gQYOF0s4LOE/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/gQYOF0s4LOE/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/gQYOF0s4LOE/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "HoloSings Ch.",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-07-01T15:16:40Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "cxIq8Mh_pfg2k_TG_636JfiiMWE",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "c4TX74_qJWs"
+        },
+        "snippet": {
+          "publishedAt": "2021-04-13T20:56:24Z",
+          "channelId": "UCdya10T9KoyHNYt3wyxMUhw",
+          "title": "【Live Ver.】Hoshimachi Suisei sings GHOST (english caption)",
+          "description": "Damn, even the live version sounds goddamn amazing. sasuga sui-chan Official MV: ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/c4TX74_qJWs/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/c4TX74_qJWs/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/c4TX74_qJWs/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "a chewin gum",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-04-13T20:56:24Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "v3vf8Nz18nPTmVNGUZ0pYXsO0Nk",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "YUw1JkbgBrw"
+        },
+        "snippet": {
+          "publishedAt": "2021-09-28T10:02:52Z",
+          "channelId": "UCrzT1p8gn0hQTBeMA6e2YiA",
+          "title": "GHOST （Still Still Stellar ver.）",
+          "description": "Provided to YouTube by cover corp. GHOST （Still Still Stellar ver.） · 星街すいせい Still Still Stellar Released on: 2021-09-29 ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/YUw1JkbgBrw/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/YUw1JkbgBrw/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/YUw1JkbgBrw/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Suisei Hoshimachi - Topic",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-09-28T10:02:52Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "-eyVZYl4B0I-QJ2H9mofF-7yzt4",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "5JZIAfa9Fds"
+        },
+        "snippet": {
+          "publishedAt": "2021-04-13T17:39:11Z",
+          "channelId": "UC1jKNHvHqLdUAGpenFT7M-Q",
+          "title": "[Romaji Lyrics] GHOST - Hoshimachi Suisei",
+          "description": "Singing: Hoshimachi Suisei Lyrics: Hoshimachi Suisei Composition: Sato Atsuhito (Dream Monster) Arrangement: Sato Atsuhito ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/5JZIAfa9Fds/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/5JZIAfa9Fds/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/5JZIAfa9Fds/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Atsuyas",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-04-13T17:39:11Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "eZKtRdLcqJEsPqfCzgvAbeO2WwY",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "Opr6vR6bAAM"
+        },
+        "snippet": {
+          "publishedAt": "2022-04-08T00:00:06Z",
+          "channelId": "UCrWdISjWqXzAZb4e9N1yxXw",
+          "title": "[Sakamata Chloe] - GHOST / Hoshimachi Suisei",
+          "description": "Chloe's 800k subs singing stream Original stream (6/4/22) : https://youtu.be/4TDuBWtfDX8 Thumbnail Art ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/Opr6vR6bAAM/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/Opr6vR6bAAM/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/Opr6vR6bAAM/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Ryuji's Holo Music ch.",
+          "liveBroadcastContent": "none",
+          "publishTime": "2022-04-08T00:00:06Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "14V_oCGw1kATh3eSaMZc-djnBgU",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "catGRxwqCQE"
+        },
+        "snippet": {
+          "publishedAt": "2021-07-02T03:22:01Z",
+          "channelId": "UCtkf8rC6LTCQiGq0NlToVIg",
+          "title": "suisei GHOST after coco graduation",
+          "description": "her stream : https://www.youtube.com/watch?v=-ryG_yoUFno her channel ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/catGRxwqCQE/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/catGRxwqCQE/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/catGRxwqCQE/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Yoza Anugrah",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-07-02T03:22:01Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "fDncR3M88jmZJBgdZ5aS25rjvwc",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "Kw6BIICpIPQ"
+        },
+        "snippet": {
+          "publishedAt": "2021-04-18T05:03:58Z",
+          "channelId": "UCgmk-t-jv505cbbTLqcZrFg",
+          "title": "Suisei talks about the deep meaning behind her new song &quot;Ghost&quot;【Hololive/EngSub】#HOLOTALK\u200b",
+          "description": "She had experienced and felt the difficult times of being a vtuber, ahh my heart... Suisei Hoshimachi ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/Kw6BIICpIPQ/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/Kw6BIICpIPQ/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/Kw6BIICpIPQ/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Hololive Posting",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-04-18T05:03:58Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "2kkmF7xDDBTmdb2EZAhVHYwYyd8",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "RuoIhG8Oezg"
+        },
+        "snippet": {
+          "publishedAt": "2022-04-25T02:00:04Z",
+          "channelId": "UCKZThnUoY3FgWdtDTHGo1nw",
+          "title": "Suisei x Towa - GHOST ｢Holofest 3rd Live Concert｣",
+          "description": "stfu like & subs this channel Hololive Festival 3rd Link Your Wish #Holofest Holofest3rd #LinkYourWish.",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/RuoIhG8Oezg/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/RuoIhG8Oezg/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/RuoIhG8Oezg/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Holograss",
+          "liveBroadcastContent": "none",
+          "publishTime": "2022-04-25T02:00:04Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "UIV99Kx_les3nUMSGbzEsVy3OW0",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "3NP7kJepZiY"
+        },
+        "snippet": {
+          "publishedAt": "2021-06-01T11:36:39Z",
+          "channelId": "UC9_0CemU9EpD9v6MpiscEcQ",
+          "title": "星街すいせい - GHOST (Lofi Remix by fourfifteentwenty)",
+          "description": "Hello! Firstly, I would like to thank the artist (@lufi_ays) for allowing me to use the artwork for the video! This is the first time that I've ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/3NP7kJepZiY/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/3NP7kJepZiY/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/3NP7kJepZiY/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "fourfifteentwenty",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-06-01T11:36:39Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "Tpi_xjigjTrU3WK7Ikf0kY-OcUs",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "TYOAmNkLjsM"
+        },
+        "snippet": {
+          "publishedAt": "2021-05-21T15:04:06Z",
+          "channelId": "UCqAXHy0yYGXCXGzsl5jImvQ",
+          "title": "【ホロライブ】星街すいせい - GHOST を叩いてみた☄ / Hololive Hoshimachi Suisei Drum Cover rum Cover",
+          "description": "桿子Drumstick Official website   ➤ https://drumsticktw.com/ 我都不看Vtuber甚麼的 聽歌以後： 真...真香 Song: GHOST Artist: 星街 ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/TYOAmNkLjsM/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/TYOAmNkLjsM/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/TYOAmNkLjsM/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "桿子 Drumstick",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-05-21T15:04:06Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "ziUsNa0JQYvjlY3XfIuIyP44YiM",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "D90BRoofjlo"
+        },
+        "snippet": {
+          "publishedAt": "2022-04-18T02:45:11Z",
+          "channelId": "UCIcfmIAFek2rWwhQMMnis9Q",
+          "title": "Hololive Sings - GHOST / 星街すいせい (Suisei, IRyS, Nene, Calliope, Moona, Anya, Chloe)",
+          "description": "That part at 3:48 always gives me chills... Like and subscribe if you enjoyed, and leave a comment below! (It helps the algorithm!)",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/D90BRoofjlo/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/D90BRoofjlo/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/D90BRoofjlo/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Tyler Not Taylor - Hololive Mashups",
+          "liveBroadcastContent": "none",
+          "publishTime": "2022-04-18T02:45:11Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "shMxH_GpVvQJoVabySxERtPga-I",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "_PkbeK22U9U"
+        },
+        "snippet": {
+          "publishedAt": "2021-05-23T11:36:57Z",
+          "channelId": "UCL0rgks7KBLTPUDJgjrPNGg",
+          "title": "GHOST @Suisei Channel BUT, Hololive Alternative [FULL PV]",
+          "description": "ALL CREDIT GIVE TO @Suisei Channel and @hololive ホロライブ - VTuber Group Holo ALT : https://youtu.be/3RxlzJWWzdY ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/_PkbeK22U9U/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/_PkbeK22U9U/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/_PkbeK22U9U/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "YubiThings",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-05-23T11:36:57Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "Pr4QDwzwQ6PEjqmga44yD_czd-o",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "nR3kzbLwTZM"
+        },
+        "snippet": {
+          "publishedAt": "2021-06-26T05:52:26Z",
+          "channelId": "UCO2yXPO_dnouPFFS1irfCVA",
+          "title": "VTUBER nOOb reacts to GHOST BY HOSHIMACHI SUISEI / 星街すいせい | REACTION &amp; ANALYSIS",
+          "description": "VTUBER reaction music week at 9600 subs So subscribe now. - Check out my Full Album Reaction videos on Patreon: ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/nR3kzbLwTZM/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/nR3kzbLwTZM/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/nR3kzbLwTZM/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Anakira Japan",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-06-26T05:52:26Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "vrkZ05SOOPXXvE3Czw7-Nx5rK48",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "SQK9HDnH27w"
+        },
+        "snippet": {
+          "publishedAt": "2021-07-01T14:26:07Z",
+          "channelId": "UCj1yKXJ7ketrV-_2kAIhGiA",
+          "title": "Hoshimachi Suisei sings GHOST | 7/1/21",
+          "description": "For her first song in her karaoke stream, Suisei sings her original song, GHOST. T_T Original stream: 7/1/21 Singing Stream ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/SQK9HDnH27w/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/SQK9HDnH27w/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/SQK9HDnH27w/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Mighty Eggroll",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-07-01T14:26:07Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "Smrlu71eBPJpDqsNYI2HYg3pNss",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "y5jbWUo4oD4"
+        },
+        "snippet": {
+          "publishedAt": "2021-08-01T08:30:11Z",
+          "channelId": "UC8iOfEtGnlMWyoK1FRkxHuw",
+          "title": "GHOST / 星街すいせい | Suisei x IRyS Duet",
+          "description": "I had to do it, here's GHOST / 星街すいせい by Suisei and IRyS! @Suisei Channel | https://youtu.be/IKKar5SS29E @IRyS Ch.",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/y5jbWUo4oD4/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/y5jbWUo4oD4/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/y5jbWUo4oD4/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Azukano",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-08-01T08:30:11Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "aQ0GWQsfDhgL4hqLWGPJAhRqmhQ",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "IUidDky8704"
+        },
+        "snippet": {
+          "publishedAt": "2021-04-14T20:51:11Z",
+          "channelId": "UChc76D7x_mbLNoaCHJAOOyQ",
+          "title": "HOLOLIVE - SUISEI GHOST REACTION | SUISEI HOSHIMACHI / 星街すいせい ORIGINAL SONG",
+          "description": "HOLOLIVE - SUISEI GHOST REACTION | SUISEI HOSHIMACHI / 星街すいせい ORIGINAL SONG Subscribe to join us on our ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/IUidDky8704/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/IUidDky8704/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/IUidDky8704/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Velo City",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-04-14T20:51:11Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "R_SMPGAARLrT5pFwYvkl7x4NSnc",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "NyVFFvbjytw"
+        },
+        "snippet": {
+          "publishedAt": "2021-05-23T16:32:48Z",
+          "channelId": "UC-vJkkXwdF0sqIk79DIPhyQ",
+          "title": "Hoshimachi Suisei - GHOST (osu!)",
+          "description": "Watch me play osu! on twitch: https://www.twitch.tv/funorange42 Map: https://osu.ppy.sh/beatmapsets/1432314#osu/2947984 ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/NyVFFvbjytw/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/NyVFFvbjytw/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/NyVFFvbjytw/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "FunOrange",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-05-23T16:32:48Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "d2VWHnjspvqjJBnfWn7ai8nDZ38",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "kRBUsdRs8aU"
+        },
+        "snippet": {
+          "publishedAt": "2021-06-12T16:00:30Z",
+          "channelId": "UCj1yKXJ7ketrV-_2kAIhGiA",
+          "title": "ghost by hoshimachi suisei but you&#39;re in an empty arena",
+          "description": "Original song: https://www.youtube.com/watch?v=IKKar5SS29E Watch Suisei's streams here: ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/kRBUsdRs8aU/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/kRBUsdRs8aU/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/kRBUsdRs8aU/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Mighty Eggroll",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-06-12T16:00:30Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "VyvlHCIxg3uGuJomwWBuNYBQWKg",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "iSKJ6uJHWCs"
+        },
+        "snippet": {
+          "publishedAt": "2021-04-15T05:36:38Z",
+          "channelId": "UCrzT1p8gn0hQTBeMA6e2YiA",
+          "title": "GHOST (Instrumental)",
+          "description": "Provided to YouTube by cover corp. GHOST (Instrumental) · 星街すいせい GHOST Released on: 2021-04-14 Auto-generated by ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/iSKJ6uJHWCs/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/iSKJ6uJHWCs/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/iSKJ6uJHWCs/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Suisei Hoshimachi - Topic",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-04-15T05:36:38Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "uk9Gqio3jKAvwsuK2rHYKD6OY2U",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "d__0rWyfgrc"
+        },
+        "snippet": {
+          "publishedAt": "2021-06-05T09:09:21Z",
+          "channelId": "UCF4-I8ZQL6Aa-iHfdz-B9KQ",
+          "title": "【Hololive】Subaru&#39;s Shocked to Find Out That Her Real-Life Friend Listens to Suisei&#39;s GHOST【Eng Sub】",
+          "description": "Subaru and her real-life friends were recommending each other songs that they like and Subaru is shocked to find out that her ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/d__0rWyfgrc/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/d__0rWyfgrc/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/d__0rWyfgrc/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "OtakMori Translations - VTubers",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-06-05T09:09:21Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "chgn-e_47hkbDZkM9v_4lIK69EQ",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "f-0mV2a5cR0"
+        },
+        "snippet": {
+          "publishedAt": "2021-06-21T00:15:01Z",
+          "channelId": "UCrWdISjWqXzAZb4e9N1yxXw",
+          "title": "[Moona Hoshinova] - GHOST / Hoshimachi Suisei",
+          "description": "Moona's 700k subs singing stream. Please subscribe for more singing clips. Don't forget to check out my other uploads. Original ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/f-0mV2a5cR0/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/f-0mV2a5cR0/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/f-0mV2a5cR0/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Ryuji's Holo Music ch.",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-06-21T00:15:01Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "d00wY5qafDWZXrKLeZOsD4Cvdr0",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "Q-YEiuFGmjA"
+        },
+        "snippet": {
+          "publishedAt": "2022-03-20T23:10:06Z",
+          "channelId": "UCEVKaZpv7xw1jOVN6422z5A",
+          "title": "Ina got surprised by Suisei&#39;s and Towa&#39;s Ghost 3D performance【Hololive】",
+          "description": "Ina didn't expect the duet between Suisei and Towa in the hololive 3rd fes. link your wish!",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/Q-YEiuFGmjA/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/Q-YEiuFGmjA/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/Q-YEiuFGmjA/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "HoloSimper Ch.",
+          "liveBroadcastContent": "none",
+          "publishTime": "2022-03-20T23:10:06Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "s-YtbHXj5dCdxhlI8-M_d6F0CSI",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "YQgI8kWChzA"
+        },
+        "snippet": {
+          "publishedAt": "2021-10-26T15:00:13Z",
+          "channelId": "UC63QsE7girr1KtClbm4KDMw",
+          "title": "[Hololive] Ghost (Suisei, IRyS)",
+          "description": "Hololive EN, JP members sing [ Ghost ] Since each singer is not asked for permission to produce a video, there is a possibility that ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/YQgI8kWChzA/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/YQgI8kWChzA/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/YQgI8kWChzA/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Hehee / 헤히 | Hololive songs",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-10-26T15:00:13Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "udUzuI02G2W_P9WDYaWXoiVNgWE",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "457BGZmFrC0"
+        },
+        "snippet": {
+          "publishedAt": "2021-07-02T23:36:52Z",
+          "channelId": "UC4Ew9etqUQpTW2ZD3klWuDw",
+          "title": "【星街すいせい】【中日羅字幕】 hololive唱歌實力天花板星街獻唱 Ghost    零失誤 ！！ 會長畢業星街誓要為大家提供歌聲療法  【hololive 中文翻譯】",
+          "description": "喜歡的話希望大家可以幫忙點讚和訂閱我的頻道Like and subscribe if you like Song GHOST / 星街すいせい(official) ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/457BGZmFrC0/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/457BGZmFrC0/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/457BGZmFrC0/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "我一個人住我的烤肉家蠻大的歡迎你們來我家玩玩累了就直接睡覺沒問題的",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-07-02T23:36:52Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "fIm24nI2TzygaorNue9u_liHYjw",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "VEA8qx8hYgE"
+        },
+        "snippet": {
+          "publishedAt": "2020-09-22T20:51:52Z",
+          "channelId": "UChzJTbxs5kTvxgAklhCwh3A",
+          "title": "Suisei Stream Got Haunted Forcing Her To End The Stream【Hololive | Hoshimati Suisei】",
+          "description": "She was playing with her friend when suddenly her mic got haunted. Later on, the game crashes when there's the creepy sound.",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/VEA8qx8hYgE/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/VEA8qx8hYgE/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/VEA8qx8hYgE/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Osekkaiおせっかい",
+          "liveBroadcastContent": "none",
+          "publishTime": "2020-09-22T20:51:52Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "nXQjiiNU6X-Kh8sCQY-Iqwq_e5s",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "i_A41jEhOJU"
+        },
+        "snippet": {
+          "publishedAt": "2021-04-13T15:42:23Z",
+          "channelId": "UCwoPa8dnG5alUGhQ-_XGyVQ",
+          "title": "[Clip] Hoshimachi Suisei&#39;s Original Song Medley during her 4th Live 『SPACE for Virtual GHOST』",
+          "description": "This concert was so damn amazing. Can you believe it was free? The production value was insane! すいちゃんは今日もかわいい ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/i_A41jEhOJU/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/i_A41jEhOJU/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/i_A41jEhOJU/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "anoako",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-04-13T15:42:23Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "37vFrOEK5-tMCk_Hti-1nHbFPqY",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "gkuwsM_55QE"
+        },
+        "snippet": {
+          "publishedAt": "2021-07-05T03:12:00Z",
+          "channelId": "UCsYcCwDqv6Sg8KMIIMF54SA",
+          "title": "Suisei Become A Real GHOST After She Can&#39;t Participate Shiranui Kensetsu Collabs【Hololive Eng Sub】",
+          "description": "Suisei Channel - GHOST: https://www.youtube.com/watch?v=IKKar5SS29E Don't forget to subscribe to our channel & the Vtuber's ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/gkuwsM_55QE/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/gkuwsM_55QE/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/gkuwsM_55QE/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Kiriku Translation",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-07-05T03:12:00Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "l0J3rsAgzX4w3mGAB78_073raZ0",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "h2jW22c15E4"
+        },
+        "snippet": {
+          "publishedAt": "2021-05-18T17:37:35Z",
+          "channelId": "UCTugRd5RNcoNQH0BUDisyLQ",
+          "title": "Suisei Channel -Ghost  ~ My Reaction",
+          "description": "My first reaction to Suisei channel about her song the titled is “Ghost” and i love and support the vtuber community #suiseichannel ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/h2jW22c15E4/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/h2jW22c15E4/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/h2jW22c15E4/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "ENITX",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-05-18T17:37:35Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "dhlpPsIfy5Ffkp8wA3Tq4ZWnaRI",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "3WrdvgqHfyw"
+        },
+        "snippet": {
+          "publishedAt": "2021-04-27T04:54:28Z",
+          "channelId": "UCzefQViKuTSUkdWMS_Y_nEw",
+          "title": "Hoshimachi Suisei - GHOST//Sub. Español y Romaji",
+          "description": "\"Seguiré hasta que mi voz se desgaste, me aferrare a las pruebas de que existo, como el fantasma que soy\" Esta frase me ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/3WrdvgqHfyw/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/3WrdvgqHfyw/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/3WrdvgqHfyw/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Beori Ch. ベオリ",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-04-27T04:54:28Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "_aa8LG9JQ456G-IZ85JqaQFbweU",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "IRqBflzqhHs"
+        },
+        "snippet": {
+          "publishedAt": "2021-11-06T10:00:09Z",
+          "channelId": "UCmlAxmlroFyF2HwcyJLLHAA",
+          "title": "♚ Hoshimachi Suisei- Ghost Cover ♚ | Neko Chiyo",
+          "description": "SUPPORT THE NEKO BOSS ⌘ Donate through this link: ☆ https://streamlabs.com/nekochiyo_ch All donations will be used to ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/IRqBflzqhHs/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/IRqBflzqhHs/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/IRqBflzqhHs/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "nekochiyo_ch",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-11-06T10:00:09Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "_B9rfk4KZufOzgciVEyz856vNFA",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "4vi45WdYhKI"
+        },
+        "snippet": {
+          "publishedAt": "2021-06-10T18:39:38Z",
+          "channelId": "UCacJphKTydrRhaQPvwy4aSw",
+          "title": "Ghost / 星街すいせい - Hoshimachi Suisei [But the drums are the melody] - (Orchestra/Instrumental/karaoke)",
+          "description": "Hi friends! again i only made the sound again Still you can buy me coffee :D p/s : Coco will be missed Credit for the music sheet: ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/4vi45WdYhKI/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/4vi45WdYhKI/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/4vi45WdYhKI/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Smol Gura Ch. ",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-06-10T18:39:38Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "YiALJN0y-mrHd9mqSxu5MI2JWHs",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "s4VhKTDSxFs"
+        },
+        "snippet": {
+          "publishedAt": "2021-04-14T10:27:29Z",
+          "channelId": "UCWIvGXkqNZ9NtklPNeud1yg",
+          "title": "HER VOICE IS SO GOOD! - GHOST / Suisei Hoshimati / 星街すいせい Reaction and Discussion",
+          "description": "GHOST / HOSHIMACHI SUISEI 星街すいせい Reaction This is my first time doing reaction content so I'm pretty out of my element.",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/s4VhKTDSxFs/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/s4VhKTDSxFs/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/s4VhKTDSxFs/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "ShadowCero",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-04-14T10:27:29Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "9ybffoFqwpRlqLzzbNIh8ktUl6I",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "83fo2UdeP6M"
+        },
+        "snippet": {
+          "publishedAt": "2021-06-23T10:08:34Z",
+          "channelId": "UC7sLK4Al0kczKJtVNa-XxFQ",
+          "title": "Suisei singing Ghost while being haunted by a real Ghost in RE7 [EN subs/ Hololive]",
+          "description": "Suisei singing Ghost while being haunted by a real Ghost in RE7 [EN subs/ Hololive] Video link: https://youtu.be/Ae0KyU20i3Q ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/83fo2UdeP6M/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/83fo2UdeP6M/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/83fo2UdeP6M/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Axl RO ch.",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-06-23T10:08:34Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "URhGTI72zZwWLSPg-_I4pv-JLIo",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "PtW7cTRpYC4"
+        },
+        "snippet": {
+          "publishedAt": "2021-07-05T06:15:02Z",
+          "channelId": "UC4Fh9OcvIEWK405Cvg25jDw",
+          "title": "Suisei suddenly appears in the stream then everyone misunderstands her as a ghost [Hololive/Eng sub]",
+          "description": "[Clip sources] [切り抜き元動画] 【 Minecraft 】不知火建設事務所へ･･･出勤にぇ！【ホロライブ/さくらみこ】 ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/PtW7cTRpYC4/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/PtW7cTRpYC4/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/PtW7cTRpYC4/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Sushi [Hololive and Vtubers]",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-07-05T06:15:02Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "UVZy59R-sXdXIRHAJ4IF1Ij2k_4",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "KeF_j5pnc3E"
+        },
+        "snippet": {
+          "publishedAt": "2021-04-24T21:34:29Z",
+          "channelId": "UCOVbhPPCo0rLyNafXQJuE4A",
+          "title": "Ghost - 星街すいせい / Suisei Hosimati (gerr. cover)",
+          "description": "Hi! It's a cover of Hoshimachi Suisei's \"GHOST\". I hope I did it justice. Support her please she deserves it. Thanks, enjoy! . Suisei ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/KeF_j5pnc3E/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/KeF_j5pnc3E/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/KeF_j5pnc3E/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Gerr",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-04-24T21:34:29Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "KXhG20bLBhWLgLkYgzegAuOE5iY",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "Oi2516dk68A"
+        },
+        "snippet": {
+          "publishedAt": "2021-04-24T18:27:29Z",
+          "channelId": "UCawS3gn6jmGJNRBBXgtF-eA",
+          "title": "The8BitDrummer plays &quot;GHOST&quot; by Hoshimachi Suisei【Hololive/星街すいせい】",
+          "description": "This clip was made with permission from The8BitDrummer. Original song: https://www.youtube.com/watch?v=IKKar5SS29E ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/Oi2516dk68A/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/Oi2516dk68A/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/Oi2516dk68A/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Crown",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-04-24T18:27:29Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "3JRn9bLscMEXbfazey6zKTKzuwY",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "KMYJdQijd4k"
+        },
+        "snippet": {
+          "publishedAt": "2022-01-28T00:15:00Z",
+          "channelId": "UCrWdISjWqXzAZb4e9N1yxXw",
+          "title": "[Momosuzu Nene] - GHOST / Hoshimachi Suisei",
+          "description": "Nene's singing stream Original stream (24/1/22) : https://youtu.be/iOigcBI5wSY Thumbnail Art ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/KMYJdQijd4k/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/KMYJdQijd4k/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/KMYJdQijd4k/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Ryuji's Holo Music ch.",
+          "liveBroadcastContent": "none",
+          "publishTime": "2022-01-28T00:15:00Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "4RU5ztHQGHfl9STDs6TJnnkfFUQ",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "YP8kHcr28p8"
+        },
+        "snippet": {
+          "publishedAt": "2021-10-28T23:09:24Z",
+          "channelId": "UCHY2V-f-L9EQyssDGbUZ8Tw",
+          "title": "GHOST by HOSHIMACHI SUISEI (星街すいせい): First time listening (piano cover)",
+          "description": "Learned live on stream - Oct 27, 21 Socials down below —— Spotify ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/YP8kHcr28p8/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/YP8kHcr28p8/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/YP8kHcr28p8/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Chewie VODs",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-10-28T23:09:24Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "7aTOECPRc90wzxEYQY20pL_TyOU",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "eOJfYZFhT8o"
+        },
+        "snippet": {
+          "publishedAt": "2021-05-22T16:05:32Z",
+          "channelId": "UClqAV85K6UiW4x2-2N2gwFQ",
+          "title": "GHOST – Hoshimachi Suisei (PIANO SHEET)",
+          "description": "Here is a arranged piano sheet of Hoshimachi Suisei's \"Ghost\"! Please enjoy! Sheet music is available here~ ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/eOJfYZFhT8o/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/eOJfYZFhT8o/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/eOJfYZFhT8o/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "CassiPiano",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-05-22T16:05:32Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "QC1Kj_AyNpT3cSIbwF9KTOkIBNE",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "041pmy_aj-s"
+        },
+        "snippet": {
+          "publishedAt": "2021-04-13T17:06:30Z",
+          "channelId": "UC43Si2gldb0ZUW5xcv4ao3w",
+          "title": "【星街すいせい3周年Live】GHOST (3DLive版)/ 中日字幕【星街すいせい】",
+          "description": "我想看有中文字幕版的所以我就翻了*禁止轉載(到B站或是其他平台)*同樣禁止搬運*分享請標明出處(FB分享網址之類的) *翻譯有誤請 ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/041pmy_aj-s/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/041pmy_aj-s/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/041pmy_aj-s/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "UF烤肉莊【ゆーエフ切り抜き莊】",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-04-13T17:06:30Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "YBGs8Ok52wcaV9wleANTogwBaTs",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "xwqSNlN9ySA"
+        },
+        "snippet": {
+          "publishedAt": "2022-01-15T13:41:45Z",
+          "channelId": "UC4Fh9OcvIEWK405Cvg25jDw",
+          "title": "Suisei talks with Ghost &quot;Hi George&quot; [Hololive/Eng sub]",
+          "description": "[Clip sources] [切り抜き元動画] 【Phasmophobia】はじめて幽霊調査やる  【#夏街すいり】 https://youtu.be/h5NGZuFLa0c ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/xwqSNlN9ySA/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/xwqSNlN9ySA/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/xwqSNlN9ySA/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Sushi [Hololive and Vtubers]",
+          "liveBroadcastContent": "none",
+          "publishTime": "2022-01-15T13:41:45Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "fsK4aNjtctMAQVDBWf-xX50G6qs",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "OpwauFnPvVU"
+        },
+        "snippet": {
+          "publishedAt": "2021-10-05T00:02:44Z",
+          "channelId": "UC8zNNZOIy16aY85ZqfEn3Hw",
+          "title": "SAO Opening but with Ghost By Suisei",
+          "description": "Suisei Ghost Fits with everything. I hope you like it! :) Please subscribe to her channel ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/OpwauFnPvVU/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/OpwauFnPvVU/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/OpwauFnPvVU/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Arslan Voyr",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-10-05T00:02:44Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "yi_4K6321uh9euwxUkl7euoxcg8",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "rWIVCkvBeho"
+        },
+        "snippet": {
+          "publishedAt": "2021-09-12T03:59:23Z",
+          "channelId": "UCN5-zeEBfwwmJ3VTRV7wk7Q",
+          "title": "【Hololive JP】Suisei&#39;s GHOST Perfectly Fits the Tales Of Arise Opening【ENG SUB】",
+          "description": "Original Stream https://youtu.be/5h6vPoa-gD8 Suisei Hoshimachi Ch.",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/rWIVCkvBeho/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/rWIVCkvBeho/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/rWIVCkvBeho/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Yuzu Translation Ch. 柚子",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-09-12T03:59:23Z"
+        }
+      },
+      {
+        "kind": "youtube#searchResult",
+        "etag": "9M3DnKsXkCDY94wgzFstgA8XfJg",
+        "id": {
+          "kind": "youtube#video",
+          "videoId": "HI1fVwC9f0s"
+        },
+        "snippet": {
+          "publishedAt": "2021-12-24T00:15:00Z",
+          "channelId": "UCrWdISjWqXzAZb4e9N1yxXw",
+          "title": "[Momosuzu Nene] [3D] - GHOST / Hoshimachi Suisei",
+          "description": "Nene x Suisei x Towa 3D Christmas Live Original stream (21/12/21) : https://youtu.be/VVQQcI6r3NU You can contact me via ...",
+          "thumbnails": {
+            "default": {
+              "url": "https://i.ytimg.com/vi/HI1fVwC9f0s/default.jpg",
+              "width": 120,
+              "height": 90
+            },
+            "medium": {
+              "url": "https://i.ytimg.com/vi/HI1fVwC9f0s/mqdefault.jpg",
+              "width": 320,
+              "height": 180
+            },
+            "high": {
+              "url": "https://i.ytimg.com/vi/HI1fVwC9f0s/hqdefault.jpg",
+              "width": 480,
+              "height": 360
+            }
+          },
+          "channelTitle": "Ryuji's Holo Music ch.",
+          "liveBroadcastContent": "none",
+          "publishTime": "2021-12-24T00:15:00Z"
+        }
+      }
+    ]
+  }
+  
