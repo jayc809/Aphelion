@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import axios from "axios"
-import videoInfo from "./videoInfo.json"
+import dummyVideoInfo from "./dummyVideoInfo.json"
+import ScrollList from './VideoInfoComponents/ScrollList'
+import VideoInfo from './VideoInfoComponents/VideoInfo'
 import "./VideoInfoView.css"
 import "./App.css"
 
@@ -8,12 +10,34 @@ const VideoInfoView = () => {
 
     const searchKeywordRef = useRef("ghost suisei")
     const [videos, setVideos] = useState([])
+    const [selectedVideo, setSelectedVideo] = useState({snippet: {title: "", channelTitle: "", thumbnails: {high: {url: ""}}}})
+    const lastSubmittedSearchKeywordRef = useRef(null)
+
+    useEffect(() => {
+        window.addEventListener("keypress", handleKeyPress)
+        setVideos(dummyVideoInfo.items)
+        return () => {
+            window.removeEventListener("keypress", handleKeyPress)
+        }
+    }, [])
+
+    const handleKeyPress = (e) => {
+        if (e.key == "Enter") {
+            handleSearchSubmit()
+        } else {
+            document.getElementById("search-input-el").focus()
+        }
+    }
 
     const handleSearchInputChange = (e) => {
         searchKeywordRef.current = e.target.value
     }
 
     const handleSearchSubmit = () => {
+        if (searchKeywordRef.current == lastSubmittedSearchKeywordRef.current) {
+            return  
+        }
+        lastSubmittedSearchKeywordRef.current = searchKeywordRef.current
         // axios.get("https://www.googleapis.com/youtube/v3/search", {
         //     params: {
         //         part: "snippet",
@@ -29,22 +53,30 @@ const VideoInfoView = () => {
         // .then(response => {
         //     setVideos(response.data.items)
         // })
-        setVideos(videoInfo.items)
+        setVideos(dummyVideoInfo.items)
     }
+
 
     return (
         <div className="video-info-view-wrapper">
-            <div className="search-bar-wrapper">
-                <input className="search-input" type="text" onChange={handleSearchInputChange}></input>
+            <div className="search-bar">
+                <input className="search-input" id="search-input-el" type="text" onChange={handleSearchInputChange}></input>
                 <button className="search-button" onClick={handleSearchSubmit}>Search</button>
             </div>
-            <ul className="video-display-wrapper">
-                {
-                    videos.map((videoSnippet, index) => {
-                        return <li key={index}>{videoSnippet.snippet.title} - {videoSnippet.snippet.channelTitle}</li>
-                    })
+
+            <div className="video-info">
+                <VideoInfo videoInfo={selectedVideo}/>
+            </div>
+
+            <button className="video-selected">
+                {selectedVideo.snippet.title != "" ? 
+                    `${selectedVideo.snippet.title} - ${selectedVideo.snippet.channelTitle}` :
+                    ""
                 }
-            </ul>
+            </button>
+            <div className="scroll-list" >
+                <ScrollList videosInput={videos} setSelectedVideo={setSelectedVideo}/>
+            </div>
         </div>
     )
 }

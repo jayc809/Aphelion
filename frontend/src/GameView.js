@@ -1,12 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react'
 import "./App.css"
 import "./GameView.css"
-import Platform from "./components/Platform"
-import Video from "./components/Video"
-import StartMessage from './components/StartMessage'
-import Score from './components/Score'
-import Combo from './components/Combo'
-import TileGenerator from './components/TileGenerator'
+import Platform from "./GameViewComponents/Platform"
+import Video from "./GameViewComponents/Video"
+import StartMessage from './GameViewComponents/StartMessage'
+import Score from './GameViewComponents/Score'
+import Combo from './GameViewComponents/Combo'
+import TileGenerator from './GameViewComponents/TileGenerator'
 const testVideoId = "IKKar5SS29E" 
 const orangeVideoId = "3DrYQMK4hJE"
 const blueVideoId = "IKKar5SS29E" 

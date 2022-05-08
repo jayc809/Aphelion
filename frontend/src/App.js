@@ -8,7 +8,7 @@ import { useRef, useState } from 'react'
 
 function App() {
 
-  const [view, setView] = useState("videoinfo")
+  const [view, setView] = useState("analyzer")
   const beatmapObjRef = useRef(null)
   const resultsObjRef = useRef(null)
 

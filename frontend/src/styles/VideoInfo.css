@@ -1,0 +1,27 @@
+.video-info-wrapper {
+    height: calc(100vh - 5vh - 30px);
+    width: 100%;
+    top: calc(5vh + 30px);
+    /* border: 2px solid red; */
+    position: absolute;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 30px;
+}
+
+.video-info-thumbnail {
+    height: 50%;
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid white;
+    object-fit: cover;
+}
+
+.video-info-description {
+    height: calc(50% - 30px);
+    width: 100%;
+    margin-top: 30px;
+    box-sizing: border-box;
+    /* border: 2px solid green; */
+}

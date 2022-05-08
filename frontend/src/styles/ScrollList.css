@@ -1,0 +1,26 @@
+.scroll-list-wrapper {
+    height: 100vh;
+    width: 100%;
+}
+
+.scroll-list-ul {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: scroll;
+    box-sizing: border-box; 
+    width: calc(100% + 50px);
+}
+
+.scroll-list-button {
+    height: calc(100vh / 9);
+    width: calc(100% - 50px);
+    margin-bottom: calc(100vh / 27);
+    font-family: "Futura-Light";
+    font-size: 150%;
+    white-space: nowrap;
+    overflow: hidden;
+    background-color: black;
+    color: white;
+    border: 2px solid white;
+}

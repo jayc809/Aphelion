@@ -4,22 +4,28 @@
     overflow: hidden;
 }
 
-.search-bar-wrapper {
+.search-bar {
     height: 5vh;
-    width: 100%;
+    width: 50vw;
     display: flex;
     flex-wrap: wrap;
     position: absolute;
-    margin-top: 30px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-right: 30px;
+    padding-left: 30px;
+    margin: 0;
+    top: 30px;
+    z-index: 100;
 }
 
 .search-input {
     height: 100%;
-    width: calc(80% - 30px);
+    width: 80%;
     margin: 0;
     border: 0;
     padding: 0;
-    margin-left: 30px;
     font-size: 150%;
     text-indent: 10px;
     user-select: none;
@@ -32,21 +38,45 @@ input:focus {
 
 .search-button {
     height: 100%;
-    width: calc(20% - 30px);
+    width: 20%;
     margin: 0;
     border: 0;
     padding: 0;
-    margin-right: 30px;
     font-size: 150%;
 }
 
-.video-display-wrapper {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
+.scroll-list {
+    height: 100vh;
+    width: 50vw;
     position: absolute;
-    top: calc(30px + 5vh);
-    margin-top: 30px;
-    padding: 0;
+    left: 50vw;
+    padding-right: 30px;
+    padding-left: 30px;
+    overflow: hidden;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    position: absolute;
+    z-index: 0;
+}
+
+.video-selected {
+    height: calc(100vh / 7);
+    width: 50vw;
+    left: 50vw;
+    top: calc(50vh - 100vh / 7 / 2);
+    font-family: "Futura-Light";
+    font-size: 150%;
+    white-space: nowrap;
+    overflow: hidden;
+    position: absolute;
+    z-index: 10;
+}
+
+.video-info {
+    height: 100vh;
+    width: 50vw;
+    position: absolute;
+    z-index: 5;
+    overflow: hidden;
 }
