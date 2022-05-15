@@ -21,7 +21,6 @@ const AnalyzerView = ({ setView, setBeatmapObjRef }) => {
                 const beatmapObj = beatmapObjRes
                 beatmapObj.refreshRate = 0.01 * 1000
                 beatmapObj.refreshTolerance = 0.0099
-                console.log(beatmapObj)
                 socket.disconnect()
                 setBeatmapObjRef(beatmapObj)
                 setShowButton(true)

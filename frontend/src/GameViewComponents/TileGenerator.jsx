@@ -15,9 +15,11 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
 
     useEffect(() => {
         onMount(beatNumber, setBeatNumber)
-        window.addEventListener("keypress", handlePress)
+        window.addEventListener("keydown", handleDown)
+        window.addEventListener("keyup", handleUp)
         return () => {
-            window.removeEventListener("keypress", handlePress)
+            window.removeEventListener("keydown", handleDown)
+            window.removeEventListener("keyup", handleUp)
         }
     }, [])
 
@@ -41,24 +43,57 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
         currentTilesRef.current = currentTiles
     }, [currentTiles])
 
-    const handlePress = (e) => {
+    const dPressed = useRef(false)
+    const fPressed = useRef(false)
+    const jPressed = useRef(false)
+    const kPressed = useRef(false)
+    const handleDown = (e) => {
         if (getAllowStart()) {
             switch (e.key) {
                 case "d":
-                    onTileTap("left")
+                    if (!dPressed.current) {
+                        dPressed.current = true
+                        onTileTap("left")
+                    }
                     break
                 case "f":
-                    onTileTap("middle-left")
+                    if (!fPressed.current) {
+                        fPressed.current = true
+                        onTileTap("middle-left")
+                    }
                     break
                 case "j":
-                    onTileTap("middle-right")
+                    if (!jPressed.current) {
+                        jPressed.current = true
+                        onTileTap("middle-right")
+                    }
                     break
                 case "k":
-                    onTileTap("right")
+                    if (!kPressed.current) {
+                        kPressed.current = true
+                        onTileTap("right")
+                    }
                     break
             }
         }
     }
+    const handleUp = (e) => {
+        switch (e.key) {
+            case "d":
+                dPressed.current = false
+                break
+            case "f":
+                fPressed.current = false
+                break
+            case "j":
+                jPressed.current = false
+                break
+            case "k":
+                kPressed.current = false
+                break
+        }
+    }
+
     //sets up a dictionary of setStates for each tile mounted
     const tileSetStates = useRef({})
     const onTileMount = (type, targetBeatNumber, setState) => {
