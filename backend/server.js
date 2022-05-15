@@ -49,7 +49,6 @@ io.on("connect", socket => {
 
         const analyzeAudio = (buffer) => {
             socket.emit("progress-update", "generating beatmap")
-
             console.log("calculating BPM")
             const audioData = getAudioData(buffer)
             const startIndex = getAudioStartIndex(audioData, buffer)
@@ -96,12 +95,9 @@ app.get("/getBeatmap", (req, res) => {
     video.once('response', () => {
         starttime = Date.now()
     })
-
     console.log("downloading video")
     video.on('progress', (chunkLength, downloaded, total) => {
         const percent = downloaded / total
-        // const downloadedMinutes = (Date.now() - starttime) / 1000 / 60
-        // const estimatedDownloadTime = (downloadedMinutes / percent) - downloadedMinutes
         readline.cursorTo(process.stdout, 0)
         process.stdout.write(`${(percent * 100).toFixed(2)}% downloaded`)
         process.stdout.write(`(${(downloaded / 1024 / 1024).toFixed(2)}MB of ${(total / 1024 / 1024).toFixed(2)}MB)\n`)
@@ -181,7 +177,6 @@ const getAudioStartIndex = (audioData, buffer) => {
         }
     }
     
-    console.log(pcmStartTime - fftStartTime)
     if (Math.abs(pcmStartTime - fftStartTime) < sampleRate) {
         return fftStartTime
     } else {
