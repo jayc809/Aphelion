@@ -40,7 +40,7 @@ const PauseMenu = ({ pauseGame, restartGame }) => {
             allowClick.current = false
             setTimeout(() => {
                 allowClick.current = true
-            }, 1000);
+            }, 500);
         }
        
     }

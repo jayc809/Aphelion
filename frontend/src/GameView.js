@@ -6,6 +6,7 @@ import Video from "./GameViewComponents/Video"
 import StartMessage from './GameViewComponents/StartMessage'
 import Score from './GameViewComponents/Score'
 import Combo from './GameViewComponents/Combo'
+import PerfectDisplay from "./GameViewComponents/PerfectDisplay"
 import TileGenerator from './GameViewComponents/TileGenerator'
 import PauseMenu from './GameViewComponents/PauseMenu'
 const testVideoId = "IKKar5SS29E" 
@@ -43,6 +44,10 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, beatmapObj }) =>
     comboRef.current = combo
     setComboRef.current = setCombo
   }
+  const setPerfectDisplayRef = useRef(null)
+  const onPerfectDisplayMount = (setPerfectDisplay) => {
+    setPerfectDisplayRef.current = setPerfectDisplay
+  }
 
   const updateScoreAndCombo = (accuracy) => {
     const incrementScore = (amount) => {
@@ -61,21 +66,25 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, beatmapObj }) =>
       case "perfect":  
         incrementScore(parseInt(100 * (1 + comboRef.current / 100)))
         incrementCombo()
+        setPerfectDisplayRef.current(true)
         break
       case "great":  
         allPerfectRef.current = false
         incrementScore(parseInt(80 * (1 + comboRef.current / 100)))
         incrementCombo()
+        setPerfectDisplayRef.current(false)
         break
       case "good":  
         allPerfectRef.current = false
         incrementScore(parseInt(60 * (1 + comboRef.current / 100)))
         incrementCombo()
+        setPerfectDisplayRef.current(false)
         break
       case "miss": 
         allPerfectRef.current = false
         comboRef.current = 0
         setComboRef.current(0)
+        setPerfectDisplayRef.current(false)
         break
     }
   }
@@ -234,6 +243,9 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, beatmapObj }) =>
 
       <div className="component" id="combo">
         <Combo onMount={onComboMount}/>
+      </div>
+      <div className="component" id="perfect-display">
+        <PerfectDisplay onMount={onPerfectDisplayMount}></PerfectDisplay>
       </div>
 
       <div className="component" id="tile-generator">

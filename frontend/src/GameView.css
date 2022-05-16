@@ -40,6 +40,10 @@
     z-index: 80;
 }
 
+#perfect-display {
+    z-index: 79;
+}
+
 #tile-generator {
     z-index: 50;
 }

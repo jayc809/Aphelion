@@ -7,9 +7,19 @@
     position: absolute;
     text-align: center;
     font-family: "Futura-Medium-Italic";
-    font-size: 80px;
     margin: 0;
+}
+
+.combo-number {
+    font-size: 80px;
+    letter-spacing: 4px;
     top: 37%;
     right: 40px;
-    letter-spacing: 4px;
+}
+
+.perfect-text {
+    font-size: 45px;
+    letter-spacing: 2.5px;
+    top: calc(37% + 80px);
+    right: 40px;
 }

@@ -3,7 +3,6 @@ import "../styles/Combo.css"
 
 const Combo = ({ onMount }) => {
 
-    const comboRef = useRef(null)
     const [combo, setCombo] = useState(0)
     
     useEffect(() => {
@@ -21,7 +20,7 @@ const Combo = ({ onMount }) => {
 
     return (
         <div className="combo-wrapper">
-            <h3 ref={comboRef} style={formatComboStyle()}>{formatComboText()}</h3>
+            <h3 className="combo-number" style={formatComboStyle()}>{formatComboText()}</h3>
         </div>
     )
 }
