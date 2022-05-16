@@ -4,8 +4,8 @@ import "../styles/StartMessage.css"
 const StartMessage = ({ getAllowStart }) => {
 
     const [show, setShow] = useState(true)
-    const handlePress = () => {
-        if (getAllowStart()) { 
+    const handlePress = (e) => {
+        if (getAllowStart() && e.key != "p") { 
             setShow(false)
             window.removeEventListener('keypress', handlePress)
         }

@@ -34,8 +34,8 @@ const Video = ({ updateBeatNumber, beatmapObj, tileSpeed, getAllowStart, onAllow
         }
     }
 
-    const handlePress = () => {
-        if (getAllowStart()) {
+    const handlePress = (e) => {
+        if (getAllowStart() && e.key != "p") {
             const blackScreen = blackScreenRef.current
             setPlayAudio(true)
             setTimeout(() => {

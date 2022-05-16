@@ -5,23 +5,42 @@ import playIcon from "../images/play-button-icon.png"
 
 const PauseMenu = ({ pauseGame, restartGame }) => {
 
-    const buttonRef = useRef(null)
     const [currIcon, setCurrIcon] = useState(pauseIcon)
     const [showMenu, setShowMenu] = useState(false)
+    const allowClick = useRef(true)
+
+    useEffect(() => {
+        window.addEventListener("keypress", handlePress)
+        return () => {
+            window.removeEventListener("keypress", handlePress)
+        }
+    }, [showMenu])
+
+    const handlePress = (e) => {
+        if (e.key == "p") {
+            handlePausePlay()
+        }
+    }
 
     const handlePausePlay = () => {
-        if (currIcon == pauseIcon) {
-            pauseGame(true)
-            setCurrIcon(playIcon)
-        } else {
-            pauseGame(false)
-            setCurrIcon(pauseIcon)
-        }
+        if (allowClick.current) {
+            if (currIcon == pauseIcon) {
+                pauseGame(true)
+                setCurrIcon(playIcon)
+            } else {
+                pauseGame(false)
+                setCurrIcon(pauseIcon)
+            }
 
-        if (!showMenu) {
-            setShowMenu(true)
-        } else {
-            setShowMenu(false)
+            if (!showMenu) {
+                setShowMenu(true)
+            } else {
+                setShowMenu(false)
+            }
+            allowClick.current = false
+            setTimeout(() => {
+                allowClick.current = true
+            }, 1000);
         }
        
     }
