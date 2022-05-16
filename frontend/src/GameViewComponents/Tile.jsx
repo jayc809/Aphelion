@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import "../styles/Tile.css"
 import tileImage from "../images/tile.png"
 
-const Tile = ({ type, tileSpeed, targetBeatNumber, onMount, onMiss}) => {
+const Tile = ({ type, tileSpeed, targetBeatNumber, onMount, onMiss, id}) => {
 
     const tileRef = useRef(null)
     const timingFunctionMove = "cubic-bezier(0.4, 0.1, 0.7, 0.4)"
@@ -55,7 +55,7 @@ const Tile = ({ type, tileSpeed, targetBeatNumber, onMount, onMiss}) => {
     }
 
     return (
-        <div className="tile-wrapper">
+        <div className="tile-wrapper" style={{zIndex: id}}>
             <div className="tile" ref={tileRef} onAnimationEnd={handleMiss}>
                 <img 
                     src={tileImage} 

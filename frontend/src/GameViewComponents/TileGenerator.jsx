@@ -159,6 +159,7 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
                         targetBeatNumber={tile.beatNumber}
                         onMount={onTileMount}
                         onMiss={onTileMiss}
+                        id={tile.id}
                         key={tile.id}
                     ></Tile>
                 )
