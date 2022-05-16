@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import "../styles/Tile.css"
 import tileImage from "../images/tile.png"
 
-const Tile = ({ type, tileSpeed, targetBeatNumber, onMount, onMiss, id}) => {
+const Tile = ({ type, tileSpeed, targetBeatNumber, onMount, onMiss, id }) => {
 
     const tileRef = useRef(null)
     const timingFunctionMove = "cubic-bezier(0.4, 0.1, 0.7, 0.4)"
@@ -12,9 +12,23 @@ const Tile = ({ type, tileSpeed, targetBeatNumber, onMount, onMiss, id}) => {
     //initializations
     useEffect(() => {
         if (type != "placeholder") {
-            onMount(type, targetBeatNumber, setState)
+            onMount(type, targetBeatNumber, controller)
         }
     }, [])
+
+    const controller = (instructions, options = null) => {
+        switch (instructions) {
+            case "setState":
+                setState(options)
+                break
+            case "pauseAnimation":
+                tileRef.current.style.animationPlayState = "paused"
+                break
+            case "playAnimation":
+                tileRef.current.style.animationPlayState = "running"
+                break
+        }
+    }
 
     useEffect(() => {
         switch (state) {

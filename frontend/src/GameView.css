@@ -24,6 +24,10 @@
     to {opacity: 1;}
 }
 
+#pause-menu {
+    z-index: 1010;
+}
+
 #start-message {
     z-index: 100;
 }

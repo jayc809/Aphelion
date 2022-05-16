@@ -14,7 +14,7 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
     const beatmapIndexRef = useRef(0)
 
     useEffect(() => {
-        onMount(beatNumber, setBeatNumber)
+        onMount(beatNumber, setBeatNumber, pauseTiles, playTiles)
         window.addEventListener("keydown", handleDown)
         window.addEventListener("keyup", handleUp)
         return () => {
@@ -95,10 +95,10 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
     }
 
     //sets up a dictionary of setStates for each tile mounted
-    const tileSetStates = useRef({})
-    const onTileMount = (type, targetBeatNumber, setState) => {
+    const tileControllers = useRef({})
+    const onTileMount = (type, targetBeatNumber, controller) => {
         const key = String(targetBeatNumber) + type
-        tileSetStates.current[key] = setState
+        tileControllers.current[key] = controller
     }
     //sets up list of missed tiles
     const missedTiles = useRef([])
@@ -126,7 +126,7 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
         }
         if (closestTileBeatNumber != null) {
             //runs the animation
-            tileSetStates.current[String(closestTileBeatNumber) + type](2)
+            tileControllers.current[String(closestTileBeatNumber) + type]("setState", 2)
             //calculate accuracy and update score and combo
             const accuracy = getTileAccuracy(closestTileBeatNumber)
             updateScoreAndCombo(accuracy)
@@ -146,6 +146,40 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
             return "good"
         } else {
             return "miss"
+        }
+    }
+    
+    const pauseTiles = () => {
+        const tiles = JSON.parse(JSON.stringify(currentTilesRef.current))
+        const types = ["left", "middle-left", "middle-right", "right"]
+        for (let i = 0; i < tiles.length; i += 1) {
+            for (let j = 0; j < types.length; j += 1) {
+                const type = types[j]
+                const key = String(tiles[i].beatNumber) + type
+                //finds the first instance in currentTiles where the tile is of type and has not been tapped yet
+                if (tiles[i].type == type && 
+                    !tappedTiles.current.includes(key) && 
+                    !missedTiles.current.includes(key)) {
+                    tileControllers.current[String(tiles[i].beatNumber) + type]("pauseAnimation")
+                }
+            }
+        }
+    }
+
+    const playTiles = () => {
+        const tiles = JSON.parse(JSON.stringify(currentTilesRef.current))
+        const types = ["left", "middle-left", "middle-right", "right"]
+        for (let i = 0; i < tiles.length; i += 1) {
+            for (let j = 0; j < types.length; j += 1) {
+                const type = types[j]
+                const key = String(tiles[i].beatNumber) + type
+                //finds the first instance in currentTiles where the tile is of type and has not been tapped yet
+                if (tiles[i].type == type && 
+                    !tappedTiles.current.includes(key) && 
+                    !missedTiles.current.includes(key)) {
+                    tileControllers.current[String(tiles[i].beatNumber) + type]("playAnimation")
+                }
+            }
         }
     }
 

@@ -7,6 +7,7 @@ import StartMessage from './GameViewComponents/StartMessage'
 import Score from './GameViewComponents/Score'
 import Combo from './GameViewComponents/Combo'
 import TileGenerator from './GameViewComponents/TileGenerator'
+import PauseMenu from './GameViewComponents/PauseMenu'
 const testVideoId = "IKKar5SS29E" 
 const orangeVideoId = "3DrYQMK4hJE"
 const blueVideoId = "IKKar5SS29E" 
@@ -102,9 +103,13 @@ const GameView = ({ setView, setResultsObjRef, beatmapObj }) => {
   const tileSpeed = 1.3
   const beatNumberRef = useRef(null)
   const setBeatNumberRef= useRef(null)
-  const onTileGeneratorMount = (beatNumber, setBeatNumber) => {
+  const pauseTilesRef = useRef(null)
+  const playTilesRef = useRef(null)
+  const onTileGeneratorMount = (beatNumber, setBeatNumber, pauseTiles, playTiles) => {
     beatNumberRef.current = beatNumber
     setBeatNumberRef.current = setBeatNumber
+    pauseTilesRef.current = pauseTiles
+    playTilesRef.current = playTiles
   }
   const currVideoTime = useRef(0)
   const getCurrVideoTime = () => {
@@ -173,6 +178,38 @@ const GameView = ({ setView, setResultsObjRef, beatmapObj }) => {
     }, 2000)
   }
 
+  const setAudioPlayRef = useRef(null)
+  const setVideoPlayRef = useRef(null)
+  const blackScreenPresent = useRef(true)
+  const onVideoMount = (setAudioPlay, setVideoPlay) => {
+    setAudioPlayRef.current = setAudioPlay
+    setVideoPlayRef.current = setVideoPlay
+  }
+
+  const pauseGame = (pause) => {
+    if (!blackScreenPresent.current) {     
+      if (pause) {
+        if (setAudioPlayRef.current != null && setVideoPlayRef.current != null) {
+          console.log("game paused")
+          setAudioPlayRef.current(false)
+          setVideoPlayRef.current(false)
+          pauseTilesRef.current()
+        }
+      } else {
+        if (setAudioPlayRef.current != null && setVideoPlayRef.current != null) {
+          console.log("game playing")
+          setAudioPlayRef.current(true)
+          setVideoPlayRef.current(true)
+          playTilesRef.current()
+        }
+      }
+    }
+  }
+
+  const restartGame = () => {
+    console.log("game restarted")
+  }
+
   return (
     <div id="screen" ref={screenRef} style={{cursor: mouseMoved ? "default" : "none"}}>
 
@@ -181,6 +218,10 @@ const GameView = ({ setView, setResultsObjRef, beatmapObj }) => {
       </div> */}
 
       <div className="component" id="ending-black-screen" ref={endingBlackScreenRef}></div>
+      
+      <div className="component" id="pause-menu">
+        <PauseMenu pauseGame={pauseGame} restartGame={restartGame}/>
+      </div>
 
       <div className="component" id="start-message">
         <StartMessage getAllowStart={getAllowStart}/>
@@ -219,6 +260,8 @@ const GameView = ({ setView, setResultsObjRef, beatmapObj }) => {
             getAllowStart={getAllowStart}
             onAllowStart={handleAllowStart}
             onVideoEnd={handleGameEnd}
+            onMount={onVideoMount}
+            blackScreenPresent={blackScreenPresent}
           />
         </div> :
         ""
