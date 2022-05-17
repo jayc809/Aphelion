@@ -9,6 +9,7 @@
     position: absolute;
     margin: 0;
     opacity: 0;
+    z-index: 20;
 }
 
 .tile img {
@@ -16,6 +17,20 @@
     width: 100%;
     object-fit: contain;
 }
+
+.bar {
+    position: absolute;
+    margin: 0;
+    opacity: 0;
+    z-index: 10;
+}
+
+.bar img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
 
 @keyframes increase-opacity {
     from {
@@ -26,54 +41,56 @@
     }
 }
 
-@keyframes move-left {
+@keyframes increase-size-tile {
     from {
         width: 1.5vw;
-        left: 46.1%;
-        top: 40%;
     }
     to {
         width: 16vw;
-        left: 15%;
-        top: 100%;
     }
 }
 
-@keyframes move-middle-left {
+@keyframes move-y {
     from {
-        width: 1.5vw;
-        left: 48.3%;
-        top: 40%;
+        bottom: calc(60vh - (1.5vw * 12/50));
     }
     to {
-        width: 16vw;
-        left: 32.8%;
-        top: 100%;
+        bottom: calc(-1vh - (16vw * 12/50));
     }
 }
 
-@keyframes move-middle-right {
+@keyframes move-x-left {
     from {
-        width: 1.5vw;
-        right: 48.3%;
-        top: 40%;
+        left: 46.3vw;
     }
     to {
-        width: 16vw;
-        right: 32.8%;
-        top: 100%;
+        left: 15.1vw;
     }
 }
 
-@keyframes move-right {
+@keyframes move-x-middle-left {
     from {
-        width: 1.5vw;
-        right: 46.1%;
-        top: 40%;
+        left: 48.3vw;
     }
     to {
-        width: 16vw;
-        right: 15%;
-        top: 100%;
+        left: 32.9vw;
+    }
+}
+
+@keyframes move-x-middle-right {
+    from {
+        right: 48.3vw;
+    }
+    to {
+        right: 32.9vw;
+    }
+}
+
+@keyframes move-x-right {
+    from {
+        right: 46.3vw;
+    }
+    to {
+        right: 15.1vw;
     }
 }

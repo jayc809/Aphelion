@@ -49,7 +49,10 @@ const Tile = ({ type, tileSpeed, targetBeatNumber, onMount, onMiss, id }) => {
         if (type == "placeholder") {
             tile.style.opacity = 0
         } else {
-            tile.style.animation = `move-${type} ${tileSpeed + "s"} ${timingFunctionMove}, increase-opacity ${tileSpeed + "s"} ${timingFunctionOpacity}`
+            tile.style.animation = `move-x-${type} ${tileSpeed + "s"} ${timingFunctionMove}, 
+                                    move-y ${tileSpeed + "s"} ${timingFunctionMove},
+                                    increase-size-tile ${tileSpeed + "s"} ${timingFunctionMove},
+                                    increase-opacity ${tileSpeed + "s"} ${timingFunctionOpacity}`
         }
     }
 
@@ -61,6 +64,7 @@ const Tile = ({ type, tileSpeed, targetBeatNumber, onMount, onMiss, id }) => {
         const tile = tileRef.current
         tile.style.animation = "none"
         tile.style.opacity = 0
+        setState(4)
     }
 
     const handleMiss = () => {
@@ -69,6 +73,7 @@ const Tile = ({ type, tileSpeed, targetBeatNumber, onMount, onMiss, id }) => {
     }
 
     return (
+        state != 4 ? 
         <div className="tile-wrapper" style={{zIndex: id}}>
             <div className="tile" ref={tileRef} onAnimationEnd={handleMiss}>
                 <img 
@@ -76,7 +81,8 @@ const Tile = ({ type, tileSpeed, targetBeatNumber, onMount, onMiss, id }) => {
                     alt="tile"
                 />
             </div>
-        </div>
+        </div> :
+        ""
     )
     
 }
