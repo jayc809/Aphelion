@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Tile from "./Tile"
+import HoldTile from './HoldTile'
 import "../styles/TileGenerator.css"
 
 const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, getAllowStart, getCurrVideoTime }) => {
@@ -186,17 +187,30 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
     return (
         <div className="tile-generator-wrapper">
             {
-                currentTiles.map((tile, index) => 
-                    <Tile 
-                        type={tile.type} 
-                        tileSpeed={tileSpeed} 
-                        targetBeatNumber={tile.beatNumber}
-                        onMount={onTileMount}
-                        onMiss={onTileMiss}
-                        id={tile.id}
-                        key={tile.id}
-                    ></Tile>
-                )
+                currentTiles.map((tile, index) => {
+                    switch (tile.class) {
+                        case "tap":
+                            return <Tile 
+                                type={tile.type} 
+                                tileSpeed={tileSpeed} 
+                                targetBeatNumber={tile.beatNumber}
+                                onMount={onTileMount}
+                                onMiss={onTileMiss}
+                                id={tile.id}
+                                key={tile.id}
+                            ></Tile>
+                        case "hold":
+                            return <HoldTile 
+                                type={tile.type} 
+                                tileSpeed={tileSpeed} 
+                                targetBeatNumber={tile.beatNumber}
+                                onMount={onTileMount}
+                                onMiss={onTileMiss}
+                                id={tile.id}
+                                key={tile.id}
+                            ></HoldTile>
+                    }
+                })
             }
         </div>
     )

@@ -237,6 +237,7 @@ const getBeatmap = (fftMap, beatTime) => {
         } 
         beatmap.push({
             beatNumber: i + 1, 
+            class: "hold",
             type: type,
             state: 1,
             id: i + 1

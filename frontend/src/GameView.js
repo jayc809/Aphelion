@@ -146,7 +146,7 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, beatmapObj }) =>
 
   const endingBlackScreenRef = useRef(null)
   const [showVideo, setShowVideo] = useState(true)
-  const getResultsObj= () => {
+  const getResultsObj = () => {
     const maxCombo = beatmapObj.beatmap.length
     const highestCombo = highestComboRef.current
     const totalCombo = totalComboRef.current
