@@ -7,19 +7,22 @@ const Tile = ({ type, tileSpeed, targetBeatNumber, onMount, onMiss, id }) => {
     const tileRef = useRef(null)
     const timingFunctionMove = "cubic-bezier(0.4, 0.1, 0.7, 0.4)"
     const timingFunctionOpacity = "cubic-bezier(0.0, 0.7, 0.0, 0.9)"
-    const [state, setState] = useState(1)
+    const [isUnloaded, setIsUnloaded] = useState(false)
 
     //initializations
     useEffect(() => {
         if (type != "placeholder") {
             onMount(type, targetBeatNumber, controller)
         }
+        loadTile()
     }, [])
 
     const controller = (instructions, options = null) => {
         switch (instructions) {
-            case "setState":
-                setState(options)
+            case "getClass":
+                return "tap"
+            case "tap":
+                tapTile()
                 break
             case "pauseAnimation":
                 tileRef.current.style.animationPlayState = "paused"
@@ -29,20 +32,6 @@ const Tile = ({ type, tileSpeed, targetBeatNumber, onMount, onMiss, id }) => {
                 break
         }
     }
-
-    useEffect(() => {
-        switch (state) {
-            case 1:
-                loadTile()
-                break
-            case 2:
-                tapTile()
-                break
-            case 3:
-                unloadTile()
-                break
-        }
-    }, [state])
 
     const loadTile = () => {
         const tile = tileRef.current
@@ -57,23 +46,23 @@ const Tile = ({ type, tileSpeed, targetBeatNumber, onMount, onMiss, id }) => {
     }
 
     const tapTile = () => {
-        setState(3)
+        unloadTile()
     }
 
     const unloadTile = () => {
         const tile = tileRef.current
         tile.style.animation = "none"
         tile.style.opacity = 0
-        setState(4)
+        setIsUnloaded(true)
     }
 
     const handleMiss = () => {
         onMiss(type, targetBeatNumber)
-        setState(3)
+        unloadTile()
     }
 
     return (
-        state != 4 ? 
+        isUnloaded ? "" :
         <div className="tile-wrapper" style={{zIndex: id}}>
             <div className="tile" ref={tileRef} onAnimationEnd={handleMiss}>
                 <img 
@@ -81,8 +70,7 @@ const Tile = ({ type, tileSpeed, targetBeatNumber, onMount, onMiss, id }) => {
                     alt="tile"
                 />
             </div>
-        </div> :
-        ""
+        </div> 
     )
     
 }

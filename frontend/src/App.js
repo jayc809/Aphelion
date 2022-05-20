@@ -27,15 +27,15 @@ function App() {
 
   return (
     <div id="app">
-      {/* {
+      {
         {
           "videoinfo": <VideoInfoView/>,
           "analyzer": <AnalyzerView setView={setView} setBeatmapObjRef={setBeatmapObjRef}/>,
           "game": <GameView setView={setView} incrementGameId={incrementGameId} setResultsObjRef={setResultsObjRef} beatmapObj={beatmapObjRef.current} key={gameId}/>,
           "results": <ResultsView resultsObj={resultsObjRef.current}/>
         } [view]
-      } */}
-      <TestView/>
+      }
+      {/* <TestView/> */}
     </div>
   )
 }

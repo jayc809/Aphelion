@@ -3,7 +3,7 @@ import "../styles/Tile.css"
 import tileImage from "../images/tile-hold.png"
 import barImage from "../images/hold-bar.png"
 
-const HoldTile = ({ type, tileSpeed, targetBeatNumber, elaspedTime, onMount, onMiss, id }) => {
+const HoldTile = ({ type, tileSpeed, targetBeatNumber, beatNumber, elaspedTime, onMount, onMiss, updateScoreAndCombo, id }) => {
 
     const tileRef = useRef(null)
     const barRef = useRef(null)
@@ -20,12 +20,27 @@ const HoldTile = ({ type, tileSpeed, targetBeatNumber, elaspedTime, onMount, onM
         if (type != "placeholder") {
             onMount(type, targetBeatNumber, controller)
         }
-        window.addEventListener("keydown", tapTile)
-        return () => {window.removeEventListener("keydown", tapTile)}
+        // window.addEventListener("keydown", tapTile)
+        // return () => {window.removeEventListener("keydown", tapTile)}
     }, [])
 
     const controller = (instructions, options = null) => {
         switch (instructions) {
+            case "getClass":
+                return "hold"
+                break
+            case "perfect":
+                tapTile("perfect")
+                break
+            case "great":
+                tapTile("great")
+                break
+            case "good":
+                tapTile("good")
+                break
+            case "miss":
+                tapTile("miss")
+                break
             case "setState":
                 setState(options)
                 break

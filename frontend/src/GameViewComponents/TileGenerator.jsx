@@ -127,10 +127,17 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
         }
         if (closestTileBeatNumber != null) {
             //runs the animation
-            tileControllers.current[String(closestTileBeatNumber) + type]("setState", 2)
-            //calculate accuracy and update score and combo
-            const accuracy = getTileAccuracy(closestTileBeatNumber)
-            updateScoreAndCombo(accuracy)
+            const controller = tileControllers.current[String(closestTileBeatNumber) + type]
+            if (controller("getClass") == "tap") {
+                controller("tap")
+                //calculate accuracy and update score and combo
+                const accuracy = getTileAccuracy(closestTileBeatNumber)
+                updateScoreAndCombo(accuracy)
+            }
+            else if (controller("getClass") == "hold") {
+                controller("setState", 2)
+            }
+
         }
     }
     const getTileAccuracy = (beatNumber) => {
