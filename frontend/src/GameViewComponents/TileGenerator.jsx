@@ -82,15 +82,19 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
         switch (e.key) {
             case "d":
                 dPressed.current = false
+                onTileRelease("left")
                 break
             case "f":
                 fPressed.current = false
+                onTileRelease("middle-left")
                 break
             case "j":
                 jPressed.current = false
+                onTileRelease("middle-right")
                 break
             case "k":
                 kPressed.current = false
+                onTileRelease("right")
                 break
         }
     }
@@ -107,6 +111,9 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
         const key = String(targetBeatNumber) + type
         missedTiles.current.push(key)
         updateScoreAndCombo("miss")
+        if (missedTiles.current.length > 30) {
+            missedTiles.current.shift()
+        }
     }
     //finds the closest tile of type and starts animation using setState
     const tappedTiles = useRef([])
@@ -122,20 +129,23 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
                 !missedTiles.current.includes(key)) {
                 closestTileBeatNumber = tiles[i].beatNumber
                 tappedTiles.current.push(key)
+                if (tappedTiles.current.length > 30) {
+                    tappedTiles.current.shift()
+                }
                 break
             }
         }
         if (closestTileBeatNumber != null) {
             //runs the animation
             const controller = tileControllers.current[String(closestTileBeatNumber) + type]
+            const accuracy = getTileAccuracy(closestTileBeatNumber)
             if (controller("getClass") == "tap") {
                 controller("tap")
-                //calculate accuracy and update score and combo
-                const accuracy = getTileAccuracy(closestTileBeatNumber)
                 updateScoreAndCombo(accuracy)
             }
             else if (controller("getClass") == "hold") {
-                controller("setState", 2)
+                controller("hold", accuracy)
+                updateScoreAndCombo(accuracy)
             }
 
         }
@@ -154,6 +164,32 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
             return "good"
         } else {
             return "miss"
+        }
+    }
+
+    const onTileRelease = (type) => {
+        let closestTileBeatNumber = null
+        //makes a copy of currentTiles
+        const tiles = JSON.parse(JSON.stringify(currentTilesRef.current))
+        for (let i = 0; i < tiles.length; i += 1) {
+            const key = String(tiles[i].beatNumber) + type
+            //finds the first instance in currentTiles where the tile is of type and has not been tapped yet
+            if (tiles[i].type == type && 
+                tappedTiles.current.includes(key) &&
+                !missedTiles.current.includes(key)) {
+                closestTileBeatNumber = tiles[i].beatNumber
+                missedTiles.current.push(key)
+                if (missedTiles.current.length > 30) {
+                    missedTiles.current.shift()
+                }
+                break
+            }
+        }
+        if (closestTileBeatNumber != null) {
+            const controller = tileControllers.current[String(closestTileBeatNumber) + type]
+            if (controller("getClass") == "hold") {
+                controller("release")
+            }
         }
     }
     
@@ -211,8 +247,11 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
                                 type={tile.type} 
                                 tileSpeed={tileSpeed} 
                                 targetBeatNumber={tile.beatNumber}
+                                elapsedBeat={tile.elapsedBeat}
+                                elapsedTime={tile.elapsedTime}
                                 onMount={onTileMount}
                                 onMiss={onTileMiss}
+                                updateScoreAndCombo={updateScoreAndCombo}
                                 id={tile.id}
                                 key={tile.id}
                             ></HoldTile>

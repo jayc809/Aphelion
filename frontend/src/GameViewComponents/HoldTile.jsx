@@ -3,7 +3,7 @@ import "../styles/Tile.css"
 import tileImage from "../images/tile-hold.png"
 import barImage from "../images/hold-bar.png"
 
-const HoldTile = ({ type, tileSpeed, targetBeatNumber, beatNumber, elaspedTime, onMount, onMiss, updateScoreAndCombo, id }) => {
+const HoldTile = ({ type, tileSpeed, targetBeatNumber, elapsedBeat, elapsedTime, onMount, onMiss, updateScoreAndCombo, id }) => {
 
     const tileRef = useRef(null)
     const barRef = useRef(null)
@@ -11,15 +11,17 @@ const HoldTile = ({ type, tileSpeed, targetBeatNumber, beatNumber, elaspedTime, 
     const barClipTapRef = useRef(null)
     const timingFunctionMove = "cubic-bezier(0.4, 0.1, 0.7, 0.4)"
     const timingFunctionOpacity = "cubic-bezier(0.0, 0.7, 0.0, 0.9)"
-    const [state, setState] = useState(1)
+    const [isUnloaded, setIsUnloaded] = useState(false)
     const tapPositionY = useRef(null)
     const [barHeight, setBarHeight] = useState(null)
+    const scoreIncrementer = useRef(null)
 
     //initializations
     useEffect(() => {
         if (type != "placeholder") {
             onMount(type, targetBeatNumber, controller)
         }
+        loadTile()
         // window.addEventListener("keydown", tapTile)
         // return () => {window.removeEventListener("keydown", tapTile)}
     }, [])
@@ -28,48 +30,26 @@ const HoldTile = ({ type, tileSpeed, targetBeatNumber, beatNumber, elaspedTime, 
         switch (instructions) {
             case "getClass":
                 return "hold"
+            case "hold":
+                tapTile(options)
                 break
-            case "perfect":
-                tapTile("perfect")
-                break
-            case "great":
-                tapTile("great")
-                break
-            case "good":
-                tapTile("good")
-                break
-            case "miss":
-                tapTile("miss")
-                break
-            case "setState":
-                setState(options)
+            case "release":
+                unloadTile()
                 break
             case "pauseAnimation":
                 tileRef.current.style.animationPlayState = "paused"
+                barRef.current.style.animationPlayState = "paused"
                 break
             case "playAnimation":
                 tileRef.current.style.animationPlayState = "running"
+                barRef.current.style.animationPlayState = "running"
                 break
         }
     }
 
-    useEffect(() => {
-        switch (state) {
-            case 1:
-                loadTile()
-                break
-            case 2:
-                tapTile()
-                break
-            case 3:
-                unloadTile()
-                break
-        }
-    }, [state])
-
     const getBarHeight = () => {
-        if (tileSpeed <= elaspedTime) {
-            return window.innerHeight * 0.6 / tileSpeed * elaspedTime
+        if (tileSpeed <= elapsedTime) {
+            return window.innerHeight * 0.6 / tileSpeed * elapsedTime
         } else {
 
         }
@@ -107,44 +87,53 @@ const HoldTile = ({ type, tileSpeed, targetBeatNumber, beatNumber, elaspedTime, 
                                     move-y ${tileSpeed + "s"} ${timingFunctionMove},
                                     increase-size-tile ${tileSpeed + "s"} ${timingFunctionMove},
                                     increase-opacity ${tileSpeed + "s"} ${timingFunctionOpacity}`
-            bar.style.animation = `move-y-bar ${tileSpeed + "s"} ${timingFunctionMove}`
+            bar.style.animation = `move-y-bar ${tileSpeed + "s"} ${timingFunctionMove}, 
+                                   increase-opacity-bar ${tileSpeed + "s"} ${timingFunctionOpacity}`
         }
     }
 
-    const tapTile = () => {
-        const tile = tileRef.current
-        tile.style.animationPlayState = "paused"
-        const tileBox = tile.getBoundingClientRect()
-        tapPositionY.current = tileBox.top + tileBox.height / 2
-        const barClipTap = barClipTapRef.current
-        barClipTap.style.clipPath = `polygon(100vw 0px, 0px 0px, 0px ${tapPositionY.current}px, 100vw ${tapPositionY.current}px)`
-        const bar = barRef.current
-        bar.style.backgroundColor = "red"
-        bar.style.animation = "none"
-        bar.style.bottom = (window.innerHeight - tapPositionY.current) + "px"
-        bar.style.animation = `move-y-bar-tapped ${elaspedTime + "s"} linear`
+    const tapTile = (accuracy) => {
+        if (accuracy == "miss") {
+            unloadTile()
+        } else {
+            const tile = tileRef.current
+            tile.style.animationPlayState = "paused"
+
+            const tileBox = tile.getBoundingClientRect()
+            tapPositionY.current = tileBox.top + tileBox.height / 2
+            const barClipTap = barClipTapRef.current
+            barClipTap.style.clipPath = `polygon(100vw 0px, 0px 0px, 0px ${tapPositionY.current}px, 100vw ${tapPositionY.current}px)`
+            
+            const bar = barRef.current
+            bar.style.animation = "none"
+            bar.style.bottom = (window.innerHeight - tapPositionY.current) + "px"
+            bar.style.animation = `move-y-bar-tapped ${elapsedTime + "s"} linear`
+            scoreIncrementer.current = setInterval(() => {
+                console.log("increment")
+                updateScoreAndCombo(accuracy)
+            }, elapsedTime / (elapsedBeat - 1) * 1000)
+        }
     }
 
     const unloadTile = () => {
+        clearInterval(scoreIncrementer.current)
         const tile = tileRef.current
         tile.style.animation = "none"
         tile.style.opacity = 0
-        setState(4)
+        setIsUnloaded(true)
     }
 
     const handleMiss = () => {
         onMiss(type, targetBeatNumber)
-        setState(3)
+        unloadTile()
     }
 
     const handleFinish = () => {
-        if (state != 3) {
-            setState(3)
-        }
+        unloadTile()
     }
 
     return (
-        state != 4 ? 
+        isUnloaded ? "" :
         <div className="tile-wrapper" style={{zIndex: id}}>
             <div className="tile" ref={tileRef} onAnimationEnd={handleMiss}>
                 <img 
@@ -174,8 +163,7 @@ const HoldTile = ({ type, tileSpeed, targetBeatNumber, beatNumber, elaspedTime, 
                     </div>
                 </div>
             </div>
-        </div> :
-        ""
+        </div> 
     )
     
 }
