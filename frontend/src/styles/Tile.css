@@ -48,6 +48,15 @@
     }
 }
 
+@keyframes increase-opacity-bar {
+    from {
+        opacity: 0
+    }
+    to {
+        opacity: 0.6;
+    }
+}
+
 @keyframes increase-size-tile {
     from {
         width: 1.5vw;
@@ -69,11 +78,9 @@
 @keyframes move-y-bar {
     from {
         bottom: 60vh;
-        opacity: 1;
     }
     to {
         bottom: -1vh;
-        opacity: 1;
     }
 }
 

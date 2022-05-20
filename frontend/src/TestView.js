@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import HoldTile from './GameViewComponents/HoldTile';
 import Platform from './GameViewComponents/Platform';
 import "./GameView.css"
 
 const TestView = () => {
 
+    useEffect(() => {
+        const yee = setInterval(() => {
+            console.log("yee")
+        }, 5000)
+        return () => {
+            clearInterval(yee)
+        }
+    }, [])
+
     return (
         <div>
-            <div className="component" id="tile-generator">
+            {/* <div className="component" id="tile-generator">
                 <HoldTile
                 type={"right"}
                 tileSpeed={1.3}
@@ -20,7 +29,7 @@ const TestView = () => {
             </div>
             <div className="component" id="platform"> 
                 <Platform/>
-            </div>
+            </div> */}
         </div>
     );
 };

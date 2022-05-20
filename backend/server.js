@@ -60,7 +60,7 @@ io.on("connect", socket => {
             const fftMap= getFFTMap(audioData, buffer, startIndex, bpm) 
 
             console.log("generating beatmap")
-            const beatmap = getBeatmap(fftMap, beatTime)
+            const beatmap = getBeatmap(fftMap, beatTime, bpm)
             const beatmapObj = {
                 videoUrl: videoUrl,
                 bpm: bpm,
@@ -127,9 +127,9 @@ app.get("/getBeatmap", (req, res) => {
         const fftMap= getFFTMap(audioData, buffer, startIndex, bpm) 
 
         console.log("generating beatmap")
-        const beatmap = getBeatmap(fftMap, beatTime)
+        const beatmap = getBeatmap(fftMap, beatTime, bpm)
         const beatmapObj = {
-            fftMap: fftMap
+            beatmap: beatmap
         }
         console.log("process completed")
         res.json(beatmapObj)
@@ -209,7 +209,7 @@ const getFFTMap = (audioData, buffer, startIndex, bpm) => {
     }
     return fftMap 
 }
-const getBeatmap = (fftMap, beatTime) => {
+const getBeatmap = (fftMap, beatTime, bpm) => {
     const frequencies = []
     for (let i = 0; i < fftMap.length; i += 1) {
         for (let j = 0; j < fftMap[i].length; j += 1) {
@@ -223,7 +223,7 @@ const getBeatmap = (fftMap, beatTime) => {
         frequenciesSorted[parseInt(frequenciesSorted.length * 0.75)]
     ]
     const beatmap = []
-    for (let i = 0; i < fftMap.length; i += 1) {
+    for (let i = 0; i < fftMap.length; i += 4) {
         const top4 = fftMap[i]
         let type = null
         if (top4[0].frequency <= quartiles[0]) {
@@ -237,7 +237,9 @@ const getBeatmap = (fftMap, beatTime) => {
         } 
         beatmap.push({
             beatNumber: i + 1, 
-            class: "tap",
+            class: "hold",
+            elapsedTime: 60 / bpm * 4,
+            elapsedBeat: 4,
             type: type,
             state: 1,
             id: i + 1
