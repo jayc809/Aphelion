@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Tile from "./Tile"
 import HoldTile from './HoldTile'
 import "../styles/TileGenerator.css"
@@ -8,7 +8,7 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
     const [beatNumber, setBeatNumber] = useState(0)
     const [currentTiles, setCurrentTiles] = useState(
         Array.apply(null, Array(30)).map((nul, index) => {
-            return {beatNumber: -1, type: "placeholder", state: 1, id: index - 30}
+            return {beatNumber: -1, type: "placeholder", id: index - 30}
         })
     )
     const currentTilesRef = useRef(currentTiles)
@@ -25,18 +25,20 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
     }, [])
 
     useEffect(() => {
-        while (true) {
-            if (beatmapIndexRef.current < beatmapObj.beatmap.length) {
-                const tile = beatmapObj.beatmap[beatmapIndexRef.current]
-                if (tile.beatNumber == beatNumber) {
-                    setCurrentTiles(currentTiles.slice(1, currentTiles.length).concat(tile))
+        if (beatmapIndexRef.current < beatmapObj.beatmap.length) {
+            const tilesToAppend = []
+            while (true) {
+                const currTile = beatmapObj.beatmap[beatmapIndexRef.current]
+                if (currTile.beatNumber == beatNumber) {
+                    tilesToAppend.push(currTile)
                     beatmapIndexRef.current += 1
                 } else {
                     break
                 }
-            } else {
-                break
-            }    
+            }
+            if (tilesToAppend.length > 0) {
+                setCurrentTiles(currentTiles.slice(tilesToAppend.length, currentTiles.length).concat(tilesToAppend))
+            }
         }
     }, [beatNumber])
 

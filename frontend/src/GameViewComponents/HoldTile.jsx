@@ -22,9 +22,25 @@ const HoldTile = ({ type, tileSpeed, targetBeatNumber, elapsedBeat, elapsedTime,
             onMount(type, targetBeatNumber, controller)
         }
         loadTile()
-        // window.addEventListener("keydown", tapTile)
-        // return () => {window.removeEventListener("keydown", tapTile)}
+        // window.addEventListener("keydown", handleDown)
+        // window.addEventListener("keyup", handleUp)
+        // return () => {
+        //     window.removeEventListener("keydown", handleDown)
+        //     window.removeEventListener("keyup", handleUp)
+        // }
     }, [])
+
+    // const [tapped, setTapped] = useState(false)
+    // const handleDown = () => {
+    //     if (!tapped) {
+    //         tapTile("perfect")
+    //         setTapped(true)
+    //     }
+    // }
+    // const handleUp = () => {
+    //     setTapped(false)
+    //     unloadTile()
+    // }
 
     const controller = (instructions, options = null) => {
         switch (instructions) {
@@ -105,11 +121,11 @@ const HoldTile = ({ type, tileSpeed, targetBeatNumber, elapsedBeat, elapsedTime,
             barClipTap.style.clipPath = `polygon(100vw 0px, 0px 0px, 0px ${tapPositionY.current}px, 100vw ${tapPositionY.current}px)`
             
             const bar = barRef.current
-            bar.style.animation = "none"
+            bar.style.opacity = 1
+            bar.style.animation= "none"
             bar.style.bottom = (window.innerHeight - tapPositionY.current) + "px"
             bar.style.animation = `move-y-bar-tapped ${elapsedTime + "s"} linear`
             scoreIncrementer.current = setInterval(() => {
-                console.log("increment")
                 updateScoreAndCombo(accuracy)
             }, elapsedTime / (elapsedBeat - 1) * 1000)
         }
@@ -129,8 +145,10 @@ const HoldTile = ({ type, tileSpeed, targetBeatNumber, elapsedBeat, elapsedTime,
     }
 
     const handleFinish = () => {
+        console.log("finished")
         unloadTile()
     }
+
 
     return (
         isUnloaded ? "" :

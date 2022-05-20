@@ -223,27 +223,55 @@ const getBeatmap = (fftMap, beatTime, bpm) => {
         frequenciesSorted[parseInt(frequenciesSorted.length * 0.75)]
     ]
     const beatmap = []
-    for (let i = 0; i < fftMap.length; i += 4) {
+    for (let i = 0; i < fftMap.length; i += 1) {
         const top4 = fftMap[i]
-        let type = null
-        if (top4[0].frequency <= quartiles[0]) {
-            type = "left"
-        } else if (top4[0].frequency <= quartiles[1]) {
-            type = "middle-left"
-        } else if (top4[0].frequency <= quartiles[2]) {
-            type = "middle-right"
-        } else {
-            type = "right"
-        } 
-        beatmap.push({
-            beatNumber: i + 1, 
-            class: "hold",
-            elapsedTime: 60 / bpm * 4,
-            elapsedBeat: 4,
-            type: type,
-            state: 1,
-            id: i + 1
-        })
+        let leftPresent = false
+        let middleLeftPresent = false
+        let middleRightPresent = false
+        let rightPresent = false
+        for (let j = 0; j < 4; j += 1) {
+            if (top4[j].frequency <= quartiles[0]) {
+                leftPresent = true
+            } else if (top4[j].frequency <= quartiles[1]) {
+                middleLeftPresent = true
+            } else if (top4[j].frequency <= quartiles[2]) {
+                middleRightPresent = true
+            } else {
+                rightPresent = true
+            } 
+        }
+        if (leftPresent) {
+            beatmap.push({
+                beatNumber: i + 1, 
+                class: "tap",
+                type: "left",
+                id: i * 4
+            })
+        }
+        if (middleLeftPresent) {
+            beatmap.push({
+                beatNumber: i + 1, 
+                class: "tap",
+                type: "middle-left",
+                id: (i * 4) + 1
+            })
+        }
+        if (middleRightPresent) {
+            beatmap.push({
+                beatNumber: i + 1, 
+                class: "tap",
+                type: "middle-right",
+                id: (i * 4) + 2
+            })
+        }
+        if (rightPresent) {
+            beatmap.push({
+                beatNumber: i + 1, 
+                class: "tap",
+                type: "right",
+                id: (i * 4) + 3
+            })
+        }
     }
     return beatmap
 }
