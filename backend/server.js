@@ -223,7 +223,7 @@ const getBeatmap = (fftMap, beatTime, bpm) => {
         frequenciesSorted[parseInt(frequenciesSorted.length * 0.75)]
     ]
     const beatmap = []
-    for (let i = 0; i < fftMap.length; i += 1) {
+    for (let i = 0; i < fftMap.length; i += 4) {
         const top4 = fftMap[i]
         let leftPresent = false
         let middleLeftPresent = false
