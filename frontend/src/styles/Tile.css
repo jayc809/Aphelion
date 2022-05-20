@@ -18,17 +18,24 @@
     object-fit: contain;
 }
 
-.bar {
+.bar-clip {
+    height: 100vh;
+    width: 100vw;
     position: absolute;
-    margin: 0;
-    opacity: 0;
     z-index: 10;
+}
+
+.bar {
+    width: 100vw;
+    position: absolute;
+    opacity: 0;
+    margin: 0;
 }
 
 .bar img {
     height: 100%;
     width: 100%;
-    object-fit: contain;
+    object-fit: fill;
 }
 
 
@@ -59,27 +66,39 @@
     }
 }
 
-@keyframes move-x-left {
+@keyframes move-y-bar {
     from {
-        left: 46.3vw;
+        bottom: 60vh;
+        opacity: 1;
     }
     to {
-        left: 15.1vw;
+        bottom: -1vh;
+        opacity: 1;
+    }
+}
+
+
+@keyframes move-x-left {
+    from {
+        left: 46.5vw;
+    }
+    to {
+        left: 14.8vw;
     }
 }
 
 @keyframes move-x-middle-left {
     from {
-        left: 48.3vw;
+        left: 48.4vw;
     }
     to {
-        left: 32.9vw;
+        left: 33vw;
     }
 }
 
 @keyframes move-x-middle-right {
     from {
-        right: 48.3vw;
+        right: 48.1vw;
     }
     to {
         right: 32.9vw;
@@ -91,6 +110,6 @@
         right: 46.3vw;
     }
     to {
-        right: 15.1vw;
+        right: 14.8vw;
     }
 }

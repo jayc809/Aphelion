@@ -1,19 +1,26 @@
 import React from 'react';
+import HoldTile from './GameViewComponents/HoldTile';
+import Platform from './GameViewComponents/Platform';
+import "./GameView.css"
 
 const TestView = () => {
 
-    const array = Array.apply(null, Array(3)).map(() => {
-        return {beatNumber: -1, type: "placeholder", state: 1}
-    })
-    const array2 = Array.apply(null, Array(2)).map(() => {
-        return {beatNumber: -1, type: "placeholder", state: 1}
-    })
-    // console.log(array)
-    console.log(array.concat("hehe").concat(array2))
-
     return (
         <div>
-            
+            <div className="component" id="tile-generator">
+                <HoldTile
+                type={"right"}
+                tileSpeed={1.3}
+                targetBeatNumber={0}
+                elaspedTime={1.3}
+                onMount={(a, b, c)=> {}} 
+                onMiss={(a, b)=>{}}
+                id={1}
+                ></HoldTile>
+            </div>
+            <div className="component" id="platform"> 
+                <Platform/>
+            </div>
         </div>
     );
 };
