@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import ReactPlayer from 'react-player'
 import "../styles/Video.css"
 
-const Video = ({ updateBeatNumber, beatmapObj, tileSpeed, getAllowStart, onAllowStart, onVideoEnd, onMount, blackScreenPresent }) => {
+const Video = ({ updateCurrTime, beatmapObj, tileSpeed, getAllowStart, onAllowStart, onVideoEnd, onMount, blackScreenPresent }) => {
 
     const [playAudio, setPlayAudio] = useState(false)
     const [playVideo, setPlayVideo] = useState(false)
@@ -24,13 +24,8 @@ const Video = ({ updateBeatNumber, beatmapObj, tileSpeed, getAllowStart, onAllow
 
     const updateAudioInfo = () => {
         const currTime = audioRef.current.getCurrentTime()
-        if (!musicHasStarted.current && 
-            currTime >= beatmapObj.startTime - beatmapObj.refreshTolerance && 
-            currTime <= beatmapObj.startTime + beatmapObj.refreshTolerance) {
-            musicHasStarted.current = true
-        }
         if (musicHasStarted.current) {
-            updateBeatNumber(currTime)
+            updateCurrTime(currTime)
         }
     }
 
@@ -38,13 +33,14 @@ const Video = ({ updateBeatNumber, beatmapObj, tileSpeed, getAllowStart, onAllow
         if (getAllowStart() && e.key != "p") {
             const blackScreen = blackScreenRef.current
             setPlayAudio(true)
+            musicHasStarted.current = true
             setTimeout(() => {
                 setPlayVideo(true)
                 setTimeout(() => {
                     blackScreen.style.animation = "fade-out 3s forwards"
                     blackScreenPresent.current = false
                 }, 1000)
-            }, tileSpeed * 1000 - 10)
+            }, tileSpeed * 0.86 * 1000)
             window.removeEventListener("keypress", handlePress)
         }
     }

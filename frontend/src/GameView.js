@@ -108,32 +108,19 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, beatmapObj }) =>
     return () => clearTimeout(mouseTimer)
   }, [handleMouseMove])
 
+
   //control tile generator
   const tileSpeed = 1.3
-  const beatNumberRef = useRef(null)
-  const setBeatNumberRef= useRef(null)
+  const handleTimeChangeRef = useRef(null)
   const pauseTilesRef = useRef(null)
   const playTilesRef = useRef(null)
-  const onTileGeneratorMount = (beatNumber, setBeatNumber, pauseTiles, playTiles) => {
-    beatNumberRef.current = beatNumber
-    setBeatNumberRef.current = setBeatNumber
+  const onTileGeneratorMount = (handleTimeChange, pauseTiles, playTiles) => {
+    handleTimeChangeRef.current = handleTimeChange
     pauseTilesRef.current = pauseTiles
     playTilesRef.current = playTiles
   }
-  const currVideoTime = useRef(0)
-  const getCurrVideoTime = () => {
-    return currVideoTime.current
-  }
-  const updateBeatNumber = (currTime) => {
-    currVideoTime.current = currTime
-    if (currTime >= beatmapObj.beatTime[beatNumberRef.current + 1] - 2 * beatmapObj.refreshTolerance &&
-        currTime <= beatmapObj.beatTime[beatNumberRef.current + 1] + beatmapObj.refreshTolerance) {
-      beatNumberRef.current += 1
-      if (beatNumberRef.current > beatmapObj.beatTime.length - 1) {
-        console.log("exceeded beatTime length")
-      }
-      setBeatNumberRef.current(beatNumberRef.current)
-    }
+  const updateCurrTime = (currTime) => {
+    handleTimeChangeRef.current(currTime)
   }
 
   const allowStart = useRef(false)
@@ -255,7 +242,6 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, beatmapObj }) =>
           tileSpeed={tileSpeed} 
           updateScoreAndCombo={updateScoreAndCombo}
           getAllowStart={getAllowStart}
-          getCurrVideoTime={getCurrVideoTime}
         />
       </div>
 
@@ -267,7 +253,7 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, beatmapObj }) =>
         showVideo ? 
         <div className="component" id="video"> 
           <Video 
-            updateBeatNumber={updateBeatNumber} 
+            updateCurrTime={updateCurrTime} 
             beatmapObj={beatmapObj} 
             tileSpeed={tileSpeed}
             getAllowStart={getAllowStart}

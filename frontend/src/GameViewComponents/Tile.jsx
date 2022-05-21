@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import "../styles/Tile.css"
 import tileImage from "../images/tile.png"
 
-const Tile = ({ type, tileSpeed, targetBeatNumber, onMount, onMiss, id }) => {
+const Tile = ({ type, tileSpeed, targetTime, onMount, onMiss, id }) => {
 
     const tileRef = useRef(null)
     const timingFunctionMove = "cubic-bezier(0.4, 0.1, 0.7, 0.4)"
@@ -12,7 +12,7 @@ const Tile = ({ type, tileSpeed, targetBeatNumber, onMount, onMiss, id }) => {
     //initializations
     useEffect(() => {
         if (type != "placeholder") {
-            onMount(type, targetBeatNumber, controller)
+            onMount(type, targetTime, controller)
         }
         loadTile()
     }, [])
@@ -57,7 +57,7 @@ const Tile = ({ type, tileSpeed, targetBeatNumber, onMount, onMiss, id }) => {
     }
 
     const handleMiss = () => {
-        onMiss(type, targetBeatNumber)
+        onMiss(type, targetTime)
         unloadTile()
     }
 
