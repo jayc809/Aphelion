@@ -140,7 +140,7 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
     const onTileTap = (type) => {
         let closestTargetTime = null
         //makes a copy of currentTiles
-        const tiles = JSON.parse(JSON.stringify(currentTilesRef.current))
+        const tiles = currentTilesRef.current
         for (let i = 0; i < tiles.length; i += 1) {
             const key = type + String(tiles[i].targetTime)
             //finds the first instance in currentTiles where the tile is of type and has not been tapped yet
@@ -190,16 +190,16 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
     }
 
     const onTileRelease = (type) => {
-        let closestTileBeatNumber = null
+        let closestTargetTime = null
         //makes a copy of currentTiles
-        const tiles = JSON.parse(JSON.stringify(currentTilesRef.current))
+        const tiles = currentTilesRef.current
         for (let i = 0; i < tiles.length; i += 1) {
-            const key = String(tiles[i].beatNumber) + type
+            const key = type + String(tiles[i].targetTime)
             //finds the first instance in currentTiles where the tile is of type and has not been tapped yet
             if (tiles[i].type == type && 
                 tappedTiles.current.includes(key) &&
                 !missedTiles.current.includes(key)) {
-                closestTileBeatNumber = tiles[i].beatNumber
+                closestTargetTime = tiles[i].targetTime
                 missedTiles.current.push(key)
                 if (missedTiles.current.length > 30) {
                     missedTiles.current.shift()
@@ -207,8 +207,9 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
                 break
             }
         }
-        if (closestTileBeatNumber != null) {
-            const controller = tileControllers.current[String(closestTileBeatNumber) + type]
+        if (closestTargetTime != null) {
+            const key = type + String(closestTargetTime)
+            const controller = tileControllers.current[key]
             if (controller("getClass") == "hold") {
                 controller("release")
             }
@@ -216,7 +217,7 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
     }
     
     const pauseTiles = () => {
-        const tiles = JSON.parse(JSON.stringify(currentTilesRef.current))
+        const tiles = currentTilesRef.current
         for (let i = 0; i < tiles.length; i += 1) {
             const key = tiles[i].type + String(tiles[i].targetTime)
             //finds the first instance in currentTiles where the tile is of type and has not been tapped yet
@@ -228,7 +229,7 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
     }
 
     const playTiles = () => {
-        const tiles = JSON.parse(JSON.stringify(currentTilesRef.current))
+        const tiles = currentTilesRef.current
         for (let i = 0; i < tiles.length; i += 1) {
             const key = tiles[i].type + String(tiles[i].targetTime)
             //finds the first instance in currentTiles where the tile is of type and has not been tapped yet
@@ -258,9 +259,9 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
                             return <HoldTile 
                                 type={tile.type} 
                                 tileSpeed={tileSpeed} 
-                                targetBeatNumber={tile.beatNumber}
-                                elapsedBeat={tile.elapsedBeat}
-                                elapsedTime={tile.elapsedTime}
+                                targetTime={tile.targetTime}
+                                elapseBeatCount={tile.elapseBeatCount}
+                                elapseTime={tile.elapseTime}
                                 onMount={onTileMount}
                                 onMiss={onTileMiss}
                                 updateScoreAndCombo={updateScoreAndCombo}

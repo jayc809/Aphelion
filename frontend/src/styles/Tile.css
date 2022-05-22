@@ -28,8 +28,9 @@
 .bar {
     width: 100vw;
     position: absolute;
-    opacity: 0;
     margin: 0;
+    opacity: 0;
+    /* background-color: red; */
 }
 
 .bar img {
@@ -80,7 +81,7 @@
         bottom: 60vh;
     }
     to {
-        bottom: -1vh;
+        bottom: -2vh;
     }
 }
 
