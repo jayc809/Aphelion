@@ -160,8 +160,6 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
             const key = type + String(closestTargetTime)
             const controller = tileControllers.current[key]
             const accuracy = getTileAccuracy(closestTargetTime)
-            console.log(currTimeRef.current)
-            console.log(closestTargetTime)
             if (controller("getClass") == "tap") {
                 controller("tap")
                 updateScoreAndCombo(accuracy)

@@ -5,13 +5,14 @@ import "./GameView.css"
 
 const TestView = () => {
 
-    // const arr = [{num: 1}, {num: 2}, {num: 3}, {num: 4}]
+    // const arr = [{tiles: [{class: 1}, {class: 2}, {class: 3}]}, 
+    // {tiles: [{class: 1}, {class: 2}, {class: 3}]},
+    // {tiles: [{class: 1}, {class: 2}, {class: 3}]},
+    // {tiles: [{class: 1}, {class: 2}, {class: 3}]}]
     // useEffect(() => {
-    //     for (let i = 0; i < arr.length; i += 1) {
-    //         if (arr[i].num == 3) {
-    //             arr[i - 1].num = 10
-    //         }
-    //     }
+    //     arr.forEach((t) => {
+    //         t.tiles = t.tiles.filter((tile) => {return tile.class != 1})
+    //     })
     //     console.log(arr)
     // })
 
@@ -22,8 +23,9 @@ const TestView = () => {
                 type={"right"}
                 tileSpeed={1.3}
                 targetTime={0}
-                elapseBeatCount={2}
-                elapseTime={1.3}
+                elapseBeatCount={8}
+                elapseTime={2.6390591754039683
+                }
                 onMount={(a, b, c)=> {}} 
                 onMiss={(a, b)=>{}}
                 updateScoreAndCombo={(a)=>{}}

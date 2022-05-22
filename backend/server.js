@@ -130,7 +130,7 @@ app.get("/getBeatmap", (req, res) => {
         console.log("generating beatmap")
         const beatmap = getBeatmap(fftMap, beatTime, bpm)
         const beatmapObj = {
-            beatmap: fftMap
+            beatmap: beatmap
         }
         console.log("process completed")
         res.json(beatmapObj)
@@ -211,120 +211,6 @@ const getFFTMap = (audioData, buffer, startIndex, bpm) => {
     }
     return fftMap 
 }
-// const getBeatmap = (fftMap, beatTime, bpm) => {
-//     const frequencies = []
-//     for (let i = 0; i < fftMap.length; i += 1) {
-//         for (let j = 0; j < fftMap[i].length; j += 1) {
-//             frequencies.push(fftMap[i][j].frequency)
-//         }
-//     }
-//     const frequenciesSorted = frequencies.sort((a, b) => a - b)
-//     const quartiles = [
-//         frequenciesSorted[parseInt(frequenciesSorted.length * 0.25)],
-//         frequenciesSorted[parseInt(frequenciesSorted.length * 0.5)],
-//         frequenciesSorted[parseInt(frequenciesSorted.length * 0.75)]
-//     ]
-//     let beatmap = []
-//     for (let i = 0; i < fftMap.length; i += 1) {
-//         const top4 = fftMap[i]
-//         let leftPresent = false
-//         let middleLeftPresent = false
-//         let middleRightPresent = false
-//         let rightPresent = false
-//         for (let j = 0; j < 4; j += 1) {
-//             const fft = top4[j]
-//             if (fft.frequency <= quartiles[0] && (fft.magnitude > 0.5 || i < 5)) {
-//                 leftPresent = true
-//             } else if (fft.frequency <= quartiles[1] && (fft.magnitude > 0.5 || i < 5)) {
-//                 middleLeftPresent = true
-//             } else if (fft.frequency <= quartiles[2] && (fft.magnitude > 0.5 || i < 5)) {
-//                 middleRightPresent = true
-//             } else if (fft.frequency <= quartiles[3] && (fft.magnitude > 0.5 || i < 5)) {
-//                 rightPresent = true
-//             } 
-//         }
-//         if (leftPresent) {
-//             beatmap.push({
-//                 beatNumber: i + 1, 
-//                 class: "tap",
-//                 type: "left",
-//                 id: i * 4
-//             })
-//         }
-//         if (middleLeftPresent) {
-//             beatmap.push({
-//                 beatNumber: i + 1, 
-//                 class: "tap",
-//                 type: "middle-left",
-//                 id: (i * 4) + 1
-//             })
-//         }
-//         if (middleRightPresent) {
-//             beatmap.push({
-//                 beatNumber: i + 1, 
-//                 class: "tap",
-//                 type: "middle-right",
-//                 id: (i * 4) + 2
-//             })
-//         }
-//         if (rightPresent) {
-//             beatmap.push({
-//                 beatNumber: i + 1, 
-//                 class: "tap",
-//                 type: "right",
-//                 id: (i * 4) + 3
-//             })
-//         }
-//     }
-//     let currBeatmapIndex = 0
-//     let leftChain = []
-//     let prevBeatNumberLeft = 0
-//     let middleLeftChain = 0
-//     let middleRightChain = 0
-//     let rightChain = 0
-
-//     for (let i = 0; i < beatmap.length; i += 1) {
-//         const tile = beatmap[i]
-//         if (tile.type == "left") {
-//             if (tile.beatNumber == prevBeatNumberLeft + 1) {
-//                 leftChain.push(tile)
-//                 if (leftChain.length == 8) {
-//                     leftChain[0].class = "hold"
-//                     leftChain[0].elapsedBeat = leftChain.length
-//                     leftChain[0].elapsedTime = 60 / bpm * leftChain.length
-//                     for (let j = 1; j < leftChain.length; j += 1) {
-//                         leftChain[j].class = "blank"
-//                     }
-//                     leftChain = []
-//                 }
-//             } else if (tile.beatNumber > prevBeatNumberLeft + 1) {
-//                 if (leftChain.length >= 4 && leftChain.length <= 8) {
-//                     leftChain[0].class = "hold"
-//                     leftChain[0].elapsedBeat = leftChain.length
-//                     leftChain[0].elapsedTime = 60 / bpm * leftChain.length
-//                     for (let j = 1; j < leftChain.length; j += 1) {
-//                         leftChain[j].class = "blank"
-//                     }
-//                 }
-//                 leftChain = []
-//             } else {
-//                 console.log("some weird shit happened")
-//             }
-//             prevBeatNumberLeft = tile.beatNumber
-//         }
-//         // else if (tile.type == "middle-left") {
-
-//         // } else if (tile.type == "middle-right") {
-
-//         // } else if (tile.type == "right") {
-
-//         // }
-//     }
-//     beatmap = beatmap.filter((tile) => {return tile.class != "blank"})
-
-//     return beatmap
-// }
-
 const getBeatmap = (fftMap, beatTime, bpm) => {
     const frequencies = []
     for (let i = 0; i < fftMap.length; i += 1) {
@@ -341,27 +227,151 @@ const getBeatmap = (fftMap, beatTime, bpm) => {
     const beatmap = []
     for (let i = 0; i < fftMap.length; i += 1) {
         const top4 = fftMap[i].meta
-        let type = null
-        if (top4[0].frequency <= quartiles[0]) {
-            type = "left"
-        } else if (top4[0].frequency <= quartiles[1]) {
-            type = "middle-left"
-        } else if (top4[0].frequency <= quartiles[2]) {
-            type = "middle-right"
-        } else {
-            type = "right"
-        } 
+        let leftPresent = false
+        let middleLeftPresent = false
+        let middleRightPresent = false
+        let rightPresent = false
+        for (let j = 0; j < 4; j += 1) {
+            const fft = top4[j]
+            if (fft.frequency <= quartiles[0] && (fft.magnitude > 1)) {
+                leftPresent = true
+            } else if (fft.frequency <= quartiles[1] && (fft.magnitude > 1)) {
+                middleLeftPresent = true
+            } else if (fft.frequency <= quartiles[2] && (fft.magnitude > 1)) {
+                middleRightPresent = true
+            } else if (fft.frequency <= quartiles[3] && (fft.magnitude > 1)) {
+                rightPresent = true
+            } 
+        }
+        const tiles = []
+        if (leftPresent) {
+            tiles.push({
+                targetTime: fftMap[i].time,
+                class: "tap",
+                type: "left",
+                id: i * 4
+            })
+        }
+        if (middleLeftPresent) {
+            tiles.push({
+                targetTime: fftMap[i].time, 
+                class: "tap",
+                type: "middle-left",
+                id: (i * 4) + 1
+            })
+        }
+        if (middleRightPresent) {
+            tiles.push({
+                targetTime: fftMap[i].time,
+                class: "tap",
+                type: "middle-right",
+                id: (i * 4) + 2
+            })
+        }
+        if (rightPresent) {
+            tiles.push({
+                targetTime: fftMap[i].time,
+                class: "tap",
+                type: "right",
+                id: (i * 4) + 3
+            })
+        }
         beatmap.push({
             time: fftMap[i].time,
-            tiles: [
-                {
-                    targetTime: fftMap[i].time,
-                    class: "tap",
-                    type: type,
-                    id: i + 1
-                }
-            ]
+            tiles: tiles
         })
     }
+    let leftChain = []
+    let prevLeftIndex = 0
+    let prevLeftEndIndex = -100
+    let middleLeftChain = 0
+    let middleRightChain = 0
+    let rightChain = 0
+
+    for (let i = 0; i < beatmap.length; i += 1) {
+        const tiles = beatmap[i].tiles
+        for (let j = 0; j < tiles.length; j += 1) {
+            const tile = tiles[j]
+            if (tile.type == "left") {
+                if (i == prevLeftIndex + 1) {
+                    leftChain.push(tile)
+                    if (leftChain.length == 8) {
+                        leftChain[0].class = "hold"
+                        leftChain[0].elapseBeatCount = leftChain.length - 1
+                        leftChain[0].elapseTime = 60 / bpm * (leftChain.length - 1)
+                        for (let k = 1; k < leftChain.length; k += 1) {
+                            leftChain[k].class = "blank"
+                        }
+                        leftChain = []
+                    }
+                } else if (i > prevLeftIndex + 1) {
+                    if (leftChain.length >= 4 && leftChain.length <= 8) {
+                        leftChain[0].class = "hold"
+                        leftChain[0].elapseBeatCount = leftChain.length
+                        leftChain[0].elapseTime = 60 / bpm * leftChain.length
+                        for (let k = 1; k < leftChain.length; k += 1) {
+                            leftChain[k].class = "blank"
+                        }
+                    }
+                    leftChain = []
+                    leftChain.push(tile)
+                }
+                prevLeftIndex = i
+            }
+        }
+        // else if (tile.type == "middle-left") {
+
+        // } else if (tile.type == "middle-right") {
+
+        // } else if (tile.type == "right") {
+
+        // }
+    }
+    
+    beatmap.forEach((meta) => {
+        meta.tiles = meta.tiles.filter((tile) => {return tile.class != "blank"})
+    })
+
     return beatmap
 }
+
+// const getBeatmap = (fftMap, beatTime, bpm) => {
+//     const frequencies = []
+//     for (let i = 0; i < fftMap.length; i += 1) {
+//         for (let j = 0; j < fftMap[i].meta.length; j += 1) {
+//             frequencies.push(fftMap[i].meta[j].frequency)
+//         }
+//     }
+//     const frequenciesSorted = frequencies.sort((a, b) => a - b)
+//     const quartiles = [
+//         frequenciesSorted[parseInt(frequenciesSorted.length * 0.25)],
+//         frequenciesSorted[parseInt(frequenciesSorted.length * 0.5)],
+//         frequenciesSorted[parseInt(frequenciesSorted.length * 0.75)]
+//     ]
+//     const beatmap = []
+//     for (let i = 0; i < fftMap.length; i += 1) {
+//         const top4 = fftMap[i].meta
+//         let type = null
+//         if (top4[0].frequency <= quartiles[0]) {
+//             type = "left"
+//         } else if (top4[0].frequency <= quartiles[1]) {
+//             type = "middle-left"
+//         } else if (top4[0].frequency <= quartiles[2]) {
+//             type = "middle-right"
+//         } else {
+//             type = "right"
+//         } 
+//         beatmap.push({
+//             time: fftMap[i].time,
+//             tiles: [
+//                 {
+//                     targetTime: fftMap[i].time,
+//                     class: "tap",
+//                     type: type,
+//                     id: i + 1
+//                 }
+//             ]
+//         })
+//     }
+//     return beatmap
+// }

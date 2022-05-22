@@ -22,25 +22,25 @@ const HoldTile = ({ type, tileSpeed, targetTime, elapseBeatCount, elapseTime, on
             onMount(type, targetTime, controller)
         }
         loadTile()
-        window.addEventListener("keydown", handleDown)
-        window.addEventListener("keyup", handleUp)
-        return () => {
-            window.removeEventListener("keydown", handleDown)
-            window.removeEventListener("keyup", handleUp)
-        }
+        // window.addEventListener("keydown", handleDown)
+        // window.addEventListener("keyup", handleUp)
+        // return () => {
+        //     window.removeEventListener("keydown", handleDown)
+        //     window.removeEventListener("keyup", handleUp)
+        // }
     }, [])
 
-    const tapped = useRef(false)
-    const handleDown = () => {
-        if (!tapped.current) {
-            tapped.current = true
-            controller("hold", "perfect")
-        }
-    }
-    const handleUp = () => {
-        tapped.current = false
-        controller("release")
-    }
+    // const tapped = useRef(false)
+    // const handleDown = () => {
+    //     if (!tapped.current) {
+    //         tapped.current = true
+    //         controller("hold", "perfect")
+    //     }
+    // }
+    // const handleUp = () => {
+    //     tapped.current = false
+    //     controller("release")
+    // }
 
     const controller = (instructions, options = null) => {
         switch (instructions) {
@@ -114,7 +114,7 @@ const HoldTile = ({ type, tileSpeed, targetTime, elapseBeatCount, elapseTime, on
                 const tileBox = tile.getBoundingClientRect()
                 setTapPositionY(tileBox.top + tileBox.height / 2)
                 const bar = barRef.current
-                bar.style.animation = `move-y-bar-tapped ${elapseTime + "s"} linear`
+                bar.style.animation = `move-y-bar-tapped ${elapseTime + "s"} ${timingFunctionMove}`
                 scoreIncrementer.current = setInterval(() => {
                     updateScoreAndCombo(accuracy)
                 }, elapseTime / (elapseBeatCount - 1) * 1000)
@@ -132,8 +132,13 @@ const HoldTile = ({ type, tileSpeed, targetTime, elapseBeatCount, elapseTime, on
         if (tile != null) {
             tile.style.animation = "none"
             tile.style.opacity = 0
-            setIsUnloaded(true)
         }
+        const bar = barRef.current
+        if (bar != null) {
+            bar.style.animation = "none"
+            bar.style.opacity = 0
+        }
+        setIsUnloaded(true)
     }
 
     const handleMiss = () => {
