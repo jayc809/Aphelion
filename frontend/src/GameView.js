@@ -31,7 +31,7 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, beatmapObj }) =>
   //update score and combo
   const scoreRef = useRef(null)
   const setScoreRef = useRef(null)
-  const allPerfectRef = useRef(true)
+  const fullPerfectRef = useRef(true)
   const onScoreMount = (score, setScore) => {
     scoreRef.current = score
     setScoreRef.current = setScore
@@ -40,6 +40,7 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, beatmapObj }) =>
   const setComboRef = useRef(null)
   const highestComboRef = useRef(0)
   const totalComboRef = useRef(0)
+  const fullComboRef = useRef(true)
   const onComboMount = (combo, setCombo) => {
     comboRef.current = combo
     setComboRef.current = setCombo
@@ -69,19 +70,20 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, beatmapObj }) =>
         setPerfectDisplayRef.current(true)
         break
       case "great":  
-        allPerfectRef.current = false
+        fullPerfectRef.current = false
         incrementScore(parseInt(80 * (1 + comboRef.current / 100)))
         incrementCombo()
         setPerfectDisplayRef.current(false)
         break
       case "good":  
-        allPerfectRef.current = false
+        fullPerfectRef.current = false
         incrementScore(parseInt(60 * (1 + comboRef.current / 100)))
         incrementCombo()
         setPerfectDisplayRef.current(false)
         break
       case "miss": 
-        allPerfectRef.current = false
+        fullPerfectRef.current = false
+        fullComboRef.current = false
         comboRef.current = 0
         setComboRef.current(0)
         setPerfectDisplayRef.current(false)
@@ -134,12 +136,12 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, beatmapObj }) =>
   const endingBlackScreenRef = useRef(null)
   const [showVideo, setShowVideo] = useState(true)
   const getResultsObj = () => {
-    const maxCombo = beatmapObj.beatmap.length
+    const maxCombo = beatmapObj.maxCombo
     const highestCombo = highestComboRef.current
     const totalCombo = totalComboRef.current
     const score = scoreRef.current
-    const fullCombo = totalCombo == beatmapObj.beatmap.length ? true : false
-    const fullPerfect = allPerfectRef.current
+    const fullCombo = fullComboRef.current
+    const fullPerfect = fullPerfectRef.current
     let tier = null
     if (fullCombo || fullPerfect) {
       tier = "S"

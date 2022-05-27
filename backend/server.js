@@ -61,13 +61,18 @@ io.on("connect", socket => {
 
             console.log("generating beatmap")
             const beatmap = getBeatmap(fftMap, beatTime, bpm)
+
+            let maxCombo = 0
+            beatmap.forEach((beat) => {
+                maxCombo += beat.tiles.length
+            })
             const beatmapObj = {
                 videoUrl: videoUrl,
                 bpm: bpm,
                 startTime: startTime,
                 totalTime: audioData.length / buffer.sampleRate,
-                beatTime: beatTime,
-                beatmap: beatmap
+                beatmap: beatmap,
+                maxCombo: maxCombo
             }
 
             socket.emit("progress-update", "process completed")
@@ -222,7 +227,8 @@ const getBeatmap = (fftMap, beatTime, bpm) => {
     const quartiles = [
         frequenciesSorted[parseInt(frequenciesSorted.length * 0.25)],
         frequenciesSorted[parseInt(frequenciesSorted.length * 0.5)],
-        frequenciesSorted[parseInt(frequenciesSorted.length * 0.75)]
+        frequenciesSorted[parseInt(frequenciesSorted.length * 0.75)],
+        frequenciesSorted[frequenciesSorted.length - 1]
     ]
     const beatmap = []
     for (let i = 0; i < fftMap.length; i += 1) {
@@ -282,50 +288,57 @@ const getBeatmap = (fftMap, beatTime, bpm) => {
         })
     }
     let leftChain = []
-    let prevLeftIndex = 0
-    let prevLeftEndIndex = -100
-    let middleLeftChain = 0
-    let middleRightChain = 0
-    let rightChain = 0
+    let leftPrevIndex = [0]
+    let middleLeftChain = []
+    let middleLeftPrevIndex = [0]
+    let middleRightChain = []
+    let middleRightPrevIndex = [0]
+    let rightChain = [0]
+    let rightPrevIndex = [0]
+    
+    const tranformHoldTiles = (tile, beat, chain, prevIndex, limit) => {
+        if (beat == prevIndex[0] + 1) {
+            chain.push(tile)
+            if (chain.length == limit) {
+                chain[0].class = "hold"
+                chain[0].elapseBeatCount = chain.length - 1
+                chain[0].elapseTime = 60 / bpm * (chain.length - 1)
+                for (let k = 1; k < chain.length; k += 1) {
+                    chain[k].class = "blank"
+                }
+                chain.length = 0
+            }
+        } else if (beat > prevIndex[0] + 1) {
+            if (chain.length >= 4 && chain.length <= limit) {
+                chain[0].class = "hold"
+                chain[0].elapseBeatCount = chain.length
+                chain[0].elapseTime = 60 / bpm * chain.length
+                for (let k = 1; k < chain.length; k += 1) {
+                    chain[k].class = "blank"
+                }
+            }
+            chain.length = 0
+            chain.push(tile)
+        }
+        prevIndex[0] = beat
+    }
 
     for (let i = 0; i < beatmap.length; i += 1) {
         const tiles = beatmap[i].tiles
         for (let j = 0; j < tiles.length; j += 1) {
             const tile = tiles[j]
             if (tile.type == "left") {
-                if (i == prevLeftIndex + 1) {
-                    leftChain.push(tile)
-                    if (leftChain.length == 8) {
-                        leftChain[0].class = "hold"
-                        leftChain[0].elapseBeatCount = leftChain.length - 1
-                        leftChain[0].elapseTime = 60 / bpm * (leftChain.length - 1)
-                        for (let k = 1; k < leftChain.length; k += 1) {
-                            leftChain[k].class = "blank"
-                        }
-                        leftChain = []
-                    }
-                } else if (i > prevLeftIndex + 1) {
-                    if (leftChain.length >= 4 && leftChain.length <= 8) {
-                        leftChain[0].class = "hold"
-                        leftChain[0].elapseBeatCount = leftChain.length
-                        leftChain[0].elapseTime = 60 / bpm * leftChain.length
-                        for (let k = 1; k < leftChain.length; k += 1) {
-                            leftChain[k].class = "blank"
-                        }
-                    }
-                    leftChain = []
-                    leftChain.push(tile)
-                }
-                prevLeftIndex = i
+                tranformHoldTiles(tile, i, leftChain, leftPrevIndex, 8)
+            } 
+            // else if (tile.type == "middle-left") {
+            //     // tranformHoldTiles(tile, i, middleLeftChain, middleLeftPrevIndex, 4)
+            // } else if (tile.type == "middle-right") {
+            //     // tranformHoldTiles(tile, i, middleRightChain, middleRightPrevIndex, 4)
+            // } 
+            else if (tile.type == "right") {
+                tranformHoldTiles(tile, i, rightChain, rightPrevIndex, 8)
             }
         }
-        // else if (tile.type == "middle-left") {
-
-        // } else if (tile.type == "middle-right") {
-
-        // } else if (tile.type == "right") {
-
-        // }
     }
     
     beatmap.forEach((meta) => {
