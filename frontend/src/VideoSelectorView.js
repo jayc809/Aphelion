@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 import axios from "axios"
 import dummyVideoInfo from "./dummyVideoInfo.json"
-import ScrollList from './VideoInfoComponents/ScrollList'
-import VideoInfo from './VideoInfoComponents/VideoInfo'
-import "./VideoInfoView.css"
+import ScrollList from './VideoSelectorComponents/ScrollList'
+import VideoInfo from './VideoSelectorComponents/VideoInfo'
+import "./VideoSelectorView.css"
 import "./App.css"
 
-const VideoInfoView = () => {
+const VideoSelectorView = () => {
 
     const searchKeywordRef = useRef("ghost suisei")
     const [videos, setVideos] = useState([])
@@ -81,4 +81,4 @@ const VideoInfoView = () => {
     )
 }
 
-export default VideoInfoView
+export default VideoSelectorView

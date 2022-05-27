@@ -2,13 +2,13 @@ import './App.css'
 import GameView from "./GameView"
 import AnalyzerView from './AnalyzerView'
 import ResultsView from './ResultsView'
-import VideoInfoView from './VideoInfoView'
+import VideoSelectorView from './VideoSelectorView'
 import TestView from "./TestView"
 import { useRef, useState } from 'react'
 
 function App() {
 
-  const [view, setView] = useState("analyzer")
+  const [view, setView] = useState("videos")
   const [gameId, setGameId] = useState(0)
   const beatmapObjRef = useRef(null)
   const resultsObjRef = useRef(null)
@@ -29,7 +29,7 @@ function App() {
     <div id="app">
       {
         {
-          "videoinfo": <VideoInfoView/>,
+          "videos": <VideoSelectorView/>,
           "analyzer": <AnalyzerView setView={setView} setBeatmapObjRef={setBeatmapObjRef}/>,
           "game": <GameView setView={setView} incrementGameId={incrementGameId} setResultsObjRef={setResultsObjRef} beatmapObj={beatmapObjRef.current} key={gameId}/>,
           "results": <ResultsView resultsObj={resultsObjRef.current}/>
