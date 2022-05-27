@@ -8,8 +8,8 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
 
     const [beatmapIndex, setBeatmapIndex] = useState(null)
     const [currentTiles, setCurrentTiles] = useState(
-        Array.apply(null, Array(30)).map((nul, index) => {
-            return {beatNumber: -1, type: "placeholder", id: index - 30}
+        Array.apply(null, Array(40)).map((nul, index) => {
+            return {beatNumber: -1, type: "placeholder", id: index - 40}
         })
     )
     const currentTilesRef = useRef(currentTiles)
@@ -131,7 +131,7 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
         const key = type + String(targetTime)
         missedTiles.current.push(key)
         updateScoreAndCombo("miss")
-        if (missedTiles.current.length > 30) {
+        if (missedTiles.current.length > 40) {
             missedTiles.current.shift()
         }
     }
@@ -149,7 +149,7 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
                 !missedTiles.current.includes(key)) {
                 closestTargetTime = tiles[i].targetTime
                 tappedTiles.current.push(key)
-                if (tappedTiles.current.length > 30) {
+                if (tappedTiles.current.length > 40) {
                     tappedTiles.current.shift()
                 }
                 break
@@ -199,7 +199,7 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
                 !missedTiles.current.includes(key)) {
                 closestTargetTime = tiles[i].targetTime
                 missedTiles.current.push(key)
-                if (missedTiles.current.length > 30) {
+                if (missedTiles.current.length > 40) {
                     missedTiles.current.shift()
                 }
                 break

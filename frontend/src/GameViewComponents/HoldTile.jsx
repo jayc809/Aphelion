@@ -10,6 +10,7 @@ const HoldTile = ({ type, tileSpeed, targetTime, elapseBeatCount, elapseTime, on
     const barClipRef = useRef(null)
     const barClipTapRef = useRef(null)
     const timingFunctionMove = "cubic-bezier(0.4, 0.1, 0.7, 0.4)"
+    const timingFunctionMoveBar = "cubic-bezier(0.95, 0.9, 1.0, 0.9)"
     const timingFunctionOpacity = "cubic-bezier(0.0, 0.7, 0.0, 0.9)"
     const [isUnloaded, setIsUnloaded] = useState(false)
     const [tapPositionY, setTapPositionY] = useState(null)
@@ -22,25 +23,7 @@ const HoldTile = ({ type, tileSpeed, targetTime, elapseBeatCount, elapseTime, on
             onMount(type, targetTime, controller)
         }
         loadTile()
-        // window.addEventListener("keydown", handleDown)
-        // window.addEventListener("keyup", handleUp)
-        // return () => {
-        //     window.removeEventListener("keydown", handleDown)
-        //     window.removeEventListener("keyup", handleUp)
-        // }
     }, [])
-
-    // const tapped = useRef(false)
-    // const handleDown = () => {
-    //     if (!tapped.current) {
-    //         tapped.current = true
-    //         controller("hold", "perfect")
-    //     }
-    // }
-    // const handleUp = () => {
-    //     tapped.current = false
-    //     controller("release")
-    // }
 
     const controller = (instructions, options = null) => {
         switch (instructions) {
@@ -114,7 +97,7 @@ const HoldTile = ({ type, tileSpeed, targetTime, elapseBeatCount, elapseTime, on
                 const tileBox = tile.getBoundingClientRect()
                 setTapPositionY(tileBox.top + tileBox.height / 2)
                 const bar = barRef.current
-                bar.style.animation = `move-y-bar-tapped ${elapseTime + "s"} ${timingFunctionMove}`
+                bar.style.animation = `move-y-bar-tapped-${id} ${elapseTime + "s"} ${timingFunctionMoveBar}`
                 scoreIncrementer.current = setInterval(() => {
                     updateScoreAndCombo(accuracy)
                 }, elapseTime / (elapseBeatCount - 1) * 1000)
@@ -164,7 +147,7 @@ const HoldTile = ({ type, tileSpeed, targetTime, elapseBeatCount, elapseTime, on
                 <div className="bar-clip" ref={barClipRef}>
                     <div className="bar" ref={barRef} onAnimationEnd={handleFinish}>
                         <style>{`
-                            @keyframes move-y-bar-tapped {
+                            @keyframes move-y-bar-tapped-${id} {
                                 from { 
                                     bottom: ${window.innerHeight - tapPositionY}px; 
                                     opacity: 1;
