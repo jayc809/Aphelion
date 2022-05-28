@@ -3,6 +3,7 @@ import axios from "axios"
 import dummyVideoInfo from "./dummyVideoInfo.json"
 import ScrollList from './VideoSelectorComponents/ScrollList'
 import VideoInfo from './VideoSelectorComponents/VideoInfo'
+import bg from "./images/video-selector-bg.png"
 import "./VideoSelectorView.css"
 import "./App.css"
 
@@ -58,8 +59,8 @@ const VideoSelectorView = () => {
 
 
     return (
-        <div className="video-info-view-wrapper">
-            <div className="search-bar">
+        <div className="video-selector-view-wrapper">
+            {/* <div className="search-bar">
                 <input className="search-input" id="search-input-el" type="text" onChange={handleSearchInputChange}></input>
                 <button className="search-button" onClick={handleSearchSubmit}>Search</button>
             </div>
@@ -73,9 +74,13 @@ const VideoSelectorView = () => {
                     `${selectedVideo.snippet.title} - ${selectedVideo.snippet.channelTitle}` :
                     ""
                 }
-            </button>
+            </button> */}
             <div className="scroll-list" >
                 <ScrollList videosInput={videos} setSelectedVideo={setSelectedVideo}/>
+            </div>
+
+            <div className="video-selector-background">
+                <img src={bg}></img>
             </div>
         </div>
     )

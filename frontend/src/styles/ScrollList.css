@@ -1,26 +1,83 @@
 .scroll-list-wrapper {
     height: 100vh;
-    width: 100%;
+    width: 100vw;
+    overflow: hidden;
 }
 
 .scroll-list-ul {
-    height: 100vh;
+    height: 150vh;
+    width: 66%;
+    position: absolute;
+    top: -25vh;
+    left: 17%;
     margin: 0;
     padding: 0;
-    overflow: scroll;
-    box-sizing: border-box; 
-    width: calc(100% + 50px);
+    transform: rotate(15deg);
+    transform-origin: center;
+    /* border: 2px green solid; */
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-color: transparent transparent;
+    scrollbar-base-color: transparent transparent;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+}
+::-webkit-scrollbar-track-piece  {
+    background-color: transparent;
+}
+::-webkit-scrollbar-thumb:vertical {
+    height: 10px;
+    background-color: transparent;
+    border-radius: 10px; 
+}
+
+.scroll-list-button-wrapper {
+    aspect-ratio: 5.4;
+    width: 100%;
+    margin-bottom: calc(100vh / 27);
+    transform: rotate(-15deg);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.scroll-list-button-wrapper button {
+    grid-row-start: 1;
+    grid-column-start: 1;
+    font-family: "Futura-Light";
+    border: 0;
+    color: white;
+    background-color: transparent;
+    white-space: nowrap;
+    text-align: left;
 }
 
 .scroll-list-button {
-    height: calc(100vh / 9);
-    width: calc(100% - 50px);
-    margin-bottom: calc(100vh / 27);
-    font-family: "Futura-Light";
-    font-size: 150%;
+    height: 100%;
+    width: 100%;
     white-space: nowrap;
+    background-color: transparent;
+    background-size: contain;
+    background-image: url("../images/video-row.png");
+    background-repeat: no-repeat;
+}
+
+.scroll-list-button-title-text {
+    height: 100%;
+    width: 90%;
+    text-indent: 5vw;
+    font-size: 3.6vh;
+    padding-bottom: 2.7vh;
     overflow: hidden;
-    background-color: black;
-    color: white;
-    border: 2px solid white;
+}
+
+.scroll-list-button-artist-text {
+    height: 100%;
+    width: 90%;
+    text-indent: 4.9vw;
+    font-size: 2.3vh;
+    padding-top: 5.9vh;
+    overflow: hidden;
 }
