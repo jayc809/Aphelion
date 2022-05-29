@@ -11,6 +11,7 @@ const AnalyzerView = ({ setView, setBeatmapObjRef }) => {
     useEffect(() => {
         const videoUrl = "https://www.youtube.com/watch?v=IKKar5SS29E"
         // const videoUrl = "https://www.youtube.com/watch?v=3cqV5BKJHyk"
+        // const videoUrl = "https://www.youtube.com/watch?v=8-vBG40_c_Y"
         const socket = socketIOClient("http://localhost:5000")
         socket.on("connected-to-server", () => {
             socket.emit("request-beatmap", videoUrl)

@@ -76,6 +76,7 @@ const Video = ({ updateCurrTime, beatmapObj, tileSpeed, getAllowStart, onAllowSt
                     height="200%"
                     onReady={handlePlayerReady}
                     onEnded={handleEnd}
+                    volume={0.5}
                     // onEnded={console.log("video ended")}
                     // onError={console.log("video error")}
                 />

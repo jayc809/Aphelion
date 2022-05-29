@@ -34,7 +34,7 @@
 
 .settings-list-row h3 {
     height: 100%;
-    width: 40%;
+    width: 50%;
     box-sizing: border-box;
     /* border: 1px solid red; */
     margin: 0;
@@ -46,9 +46,9 @@
 
 .settings-list-row-content {
     height: 100%;
-    width: 60%;
+    width: 50%;
     box-sizing: border-box;
-    border: 1px solid cyan;
+    /* border: 1px solid cyan; */
     margin: 0;
     background-color: transparent;
     display: grid;
@@ -113,4 +113,35 @@
     padding: 0;
     border: 0;
     /* border: red 1px solid; */
+}
+  
+/* The slider itself */
+.hue-slider {
+    -webkit-appearance: none;  
+    appearance: none;
+    width: 60%; 
+    aspect-ratio: 25;
+    background: transparent; 
+    background-image: url("../images/slider-background.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    outline: none; 
+}
+
+.hue-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; 
+    appearance: none;
+    width: 10%;
+    aspect-ratio: 1;
+    background: white; 
+    border-radius: 100%;
+    cursor: move;
+}
+
+.hue-slider::-moz-range-thumb {
+    width: 10%;
+    aspect-ratio: 1;
+    background: white; 
+    border-radius: 100%;
+    cursor: move;
 }

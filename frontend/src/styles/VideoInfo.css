@@ -16,6 +16,7 @@
     margin-bottom: 1vh;
     display: grid;
     grid-template-columns: 1fr;
+    place-items: center;
 }
 
 .video-thumbnail-frame {
@@ -25,6 +26,7 @@
     width: 100%;
     object-fit: contain;
     background-color: transparent;
+    /* border: 2px solid blue; */
 }
 
 .video-thumbnail-img {
@@ -33,6 +35,22 @@
     aspect-ratio: 16/9;
     width: 100%;
     object-fit: cover;
+    background-color: transparent;
+}
+
+.video-thumbnail-video-wrapper {
+    grid-row-start: 1;
+    grid-column-start: 1;
+    aspect-ratio: 16/9;
+    width: 100%;
+    background-color: transparent;
+    overflow: hidden;
+}
+
+.video-thumbnail-video {
+    aspect-ratio: 8/9;
+    width: 100%;
+    margin-top: calc(-52vw * 0.85 * 9 / 16 / 2);
     background-color: transparent;
 }
 

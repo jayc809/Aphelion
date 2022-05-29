@@ -76,10 +76,16 @@ const VideoSelectorView = () => {
     const selectedVideoRef = useRef(null)
     const settingsRef = useRef(null)
     const animationTime = 0.3
+    const setUseVideoRef = useRef(null)
+
+    const onVideoInfoMount = (setUseVideo) => {
+        setUseVideoRef.current = setUseVideo
+    }
 
     const showSettings = () => {
         scrollListRef.current.style.animation = `hide-scroll-list ${animationTime}s ease-out forwards`
         selectedVideoRef.current.style.animation = `hide-selected-video ${animationTime}s ease-out forwards`
+        setUseVideoRef.current(true)
         setTimeout(() => {
             settingsRef.current.style.animation =  `show-settings ${animationTime}s ease-out forwards`
             settingsShowingRef.current = true
@@ -88,6 +94,7 @@ const VideoSelectorView = () => {
 
     const hideSettings = () => {
         settingsRef.current.style.animation =  `hide-settings ${animationTime}s ease-out forwards`
+        setUseVideoRef.current(false)
         setTimeout(() => {  
             scrollListRef.current.style.animation = `show-scroll-list ${animationTime}s ease-out forwards`
             selectedVideoRef.current.style.animation = `show-selected-video ${animationTime}s ease-out forwards`
@@ -111,16 +118,15 @@ const VideoSelectorView = () => {
         difficulty: "Hard",
         tileSpeed: 1.3,
         theme: "dark",
-        themeHue: 15,
-        videoSaturation: 2,
+        uiHue: 0,
+        uiSaturation: 1.6,
+        uiBrightness: 1.0,
+        videoSaturation: 2.0,
         videoBrightness: 0.8,
         smoothAnimations: true,
         beatNotes: true,
         lowerVolumeOnMisses: false
     })
-    useEffect(() => {
-        console.log(settingsObj)
-    }, [settingsObj])
 
     return (
         <div className="video-selector-view-wrapper">
@@ -131,7 +137,7 @@ const VideoSelectorView = () => {
                 {showYT ? <img className="search-YT-logo" src={ytLogo}></img> : ""}
             </div>
 
-            <div className="video-selected" ref={selectedVideoRef}>
+            <div className="video-selected" ref={selectedVideoRef} style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
                 <button className="video-selected-button">
                 </button>
                 <button className="video-selected-title-text">
@@ -146,15 +152,15 @@ const VideoSelectorView = () => {
                 <SettingsList settingsObj={settingsObj} setSettingsObj={setSettingsObj}></SettingsList>
             </div>
 
-            <div className="scroll-list" ref={scrollListRef}>
+            <div className="scroll-list" ref={scrollListRef} style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
                 <ScrollList videosInput={videos} setSelectedVideo={setSelectedVideo}/>
             </div>
 
             <div className="video-info">
-                <VideoInfo videoInfo={selectedVideo}/>
+                <VideoInfo videoInfo={selectedVideo} settingsObj={settingsObj} onMount={onVideoInfoMount}/>
             </div>
 
-            <div className="video-buttons">
+            <div className="video-buttons" style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
                 <button className="back-button" onClick={handleBackButtonClick}>Back</button>
                 <button className="next-button" onClick={handleNextButtonClick}>Next</button>
             </div>
