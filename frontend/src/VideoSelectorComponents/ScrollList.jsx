@@ -43,7 +43,7 @@ const ScrollList = ({ videosInput, setSelectedVideo }) => {
                     break
                 }
             }
-        }, 100)
+        }, 10)
         return () => {
             clearInterval(videoButtonPositionUpdater)
         }
@@ -65,7 +65,13 @@ const ScrollList = ({ videosInput, setSelectedVideo }) => {
                             </button>
                             <button className="scroll-list-button-artist-text" id={"videoButton" + index}>
                                 {index != selectedVideoIndex && videoSnippet.snippet.title != "" ? 
-                                    "- " + videoSnippet.snippet.channelTitle : 
+                                    "- " + videoSnippet.snippet.channelTitle :
+                                    ""
+                                }
+                            </button>
+                            <button className="scroll-list-button-duration-text" id={"videoButton" + index}>
+                                {index != selectedVideoIndex && videoSnippet.snippet.title != "" ? 
+                                    videoSnippet.snippet.duration : 
                                     ""
                                 }
                             </button>

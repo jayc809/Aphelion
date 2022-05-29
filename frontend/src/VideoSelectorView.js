@@ -24,7 +24,8 @@ const VideoSelectorView = () => {
         window.addEventListener("keypress", handleKeyPress)
         setVideos(dummyVideoInfo.items)
         const checkEmptyInput = setInterval(() => {
-            if (document.getElementById("search-input-el").value == "") {
+            const inputEl = document.getElementById("search-input-el")
+            if (inputEl.value == "" && document.activeElement != inputEl) {
                 setShowYT(true)
             } else {
                 setShowYT(false)
@@ -48,27 +49,74 @@ const VideoSelectorView = () => {
         searchKeywordRef.current = e.target.value
     }
 
+    const [viewKey, setViewKey] = useState(0)
+
     const handleSearchSubmit = () => {
         if (searchKeywordRef.current == lastSubmittedSearchKeywordRef.current) {
             return  
         }
         lastSubmittedSearchKeywordRef.current = searchKeywordRef.current
-        // axios.get("https://www.googleapis.com/youtube/v3/search", {
-        //     params: {
-        //         part: "snippet",
-        //         key: "AIzaSyBDJAkuO_5rZovFS6DNIrEKMziVx4vlBmw",
-        //         q: searchKeywordRef.current,
-        //         type: "video",
-        //         maxResults: 50,
-        //         videoDimension: "2d",
-        //         videoEmbeddable: true,
-        //         videoSyndicated: true,
-        //     }
-        // })
-        // .then(response => {
-        //     setVideos(response.data.items)
-        // })
-        setVideos(dummyVideoInfo.items)
+        hideSettings()
+        let firstSearchResult = []
+        let secondSearchResult = []
+        axios.get("https://www.googleapis.com/youtube/v3/search", {
+            params: {
+                part: "snippet",
+                key: "AIzaSyBDJAkuO_5rZovFS6DNIrEKMziVx4vlBmw",
+                q: searchKeywordRef.current,
+                type: "video",
+                maxResults: 50,
+                videoDimension: "2d",
+                videoEmbeddable: true,
+                videoSyndicated: true,
+            }
+        })
+        .then(response => {
+            firstSearchResult = response.data.items
+        })
+        .then(() => {
+            let videoIds = firstSearchResult[0].id.videoId
+            firstSearchResult.slice(1, firstSearchResult.length).forEach((info) => {
+                videoIds += "," + info.id.videoId.toString()
+            })
+            axios.get("https://www.googleapis.com/youtube/v3/videos", {
+                params: {
+                    part: "snippet, contentDetails",
+                    key: "AIzaSyBDJAkuO_5rZovFS6DNIrEKMziVx4vlBmw",
+                    id: videoIds,
+                }
+            })
+            .then((response) => {
+                response.data.items.forEach((info) => {
+                    const snippet = JSON.parse(JSON.stringify(info.snippet))
+                    const duration = info.contentDetails.duration
+                    const hours = /\d+(?=H)/.exec(duration)
+                    const minutes = parseInt(/\d+(?=M)/.exec(duration))
+                    const seconds = parseInt(/\d+(?=S)/.exec(duration))
+                    let durationString = null
+                    if (hours == null) {
+                        if (minutes != null && minutes <= 6 && minutes >= 1) {
+                            if (!Number.isNaN(seconds)) {
+                                if (Math.floor(seconds / 10) == 0) {
+                                    durationString = minutes.toString() + ":0" + seconds.toString()
+                                } else {
+                                    durationString = minutes.toString() + ":" + seconds.toString()
+                                }
+                            } else {
+                                durationString = minutes.toString() + ":00"
+                            }
+                        }
+                    }
+                    if (durationString != null) {
+                        snippet.duration = durationString
+                        const videoId = info.id
+                        secondSearchResult.push({id: {videoId: videoId}, snippet: snippet})
+                    }
+                })
+                setVideos(secondSearchResult)
+                setViewKey(viewKey + 1)
+            })
+        })
     }
 
     const settingsShowingRef = useRef(false)
@@ -129,12 +177,12 @@ const VideoSelectorView = () => {
     })
 
     return (
-        <div className="video-selector-view-wrapper">
+        <div className="video-selector-view-wrapper" key={viewKey}>
             <div className="search-bar">
-                <input className="search-input" id="search-input-el" type="text" onChange={handleSearchInputChange} autoComplete="off"></input>
                 <img className="search-bar-background" src={searchBarBackground}></img>
                 {showYT ? <div className="search-YT">Search</div> : ""}
                 {showYT ? <img className="search-YT-logo" src={ytLogo}></img> : ""}
+                <input className="search-input" id="search-input-el" type="text" onChange={handleSearchInputChange} onFocus={() => {setShowYT(false)}} autoComplete="off"></input>
             </div>
 
             <div className="video-selected" ref={selectedVideoRef} style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
@@ -145,6 +193,9 @@ const VideoSelectorView = () => {
                 </button>
                 <button className="video-selected-artist-text">
                     {"- " + selectedVideo.snippet.channelTitle}
+                </button>
+                <button className="video-selected-duration-text">
+                    {selectedVideo.snippet.duration} 
                 </button>
             </div>
 

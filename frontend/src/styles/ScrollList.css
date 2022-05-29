@@ -81,3 +81,12 @@
     padding-top: 5.9vh;
     overflow: hidden;
 }
+
+.scroll-list-button-duration-text {
+    height: 100%;
+    width: 90%;
+    text-indent: 30vw;
+    font-size: 2.1vh;
+    padding-top: 6vh;
+    overflow: hidden;
+}

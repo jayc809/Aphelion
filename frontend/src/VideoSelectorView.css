@@ -146,6 +146,15 @@ input:focus {
     overflow: hidden;
 }
 
+.video-selected-duration-text {
+    height: 100%;
+    width: 90%;
+    text-indent: 36vw;
+    font-size: 2.65vh;
+    padding-top: 7.9vh;
+    overflow: hidden;
+}
+
 .video-info {
     height: 100vh;
     width: 52vw;
@@ -230,6 +239,10 @@ input:focus {
     position: absolute;
     z-index: 9;
     right: calc(-42vw - 2vw);
+}
+
+pre {
+    font-family: "Futura-Light";
 }
 
 @keyframes hide-scroll-list {
