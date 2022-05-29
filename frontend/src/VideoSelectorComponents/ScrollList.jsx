@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import "../styles/ScrollList.css"
-import videoRow from "../images/video-row.png"
 const ScrollList = ({ videosInput, setSelectedVideo }) => {
 
     useEffect(() => {
@@ -44,7 +43,7 @@ const ScrollList = ({ videosInput, setSelectedVideo }) => {
                     break
                 }
             }
-        }, 10)
+        }, 100)
         return () => {
             clearInterval(videoButtonPositionUpdater)
         }
@@ -55,16 +54,16 @@ const ScrollList = ({ videosInput, setSelectedVideo }) => {
             <ul className="scroll-list-ul">
                 {videos.map((videoSnippet, index) => { 
                     return (
-                        <div className="scroll-list-button-wrapper">
-                            <button className="scroll-list-button" key={index} id={"videoButton" + index} >
+                        <div className="scroll-list-button-wrapper" key={index}>
+                            <button className="scroll-list-button" id={"videoButton" + index} >
                             </button>
-                            <button className="scroll-list-button-title-text" key={index * 2} id={"videoButton" + index}>
+                            <button className="scroll-list-button-title-text" id={"videoButton" + index}>
                                 {index != selectedVideoIndex && videoSnippet.snippet.title != "" ? 
                                     videoSnippet.snippet.title : 
                                     ""
                                 }
                             </button>
-                            <button className="scroll-list-button-artist-text" key={index * 2} id={"videoButton" + index}>
+                            <button className="scroll-list-button-artist-text" id={"videoButton" + index}>
                                 {index != selectedVideoIndex && videoSnippet.snippet.title != "" ? 
                                     "- " + videoSnippet.snippet.channelTitle : 
                                     ""

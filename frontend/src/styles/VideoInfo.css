@@ -1,21 +1,39 @@
 .video-info-wrapper {
-    height: calc(100vh - 5vh - 30px);
+    height: 100%;
     width: 100%;
-    top: calc(5vh + 30px);
-    /* border: 2px solid red; */
     position: absolute;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    padding: 30px;
+    /* border: 2px solid red; */
+    display: grid;
+    place-items: center right;
 }
 
-.video-info-thumbnail {
-    height: 50%;
-    width: 100%;
-    box-sizing: border-box;
-    border: 2px solid white;
+.video-thumbnail-wrapper {
+    aspect-ratio: 1650 / 950;
+    width: 85%;
     object-fit: cover;
+    position: absolute;
+    background-color: transparent;
+    margin-bottom: 1vh;
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.video-thumbnail-frame {
+    grid-row-start: 1;
+    grid-column-start: 1;
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    background-color: transparent;
+}
+
+.video-thumbnail-img {
+    grid-row-start: 1;
+    grid-column-start: 1;
+    aspect-ratio: 16/9;
+    width: 100%;
+    object-fit: cover;
+    background-color: transparent;
 }
 
 .video-info-description {
@@ -24,4 +42,60 @@
     margin-top: 30px;
     box-sizing: border-box;
     /* border: 2px solid green; */
+}
+
+.video-high-score {
+    aspect-ratio: 1585 / 386;
+    width: 30vw;
+    margin-top: 27vw;
+    margin-right: 20vw;
+    z-index: 100;
+    display: grid;
+    grid-template-columns: 1fr;
+    background-color: transparent;
+}
+
+.video-high-score img {
+    grid-row-start: 1;
+    grid-column-start: 1;
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    background-color: transparent;
+}
+
+.video-high-score h4 {
+    grid-row-start: 1;
+    grid-column-start: 1;
+    height: 100%;
+    width: 90%;
+    text-align: right;
+    font-size: 2.5vh;
+    padding-top: 3vh;
+}
+
+.video-high-score h3 {
+    grid-row-start: 1;
+    grid-column-start: 1;
+    height: 100%;
+    width: 90%;
+    text-align: right;
+    font-size: 5vh;
+    padding-top: 5vh;
+}
+
+.video-tier {
+    position: absolute;
+    z-index: 200;
+    height: 11vw;
+    width: 11vw;
+    margin-top: 16.5vw;
+    margin-right: 35vw;
+}
+
+.video-tier img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    background-color: transparent;
 }

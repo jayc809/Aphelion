@@ -7,7 +7,7 @@
 }
 
 .search-bar {
-    height: 5vh;
+    aspect-ratio: 1625 / 145;
     width: 50vw;
     display: flex;
     flex-wrap: wrap;
@@ -15,22 +15,38 @@
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    padding-right: 30px;
-    padding-left: 30px;
     margin: 0;
-    top: 30px;
+    top: 9vh;
+    left: 4.9vw; /* centered at 29.9 */
     z-index: 100;
+    display: grid;
+    grid-template-columns: 1fr;
 }
 
 .search-input {
     height: 100%;
-    width: 80%;
+    width: 90%;
     margin: 0;
     border: 0;
     padding: 0;
-    font-size: 150%;
+    font-size: 3vw;
     text-indent: 10px;
     user-select: none;
+    grid-row-start: 1;
+    grid-column-start: 1;
+    color: white;
+    background-color: transparent;
+    font-family: "Futura-Light";
+    letter-spacing: 0.15vh;
+}
+
+.search-bar-background {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    padding-top: 1.5vh;
+    grid-row-start: 1;
+    grid-column-start: 1;
 }
 
 input:focus {
@@ -38,17 +54,35 @@ input:focus {
     border: 0;
 }
 
-.search-button {
+.search-YT {
     height: 100%;
-    width: 20%;
+    width: 100%;
     margin: 0;
     border: 0;
     padding: 0;
-    font-size: 150%;
+    font-size: 3vw;
+    text-indent: 10px;
+    user-select: none;
+    grid-row-start: 1;
+    grid-column-start: 1;
+    color: white;
+    background-color: transparent;
+    font-family: "Futura-Light";
+    letter-spacing: 0.15vh;
+    padding-top: 1.7vh;
+}
+
+.search-YT-logo {
+    height: 3vw;
+    object-fit: contain;
+    grid-row-start: 1;
+    grid-column-start: 1;
+    margin-left: 10.5vw;
+    margin-top: 1.5vh;
 }
 
 .scroll-list {
-    height: 105vh;
+    height: 109vh;
     width: 63vw;
     position: absolute;
     top: -9vh;
@@ -57,30 +91,69 @@ input:focus {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     position: absolute;
-    z-index: 0;
+    z-index: 10;
     /* border: 2px red solid; */
     overflow: hidden;
 }
 
 .video-selected {
-    height: calc(100vh / 7);
+    aspect-ratio: 5.4;
     width: 50vw;
-    left: 50vw;
-    top: calc(50vh - 100vh / 7 / 2);
-    font-family: "Futura-Light";
-    font-size: 150%;
-    white-space: nowrap;
-    overflow: hidden;
+    right: 3.9vw;
+    top: 50vh;
     position: absolute;
-    z-index: 10;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.video-selected button {
+    grid-row-start: 1;
+    grid-column-start: 1;
+    font-family: "Futura";
+    border: 0;
+    color: white;
+    background-color: transparent;
+    white-space: nowrap;
+    text-align: left;
+}
+
+.video-selected-button {
+    height: 100%;
+    width: 100%;
+    white-space: nowrap;
+    background-color: transparent;
+    background-size: contain;
+    background-image: url("./images/video-row.png");
+    background-repeat: no-repeat;
+}
+
+.video-selected-title-text {
+    height: 100%;
+    width: 90%;
+    text-indent: 6vw;
+    font-size: 4.6vh;
+    padding-bottom: 2.9vh;
+    overflow: hidden;
+}
+
+.video-selected-artist-text {
+    height: 100%;
+    width: 90%;
+    text-indent: 5.9vw;
+    font-size: 2.9vh;
+    padding-top: 7.3vh;
+    overflow: hidden;
 }
 
 .video-info {
     height: 100vh;
-    width: 50vw;
+    width: 52vw;
     position: absolute;
     z-index: 5;
     overflow: hidden;
+    bottom: 2vh;
+    /* border: 2px solid red; */
 }
 
 .video-selector-background {
@@ -95,4 +168,118 @@ input:focus {
     height: 100vh;
     width: 100vw;
     object-fit: fill;
+}
+
+.video-buttons {
+    height: 10vh;
+    width: 50vw;
+    position: absolute;
+    top: 85vh;
+    left: 6vw;
+    display: block;
+    z-index: 50;
+}
+
+.back-button {
+    width: 21vw;
+    aspect-ratio: 1300 / 359;
+    background-image: url("./images/backward-button.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
+    color: white;
+    text-align: center;
+    text-indent: 1vw;
+    font-size: 4vh;
+    font-family: "Futura-Light";
+    border: 0;
+}
+
+.next-button {
+    width: 21vw;
+    aspect-ratio: 1300 / 359;
+    background-image: url("./images/forward-button.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
+    color: white;
+    text-align: center;
+    text-indent: -1vw;
+    font-size: 4vh;
+    font-family: "Futura-Light";
+    border: 0;
+}
+
+.background-video-wrapper {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    z-index: -10;
+}
+
+.background-video {
+    height: 150vh;
+    width: 100vw;
+    position: absolute;
+    top: -25vh;
+}
+
+.settings {
+    height: 100vh;
+    width: 42vw;
+    position: absolute;
+    z-index: 9;
+    right: calc(-42vw - 2vw);
+}
+
+@keyframes hide-scroll-list {
+    from {
+        left: 46vw;
+    }
+    to {
+        left: calc(46vw + 63vw);
+    }
+}
+@keyframes hide-selected-video {
+    from {
+        right: 3.9vw;
+    }
+    to {
+        right: calc(3.9vw - 63vw);
+    }
+}
+@keyframes hide-settings {
+    from {
+        right: 2vw;
+    }
+    to {
+        right: calc(-42vw - 2vw);
+    }
+}
+
+
+
+@keyframes show-scroll-list {
+    from {
+        left: calc(46vw + 63vw);
+    }
+    to {
+        left: 46vw;
+    }
+}
+@keyframes show-selected-video{
+    from {
+        right: calc(3.9vw - 63vw);
+    }
+    to {
+        right: 3.9vw;
+    }
+}
+@keyframes show-settings {
+    from {
+        right: calc(-42vw - 2vw);
+    }
+    to {
+        right: 2vw;
+    }
 }

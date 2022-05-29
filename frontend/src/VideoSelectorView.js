@@ -1,8 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
+import ReactPlayer from 'react-player'
 import axios from "axios"
 import dummyVideoInfo from "./dummyVideoInfo.json"
 import ScrollList from './VideoSelectorComponents/ScrollList'
 import VideoInfo from './VideoSelectorComponents/VideoInfo'
+import SettingsList from './VideoSelectorComponents/SettingsList'
+import searchBarBackground from "./images/search-bar.png"
+import ytLogo from "./images/yt-logo.png"
 import bg from "./images/video-selector-bg.png"
 import "./VideoSelectorView.css"
 import "./App.css"
@@ -13,12 +17,22 @@ const VideoSelectorView = () => {
     const [videos, setVideos] = useState([])
     const [selectedVideo, setSelectedVideo] = useState({snippet: {title: "", channelTitle: "", thumbnails: {high: {url: ""}}}})
     const lastSubmittedSearchKeywordRef = useRef(null)
+    const [showYT, setShowYT] = useState(true)
+    const backgroundVideo = "https://www.youtube.com/watch?v=jH1LBL_v7Qs"
 
     useEffect(() => {
         window.addEventListener("keypress", handleKeyPress)
         setVideos(dummyVideoInfo.items)
+        const checkEmptyInput = setInterval(() => {
+            if (document.getElementById("search-input-el").value == "") {
+                setShowYT(true)
+            } else {
+                setShowYT(false)
+            }
+        }, 100);
         return () => {
             window.removeEventListener("keypress", handleKeyPress)
+            clearInterval(checkEmptyInput)
         }
     }, [])
 
@@ -57,30 +71,98 @@ const VideoSelectorView = () => {
         setVideos(dummyVideoInfo.items)
     }
 
+    const settingsShowingRef = useRef(false)
+    const scrollListRef = useRef(null)
+    const selectedVideoRef = useRef(null)
+    const settingsRef = useRef(null)
+    const animationTime = 0.3
+
+    const showSettings = () => {
+        scrollListRef.current.style.animation = `hide-scroll-list ${animationTime}s ease-out forwards`
+        selectedVideoRef.current.style.animation = `hide-selected-video ${animationTime}s ease-out forwards`
+        setTimeout(() => {
+            settingsRef.current.style.animation =  `show-settings ${animationTime}s ease-out forwards`
+            settingsShowingRef.current = true
+        }, (animationTime * 0.4) * 1000)
+    }
+
+    const hideSettings = () => {
+        settingsRef.current.style.animation =  `hide-settings ${animationTime}s ease-out forwards`
+        setTimeout(() => {  
+            scrollListRef.current.style.animation = `show-scroll-list ${animationTime}s ease-out forwards`
+            selectedVideoRef.current.style.animation = `show-selected-video ${animationTime}s ease-out forwards`
+            settingsShowingRef.current = false
+        }, (animationTime * 0.4) * 1000)
+    }
+
+    const handleBackButtonClick = () => {
+        if (settingsShowingRef.current) {
+            hideSettings()
+        }
+    }
+    
+    const handleNextButtonClick = () => {
+        if (!settingsShowingRef.current) {
+            showSettings()
+        }
+    }
+
+    const [settingsObj, setSettingsObj] = useState({
+        difficulty: "Hard",
+        tileSpeed: 1.3,
+        theme: "dark",
+        themeHue: 15,
+        videoSaturation: 2,
+        videoBrightness: 0.8,
+        smoothAnimations: true,
+        beatNotes: true,
+        lowerVolumeOnMisses: false
+    })
+    useEffect(() => {
+        console.log(settingsObj)
+    }, [settingsObj])
 
     return (
         <div className="video-selector-view-wrapper">
-            {/* <div className="search-bar">
-                <input className="search-input" id="search-input-el" type="text" onChange={handleSearchInputChange}></input>
-                <button className="search-button" onClick={handleSearchSubmit}>Search</button>
+            <div className="search-bar">
+                <input className="search-input" id="search-input-el" type="text" onChange={handleSearchInputChange} autoComplete="off"></input>
+                <img className="search-bar-background" src={searchBarBackground}></img>
+                {showYT ? <div className="search-YT">Search</div> : ""}
+                {showYT ? <img className="search-YT-logo" src={ytLogo}></img> : ""}
+            </div>
+
+            <div className="video-selected" ref={selectedVideoRef}>
+                <button className="video-selected-button">
+                </button>
+                <button className="video-selected-title-text">
+                    {selectedVideo.snippet.title}
+                </button>
+                <button className="video-selected-artist-text">
+                    {"- " + selectedVideo.snippet.channelTitle}
+                </button>
+            </div>
+
+            <div className="settings" ref={settingsRef}>
+                <SettingsList settingsObj={settingsObj} setSettingsObj={setSettingsObj}></SettingsList>
+            </div>
+
+            <div className="scroll-list" ref={scrollListRef}>
+                <ScrollList videosInput={videos} setSelectedVideo={setSelectedVideo}/>
             </div>
 
             <div className="video-info">
                 <VideoInfo videoInfo={selectedVideo}/>
             </div>
 
-            <button className="video-selected">
-                {selectedVideo.snippet.title != "" ? 
-                    `${selectedVideo.snippet.title} - ${selectedVideo.snippet.channelTitle}` :
-                    ""
-                }
-            </button> */}
-            <div className="scroll-list" >
-                <ScrollList videosInput={videos} setSelectedVideo={setSelectedVideo}/>
+            <div className="video-buttons">
+                <button className="back-button" onClick={handleBackButtonClick}>Back</button>
+                <button className="next-button" onClick={handleNextButtonClick}>Next</button>
             </div>
 
-            <div className="video-selector-background">
-                <img src={bg}></img>
+            <div className="background-video-wrapper"> 
+                <div className="background-video" >
+                    <ReactPlayer url={backgroundVideo} width="100%" height="100%" playing={true} loop={true} muted={true} style={{ pointerEvents: "none"}}></ReactPlayer>
+                </div>
             </div>
         </div>
     )

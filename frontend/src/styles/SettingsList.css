@@ -1,0 +1,116 @@
+.settings-list-wrapper {
+    height: 100%;
+    width: 100%;
+}
+
+.settings-list-title {
+    height: 15%;
+    width: 100%;
+    display: grid;
+    place-items: center;
+    margin-top: 5.8vh;
+}
+
+.settings-list-title h3 {
+    font-family: "Futura-Light";
+    text-align: center;
+    font-size: 3vw;
+}
+
+.settings-list-content {
+    height: 77.2%;
+    width: 100%;
+    margin-top: 2vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.settings-list-row {
+    height: 15%;
+    width: 100%;
+    /* border: 1px solid blue; */
+    display: flex;
+}
+
+.settings-list-row h3 {
+    height: 100%;
+    width: 40%;
+    box-sizing: border-box;
+    /* border: 1px solid red; */
+    margin: 0;
+    text-align: center;
+    display: grid;
+    place-items: center;
+    font-size: 2.2vw;
+}
+
+.settings-list-row-content {
+    height: 100%;
+    width: 60%;
+    box-sizing: border-box;
+    border: 1px solid cyan;
+    margin: 0;
+    background-color: transparent;
+    display: grid;
+    place-items: center;
+}
+
+#theme-button {
+    height: 2.8vw;
+    aspect-ratio: 500 / 120;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
+    border: 0;
+}
+
+.word-button {
+    height: 100%;
+    width: 100%;
+    font-family: "Futura-Light";
+    font-size: 2.2vw;
+    background-color: transparent;
+    border: 0;
+    color: white;
+}
+
+.stepper-button-wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    place-content: center;
+}
+
+.stepper-button-wrapper div {
+    height: 100%;
+    color: white;
+    font-size: 2.2vw;
+    margin: 0;
+    display: grid;
+    place-items: center;
+    padding-top: 0.3vw;
+    /* border: red 1px solid; */
+}
+
+.stepper-button-incrementer-decrease {
+    height: 100%;
+    aspect-ratio: 1;
+    margin-right: -0.6vw;
+    background-color: transparent;
+    color: white;
+    font-size: 2.5vw;
+    padding: 0;
+    border: 0;
+    /* border: red 1px solid; */
+}
+.stepper-button-incrementer-increase {
+    height: 100%;
+    aspect-ratio: 1;
+    margin-left: -0.6vw;
+    background-color: transparent;
+    color: white;
+    font-size: 2.5vw;
+    padding: 0;
+    border: 0;
+    /* border: red 1px solid; */
+}
