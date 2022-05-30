@@ -19,11 +19,15 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
 
   // console.log("rerendered GameView")
 
+  const [showGame, setShowGame] = useState(false)
   //initialization
   useEffect(() => {
     handleScreenResize()
     window.addEventListener("resize", handleScreenResize)
     window.addEventListener("mousemove", handleMouseMove)
+    setTimeout(() => {
+      setShowGame(true)
+    }, 700)
     return () => {
       window.removeEventListener("resize", handleScreenResize)
       window.removeEventListener("mousemove", handleMouseMove)
@@ -241,7 +245,7 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
           nextViewDestinationRef.current == "restart" ? nextViewRestart : ""
         } 
         start={transitionOut} settingsObj={settingsObj}></TransitionOutView>
-      <div id="screen" ref={screenRef} style={{cursor: mouseMoved ? "default" : "none"}}>
+      <div id="screen" ref={screenRef} style={{cursor: mouseMoved ? "default" : "none", opacity: showGame ? 1 : 0}}>
 
         {/* <div className="component" id="test">
           <button onClick={() => handleGameEnd()}>end</button>

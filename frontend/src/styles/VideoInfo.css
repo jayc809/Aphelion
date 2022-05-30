@@ -46,6 +46,8 @@
     width: 100%;
     background-color: transparent;
     overflow: hidden;
+    box-sizing: border-box;
+    border: 2px solid black;
 }
 
 .video-thumbnail-video {

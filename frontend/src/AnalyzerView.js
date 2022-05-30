@@ -11,6 +11,7 @@ const AnalyzerView = ({ setView, setBeatmapObjRef, settingsObj, videoId }) => {
     const [displayText, setDisplayText] = useState("")
     const [showButton, setShowButton] = useState(false)
     const [progessBarWidth, setProgressBarWidth] = useState(0)
+    const [showAnalyzer, setShowAnalyzer] = useState(false)
     const displayTextRef = useRef(null)
     const startButtonRef = useRef(null)
     const loadingVideo = "https://www.youtube.com/watch?v=JycQdXuAP0k"
@@ -18,6 +19,9 @@ const AnalyzerView = ({ setView, setBeatmapObjRef, settingsObj, videoId }) => {
     useEffect(() => {
         const videoUrl = `https://www.youtube.com/watch?v=${videoId}`
         const socket = socketIOClient("http://localhost:5000")
+        setTimeout(() => {
+            setShowAnalyzer(true)
+        }, 700)
         socket.on("connected-to-server", () => {
             socket.emit("request-beatmap", videoUrl)
             socket.on("progress-update", (message) => {
@@ -66,7 +70,7 @@ const AnalyzerView = ({ setView, setBeatmapObjRef, settingsObj, videoId }) => {
         <div className="screen-wrapper">
             <TransitionOutView nextView={nextView} start={transitionOut} settingsObj={settingsObj}></TransitionOutView>
             <TransitionInView delay={1} settingsObj={settingsObj}></TransitionInView>
-            <div className="analyzer-view-wrapper">
+            <div className="analyzer-view-wrapper" style={{opacity: showAnalyzer ? 1 : 0}}>
                 <h1 className="progress-text" ref={displayTextRef}>{displayText}</h1>
                 <button 
                     className="start-game-button" onClick={handleStartGame} ref={startButtonRef} 
