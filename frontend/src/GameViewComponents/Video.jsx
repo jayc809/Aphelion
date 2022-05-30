@@ -6,6 +6,9 @@ const Video = ({ updateCurrTime, beatmapObj, tileSpeed, getAllowStart, onAllowSt
 
     const [playAudio, setPlayAudio] = useState(false)
     const [playVideo, setPlayVideo] = useState(false)
+    const highVolume = 0.5
+    const lowVolume = 0.2
+    const [volume, setVolume] = useState(highVolume)
     const infoUpdaterRef = useRef(null)
     const audioRef = useRef(null)
     const blackScreenRef = useRef(null)
@@ -50,7 +53,7 @@ const Video = ({ updateCurrTime, beatmapObj, tileSpeed, getAllowStart, onAllowSt
         numPlayersReady.current += 1
         if (numPlayersReady.current == 2) {
             onAllowStart()
-            onMount(setPlayAudio, setPlayVideo)
+            onMount(setPlayAudio, setPlayVideo, setVideoVolume)
         }
     }
 
@@ -60,6 +63,14 @@ const Video = ({ updateCurrTime, beatmapObj, tileSpeed, getAllowStart, onAllowSt
         blackScreen.style.opacity = 1
         clearInterval(infoUpdaterRef.current)
         onVideoEnd()
+    }
+
+    const setVideoVolume = (level) => {
+        if (level == "high") {
+            setVolume(highVolume)
+        } else {
+            setVolume(lowVolume)
+        }
     }
 
     return (
@@ -76,7 +87,7 @@ const Video = ({ updateCurrTime, beatmapObj, tileSpeed, getAllowStart, onAllowSt
                     height="200%"
                     onReady={handlePlayerReady}
                     onEnded={handleEnd}
-                    volume={0.5}
+                    volume={volume}
                     // onEnded={console.log("video ended")}
                     // onError={console.log("video error")}
                 />

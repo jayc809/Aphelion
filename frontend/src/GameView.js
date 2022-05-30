@@ -70,18 +70,27 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
         incrementScore(parseInt(100 * (1 + comboRef.current / 100)))
         incrementCombo()
         setPerfectDisplayRef.current(true)
+        if (settingsObj.lowerVolumeOnMisses) {
+          setVideoVolumeRef.current("high")
+        }
         break
       case "great":  
         fullPerfectRef.current = false
         incrementScore(parseInt(80 * (1 + comboRef.current / 100)))
         incrementCombo()
         setPerfectDisplayRef.current(false)
+        if (settingsObj.lowerVolumeOnMisses) {
+          setVideoVolumeRef.current("high")
+        }
         break
       case "good":  
         fullPerfectRef.current = false
         incrementScore(parseInt(60 * (1 + comboRef.current / 100)))
         incrementCombo()
         setPerfectDisplayRef.current(false)
+        if (settingsObj.lowerVolumeOnMisses) {
+          setVideoVolumeRef.current("high")
+        }
         break
       case "miss": 
         fullPerfectRef.current = false
@@ -89,6 +98,9 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
         comboRef.current = 0
         setComboRef.current(0)
         setPerfectDisplayRef.current(false)
+        if (settingsObj.lowerVolumeOnMisses) {
+          setVideoVolumeRef.current("low")
+        }
         break
     }
   }
@@ -182,10 +194,12 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
 
   const setAudioPlayRef = useRef(null)
   const setVideoPlayRef = useRef(null)
+  const setVideoVolumeRef = useRef(null)
   const blackScreenPresent = useRef(true)
-  const onVideoMount = (setAudioPlay, setVideoPlay) => {
+  const onVideoMount = (setAudioPlay, setVideoPlay, setVideoVolume) => {
     setAudioPlayRef.current = setAudioPlay
     setVideoPlayRef.current = setVideoPlay
+    setVideoVolumeRef.current = setVideoVolume
   }
 
   const pauseGame = (pause) => {
