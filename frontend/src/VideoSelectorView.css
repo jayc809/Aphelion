@@ -4,6 +4,7 @@
     overflow: hidden;
     clip-path: polygon(0 0, 0 100vh, 100vw 100vh, 100vw 0);
     position: absolute;
+    z-index: 1;
 }
 
 .search-bar {

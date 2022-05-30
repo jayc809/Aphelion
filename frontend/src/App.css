@@ -50,3 +50,58 @@ body {
     -ms-user-select: none; /* IE10+/Edge */
     user-select: none; /* Standard */
 }
+
+.screen-wrapper {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.transition-out-view-wrapper {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    position: absolute;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+}
+
+.transition-left {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    z-index: 100;
+    object-fit: fill;
+    opacity: 0;
+}
+
+.transition-right {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    z-index: 101;
+    object-fit: fill;
+}
+
+@keyframes transition-out-left {
+    from {
+        left: calc(-1100 / 1280 * 100vw);
+        opacity: 1;
+    }
+    to {
+        left: 0vw;
+        opacity: 1;
+    }
+}
+
+@keyframes transition-out-right {
+    from {
+        right: calc(-500 / 1280 * 100vw);
+        opacity: 1;
+    }
+    to {
+        right: 0vw;
+        opacity: 1;
+    }
+}

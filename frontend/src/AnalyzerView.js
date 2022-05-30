@@ -27,10 +27,10 @@ const AnalyzerView = ({ setView, setBeatmapObjRef, settingsObj, videoId }) => {
                 beatmapObj.refreshTolerance = 0.008
                 socket.disconnect()
                 setBeatmapObjRef(beatmapObj)
-                displayTextRef.current.style.animation = "opacity-1-0 1s linear forwards"
+                displayTextRef.current.style.animation = "opacity-1-0 0.7s linear forwards"
                 setTimeout(() => {
-                    startButtonRef.current.style.animation = "opacity-0-1 1s linear forwards"
-                }, 1000);
+                    startButtonRef.current.style.animation = "opacity-0-1 0.7s linear forwards"
+                }, 700);
                 setTimeout(() => {
                     setShowButton(true)
                 }, 2000);

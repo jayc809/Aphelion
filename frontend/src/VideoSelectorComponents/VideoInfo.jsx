@@ -9,9 +9,10 @@ const VideoInfo = ({ videoInfo, settingsObj, onMount }) => {
 
     const [useVideo, setUseVideo] = useState(false)
     const [videoId, setVideoId] = useState(null)
+    const [play, setPlay] = useState(true)
 
     useEffect(() => {
-        onMount(setUseVideo)
+        onMount(setUseVideo, setPlay)
     }, [])
 
     useEffect(() => {
@@ -39,7 +40,7 @@ const VideoInfo = ({ videoInfo, settingsObj, onMount }) => {
                                 <div className="video-thumbnail-video">
                                     <ReactPlayer 
                                         url={`https://www.youtube.com/watch?v=${videoId}`}
-                                        playing={true}
+                                        playing={play}
                                         style={{pointerEvents: "none"}}
                                         config={{youtube: {playerVars: {start: 60}}}}
                                         width="100%"
