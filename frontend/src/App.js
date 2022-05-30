@@ -55,7 +55,6 @@ function App() {
           "results": <ResultsView resultsObj={resultsObjRef.current}/>
         } [view]
       }
-      {/* <TransitionInView></TransitionInView> */}
       {/* <TestView/> */}
     </div>
   )
