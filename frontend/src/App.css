@@ -62,6 +62,16 @@ body {
     width: 100vw;
     overflow: hidden;
     position: absolute;
+    z-index: 10001;
+    left: 0;
+    top: 0;
+}
+
+.transition-in-view-wrapper {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    position: absolute;
     z-index: 10000;
     left: 0;
     top: 0;
@@ -102,6 +112,28 @@ body {
     }
     to {
         right: 0vw;
+        opacity: 1;
+    }
+}
+
+@keyframes transition-in-left {
+    from {
+        left: 0vw;
+        opacity: 1;
+    }
+    to {
+        left: calc(-1100 / 1280 * 100vw);
+        opacity: 1;
+    }
+}
+
+@keyframes transition-in-right {
+    from {
+        right: 0vw;
+        opacity: 1;
+    }
+    to {
+        right: calc(-500 / 1280 * 100vw);
         opacity: 1;
     }
 }

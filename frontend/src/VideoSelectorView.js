@@ -172,14 +172,13 @@ const VideoSelectorView = ({ setView, setVideoIdRef, settingsObj, setSettingsObj
             setVideoPlayRef.current(false)
         }
     }
-
     const nextView = () => {
         setView("analyzer")
     }
 
     return (
         <div className="screen-wrapper">
-            {transitionOut ? <TransitionOutView nextView={nextView}></TransitionOutView> : ""}
+            <TransitionOutView nextView={nextView} start={transitionOut} settingsObj={settingsObj}></TransitionOutView>
             <div className="video-selector-view-wrapper" key={viewKey}>
                 <div className="search-bar">
                     <img className="search-bar-background" src={searchBarBackground}></img>

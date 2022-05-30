@@ -5,6 +5,7 @@ import ResultsView from './ResultsView'
 import VideoSelectorView from './VideoSelectorView'
 import TestView from "./TestView"
 import TransitionOutView from './TransitionOutView'
+import TransitionInView from './TransitionInView'
 import { useRef, useState } from 'react'
 
 function App() {
@@ -54,7 +55,7 @@ function App() {
           "results": <ResultsView resultsObj={resultsObjRef.current}/>
         } [view]
       }
-      {/* <TransitionOutView></TransitionOutView> */}
+      {/* <TransitionInView></TransitionInView> */}
       {/* <TestView/> */}
     </div>
   )

@@ -275,6 +275,39 @@
     {
       "id": {
         "kind": "youtube#video",
+        "videoId": "9yBLZKFKXyg"
+      },
+      "snippet": {
+        "publishedAt": "2022-01-27T11:00:11Z",
+        "channelId": "UC5CwaMl1eIgY8h02uZw7u8A",
+        "title": "アニマル / miComet(cover)",
+        "description": "アニマル / DECO*27 様 https://youtu.be/HtBqK6xsQ9k © OTOIRO / DECO*27 inst / 赤ティン 様 https://twitter.com/akatibitintin ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/9yBLZKFKXyg/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/9yBLZKFKXyg/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/9yBLZKFKXyg/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Suisei Channel",
+        "liveBroadcastContent": "none",
+        "publishTime": "2022-01-27T11:00:11Z",
+        "duration": "2:33"
+      }
+    },
+    {
+      "id": {
+        "kind": "youtube#video",
         "videoId": "ZfDYRy17CBY"
       },
       "snippet": {

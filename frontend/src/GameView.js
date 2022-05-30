@@ -9,6 +9,7 @@ import Combo from './GameViewComponents/Combo'
 import PerfectDisplay from "./GameViewComponents/PerfectDisplay"
 import TileGenerator from './GameViewComponents/TileGenerator'
 import PauseMenu from './GameViewComponents/PauseMenu'
+import TransitionInView from './TransitionInView'
 const testVideoId = "IKKar5SS29E" 
 const orangeVideoId = "3DrYQMK4hJE"
 const blueVideoId = "IKKar5SS29E" 
@@ -210,64 +211,67 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
   }
 
   return (
-    <div id="screen" ref={screenRef} style={{cursor: mouseMoved ? "default" : "none"}}>
+    <div className="screen-wrapper">
+      <TransitionInView delay={1} settingsObj={settingsObj}></TransitionInView>
+      <div id="screen" ref={screenRef} style={{cursor: mouseMoved ? "default" : "none"}}>
 
-      {/* <div className="component" id="test">
-        <button onClick={() => handleGameEnd()}>end</button>
-      </div> */}
+        {/* <div className="component" id="test">
+          <button onClick={() => handleGameEnd()}>end</button>
+        </div> */}
 
-      <div className="component" id="ending-black-screen" ref={endingBlackScreenRef}></div>
-      
-      <div className="component" id="pause-menu">
-        <PauseMenu pauseGame={pauseGame} restartGame={restartGame}/>
-      </div>
+        <div className="component" id="ending-black-screen" ref={endingBlackScreenRef}></div>
+        
+        <div className="component" id="pause-menu">
+          <PauseMenu pauseGame={pauseGame} restartGame={restartGame}/>
+        </div>
 
-      <div className="component" id="start-message">
-        <StartMessage getAllowStart={getAllowStart}/>
-      </div>
+        <div className="component" id="start-message">
+          <StartMessage getAllowStart={getAllowStart}/>
+        </div>
 
-      <div className="component" id="score">
-        <Score onMount={onScoreMount}/>
-      </div>
+        <div className="component" id="score">
+          <Score onMount={onScoreMount}/>
+        </div>
 
-      <div className="component" id="combo">
-        <Combo onMount={onComboMount}/>
-      </div>
-      <div className="component" id="perfect-display">
-        <PerfectDisplay onMount={onPerfectDisplayMount}></PerfectDisplay>
-      </div>
+        <div className="component" id="combo">
+          <Combo onMount={onComboMount}/>
+        </div>
+        <div className="component" id="perfect-display">
+          <PerfectDisplay onMount={onPerfectDisplayMount}></PerfectDisplay>
+        </div>
 
-      <div className="component" id="tile-generator">
-        <TileGenerator 
-          beatmapObj={beatmapObj} 
-          onMount={onTileGeneratorMount} 
-          tileSpeed={tileSpeed} 
-          updateScoreAndCombo={updateScoreAndCombo}
-          getAllowStart={getAllowStart}
-        />
-      </div>
-
-      <div className="component" id="platform"> 
-        <Platform/>
-      </div>
-
-      {
-        showVideo ? 
-        <div className="component" id="video"> 
-          <Video 
-            updateCurrTime={updateCurrTime} 
+        <div className="component" id="tile-generator" style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
+          <TileGenerator 
             beatmapObj={beatmapObj} 
-            tileSpeed={tileSpeed}
+            onMount={onTileGeneratorMount} 
+            tileSpeed={tileSpeed} 
+            updateScoreAndCombo={updateScoreAndCombo}
             getAllowStart={getAllowStart}
-            onAllowStart={handleAllowStart}
-            onVideoEnd={handleGameEnd}
-            onMount={onVideoMount}
-            blackScreenPresent={blackScreenPresent}
           />
-        </div> :
-        ""
-      }
+        </div>
 
+        <div className="component" id="platform"> 
+          <Platform/>
+        </div>
+
+        {
+          showVideo ? 
+          <div className="component" id="video" style={{filter: `saturate(${settingsObj.videoSaturation}) brightness(${settingsObj.videoBrightness})`}}> 
+            <Video 
+              updateCurrTime={updateCurrTime} 
+              beatmapObj={beatmapObj} 
+              tileSpeed={tileSpeed}
+              getAllowStart={getAllowStart}
+              onAllowStart={handleAllowStart}
+              onVideoEnd={handleGameEnd}
+              onMount={onVideoMount}
+              blackScreenPresent={blackScreenPresent}
+            />
+          </div> :
+          ""
+        }
+
+      </div>
     </div>
   )
 }

@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react'
 import socketIOClient from "socket.io-client"
 import ReactPlayer from 'react-player'
+import TransitionInView from './TransitionInView'
+import TransitionOutView from './TransitionOutView'
 import "./App.css"
 import "./AnalyzerView.css"
 
@@ -33,7 +35,7 @@ const AnalyzerView = ({ setView, setBeatmapObjRef, settingsObj, videoId }) => {
                 }, 700);
                 setTimeout(() => {
                     setShowButton(true)
-                }, 2000);
+                }, 1200);
             })
         })
     }, [])
@@ -50,26 +52,34 @@ const AnalyzerView = ({ setView, setBeatmapObjRef, settingsObj, videoId }) => {
         }
     }, [displayText])
 
+    const [transitionOut, setTransitionOut] = useState(false)
     const handleStartGame = () => {
         if (showButton) {
-            setView("game")
+            setTransitionOut(true)
         }
+    }
+    const nextView = () => {
+        setView("game")
     }
 
     return (
-        <div className="analyzer-view-wrapper">
-            <h1 className="progress-text" ref={displayTextRef}>{displayText}</h1>
-            <button 
-                className="start-game-button" onClick={handleStartGame} ref={startButtonRef} 
-                style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
-                Start Game
-            </button> 
-            <div className="loading-video-wrapper">
-                <div className="loading-video">
-                    <ReactPlayer url={loadingVideo} width="100%" height="100%" playing={true} loop={true} muted={true} style={{ pointerEvents: "none"}}></ReactPlayer>
+        <div className="screen-wrapper">
+            <TransitionOutView nextView={nextView} start={transitionOut} settingsObj={settingsObj}></TransitionOutView>
+            <TransitionInView delay={1} settingsObj={settingsObj}></TransitionInView>
+            <div className="analyzer-view-wrapper">
+                <h1 className="progress-text" ref={displayTextRef}>{displayText}</h1>
+                <button 
+                    className="start-game-button" onClick={handleStartGame} ref={startButtonRef} 
+                    style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
+                    Start Game
+                </button> 
+                <div className="loading-video-wrapper">
+                    <div className="loading-video">
+                        <ReactPlayer url={loadingVideo} width="100%" height="100%" playing={true} loop={true} muted={true} style={{ pointerEvents: "none"}}></ReactPlayer>
+                    </div>
                 </div>
-            </div>
-            <div className="progress-bar" style={{width: progessBarWidth + "vw", filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
+                <div className="progress-bar" style={{width: progessBarWidth + "vw", filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
+                </div>
             </div>
         </div>
     )
