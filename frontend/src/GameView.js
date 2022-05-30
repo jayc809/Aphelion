@@ -10,6 +10,7 @@ import PerfectDisplay from "./GameViewComponents/PerfectDisplay"
 import TileGenerator from './GameViewComponents/TileGenerator'
 import PauseMenu from './GameViewComponents/PauseMenu'
 import TransitionInView from './TransitionInView'
+import TransitionOutView from "./TransitionOutView"
 const testVideoId = "IKKar5SS29E" 
 const orangeVideoId = "3DrYQMK4hJE"
 const blueVideoId = "IKKar5SS29E" 
@@ -117,10 +118,12 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
   const handleTimeChangeRef = useRef(null)
   const pauseTilesRef = useRef(null)
   const playTilesRef = useRef(null)
-  const onTileGeneratorMount = (handleTimeChange, pauseTiles, playTiles) => {
+  const disableKeyboardRef = useRef(null)
+  const onTileGeneratorMount = (handleTimeChange, pauseTiles, playTiles, disableKeyboard) => {
     handleTimeChangeRef.current = handleTimeChange
     pauseTilesRef.current = pauseTiles
     playTilesRef.current = playTiles
+    disableKeyboardRef.current = disableKeyboard
   }
   const updateCurrTime = (currTime) => {
     handleTimeChangeRef.current(currTime)
@@ -189,30 +192,41 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
     if (!blackScreenPresent.current) {     
       if (pause) {
         if (setAudioPlayRef.current != null && setVideoPlayRef.current != null) {
-          console.log("game paused")
           setAudioPlayRef.current(false)
           setVideoPlayRef.current(false)
           pauseTilesRef.current()
+          disableKeyboardRef.current(true)
         }
       } else {
         if (setAudioPlayRef.current != null && setVideoPlayRef.current != null) {
-          console.log("game playing")
           setAudioPlayRef.current(true)
           setVideoPlayRef.current(true)
           playTilesRef.current()
+          disableKeyboardRef.current(false)
         }
       }
     }
   }
 
   const restartGame = () => {
-    console.log("game restarted")
+    nextViewDestinationRef.current = "restart"
+    setTransitionOut(true)
+  }
+
+  const [transitionOut, setTransitionOut] = useState(false)
+  const nextViewDestinationRef = useRef("")
+  const nextViewRestart = () => {
     incrementGameId()
   }
 
   return (
     <div className="screen-wrapper">
       <TransitionInView delay={1} settingsObj={settingsObj}></TransitionInView>
+      <TransitionOutView 
+        nextView={
+          nextViewDestinationRef.current == "restart" ? nextViewRestart : ""
+        } 
+        start={transitionOut} settingsObj={settingsObj}></TransitionOutView>
       <div id="screen" ref={screenRef} style={{cursor: mouseMoved ? "default" : "none"}}>
 
         {/* <div className="component" id="test">

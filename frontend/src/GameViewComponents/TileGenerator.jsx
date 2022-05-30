@@ -16,7 +16,7 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
     const currTimeRef = useRef(null)
 
     useEffect(() => {
-        onMount(handleTimeChange, pauseTiles, playTiles)
+        onMount(handleTimeChange, pauseTiles, playTiles, disableKeyboard)
         window.addEventListener("keydown", handleDown)
         window.addEventListener("keyup", handleUp)
         return () => {
@@ -24,6 +24,15 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
             window.removeEventListener("keyup", handleUp)
         }
     }, [])
+
+    const allowKeyboardRef = useRef(true)
+    const disableKeyboard = (disable) => {
+        if (disable) {
+            allowKeyboardRef.current = false
+        } else {
+            allowKeyboardRef.current = true
+        }
+    }
 
     const handleTimeChange = (currTime) => {
         currTimeRef.current = currTime
@@ -67,8 +76,9 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
     const fPressed = useRef(false)
     const jPressed = useRef(false)
     const kPressed = useRef(false)
+
     const handleDown = (e) => {
-        if (getAllowStart()) {
+        if (getAllowStart() && allowKeyboardRef.current) {
             switch (e.key) {
                 case "d":
                     if (!dPressed.current) {
@@ -99,23 +109,25 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
     }
 
     const handleUp = (e) => {
-        switch (e.key) {
-            case "d":
-                dPressed.current = false
-                onTileRelease("left")
-                break
-            case "f":
-                fPressed.current = false
-                onTileRelease("middle-left")
-                break
-            case "j":
-                jPressed.current = false
-                onTileRelease("middle-right")
-                break
-            case "k":
-                kPressed.current = false
-                onTileRelease("right")
-                break
+        if (allowKeyboardRef.current) {
+            switch (e.key) {
+                case "d":
+                    dPressed.current = false
+                    onTileRelease("left")
+                    break
+                case "f":
+                    fPressed.current = false
+                    onTileRelease("middle-left")
+                    break
+                case "j":
+                    jPressed.current = false
+                    onTileRelease("middle-right")
+                    break
+                case "k":
+                    kPressed.current = false
+                    onTileRelease("right")
+                    break
+            }
         }
     }
 
@@ -220,7 +232,17 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
             const key = tiles[i].type + String(tiles[i].targetTime)
             //finds the first instance in currentTiles where the tile is of type and has not been tapped yet
             if (!tappedTiles.current.includes(key) && 
-                !missedTiles.current.includes(key)) {
+                !missedTiles.current.includes(key) &&
+                key in tileControllers.current) {
+                tileControllers.current[key]("pauseAnimation")
+            }
+        }
+        for (let i = 0; i < tiles.length; i += 1) {
+            const key = tiles[i].type + String(tiles[i].targetTime)
+            //finds the first instance in currentTiles where the tile is of type and has not been tapped yet
+            if (!tappedTiles.current.includes(key) && 
+                !missedTiles.current.includes(key) &&
+                key in tileControllers.current) {
                 tileControllers.current[key]("pauseAnimation")
             }
         }
@@ -232,7 +254,17 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
             const key = tiles[i].type + String(tiles[i].targetTime)
             //finds the first instance in currentTiles where the tile is of type and has not been tapped yet
             if (!tappedTiles.current.includes(key) && 
-                !missedTiles.current.includes(key)) {
+                !missedTiles.current.includes(key) &&
+                key in tileControllers.current) {
+                tileControllers.current[key]("playAnimation")
+            }
+        }
+        for (let i = 0; i < tiles.length; i += 1) {
+            const key = tiles[i].type + String(tiles[i].targetTime)
+            //finds the first instance in currentTiles where the tile is of type and has not been tapped yet
+            if (!tappedTiles.current.includes(key) && 
+                !missedTiles.current.includes(key) &&
+                key in tileControllers.current) {
                 tileControllers.current[key]("playAnimation")
             }
         }
