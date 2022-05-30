@@ -26,7 +26,7 @@ io.on("connect", socket => {
         video.once('response', () => {
             starttime = Date.now()
         })
-        socket.emit("progress-update", "downloading video")
+        socket.emit("progress-update", "Downloading Video")
         console.log("downloading video")
         video.on('progress', (chunkLength, downloaded, total) => {
             const percent = downloaded / total
@@ -42,13 +42,13 @@ io.on("connect", socket => {
             const data = fs.readFileSync(filePath)
             const buffer = data.buffer
             const audioCtx = new webAudioApi.AudioContext()
-            socket.emit("progress-update", "decoding audio data")
+            socket.emit("progress-update", "Decoding Audio Data")
             console.log("decoding audio data")
             audioCtx.decodeAudioData(buffer, analyzeAudio)
         })
 
         const analyzeAudio = (buffer) => {
-            socket.emit("progress-update", "generating beatmap")
+            socket.emit("progress-update", "Generating Beatmap")
             console.log("calculating BPM")
             const audioData = getAudioData(buffer)
             const startIndex = getAudioStartIndex(audioData, buffer)
@@ -75,7 +75,7 @@ io.on("connect", socket => {
                 maxCombo: maxCombo
             }
 
-            socket.emit("progress-update", "process completed")
+            socket.emit("progress-update", "Process Completed")
             console.log("process completed")
             socket.emit("respond-beatmap", beatmapObj)
         }

@@ -13,7 +13,7 @@ const testVideoId = "IKKar5SS29E"
 const orangeVideoId = "3DrYQMK4hJE"
 const blueVideoId = "IKKar5SS29E" 
 
-const GameView = ({ setView, incrementGameId, setResultsObjRef, beatmapObj }) => {
+const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, beatmapObj }) => {
 
   // console.log("rerendered GameView")
 

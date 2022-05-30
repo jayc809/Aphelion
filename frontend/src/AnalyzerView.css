@@ -9,14 +9,73 @@
     position: absolute;
     bottom: 0;
     right: 0;
+    margin: 3vh;
+    margin-bottom: 4vh;
     z-index: 10;
-    margin: 20px;
-    font-size: 40px;
+    font-size: 5vh;
+    font-family: "Futura-Light";
 }
 
-.start-button {
+.start-game-button {
+    height: 8vh;
+    aspect-ratio: 840 / 152;
     position: absolute;
-    top: 0;
+    bottom: 0;
     right: 0;
+    margin: 3vh;
+    margin-bottom: 4vh;
     z-index: 100;
+    border: 0;
+    color: white;
+    font-size: 5vh;
+    font-family: "Futura-Light";
+    background-color: transparent;
+    background-image: url("./images/start-game-button.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0;
+}
+
+@keyframes opacity-1-0 {
+    from {
+        opacity: 1;
+    }
+    to {    
+        opacity: 0;
+    }
+}
+
+@keyframes opacity-0-1 {
+    from {
+        opacity: 0;
+    }
+    to {    
+        opacity: 1;
+    }
+}
+
+.loading-video-wrapper {
+    height: 40vh;
+    aspect-ratio: 1;
+    /* border: 1px solid red; */
+    position: absolute;
+    left: calc(50vw - 20vh);
+    top: calc(30vh - 2vh);
+    overflow: hidden;
+}
+
+.loading-video {
+    height: 80vh;
+    aspect-ratio: 1 / 2;
+    /* border: 1px solid blue; */
+    position: absolute;
+    top: -20vh;
+}
+
+.progress-bar {
+    height: 0.3vh;
+    position: absolute;
+    bottom: 0;
+    transition: width 0.5s;
+    background-image: linear-gradient(90deg, black 0%, white 15%, white 65%, #6142b8 85%, black 100%);
 }

@@ -11,7 +11,7 @@ import bg from "./images/video-selector-bg.png"
 import "./VideoSelectorView.css"
 import "./App.css"
 
-const VideoSelectorView = () => {
+const VideoSelectorView = ({ setView, setVideoIdRef, settingsObj, setSettingsObj }) => {
 
     const searchKeywordRef = useRef("ghost suisei")
     const [videos, setVideos] = useState([])
@@ -130,9 +130,12 @@ const VideoSelectorView = () => {
         setUseVideoRef.current = setUseVideo
     }
 
+    
+    const [nextButtonText, setNextButtonText] = useState("Next")
     const showSettings = () => {
         scrollListRef.current.style.animation = `hide-scroll-list ${animationTime}s ease-out forwards`
         selectedVideoRef.current.style.animation = `hide-selected-video ${animationTime}s ease-out forwards`
+        setNextButtonText("Start")
         setUseVideoRef.current(true)
         setTimeout(() => {
             settingsRef.current.style.animation =  `show-settings ${animationTime}s ease-out forwards`
@@ -143,6 +146,7 @@ const VideoSelectorView = () => {
     const hideSettings = () => {
         settingsRef.current.style.animation =  `hide-settings ${animationTime}s ease-out forwards`
         setUseVideoRef.current(false)
+        setNextButtonText("Next")
         setTimeout(() => {  
             scrollListRef.current.style.animation = `show-scroll-list ${animationTime}s ease-out forwards`
             selectedVideoRef.current.style.animation = `show-selected-video ${animationTime}s ease-out forwards`
@@ -159,22 +163,11 @@ const VideoSelectorView = () => {
     const handleNextButtonClick = () => {
         if (!settingsShowingRef.current) {
             showSettings()
+        } else {
+            setVideoIdRef(selectedVideo.id.videoId)
+            setView("analyzer")
         }
     }
-
-    const [settingsObj, setSettingsObj] = useState({
-        difficulty: "Hard",
-        tileSpeed: 1.3,
-        theme: "dark",
-        uiHue: 0,
-        uiSaturation: 1.6,
-        uiBrightness: 1.0,
-        videoSaturation: 2.0,
-        videoBrightness: 0.8,
-        smoothAnimations: true,
-        beatNotes: true,
-        lowerVolumeOnMisses: false
-    })
 
     return (
         <div className="video-selector-view-wrapper" key={viewKey}>
@@ -213,7 +206,7 @@ const VideoSelectorView = () => {
 
             <div className="video-buttons" style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
                 <button className="back-button" onClick={handleBackButtonClick}>Back</button>
-                <button className="next-button" onClick={handleNextButtonClick}>Next</button>
+                <button className="next-button" onClick={handleNextButtonClick}>{nextButtonText}</button>
             </div>
 
             <div className="background-video-wrapper"> 
