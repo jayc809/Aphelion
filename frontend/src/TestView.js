@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import HoldTile from './GameViewComponents/HoldTile';
 import Platform from './GameViewComponents/Platform';
+import CircleProgressBar from './ResultsViewComponents/CircleProgressBar'
 import "./GameView.css"
 
 const TestView = () => {
@@ -17,8 +18,8 @@ const TestView = () => {
     }
 
     return (
-        <div>
-            <img ref={imgRef} src={thumbnailSrc} onLoad={handleImgValidity}></img>
+        <div>      
+            <CircleProgressBar size={"30vh"} numerator={260} denominator={300} delay={1} duration={1}/>
         </div>
     )
 }

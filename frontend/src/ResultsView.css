@@ -42,6 +42,7 @@
     position: absolute;
     object-fit: cover;
     left: -42vw;
+    opacity: 0.4;
 }
 
 .results-view-top {
@@ -56,10 +57,199 @@
 }
 
 .results-view-top img {
-    height: 25vh;
+    height: 20vh;
     width: 100%;
     object-fit: cover;
     object-position: left;
     grid-row-start: 1;
     grid-column-start: 1;
+    z-index: 0;
+}
+
+.results-view-top h3 {
+    grid-row-start: 1;
+    grid-column-start: 1;
+    color: white;
+    z-index: 100;
+    font-size: 5.2vh;
+    padding-left: 13vh;
+    margin-top: 4.5vh;
+    /* background-color: red; */
+    /* border: 1px solid red; */
+}
+
+.results-view-top h4 {
+    grid-row-start: 1;
+    grid-column-start: 1;
+    color: white;
+    z-index: 100;
+    font-size: 3.4vh;
+    padding-left: 13vh;
+    padding-top: calc(5vh + 3.3vh);
+    /* background-color: red; */
+    /* border: 1px solid red; */
+}
+
+.results-next-button {
+    position: absolute;
+    z-index: 1000;
+    height: 10vh;
+    aspect-ratio: 1300 / 359;
+    bottom: 3vh;
+    right: 3vh;
+    background-image: url("./images/forward-button.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
+    color: white;
+    text-align: center;
+    text-indent: -1vw;
+    font-size: 4vh;
+    font-family: "Futura-Light";
+    border: 0;
+}
+
+.results-back-button {
+    position: absolute;
+    z-index: 1001;
+    height: 10vh;
+    aspect-ratio: 1300 / 359;
+    bottom: 3vh;
+    left: 3vh;
+    background-image: url("./images/backward-button.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
+    color: white;
+    text-align: center;
+    text-indent: 1vw;
+    font-size: 4vh;
+    font-family: "Futura-Light";
+    border: 0;
+}
+
+.results-main-content {
+    height: 67vh;
+    width: 75vw;
+    position: absolute;
+    z-index: 100;
+    bottom: 3vh;
+    left: 8vh;
+    display: flex;
+}
+
+.results-tier-wrapper {
+    height: 100%;
+    width: 30%;
+    /* border: 1px red solid; */
+}
+
+.results-tier-wrapper h4 {
+    font-size: 3.4vh;
+    margin: 1vh;
+}
+
+.results-tier-wrapper img {
+    width: 95%;
+    height: 80%;
+    object-fit: contain;
+}
+
+.results-metrics-wrapper {
+    height: 100%;
+    width: 60%;
+    /* border: 1px red solid; */
+
+}
+
+.results-metrics-wrapper h4 {
+    font-size: 3.4vh;
+    margin: 1vh;
+}
+
+.results-metrics-wrapper h2 {
+    font-size: 8vh;
+    margin-left: 1vh;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+}
+
+.results-circle-wrapper {
+    height: 60%;
+    width: calc(75vw * 0.6);
+    /* border: 1px solid green; */
+    position: absolute;
+    bottom: 0;
+    display: flex;
+}
+
+.circluar-progress-bar-wrapper {
+    display: grid;
+    place-items: center;
+    /* border: 1px solid red; */
+    grid-template-columns: 1fr;
+}
+
+.circluar-progress-bar-wrapper div {
+    grid-row-start: 1;
+    grid-column-start: 1;
+}
+.circluar-progress-bar-background-white {
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    border-radius: 10000px;
+}
+
+.circluar-progress-bar-background-black {
+    background-color: black;
+    height: 97.5%;
+    width: 97.5%;
+    z-index: 11;
+    border-radius: 10000px;
+}
+
+.circluar-progress-bar-foreground-white {
+    background-color: white;
+    height: 75%;
+    width: 75%;
+    z-index: 150;
+    border-radius: 10000px;
+}
+
+.circluar-progress-bar-foreground-black {
+    background-color: black;
+    height: 72.5%;
+    width: 72.5%;
+    z-index: 151;
+    border-radius: 10000px;
+}
+
+.circluar-progress-bar-line {
+    background-color: white;
+    height: 67.5%;
+    width: 1%;
+    z-index: 500;
+    transform: rotate(45deg);
+}
+
+.circluar-progress-bar-numerator {
+    grid-row-start: 1;
+    grid-column-start: 1;
+    color: white;
+    padding-right: 25%;
+    padding-bottom: 25%;
+    margin: 0;
+    z-index: 1000;
+}
+
+.circluar-progress-bar-denominator {
+    grid-row-start: 1;
+    grid-column-start: 1;
+    color: white;
+    padding-left: 25%;
+    padding-top: 25%;
+    margin: 0;
+    z-index: 1001;
 }

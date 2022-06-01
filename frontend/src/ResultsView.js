@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import "./ResultsView.css"
+import CircleProgressBar from './ResultsViewComponents/CircleProgressBar';
+import TransitionInView from './TransitionInView';
 import resultsBackground from "./images/results-background.png"
 import resultsTop from "./images/results-top.png"
+import aTier from "./images/a-tier.png"
 
 const ResultsView = ({ resultsObj, settingsObj, videoInfo }) => {
 
@@ -54,18 +57,46 @@ const ResultsView = ({ resultsObj, settingsObj, videoInfo }) => {
         }
     }
 
+    const formatScore = () => {
+        return String(resultsObj.score).padStart(12, '0')
+    }
+
     return (
-        <div className="results-view-wrapper">
-            <div className="results-img-right-clip" style={{clipPath: clipRight, filter: `saturate(${settingsObj.videoSaturation}) brightness(${settingsObj.videoBrightness})`}}>
-                <img className="results-img-right-clip-content" ref={thumbnailImgRef} src={thumbnailSrc}></img>
-            </div>
-            <div className="results-img-left-clip" style={{clipPath: clipLeft, filter: `saturate(${settingsObj.videoSaturation}) brightness(${settingsObj.videoBrightness})`}}>
-                <img className="results-img-left-clip-content" src={thumbnailSrc}></img>
-            </div>
-            <img className="results-view-background" src={resultsBackground} style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}></img>
-            <div className="results-view-top">
-                
-                <img src={resultsTop} style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}></img>
+        <div className="screen-wrapper">
+            <TransitionInView delay={1} settingsObj={settingsObj}></TransitionInView>
+            <div className="results-view-wrapper">
+                <button className="results-next-button" style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
+                    Continue
+                </button>
+                <button className="results-back-button" style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
+                    Retry
+                </button>
+                <div className="results-main-content">
+                    <div className="results-tier-wrapper">
+                        <h4>Rank</h4>
+                        <img src={aTier}></img>
+                    </div>
+                    <div className="results-metrics-wrapper">
+                        <h4>Score</h4>
+                        <h2>{formatScore()}</h2>
+                        <div className="results-circle-wrapper">
+                            <CircleProgressBar size={"calc(75vw * 0.6 / 2.2)"} numerator={260} denominator={300} delay={1.7} duration={1}></CircleProgressBar>
+                            <CircleProgressBar size={"calc(75vw * 0.6 / 2.2)"} numerator={260} denominator={300} delay={1.7} duration={1}></CircleProgressBar>
+                        </div>
+                    </div>
+                </div>
+                <div className="results-img-right-clip" style={{clipPath: clipRight, filter: `saturate(${settingsObj.videoSaturation}) brightness(${settingsObj.videoBrightness})`}}>
+                    <img className="results-img-right-clip-content" ref={thumbnailImgRef} src={thumbnailSrc}></img>
+                </div>
+                <div className="results-img-left-clip" style={{clipPath: clipLeft, filter: `saturate(${settingsObj.videoSaturation}) brightness(${settingsObj.videoBrightness})`}}>
+                    <img className="results-img-left-clip-content" src={thumbnailSrc}></img>
+                </div>
+                <img className="results-view-background" src={resultsBackground} style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}></img>
+                <div className="results-view-top">
+                    <h3>{videoInfo.snippet.title}</h3>
+                    <h4>{videoInfo.snippet.channelTitle}</h4>
+                    <img src={resultsTop} style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}></img>
+                </div>
             </div>
         </div>
     );

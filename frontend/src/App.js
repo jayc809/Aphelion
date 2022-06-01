@@ -4,8 +4,6 @@ import AnalyzerView from './AnalyzerView'
 import ResultsView from './ResultsView'
 import VideoSelectorView from './VideoSelectorView'
 import TestView from "./TestView"
-import TransitionOutView from './TransitionOutView'
-import TransitionInView from './TransitionInView'
 import { useRef, useState } from 'react'
 
 function App() {
