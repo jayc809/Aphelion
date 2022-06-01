@@ -1,0 +1,45 @@
+.results-view-wrapper {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.results-view-background {
+    height: 100vh;
+    width: 100vw;
+    object-fit: cover;
+    position: absolute;
+    z-index: 10;
+}
+
+.results-img-right-clip {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    z-index: 16;
+    overflow: hidden;
+}
+
+.results-img-right-clip-content {
+    height: 100vh;
+    aspect-ratio: 1280 / 540;
+    position: absolute;
+    object-fit: cover;
+    right: -42vw;
+}
+
+.results-img-left-clip {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    z-index: 15;
+    overflow: hidden;
+}
+
+.results-img-left-clip-content {
+    height: 100vh;
+    aspect-ratio: 1280 / 540;
+    position: absolute;
+    object-fit: cover;
+    left: -42vw;
+}

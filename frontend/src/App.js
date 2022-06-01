@@ -10,14 +10,14 @@ import { useRef, useState } from 'react'
 
 function App() {
 
-  const [view, setView] = useState("videos")
+  const [view, setView] = useState("results")
   const [gameId, setGameId] = useState(0)
   const videoIdRef = useRef("IKKar5SS29E")
   const [settingsObj, setSettingsObj] = useState({
       difficulty: "Hard",
       tileSpeed: 1.3,
       theme: "dark",
-      uiHue: 0,
+      uiHue: 348,
       uiSaturation: 1.6,
       uiBrightness: 1.0,
       videoSaturation: 2.0,
@@ -27,7 +27,15 @@ function App() {
       lowerVolumeOnMisses: false
   })
   const beatmapObjRef = useRef(null)
-  const resultsObjRef = useRef(null)
+  const resultsObjRef = useRef({
+    maxCombo: 500,
+    highestCombo: 320,
+    totalCombo: 460,
+    score: 589329,
+    fullCombo: false,
+    fullPerfect: false,
+    tier: "A"
+  })
 
   const setBeatmapObjRef = (beatmapObj) => {
     beatmapObjRef.current = beatmapObj
@@ -52,7 +60,7 @@ function App() {
           "videos": <VideoSelectorView setView={setView} setVideoIdRef={setVideoIdRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj}/>,
           "analyzer": <AnalyzerView setView={setView} setBeatmapObjRef={setBeatmapObjRef} settingsObj={settingsObj} videoId={videoIdRef.current}/>,
           "game": <GameView setView={setView} incrementGameId={incrementGameId} setResultsObjRef={setResultsObjRef} settingsObj={settingsObj} beatmapObj={beatmapObjRef.current} key={gameId}/>,
-          "results": <ResultsView resultsObj={resultsObjRef.current}/>
+          "results": <ResultsView resultsObj={resultsObjRef.current} settingsObj={settingsObj} videoId={videoIdRef.current}/>
         } [view]
       }
       {/* <TestView/> */}
