@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import "./ResultsView.css"
 import resultsBackground from "./images/results-background.png"
+import resultsTop from "./images/results-top.png"
 
-const ResultsView = ({ resultsObj, settingsObj, videoId }) => {
+const ResultsView = ({ resultsObj, settingsObj, videoInfo }) => {
 
     const [clipRight, setClipRight] = useState(null)
     const [clipLeft, setClipLeft] = useState(null)
@@ -12,7 +13,7 @@ const ResultsView = ({ resultsObj, settingsObj, videoId }) => {
 
     useEffect(() => {
         setClips()
-        setThumbnailSrc(`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`)
+        setThumbnailSrc(`https://img.youtube.com/vi/${videoInfo.id.videoId}/maxresdefault.jpg`)
         window.addEventListener("resize", setClips)
         return () => {
             window.removeEventListener("resize", setClips)
@@ -23,10 +24,10 @@ const ResultsView = ({ resultsObj, settingsObj, videoId }) => {
         console.log(thumbnailImgRef.current.naturalHeight)
         if (thumbnailImgRef.current.naturalHeight == 90 && currentResRef.current == "max") {
             currentResRef.current = "high"
-            setThumbnailSrc(`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`)
+            setThumbnailSrc(`https://img.youtube.com/vi/${videoInfo.id.videoId}/hqdefault.jpg`)
         } else if (thumbnailImgRef.current.naturalHeight == 90 && currentResRef.current == "high") {
             currentResRef.current = "default"
-            setThumbnailSrc(`https://img.youtube.com/vi/${videoId}/mqdefault.jpg`)
+            setThumbnailSrc(videoInfo.snippet.thumbnails.high)
         }
     }
 
@@ -62,6 +63,10 @@ const ResultsView = ({ resultsObj, settingsObj, videoId }) => {
                 <img className="results-img-left-clip-content" src={thumbnailSrc}></img>
             </div>
             <img className="results-view-background" src={resultsBackground} style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}></img>
+            <div className="results-view-top">
+                
+                <img src={resultsTop} style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}></img>
+            </div>
         </div>
     );
 };

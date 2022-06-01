@@ -43,3 +43,23 @@
     object-fit: cover;
     left: -42vw;
 }
+
+.results-view-top {
+    position: absolute;
+    z-index: 5;
+    top: calc(1 / 16 * 100vh);
+    left: calc(1 / 16 * 100vh);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr;
+    /* border: 1px solid red; */
+}
+
+.results-view-top img {
+    height: 25vh;
+    width: 100%;
+    object-fit: cover;
+    object-position: left;
+    grid-row-start: 1;
+    grid-column-start: 1;
+}

@@ -12,7 +12,7 @@ import bg from "./images/video-selector-bg.png"
 import "./VideoSelectorView.css"
 import "./App.css"
 
-const VideoSelectorView = ({ setView, setVideoIdRef, settingsObj, setSettingsObj }) => {
+const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsObj }) => {
 
     const searchKeywordRef = useRef("ghost suisei")
     const [videos, setVideos] = useState([])
@@ -167,7 +167,7 @@ const VideoSelectorView = ({ setView, setVideoIdRef, settingsObj, setSettingsObj
         if (!settingsShowingRef.current) {
             showSettings()
         } else {
-            setVideoIdRef(selectedVideo.id.videoId)
+            setVideoInfoRef(selectedVideo)
             setTransitionOut(true)
             setVideoPlayRef.current(false)
         }
