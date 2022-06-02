@@ -34,16 +34,16 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
   //update score and combo
   const scoreRef = useRef(null)
   const setScoreRef = useRef(null)
-  const fullPerfectRef = useRef(true)
   const onScoreMount = (score, setScore) => {
     scoreRef.current = score
     setScoreRef.current = setScore
   }
   const comboRef = useRef(null)
   const setComboRef = useRef(null)
-  const highestComboRef = useRef(0)
+  const maxComboRef = useRef(0)
   const totalComboRef = useRef(0)
-  const fullComboRef = useRef(true)
+  const totalPerfectRef = useRef(0)
+  const noMissesRef = useRef(null)
   const onComboMount = (combo, setCombo) => {
     comboRef.current = combo
     setComboRef.current = setCombo
@@ -61,22 +61,20 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
     const incrementCombo = () => {
       comboRef.current += 1
       totalComboRef.current += 1
-      if (comboRef.current > highestComboRef.current) {
-        highestComboRef.current = comboRef.current
-      }
+      maxComboRef.current = Math.max(comboRef.current, maxComboRef.current)
       setComboRef.current(comboRef.current)
     }
     switch (accuracy) {
       case "perfect":  
         incrementScore(parseInt(100 * (1 + comboRef.current / 100)))
         incrementCombo()
+        totalPerfectRef.current += 1
         setPerfectDisplayRef.current(true)
         if (settingsObj.lowerVolumeOnMisses) {
           setVideoVolumeRef.current("high")
         }
         break
       case "great":  
-        fullPerfectRef.current = false
         incrementScore(parseInt(80 * (1 + comboRef.current / 100)))
         incrementCombo()
         setPerfectDisplayRef.current(false)
@@ -85,7 +83,6 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
         }
         break
       case "good":  
-        fullPerfectRef.current = false
         incrementScore(parseInt(60 * (1 + comboRef.current / 100)))
         incrementCombo()
         setPerfectDisplayRef.current(false)
@@ -94,8 +91,7 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
         }
         break
       case "miss": 
-        fullPerfectRef.current = false
-        fullComboRef.current = false
+        noMissesRef.current = false
         comboRef.current = 0
         setComboRef.current(0)
         setPerfectDisplayRef.current(false)
@@ -145,31 +141,33 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
   const endingBlackScreenRef = useRef(null)
   const [showVideo, setShowVideo] = useState(true)
   const getResultsObj = () => {
-    const maxCombo = beatmapObj.maxCombo
-    const highestCombo = highestComboRef.current
+    const totalNotes = beatmapObj.maxCombo
     const totalCombo = totalComboRef.current
-    const score = scoreRef.current
-    const fullCombo = fullComboRef.current
-    const fullPerfect = fullPerfectRef.current
+    const totalPerfect = totalPerfectRef.current
+    const noMisses = noMissesRef.current == true ? true : false
+    const fullCombo = totalCombo == totalNotes
+    const fullPerfect = totalPerfect == totalNotes
     let tier = null
     if (fullCombo || fullPerfect) {
       tier = "S"
-    } else if (totalCombo / maxCombo > 0.95) {
+    } else if (totalCombo / totalNotes > 0.95) {
       tier = "A"
-    } else if (totalCombo / maxCombo > 0.9) {
+    } else if (totalCombo / totalNotes > 0.9) {
       tier = "B"
-    } else if (totalCombo / maxCombo > 0.85) {
+    } else if (totalCombo / totalNotes > 0.85) {
       tier = "C"
-    } else if (totalCombo / maxCombo > 0.8) {
+    } else if (totalCombo / totalNotes > 0.8) {
       tier = "D"
     } else {
       tier = "F"
     }
     return {
-      maxCombo: maxCombo,
-      highestCombo: highestCombo,
+      totalNotes: totalNotes,
+      maxCombo: maxComboRef.current,
       totalCombo: totalCombo,
-      score: score,
+      totalPerfect: totalPerfect,
+      score: scoreRef.current,
+      noMisses: noMisses,
       fullCombo: fullCombo,
       fullPerfect: fullPerfect,
       tier: tier
@@ -226,7 +224,7 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
         setShowVideo(false)
         nextViewDestinationRef.current = "results"
         setTransitionOut(true)
-      }, 2000)
+      }, 4100)
     } else {
       setShowVideo(false)
       nextViewDestinationRef.current = "results"

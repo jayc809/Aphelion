@@ -30,7 +30,7 @@ const Video = ({ updateCurrTime, beatmapObj, tileSpeed, getAllowStart, onAllowSt
         if (musicHasStarted.current) {
             updateCurrTime(currTime)
         } 
-        if (beatmapObj.totalTime - currTime <= 1.9) {
+        if (!hasEndedRef.current && beatmapObj.totalTime - (currTime - tileSpeed * 0.86) <= 1.9) {
             handleEnd()
         }
     }
@@ -60,10 +60,14 @@ const Video = ({ updateCurrTime, beatmapObj, tileSpeed, getAllowStart, onAllowSt
         }
     }
 
+    const hasEndedRef = useRef(false)
     const handleEnd = () => {
+        hasEndedRef.current = true
         const blackScreen = blackScreenRef.current
         blackScreen.style.animation = "fade-in 2s forwards"
-        clearInterval(infoUpdaterRef.current)
+        setTimeout(() => {
+            clearInterval(infoUpdaterRef.current)
+        }, 2000)
         onVideoEnd("delay")
     }
 
@@ -89,6 +93,13 @@ const Video = ({ updateCurrTime, beatmapObj, tileSpeed, getAllowStart, onAllowSt
                     height="200%"
                     onReady={handlePlayerReady}
                     volume={volume}
+                    onEnded={
+                        () => {
+                            if (!hasEndedRef.current) {
+                                handleEnd()
+                            }
+                        }
+                    }
                     // onEnded={console.log("video ended")}
                     // onError={console.log("video error")}
                 />

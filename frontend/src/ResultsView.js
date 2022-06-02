@@ -6,15 +6,21 @@ import TransitionOutView from './TransitionOutView';
 import ReactPlayer from 'react-player';
 import resultsBackground from "./images/results-background.png"
 import resultsTop from "./images/results-top.png"
+import noMisses from "./images/no-misses.png"
 import fullCombo from "./images/full-combo.png"
 import fullPerfect from "./images/full-perfect.png"
+import sTier from "./images/s-tier.png"
 import aTier from "./images/a-tier.png"
+import bTier from "./images/b-tier.png"
+import cTier from "./images/c-tier.png"
+import fTier from "./images/f-tier.png"
 
 const ResultsView = ({ setView, incrementGameId, resultsObj, settingsObj, videoInfo }) => {
 
     const [clipRight, setClipRight] = useState(null)
     const [clipLeft, setClipLeft] = useState(null)
     const [circleSize, setCircleSize] = useState(null)
+    const [signSize, setSignSize] = useState(null)
     const [thumbnailSrc, setThumbnailSrc] = useState(null)
     const [scoreDisplay, setScoreDisplay] = useState(0)
     const startAddingScore = useRef(false)
@@ -86,6 +92,7 @@ const ResultsView = ({ setView, incrementGameId, resultsObj, settingsObj, videoI
             setClipRight(`polygon(100vw 0vh, 100vw 100vh, ${lowerLeft}px 100vh, ${upperLeft}px 0vh)`)
             setClipLeft(`polygon(0vw 100vh, 0vw ${upperRight}px, ${lowerRight}px 100vh)`)
             setCircleSize("calc(67vh / 2.25)")
+            setSignSize("calc((67vh / 2.25 + 3.5vw / 2) * 2 / 3)")
         } else {
             const lowerRight = window.innerHeight - ((outerWidth - window.innerWidth) / 2) / Math.tan(lineAngle)
             const upperRight = window.innerWidth - (window.innerHeight * Math.tan(lineAngle) - ((outerWidth - window.innerWidth) / 2))
@@ -94,6 +101,7 @@ const ResultsView = ({ setView, incrementGameId, resultsObj, settingsObj, videoI
             setClipRight(`polygon(100vw 0vh, 100vw ${lowerRight}px, ${upperRight}px 0vh)`)
             setClipLeft(`polygon(0vw 100vh, ${lowerLeft}px 100vh, 0vw ${upperLeft}px)`)
             setCircleSize("calc(75vw * 0.62 / 2.5)")
+            setSignSize("calc((75vw * 0.62 / 2.5 + 3.5vw / 2) * 2 / 3)")
         }
     }
 
@@ -118,6 +126,21 @@ const ResultsView = ({ setView, incrementGameId, resultsObj, settingsObj, videoI
 
     const [showView, setShowView] = useState(false)
 
+    const getTierSrc = () => {
+        switch (resultsObj.tier) {
+            case "S":
+                return sTier
+            case "A":
+                return aTier
+            case "B":
+                return bTier
+            case "C":
+                return cTier
+            case "F":
+                return fTier
+        }
+    }
+
     return (
         <div className="screen-wrapper">
             <TransitionInView delay={1} settingsObj={settingsObj}></TransitionInView>
@@ -125,29 +148,36 @@ const ResultsView = ({ setView, incrementGameId, resultsObj, settingsObj, videoI
                 nextViewDestinationRef.current == "videos" ? nextViewVideos : nextViewGame
             } start={transitionOut} settingsObj={settingsObj}></TransitionOutView>
             <div className="results-view-wrapper" style={{opacity: showView ? 1 : 0}}>
-                <button className="results-next-button" ref={retryButtonRef}onClick={handleContinue} style={{opacity: 0, filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
+                <button className="results-next-button" ref={retryButtonRef}onClick={handleContinue} 
+                    style={{opacity: 0, filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}
+                >
                     Continue
                 </button>
-                <button className="results-back-button" ref={conitnueButtonRef} onClick={handleRetry} style={{opacity: 0, filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
+                <button className="results-back-button" ref={conitnueButtonRef} onClick={handleRetry} 
+                    style={{opacity: 0, filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}
+                >
                     Retry
                 </button>
                 <div className="results-main-content">
                     <div className="results-tier-wrapper">
                         <h4>Rank</h4>
-                        <img src={aTier} ref={tierRef} style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}></img>
+                        <img src={getTierSrc()} ref={tierRef} style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}></img>
                     </div>
                     <div className="results-metrics-wrapper">
                         <h4>Score</h4>
                         <h2>{String(scoreDisplay).padStart(12, "0")}</h2>
+                        <div className="results-sign-wrapper">
+                            <img src={noMisses} style={{width: signSize, marginBottom: `calc(${circleSize} / 8)`, opacity: resultsObj.noMisses ? 1 : 0.35}}></img>
+                            <img src={fullCombo} style={{width: signSize, marginBottom: `calc(${circleSize} / 8)`, opacity: resultsObj.fullCombo ? 1 : 0.35}}></img>
+                            <img src={fullPerfect} style={{width: signSize, marginBottom: `calc(${circleSize} / 8)`, opacity: resultsObj.fullPerfect ? 1 : 0.4}}></img>
+                        </div>
                         <div className="results-circle-wrapper">
                             <div style={{height: `calc(${circleSize} * 1.6)`, width: circleSize}}>
-                                <img src={fullCombo} style={{marginBottom: `calc(${circleSize} / 8)`, opacity: resultsObj.fullCombo ? 1 : 0.25}}></img>
-                                <CircleProgressBar size={circleSize} numerator={resultsObj.totalCombo} denominator={resultsObj.maxCombo} delay={1.7} duration={1}></CircleProgressBar>
+                                <CircleProgressBar size={circleSize} numerator={resultsObj.maxCombo} denominator={resultsObj.totalNotes} delay={1.7} duration={1}></CircleProgressBar>
                                 <h4 style={{textAlign: "center", margin: "0", marginTop: `calc(${circleSize} / 8)`, textIndent: `calc(${circleSize} / 30)`}}>Max Combo</h4>
                             </div>
                             <div style={{height: `calc(${circleSize} * 1.6)`, width: circleSize}}>
-                                <img src={fullPerfect} style={{marginBottom: `calc(${circleSize} / 8)`, opacity: resultsObj.fullCombo ? 1 : 0.3}}></img>
-                                <CircleProgressBar size={circleSize} numerator={resultsObj.totalCombo} denominator={resultsObj.maxCombo} delay={1.7} duration={1}></CircleProgressBar>
+                                <CircleProgressBar size={circleSize} numerator={resultsObj.totalPerfect} denominator={resultsObj.totalNotes} delay={1.7} duration={1}></CircleProgressBar>
                                 <h4 style={{textAlign: "center", margin: "0", marginTop: `calc(${circleSize} / 8)`, textIndent: `calc(${circleSize} / 15)`}}>Perfect Notes</h4>
                             </div>
                         </div>

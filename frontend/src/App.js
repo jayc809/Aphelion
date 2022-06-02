@@ -8,7 +8,7 @@ import { useRef, useState } from 'react'
 
 function App() {
 
-  const [view, setView] = useState("videos")
+  const [view, setView] = useState("results")
   const [gameId, setGameId] = useState(0)
   const videoInfoRef = useRef({
     "id": {
@@ -58,10 +58,12 @@ function App() {
   })
   const beatmapObjRef = useRef(null)
   const resultsObjRef = useRef({
-    maxCombo: 500,
-    highestCombo: 320,
-    totalCombo: 460,
+    totalNotes: 500,
+    maxCombo: 470,
+    totalCombo: 470,
+    totalPerfect: 482,
     score: 589329,
+    noMisses: true,
     fullCombo: false,
     fullPerfect: false,
     tier: "A"

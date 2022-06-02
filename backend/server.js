@@ -60,12 +60,10 @@ io.on("connect", socket => {
             const fftMap= getFFTMap(audioData, buffer, startIndex, bpm) 
 
             console.log("generating beatmap")
-            const beatmap = getBeatmap(fftMap, beatTime, bpm)
+            const res = getBeatmap(fftMap, beatTime, bpm)
+            const beatmap = res[0]
+            const maxCombo = res[1]
 
-            let maxCombo = 0
-            beatmap.forEach((beat) => {
-                maxCombo += beat.tiles.length
-            })
             const beatmapObj = {
                 videoUrl: videoUrl,
                 bpm: bpm,
@@ -341,11 +339,16 @@ const getBeatmap = (fftMap, beatTime, bpm) => {
         }
     }
     
+    let maxCombo = 0
+    beatmap.forEach((beat) => {
+        maxCombo += beat.tiles.length
+    })
+    
     beatmap.forEach((meta) => {
         meta.tiles = meta.tiles.filter((tile) => {return tile.class != "blank"})
     })
 
-    return beatmap
+    return [beatmap, maxCombo]
 }
 
 // const getBeatmap = (fftMap, beatTime, bpm) => {
