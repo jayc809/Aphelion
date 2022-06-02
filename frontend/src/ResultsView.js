@@ -21,6 +21,8 @@ const ResultsView = ({ setView, incrementGameId, resultsObj, settingsObj, videoI
     const thumbnailImgRef = useRef(null)
     const currentResRef = useRef("max")
     const tierRef = useRef(null)
+    const retryButtonRef = useRef(null)
+    const conitnueButtonRef = useRef(null)
     const backgroundVideo = "https://www.youtube.com/watch?v=jH1LBL_v7Qs"
 
     useEffect(() => {
@@ -33,6 +35,8 @@ const ResultsView = ({ setView, incrementGameId, resultsObj, settingsObj, videoI
             setTimeout(() => {
                 tierRef.current.style.animation = "tier-zoom-out 0.5s ease-out forwards"
             }, 500);
+            retryButtonRef.current.style.animation = "opacity-0-1 0.7s linear forwards"
+            conitnueButtonRef.current.style.animation = "opacity-0-1 0.7s linear forwards"
             startAddingScore.current = true
             setScoreDisplay(1)
         }, 1700);
@@ -121,10 +125,10 @@ const ResultsView = ({ setView, incrementGameId, resultsObj, settingsObj, videoI
                 nextViewDestinationRef.current == "videos" ? nextViewVideos : nextViewGame
             } start={transitionOut} settingsObj={settingsObj}></TransitionOutView>
             <div className="results-view-wrapper" style={{opacity: showView ? 1 : 0}}>
-                <button className="results-next-button" onClick={handleContinue} style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
+                <button className="results-next-button" ref={retryButtonRef}onClick={handleContinue} style={{opacity: 0, filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
                     Continue
                 </button>
-                <button className="results-back-button" onClick={handleRetry} style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
+                <button className="results-back-button" ref={conitnueButtonRef} onClick={handleRetry} style={{opacity: 0, filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
                     Retry
                 </button>
                 <div className="results-main-content">

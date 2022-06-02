@@ -62,6 +62,7 @@ const VideoInfo = ({ videoInfo, settingsObj, onMount }) => {
                                         width="100%"
                                         height="100%"
                                         volume={0.5}
+                                        loop={true}
                                     />
                                 </div>
                             </div>

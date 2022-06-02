@@ -26,6 +26,7 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
     useEffect(() => {
         window.addEventListener("keypress", handleKeyPress)
         setVideos(dummyVideoInfo.items)
+        hideSettings() //?
         const checkEmptyInput = setInterval(() => {
             const inputEl = document.getElementById("search-input-el")
             if (inputEl.value == "" && document.activeElement != inputEl) {
@@ -137,7 +138,7 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
         setVideoPlayRef.current = setPlay
     }
     
-    const [nextButtonText, setNextButtonText] = useState("Next")
+    const [nextButtonText, setNextButtonText] = useState("Continue")
     const showSettings = () => {
         if (!settingsShowingRef.current) {    
             scrollListRef.current.style.animation = `hide-scroll-list ${animationTime}s ease-out forwards`
@@ -155,7 +156,7 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
         if (settingsShowingRef.current) {   
             settingsRef.current.style.animation =  `hide-settings ${animationTime}s ease-out forwards`
             setUseVideoRef.current(false)
-            setNextButtonText("Next")
+            setNextButtonText("Continue")
             setTimeout(() => {  
                 scrollListRef.current.style.animation = `show-scroll-list ${animationTime}s ease-out forwards`
                 selectedVideoRef.current.style.animation = `show-selected-video ${animationTime}s ease-out forwards`
