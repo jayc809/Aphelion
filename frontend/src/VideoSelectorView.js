@@ -20,6 +20,7 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
     const [selectedVideo, setSelectedVideo] = useState({snippet: {title: "", channelTitle: "", thumbnails: {high: {url: ""}}}})
     const lastSubmittedSearchKeywordRef = useRef(null)
     const [showYT, setShowYT] = useState(true)
+    const inputRef = useRef(null)
     const backgroundVideo = "https://www.youtube.com/watch?v=jH1LBL_v7Qs"
 
     const [showView, setShowView] = useState(false)
@@ -122,8 +123,17 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
                 })
                 setVideos(secondSearchResult)
                 setViewKey(viewKey + 1)
+                inputRef.current.value = lastSubmittedSearchKeywordRef.current
+                unfocusInput()
             })
         })
+    }
+
+    const unfocusInput = () => {
+        const temp = document.createElement("input");
+        document.body.appendChild(temp);
+        temp.focus();
+        document.body.removeChild(temp);
     }
 
     const settingsShowingRef = useRef(false)
@@ -194,7 +204,7 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
                     <img className="search-bar-background" src={searchBarBackground}></img>
                     {showYT ? <div className="search-YT">Search</div> : ""}
                     {showYT ? <img className="search-YT-logo" src={ytLogo}></img> : ""}
-                    <input className="search-input" id="search-input-el" type="text" onChange={handleSearchInputChange} onFocus={() => {setShowYT(false)}} autoComplete="off"></input>
+                    <input className="search-input" id="search-input-el" ref={inputRef} type="text" onChange={handleSearchInputChange} onFocus={() => {setShowYT(false)}} autoComplete="off"></input>
                 </div>
 
                 <div className="video-selected" ref={selectedVideoRef} style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
