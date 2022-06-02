@@ -10,7 +10,7 @@ import fullCombo from "./images/full-combo.png"
 import fullPerfect from "./images/full-perfect.png"
 import aTier from "./images/a-tier.png"
 
-const ResultsView = ({ setView, resultsObj, settingsObj, videoInfo }) => {
+const ResultsView = ({ setView, incrementGameId, resultsObj, settingsObj, videoInfo }) => {
 
     const [clipRight, setClipRight] = useState(null)
     const [clipLeft, setClipLeft] = useState(null)
@@ -26,6 +26,9 @@ const ResultsView = ({ setView, resultsObj, settingsObj, videoInfo }) => {
     useEffect(() => {
         handleResize()
         setThumbnailSrc(`https://img.youtube.com/vi/${videoInfo.id.videoId}/maxresdefault.jpg`)
+        setTimeout(() => {
+            setShowView(true)
+        }, 700);
         setTimeout(() => {
             setTimeout(() => {
                 tierRef.current.style.animation = "tier-zoom-out 0.5s ease-out forwards"
@@ -52,7 +55,6 @@ const ResultsView = ({ setView, resultsObj, settingsObj, videoInfo }) => {
                     setScoreDisplay(currScore)
                 }
             }, 1000 / intervals)
-            console.log("wuh")
         }
     }, [scoreDisplay])
 
@@ -92,22 +94,33 @@ const ResultsView = ({ setView, resultsObj, settingsObj, videoInfo }) => {
     }
 
     const [transitionOut, setTransitionOut] = useState(false)
+    const nextViewDestinationRef = useRef(null)
     const handleContinue = () => {
+        nextViewDestinationRef.current = "videos"
         setTransitionOut(true)
     }
-    const nextView = () => {
+    const nextViewVideos = () => {
         setView("videos")
     }
 
     const handleRetry = () => {
-        console.log(2)
+        nextViewDestinationRef.current = "game"
+        incrementGameId()
+        setTransitionOut(true)
     }
+    const nextViewGame = () => {
+        setView("game")
+    }
+
+    const [showView, setShowView] = useState(false)
 
     return (
         <div className="screen-wrapper">
             <TransitionInView delay={1} settingsObj={settingsObj}></TransitionInView>
-            <TransitionOutView nextView={nextView} start={transitionOut} settingsObj={settingsObj}></TransitionOutView>
-            <div className="results-view-wrapper">
+            <TransitionOutView nextView={
+                nextViewDestinationRef.current == "videos" ? nextViewVideos : nextViewGame
+            } start={transitionOut} settingsObj={settingsObj}></TransitionOutView>
+            <div className="results-view-wrapper" style={{opacity: showView ? 1 : 0}}>
                 <button className="results-next-button" onClick={handleContinue} style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
                     Continue
                 </button>

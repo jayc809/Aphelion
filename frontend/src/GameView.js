@@ -175,15 +175,6 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
       tier: tier
     }
   }
-  const handleGameEnd = () => {
-    setShowVideo(false)
-    const resultsObj = getResultsObj()
-    setResultsObjRef(resultsObj)
-    endingBlackScreenRef.current.style.animation = "fade-in 2s forwards"
-    setTimeout(() => {
-      setView("results")
-    }, 2000)
-  }
 
   const setAudioPlayRef = useRef(null)
   const setVideoPlayRef = useRef(null)
@@ -215,35 +206,52 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
     }
   }
 
+  const [transitionOut, setTransitionOut] = useState(false)
+
   const restartGame = () => {
-    nextViewDestinationRef.current = "restart"
+    nextViewDestinationRef.current = "game"
     setTransitionOut(true)
   }
-
-  const [transitionOut, setTransitionOut] = useState(false)
   const nextViewDestinationRef = useRef("")
-  const nextViewRestart = () => {
+  const nextViewGame = () => {
     incrementGameId()
   }
+ 
+  const endGame = (delay) => {
+    // endingBlackScreenRef.current.style.animation = "fade-in 2s forwards"
+    const resultsObj = getResultsObj()
+    setResultsObjRef(resultsObj)
+    if (delay == "delay") {
+      setTimeout(() => {
+        setShowVideo(false)
+        nextViewDestinationRef.current = "results"
+        setTransitionOut(true)
+      }, 2000)
+    } else {
+      setShowVideo(false)
+      nextViewDestinationRef.current = "results"
+      setTransitionOut(true)
+    }
+  }
+  const nextViewResults = () => {
+    setView("results")
+  }
+
 
   return (
     <div className="screen-wrapper">
       <TransitionInView delay={1} settingsObj={settingsObj}></TransitionInView>
       <TransitionOutView 
         nextView={
-          nextViewDestinationRef.current == "restart" ? nextViewRestart : ""
+          nextViewDestinationRef.current == "game" ? nextViewGame : nextViewResults
         } 
         start={transitionOut} settingsObj={settingsObj}></TransitionOutView>
       <div className="game-view-wrapper" style={{cursor: mouseMoved ? "default" : "none", opacity: showGame ? 1 : 0}}>
 
-        {/* <div className="component" id="test">
-          <button onClick={() => handleGameEnd()}>end</button>
-        </div> */}
-
         <div className="component" id="ending-black-screen" ref={endingBlackScreenRef}></div>
         
         <div className="component" id="pause-menu">
-          <PauseMenu pauseGame={pauseGame} restartGame={restartGame}/>
+          <PauseMenu pauseGame={pauseGame} restartGame={restartGame} endGame={endGame}/>
         </div>
 
         <div className="component" id="start-message">
@@ -284,7 +292,7 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
               tileSpeed={tileSpeed}
               getAllowStart={getAllowStart}
               onAllowStart={handleAllowStart}
-              onVideoEnd={handleGameEnd}
+              onVideoEnd={endGame}
               onMount={onVideoMount}
               blackScreenPresent={blackScreenPresent}
             />

@@ -47,7 +47,7 @@ const VideoInfo = ({ videoInfo, settingsObj, onMount }) => {
                 <div className="video-high-score" style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
                     <img src={highScoreBackground}></img>
                     <h4>High Score</h4>
-                    <h3>0001373928</h3>
+                    <h3>000001373928</h3>
                 </div>
                 {useVideo ? (
                     videoId != null ?

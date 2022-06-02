@@ -29,6 +29,9 @@ const Video = ({ updateCurrTime, beatmapObj, tileSpeed, getAllowStart, onAllowSt
         const currTime = audioRef.current.getCurrentTime()
         if (musicHasStarted.current) {
             updateCurrTime(currTime)
+        } 
+        if (beatmapObj.totalTime - currTime <= 1.9) {
+            handleEnd()
         }
     }
 
@@ -59,10 +62,9 @@ const Video = ({ updateCurrTime, beatmapObj, tileSpeed, getAllowStart, onAllowSt
 
     const handleEnd = () => {
         const blackScreen = blackScreenRef.current
-        blackScreen.style.animation = "none"
-        blackScreen.style.opacity = 1
+        blackScreen.style.animation = "fade-in 2s forwards"
         clearInterval(infoUpdaterRef.current)
-        onVideoEnd()
+        onVideoEnd("delay")
     }
 
     const setVideoVolume = (level) => {
@@ -86,7 +88,6 @@ const Video = ({ updateCurrTime, beatmapObj, tileSpeed, getAllowStart, onAllowSt
                     width="100%"
                     height="200%"
                     onReady={handlePlayerReady}
-                    onEnded={handleEnd}
                     volume={volume}
                     // onEnded={console.log("video ended")}
                     // onError={console.log("video error")}

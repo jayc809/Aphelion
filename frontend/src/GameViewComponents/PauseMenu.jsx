@@ -3,7 +3,7 @@ import "../styles/PauseMenu.css"
 import pauseIcon from "../images/pause-button-icon.png"
 import playIcon from "../images/play-button-icon.png"
 
-const PauseMenu = ({ pauseGame, restartGame }) => {
+const PauseMenu = ({ pauseGame, restartGame, endGame }) => {
 
     const [currIcon, setCurrIcon] = useState(pauseIcon)
     const [showMenu, setShowMenu] = useState(false)
@@ -50,6 +50,7 @@ const PauseMenu = ({ pauseGame, restartGame }) => {
     }
 
     const handleExit = () => {
+        endGame("no delay")
     }
 
     return (
