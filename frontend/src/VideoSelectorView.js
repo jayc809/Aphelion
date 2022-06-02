@@ -5,6 +5,7 @@ import dummyVideoInfo from "./dummyVideoInfo.json"
 import ScrollList from './VideoSelectorComponents/ScrollList'
 import VideoInfo from './VideoSelectorComponents/VideoInfo'
 import SettingsList from './VideoSelectorComponents/SettingsList'
+import TransitionInView from './TransitionInView'
 import TransitionOutView from './TransitionOutView'
 import searchBarBackground from "./images/search-bar.png"
 import ytLogo from "./images/yt-logo.png"
@@ -21,6 +22,7 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
     const [showYT, setShowYT] = useState(true)
     const backgroundVideo = "https://www.youtube.com/watch?v=jH1LBL_v7Qs"
 
+    const [showView, setShowView] = useState(false)
     useEffect(() => {
         window.addEventListener("keypress", handleKeyPress)
         setVideos(dummyVideoInfo.items)
@@ -32,6 +34,9 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
                 setShowYT(false)
             }
         }, 100);
+        setTimeout(() => {
+            setShowView(true)
+        }, 700);
         return () => {
             window.removeEventListener("keypress", handleKeyPress)
             clearInterval(checkEmptyInput)
@@ -131,29 +136,32 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
         setUseVideoRef.current = setUseVideo
         setVideoPlayRef.current = setPlay
     }
-
     
     const [nextButtonText, setNextButtonText] = useState("Next")
     const showSettings = () => {
-        scrollListRef.current.style.animation = `hide-scroll-list ${animationTime}s ease-out forwards`
-        selectedVideoRef.current.style.animation = `hide-selected-video ${animationTime}s ease-out forwards`
-        setNextButtonText("Start")
-        setUseVideoRef.current(true)
-        setTimeout(() => {
-            settingsRef.current.style.animation =  `show-settings ${animationTime}s ease-out forwards`
-            settingsShowingRef.current = true
-        }, (animationTime * 0.4) * 1000)
+        if (!settingsShowingRef.current) {    
+            scrollListRef.current.style.animation = `hide-scroll-list ${animationTime}s ease-out forwards`
+            selectedVideoRef.current.style.animation = `hide-selected-video ${animationTime}s ease-out forwards`
+            setNextButtonText("Start")
+            setUseVideoRef.current(true)
+            setTimeout(() => {
+                settingsRef.current.style.animation =  `show-settings ${animationTime}s ease-out forwards`
+                settingsShowingRef.current = true
+            }, (animationTime * 0.4) * 1000)
+        }
     }
 
     const hideSettings = () => {
-        settingsRef.current.style.animation =  `hide-settings ${animationTime}s ease-out forwards`
-        setUseVideoRef.current(false)
-        setNextButtonText("Next")
-        setTimeout(() => {  
-            scrollListRef.current.style.animation = `show-scroll-list ${animationTime}s ease-out forwards`
-            selectedVideoRef.current.style.animation = `show-selected-video ${animationTime}s ease-out forwards`
-            settingsShowingRef.current = false
-        }, (animationTime * 0.4) * 1000)
+        if (settingsShowingRef.current) {   
+            settingsRef.current.style.animation =  `hide-settings ${animationTime}s ease-out forwards`
+            setUseVideoRef.current(false)
+            setNextButtonText("Next")
+            setTimeout(() => {  
+                scrollListRef.current.style.animation = `show-scroll-list ${animationTime}s ease-out forwards`
+                selectedVideoRef.current.style.animation = `show-selected-video ${animationTime}s ease-out forwards`
+                settingsShowingRef.current = false
+            }, (animationTime * 0.4) * 1000)
+        }
     }
 
     const handleBackButtonClick = () => {
@@ -178,8 +186,9 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
 
     return (
         <div className="screen-wrapper">
+            <TransitionInView delay={1} settingsObj={settingsObj}></TransitionInView>
             <TransitionOutView nextView={nextView} start={transitionOut} settingsObj={settingsObj}></TransitionOutView>
-            <div className="video-selector-view-wrapper" key={viewKey}>
+            <div className="video-selector-view-wrapper" key={viewKey} style={{opacity: showView ? 1 : 0}}>
                 <div className="search-bar">
                     <img className="search-bar-background" src={searchBarBackground}></img>
                     {showYT ? <div className="search-YT">Search</div> : ""}

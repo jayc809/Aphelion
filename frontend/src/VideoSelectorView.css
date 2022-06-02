@@ -225,6 +225,7 @@ input:focus {
     width: 100vw;
     position: absolute;
     z-index: -10;
+    overflow: hidden;
 }
 
 .background-video {

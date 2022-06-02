@@ -58,7 +58,7 @@ const CircleProgressBar = ({ size, numerator, denominator, delay, duration }) =>
             <div className="circluar-progress-bar-line"></div>
             <div className="circluar-progress-bar-foreground-black"></div>
             <div className="circluar-progress-bar-foreground-white"></div>
-            <div style={{height: "93.4%", width: "93.4%", zIndex: 100, paddingTop: "0%"}}>
+            <div style={{height: "93.4%", aspectRatio: "1", zIndex: 100, paddingTop: "0%"}}>
             {
                 circle
             }

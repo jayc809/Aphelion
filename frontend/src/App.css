@@ -37,6 +37,10 @@
     font-display: swap;
 }
 
+img {
+    pointer-events: none;
+}
+
 body {
     background-color: black;
     color: white;

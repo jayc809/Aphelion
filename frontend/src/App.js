@@ -8,7 +8,7 @@ import { useRef, useState } from 'react'
 
 function App() {
 
-  const [view, setView] = useState("results")
+  const [view, setView] = useState("videos")
   const [gameId, setGameId] = useState(0)
   const videoInfoRef = useRef({
     "id": {
@@ -47,7 +47,7 @@ function App() {
       difficulty: "Hard",
       tileSpeed: 1.3,
       theme: "dark",
-      uiHue: 348,
+      uiHue: 342,
       uiSaturation: 1.6,
       uiBrightness: 1.0,
       videoSaturation: 2.0,
@@ -90,7 +90,7 @@ function App() {
           "videos": <VideoSelectorView setView={setView} setVideoInfoRef={setVideoInfoRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj}/>,
           "analyzer": <AnalyzerView setView={setView} setBeatmapObjRef={setBeatmapObjRef} settingsObj={settingsObj} videoId={videoInfoRef.current.id.videoId}/>,
           "game": <GameView setView={setView} incrementGameId={incrementGameId} setResultsObjRef={setResultsObjRef} settingsObj={settingsObj} beatmapObj={beatmapObjRef.current} key={gameId}/>,
-          "results": <ResultsView resultsObj={resultsObjRef.current} settingsObj={settingsObj} videoInfo={videoInfoRef.current}/>
+          "results": <ResultsView setView={setView} resultsObj={resultsObjRef.current} settingsObj={settingsObj} videoInfo={videoInfoRef.current}/>
         } [view]
       }
       {/* <TestView/> */}
