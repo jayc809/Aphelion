@@ -17,8 +17,8 @@ io.on("connect", socket => {
     socket.emit("connected-to-server", "connected to server")
 
     socket.on("request-beatmap", (videoUrl) => {
-        const filePath = path.resolve(__dirname, 'video.mp4')
-        const video = ytdl(videoUrl)
+        const filePath = path.resolve(__dirname, 'video.mp3')
+        const video = ytdl(videoUrl, { filter: "audio" })
 
         //download the video
         let starttime
@@ -41,10 +41,14 @@ io.on("connect", socket => {
             process.stdout.write('\n')
             const data = fs.readFileSync(filePath)
             const buffer = data.buffer
-            const audioCtx = new webAudioApi.AudioContext()
-            socket.emit("progress-update", "Decoding Audio Data")
-            console.log("decoding audio data")
-            audioCtx.decodeAudioData(buffer, analyzeAudio)
+            if (checkADTSValidity(buffer)) {  
+                const audioCtx = new webAudioApi.AudioContext()
+                socket.emit("progress-update", "Decoding Audio Data")
+                console.log("decoding audio data")
+                audioCtx.decodeAudioData(buffer, analyzeAudio)
+            } else {
+                socket.emit("progress-update", "ERROR: Decoding Audio Data Failed")
+            }
         })
 
         const analyzeAudio = (buffer) => {
@@ -60,9 +64,9 @@ io.on("connect", socket => {
             const fftMap= getFFTMap(audioData, buffer, startIndex, bpm) 
 
             console.log("generating beatmap")
-            const res = getBeatmap(fftMap, beatTime, bpm)
-            const beatmap = res[0]
-            const maxCombo = res[1]
+            const response = getBeatmap(fftMap, beatTime, bpm)
+            const beatmap = response[0]
+            const maxCombo = response[1]
 
             const beatmapObj = {
                 videoUrl: videoUrl,
@@ -88,10 +92,67 @@ io.on("connect", socket => {
 //tests
 app.listen(4000, () => {console.log("server running on port 4000")})
 
+app.get("/getAudio", (req, res) => {
+    const filePath = path.resolve(__dirname, 'test.mkv')
+    const video = ytdl(req.query.videoUrl, { filter: "audio"})
+
+    //download the video
+    let starttime
+    video.pipe(fs.createWriteStream(filePath))
+    video.once('response', () => {
+        starttime = Date.now()
+    })
+    console.log("downloading video")
+    video.on('progress', (chunkLength, downloaded, total) => {
+        const percent = downloaded / total
+        readline.cursorTo(process.stdout, 0)
+        process.stdout.write(`${(percent * 100).toFixed(2)}% downloaded`)
+        process.stdout.write(`(${(downloaded / 1024 / 1024).toFixed(2)}MB of ${(total / 1024 / 1024).toFixed(2)}MB)\n`)
+        readline.moveCursor(process.stdout, 0, -1)
+    })
+
+    //analyze audio
+    video.on('end', () => {
+        process.stdout.write('\n\n')
+        const data = fs.readFileSync(filePath)
+        const buffer = data.buffer
+        if (checkADTSValidity(buffer)) {  
+            const audioCtx = new webAudioApi.AudioContext()
+            console.log("decoding audio data")
+            audioCtx.decodeAudioData(buffer, analyzeAudio, (e) => {console.log(e)})
+        } else {
+            res.json({ res: "bad" })
+        }
+    })
+    
+    const analyzeAudio = (buffer) => {
+        console.log("calculating BPM")
+        const audioData = getAudioData(buffer)
+
+        const startIndex = getAudioStartIndex(audioData, buffer)
+        const startTime = startIndex / buffer.sampleRate
+        const bpm = getBPM(audioData)
+
+        console.log("analyzing audio using FFT")
+        const beatTime = getBeatTime(audioData, buffer, startIndex, bpm)
+        const fftMap= getFFTMap(audioData, buffer, startIndex, bpm) 
+
+        console.log("generating beatmap")
+        const response = getBeatmap(fftMap, beatTime, bpm)
+        const beatmap = response[0]
+        const maxCombo = response[1]
+        const beatmapObj = {
+            beatmap: beatmap
+        }
+        console.log("process completed")
+        res.json(beatmapObj)
+    }
+})
+
 app.get("/getBeatmap", (req, res) => {
 
-    const filePath = path.resolve(__dirname, 'video.mp4')
-    const video = ytdl(req.query.videoUrl)
+    const filePath = path.resolve(__dirname, 'video.mp3')
+    const video = ytdl(req.query.videoUrl, {filter: "audio"})
 
     //download the video
     let starttime
@@ -115,7 +176,7 @@ app.get("/getBeatmap", (req, res) => {
         const buffer = data.buffer
         const audioCtx = new webAudioApi.AudioContext()
         console.log("decoding audio data")
-        audioCtx.decodeAudioData(buffer, analyzeAudio)
+        audioCtx.decodeAudioData(buffer, analyzeAudio, (e) => {console.log(e)})
     })
     
     const analyzeAudio = (buffer) => {
@@ -131,7 +192,9 @@ app.get("/getBeatmap", (req, res) => {
         const fftMap= getFFTMap(audioData, buffer, startIndex, bpm) 
 
         console.log("generating beatmap")
-        const beatmap = getBeatmap(fftMap, beatTime, bpm)
+        const response = getBeatmap(fftMap, beatTime, bpm)
+        const beatmap = response[0]
+        const maxCombo = response[1]
         const beatmapObj = {
             beatmap: beatmap
         }
@@ -140,7 +203,14 @@ app.get("/getBeatmap", (req, res) => {
     }
 })
 
-
+const checkADTSValidity = (buffer) => {
+    const temp = new Uint8Array(buffer)
+    if (temp[0] == 0 && temp[1] == 0 && temp[2] == 0) {
+        return true
+    } else {
+        return false
+    }
+}
 const getAudioData = (buffer) => {
     const audioData = []
     if (buffer.numberOfChannels == 2) {

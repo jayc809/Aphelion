@@ -196,7 +196,7 @@
     /* border: 1px solid red; */
     display: flex;
     overflow: hidden;
-    padding-left: 2vh;
+    padding-left: 1.5vh;
 }
 
 .results-sign-wrapper img {
@@ -213,7 +213,7 @@
     display: flex;
     gap: 3.5vw;
     overflow: hidden;
-    padding-left: 2vh;
+    padding-left: 1.5vh;
 }
 
 .circluar-progress-bar-wrapper {

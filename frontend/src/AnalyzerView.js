@@ -9,11 +9,13 @@ import "./AnalyzerView.css"
 const AnalyzerView = ({ setView, setBeatmapObjRef, settingsObj, videoId }) => {
 
     const [displayText, setDisplayText] = useState("")
-    const [showButton, setShowButton] = useState(false)
+    const [showNextButton, setShowNextButton] = useState(false)
+    const [showBackButton, setShowBackButton] = useState(false)
     const [progessBarWidth, setProgressBarWidth] = useState(0)
     const [showAnalyzer, setShowAnalyzer] = useState(false)
     const displayTextRef = useRef(null)
     const startButtonRef = useRef(null)
+    const backButtonRef = useRef(null)
     const loadingVideo = "https://www.youtube.com/watch?v=JycQdXuAP0k"
 
     useEffect(() => {
@@ -26,6 +28,12 @@ const AnalyzerView = ({ setView, setBeatmapObjRef, settingsObj, videoId }) => {
             socket.emit("request-beatmap", videoUrl)
             socket.on("progress-update", (message) => {
                 setDisplayText(message)
+                if (message == "ERROR: Decoding Audio Data Failed") {
+                    backButtonRef.current.style.animation = "opacity-0-1 0.7s linear forwards"
+                    setTimeout(() => {
+                        setShowBackButton(true)
+                    }, 700);
+                }
             })
             socket.on("respond-beatmap", (beatmapObjRes) => {
                 const beatmapObj = beatmapObjRes
@@ -38,7 +46,7 @@ const AnalyzerView = ({ setView, setBeatmapObjRef, settingsObj, videoId }) => {
                     startButtonRef.current.style.animation = "opacity-0-1 0.7s linear forwards"
                 }, 700);
                 setTimeout(() => {
-                    setShowButton(true)
+                    setShowNextButton(true)
                 }, 1200);
             })
         })
@@ -57,18 +65,32 @@ const AnalyzerView = ({ setView, setBeatmapObjRef, settingsObj, videoId }) => {
     }, [displayText])
 
     const [transitionOut, setTransitionOut] = useState(false)
+    const nextViewDestinationRef = useRef(null)
     const handleStartGame = () => {
-        if (showButton) {
+        if (showNextButton) {
+            nextViewDestinationRef.current = "game"
             setTransitionOut(true)
         }
     }
-    const nextView = () => {
+    const nextViewGame = () => {
         setView("game")
+    }
+
+    const handleReturnToVideos = () => {
+        if (showBackButton) {
+            nextViewDestinationRef.current = "videos"
+            setTransitionOut(true)
+        }
+    }
+    const nextViewVideos = () => {
+        setView("videos")
     }
 
     return (
         <div className="screen-wrapper">
-            <TransitionOutView nextView={nextView} start={transitionOut} settingsObj={settingsObj}></TransitionOutView>
+            <TransitionOutView nextView={
+                nextViewDestinationRef.current == "game" ? nextViewGame : nextViewVideos
+            } start={transitionOut} settingsObj={settingsObj}></TransitionOutView>
             <TransitionInView delay={1} settingsObj={settingsObj}></TransitionInView>
             <div className="analyzer-view-wrapper" style={{opacity: showAnalyzer ? 1 : 0}}>
                 <h1 className="progress-text" ref={displayTextRef}>{displayText}</h1>
@@ -76,6 +98,11 @@ const AnalyzerView = ({ setView, setBeatmapObjRef, settingsObj, videoId }) => {
                     className="start-game-button" onClick={handleStartGame} ref={startButtonRef} 
                     style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
                     Start Game
+                </button> 
+                <button 
+                    className="back-game-button" onClick={handleReturnToVideos} ref={backButtonRef} 
+                    style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
+                    Back
                 </button> 
                 <div className="loading-video-wrapper">
                     <div className="loading-video">
