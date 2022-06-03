@@ -8,7 +8,7 @@ import { useRef, useState } from 'react'
 
 function App() {
 
-  const [view, setView] = useState("results")
+  const [view, setView] = useState("videos")
   const [gameId, setGameId] = useState(0)
   const videoInfoRef = useRef({
     "id": {

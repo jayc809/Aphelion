@@ -111,7 +111,7 @@ input:focus {
 .video-selected button {
     grid-row-start: 1;
     grid-column-start: 1;
-    font-family: "Futura";
+    font-family: "Futura-Light";
     border: 0;
     color: #fffc00;
     background-color: transparent;

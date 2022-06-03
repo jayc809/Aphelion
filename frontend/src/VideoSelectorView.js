@@ -75,8 +75,6 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
                 type: "video",
                 maxResults: 50,
                 videoDimension: "2d",
-                videoEmbeddable: true,
-                videoSyndicated: true,
             }
         })
         .then(response => {
