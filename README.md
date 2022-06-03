@@ -8,5 +8,6 @@
   1. make new terminal
   2. cd into frontent
   3. run '''npm start'''
+- go to localhost:3000 using Chrome
 
 I've given up on writing docs
