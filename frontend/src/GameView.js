@@ -73,6 +73,9 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
         if (settingsObj.lowerVolumeOnMisses) {
           setVideoVolumeRef.current("high")
         }
+        if (noMissesRef.current == null) {
+          noMissesRef.current = true
+        }
         break
       case "great":  
         incrementScore(parseInt(80 * (1 + comboRef.current / 100)))
@@ -81,6 +84,9 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
         if (settingsObj.lowerVolumeOnMisses) {
           setVideoVolumeRef.current("high")
         }
+        if (noMissesRef.current == null) {
+          noMissesRef.current = true
+        }
         break
       case "good":  
         incrementScore(parseInt(60 * (1 + comboRef.current / 100)))
@@ -88,6 +94,9 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
         setPerfectDisplayRef.current(false)
         if (settingsObj.lowerVolumeOnMisses) {
           setVideoVolumeRef.current("high")
+        }
+        if (noMissesRef.current == null) {
+          noMissesRef.current = true
         }
         break
       case "miss": 
@@ -149,6 +158,8 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
     const fullPerfect = totalPerfect == totalNotes
     let tier = null
     if (fullCombo || fullPerfect) {
+      tier = "S"
+    } else if (totalCombo / totalNotes > 0.95 && noMisses) {
       tier = "S"
     } else if (totalCombo / totalNotes > 0.95) {
       tier = "A"
@@ -219,12 +230,12 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
     // endingBlackScreenRef.current.style.animation = "fade-in 2s forwards"
     const resultsObj = getResultsObj()
     setResultsObjRef(resultsObj)
+    setShowVideo(false)
     if (delay == "delay") {
       setTimeout(() => {
-        setShowVideo(false)
         nextViewDestinationRef.current = "results"
         setTransitionOut(true)
-      }, 4100)
+      }, 2000)
     } else {
       setShowVideo(false)
       nextViewDestinationRef.current = "results"

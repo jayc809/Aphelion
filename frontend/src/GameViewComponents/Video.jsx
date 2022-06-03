@@ -11,8 +11,10 @@ const Video = ({ updateCurrTime, beatmapObj, tileSpeed, getAllowStart, onAllowSt
     const [volume, setVolume] = useState(highVolume)
     const infoUpdaterRef = useRef(null)
     const audioRef = useRef(null)
+    const videoRef = useRef(null)
     const blackScreenRef = useRef(null)
     const musicHasStarted = useRef(false)
+    const audioEndedRef = useRef(false)
 
     useEffect(() => {
         window.addEventListener("keypress", handlePress)
@@ -28,10 +30,15 @@ const Video = ({ updateCurrTime, beatmapObj, tileSpeed, getAllowStart, onAllowSt
     const updateAudioInfo = () => {
         const currTime = audioRef.current.getCurrentTime()
         if (musicHasStarted.current) {
-            updateCurrTime(currTime)
+            if (!audioEndedRef.current) {
+                updateCurrTime(currTime)
+            } else {
+                const processTimeOffset = 0.05
+                updateCurrTime((videoRef.current.getCurrentTime() + (tileSpeed * 0.86) - processTimeOffset))
+            }
         } 
-        if (!hasEndedRef.current && beatmapObj.totalTime - (currTime - tileSpeed * 0.86) <= 1.9) {
-            handleEnd()
+        if (beatmapObj.totalTime - (currTime - tileSpeed * 0.86) <= 1.9) {
+            handleNearEnd()
         }
     }
 
@@ -60,14 +67,15 @@ const Video = ({ updateCurrTime, beatmapObj, tileSpeed, getAllowStart, onAllowSt
         }
     }
 
-    const hasEndedRef = useRef(false)
-    const handleEnd = () => {
-        hasEndedRef.current = true
+    const handleNearEnd = () => {
         const blackScreen = blackScreenRef.current
         blackScreen.style.animation = "fade-in 2s forwards"
-        setTimeout(() => {
-            clearInterval(infoUpdaterRef.current)
-        }, 2000)
+    }
+    const handleAudioEnd = () => {
+        audioEndedRef.current = true
+    }
+    const handleVideoEnd = () => {
+        clearInterval(infoUpdaterRef.current)
         onVideoEnd("delay")
     }
 
@@ -91,15 +99,10 @@ const Video = ({ updateCurrTime, beatmapObj, tileSpeed, getAllowStart, onAllowSt
                     playing={playVideo}
                     width="100%"
                     height="200%"
+                    ref={videoRef}
                     onReady={handlePlayerReady}
                     volume={volume}
-                    onEnded={
-                        () => {
-                            if (!hasEndedRef.current) {
-                                handleEnd()
-                            }
-                        }
-                    }
+                    onEnded={handleVideoEnd}
                     // onEnded={console.log("video ended")}
                     // onError={console.log("video error")}
                 />
@@ -110,6 +113,7 @@ const Video = ({ updateCurrTime, beatmapObj, tileSpeed, getAllowStart, onAllowSt
                     playing={playAudio}
                     ref={audioRef}
                     onReady={handlePlayerReady}
+                    onEnded={handleAudioEnd}
                     // onEnded={console.log("video ended")}
                     // onError={console.log("video error")}
                 />

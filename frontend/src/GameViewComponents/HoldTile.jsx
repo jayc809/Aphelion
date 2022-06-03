@@ -100,7 +100,7 @@ const HoldTile = ({ type, tileSpeed, targetTime, elapseBeatCount, elapseTime, on
                 bar.style.animation = `move-y-bar-tapped-${id} ${elapseTime + "s"} ${timingFunctionMoveBar}`
                 scoreIncrementer.current = setInterval(() => {
                     updateScoreAndCombo(accuracy)
-                }, elapseTime / (elapseBeatCount - 1) * 1000)
+                }, (elapseTime - 0.15) / (elapseBeatCount - 1) * 1000)
             }
         }
     }

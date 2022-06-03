@@ -185,9 +185,9 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
     }
     const getTileAccuracy = (closestTargetTime) => {
         const processTimeOffset = 0.05
-        const tileCrossTime = closestTargetTime + (tileSpeed * 0.86) - processTimeOffset //by cubic bezier animation of tile movement
+        const targetCrossTime = closestTargetTime + (tileSpeed * 0.86) - processTimeOffset //by cubic bezier animation of tile movement
         const accuracyUnit = tileSpeed / 14
-        const timeDifference = Math.abs(currTimeRef.current - tileCrossTime)
+        const timeDifference = Math.abs(currTimeRef.current - targetCrossTime)
         if (timeDifference <= accuracyUnit) {
             return "perfect"
         } else if (timeDifference <= 2 * accuracyUnit) {

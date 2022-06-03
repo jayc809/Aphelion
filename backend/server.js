@@ -17,7 +17,7 @@ io.on("connect", socket => {
     socket.emit("connected-to-server", "connected to server")
 
     socket.on("request-beatmap", (videoUrl) => {
-        const filePath = path.resolve(__dirname, 'video.mp3')
+        const filePath = path.resolve(__dirname, 'video.mkv')
         const video = ytdl(videoUrl, { filter: "audio" })
 
         //download the video
@@ -298,6 +298,8 @@ const getBeatmap = (fftMap, beatTime, bpm) => {
         frequenciesSorted[parseInt(frequenciesSorted.length * 0.75)],
         frequenciesSorted[frequenciesSorted.length - 1]
     ]
+    
+    let maxCombo = 0
     const beatmap = []
     for (let i = 0; i < fftMap.length; i += 1) {
         const top4 = fftMap[i].meta
@@ -354,6 +356,7 @@ const getBeatmap = (fftMap, beatTime, bpm) => {
             time: fftMap[i].time,
             tiles: tiles
         })
+        maxCombo += tiles.length
     }
     let leftChain = []
     let leftPrevIndex = [0]
@@ -375,6 +378,7 @@ const getBeatmap = (fftMap, beatTime, bpm) => {
                     chain[k].class = "blank"
                 }
                 chain.length = 0
+                maxCombo -= 1
             }
         } else if (beat > prevIndex[0] + 1) {
             if (chain.length >= 4 && chain.length <= limit) {
@@ -408,11 +412,6 @@ const getBeatmap = (fftMap, beatTime, bpm) => {
             }
         }
     }
-    
-    let maxCombo = 0
-    beatmap.forEach((beat) => {
-        maxCombo += beat.tiles.length
-    })
     
     beatmap.forEach((meta) => {
         meta.tiles = meta.tiles.filter((tile) => {return tile.class != "blank"})
