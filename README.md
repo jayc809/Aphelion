@@ -10,4 +10,4 @@
   3. run ```npm start```
 - go to localhost:3000 using Chrome
 
-yes i code yes i dont doc my functions
+yes i dont doc my functions
