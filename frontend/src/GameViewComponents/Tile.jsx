@@ -16,7 +16,7 @@ const Tile = ({ type, tileSpeed, targetTime, onMount, onMiss, id }) => {
             onMount(type, targetTime, controller)
         }
         loadTile()
-        window.addEventListener("keypress", () => {tapTile("perfect")})
+        // window.addEventListener("keypress", () => {tapTile("perfect")})
     }, [])
 
     const controller = (instructions, options = null) => {
@@ -27,10 +27,14 @@ const Tile = ({ type, tileSpeed, targetTime, onMount, onMiss, id }) => {
                 tapTile(options)
                 break
             case "pauseAnimation":
-                tileRef.current.style.animationPlayState = "paused"
+                if (tileRef.current.style) {
+                    tileRef.current.style.animationPlayState = "paused"
+                }
                 break
             case "playAnimation":
-                tileRef.current.style.animationPlayState = "running"
+                if (tileRef.current.style) {
+                    tileRef.current.style.animationPlayState = "running"
+                }
                 break
         }
     }
@@ -53,6 +57,7 @@ const Tile = ({ type, tileSpeed, targetTime, onMount, onMiss, id }) => {
     const animationX = useRef("0px")
     const animationY = useRef("0px")
     const animationName = useRef(null)
+
     const tapTile = (accuracy) => {
         const tile = tileRef.current
         tile.style.animationPlayState = "paused"
@@ -107,14 +112,14 @@ const Tile = ({ type, tileSpeed, targetTime, onMount, onMiss, id }) => {
         isUnloaded ? "" :
         <div className="tile-wrapper" style={{zIndex: id}}>
             {playAnimation ?
-                <div style={{filter: "hue-rotate(354deg)", zIndex: 1000}}>
+                <div style={{filter: "hue-rotate(356deg)", zIndex: 1000}}>
                     <AnimationView 
                         height={animationHeight.current} 
                         width={animationWidth.current} 
                         x={animationX.current} 
                         y={animationY.current} 
                         dirName={animationName.current} 
-                        start={0} end={29} loop={false} loopStart={0} loopEnd={false}
+                        start={0} end={29} loop={false}
                         onComplete={unloadTile}
                     ></AnimationView> 
                 </div> :

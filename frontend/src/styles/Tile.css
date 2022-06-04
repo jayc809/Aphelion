@@ -1,6 +1,6 @@
 .tile-wrapper {
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
     overflow: hidden;
     position: absolute;
 }
@@ -18,9 +18,16 @@
     object-fit: contain;
 }
 
-.bar-clip {
+.bar-wrapper {
     height: 100vh;
     width: 100vw;
+    position: absolute;
+    z-index: 0;
+}
+
+.bar-clip {
+    height: 100%;
+    width: 100%;
     position: absolute;
     z-index: 10;
 }
@@ -31,6 +38,7 @@
     margin: 0;
     opacity: 0;
     /* background-color: red; */
+    background-image: linear-gradient(0deg, black 0%, black 12.5%, #6142b8 25%, white 37.5%, white 90%, transparent 100%);
 }
 
 .bar img {
@@ -119,5 +127,14 @@
     }
     to {
         right: 14.8vw;
+    }
+}
+
+@keyframes opacity-06-0 {
+    from {
+        opacity: 0.6;
+    }
+    to {
+        opacity: 0;
     }
 }

@@ -79,7 +79,7 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
     }
     switch (accuracy) {
       case "perfect":  
-        incrementScore(parseInt(100 * (1 + comboRef.current / 100)))
+        incrementScore(parseInt(10000 * (1 + comboRef.current / 100)))
         incrementCombo()
         totalPerfectRef.current += 1
         setPerfectDisplayRef.current(true)
@@ -91,7 +91,7 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
         }
         break
       case "great":  
-        incrementScore(parseInt(80 * (1 + comboRef.current / 100)))
+        incrementScore(parseInt(8000 * (1 + comboRef.current / 100)))
         incrementCombo()
         setPerfectDisplayRef.current(false)
         if (settingsObj.lowerVolumeOnMisses) {
@@ -102,7 +102,7 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
         }
         break
       case "good":  
-        incrementScore(parseInt(60 * (1 + comboRef.current / 100)))
+        incrementScore(parseInt(6000 * (1 + comboRef.current / 100)))
         incrementCombo()
         setPerfectDisplayRef.current(false)
         if (settingsObj.lowerVolumeOnMisses) {
