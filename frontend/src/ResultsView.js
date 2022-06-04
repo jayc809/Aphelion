@@ -151,12 +151,12 @@ const ResultsView = ({ setView, incrementGameId, resultsObj, settingsObj, videoI
             } start={transitionOut} settingsObj={settingsObj}></TransitionOutView>
             <div className="results-view-wrapper" style={{opacity: showView ? 1 : 0}}>
                 <button className="results-next-button" ref={retryButtonRef}onClick={handleContinue} 
-                    style={{opacity: 0, filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}
+                    style={{opacity: 0, filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`, cursor: "pointer"}}
                 >
                     Continue
                 </button>
                 <button className="results-back-button" ref={conitnueButtonRef} onClick={handleRetry} 
-                    style={{opacity: 0, filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}
+                    style={{opacity: 0, filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`, cursor: "pointer"}}
                 >
                     Retry
                 </button>

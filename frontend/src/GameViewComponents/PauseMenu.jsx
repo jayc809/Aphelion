@@ -58,7 +58,7 @@ const PauseMenu = ({ pauseGame, restartGame, endGame, settingsObj, setSettingsOb
         <div className="pause-menu-wrapper">
             <button 
                 className="pause-button" 
-                style={{backgroundImage: `url(${currIcon})`, backgroundSize: "contain"}}
+                style={{backgroundImage: `url(${currIcon})`, backgroundSize: "contain", cursor: "pointer"}}
                 onClick={handlePausePlay}
             ></button>
             {
@@ -68,9 +68,9 @@ const PauseMenu = ({ pauseGame, restartGame, endGame, settingsObj, setSettingsOb
                         <SettingsList settingsObj={settingsObj} setSettingsObj={setSettingsObj} pauseMenu={true}></SettingsList>
                     </div>
                     <div className="pause-menu-button-wrapper">
-                        <button className="pause-menu-button" onClick={handlePausePlay}>Resume</button>
-                        <button className="pause-menu-button" onClick={handleRestart}>Restart</button>
-                        <button className="pause-menu-button" onClick={handleExit}>Quit</button>
+                        <button className="pause-menu-button" onClick={handlePausePlay} style={{cursor: "pointer"}}>Resume</button>
+                        <button className="pause-menu-button" onClick={handleRestart} style={{cursor: "pointer"}}>Restart</button>
+                        <button className="pause-menu-button" onClick={handleExit} style={{cursor: "pointer"}}>Quit</button>
                     </div>
                 </div> :
                 ""

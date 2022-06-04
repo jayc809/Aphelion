@@ -126,7 +126,7 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, set
 
 
   //control tile generator
-  const tileSpeed = 1.3
+  const tileSpeed = settingsObj.tileSpeed
   const handleTimeChangeRef = useRef(null)
   const pauseTilesRef = useRef(null)
   const playTilesRef = useRef(null)

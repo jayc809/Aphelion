@@ -23,9 +23,9 @@ const StepperButton = ({ min, max, start, step, round, setVal }) => {
 
     return (
         <div className="stepper-button-wrapper">
-            <button className="stepper-button-incrementer-decrease" onClick={handleDecrease}>◄</button>
+            <button className="stepper-button-incrementer-decrease" onClick={handleDecrease} style={{cursor: "pointer"}}>◄</button>
             <div>{valDisplay}</div>
-            <button className="stepper-button-incrementer-increase" onClick={handleIncrease}>►</button>
+            <button className="stepper-button-incrementer-increase" onClick={handleIncrease} style={{cursor: "pointer"}}>►</button>
         </div>
     );
 };

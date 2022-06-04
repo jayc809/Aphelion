@@ -96,12 +96,12 @@ const AnalyzerView = ({ setView, setBeatmapObjRef, settingsObj, videoId }) => {
                 <h1 className="progress-text" ref={displayTextRef}>{displayText}</h1>
                 <button 
                     className="start-game-button" onClick={handleStartGame} ref={startButtonRef} 
-                    style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
+                    style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`, cursor: "pointer"}}>
                     Start Game
                 </button> 
                 <button 
                     className="back-game-button" onClick={handleReturnToVideos} ref={backButtonRef} 
-                    style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
+                    style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`, cursor: "pointer"}}>
                     Back
                 </button> 
                 <div className="loading-video-wrapper">

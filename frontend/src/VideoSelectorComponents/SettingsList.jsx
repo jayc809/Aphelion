@@ -122,7 +122,7 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false }) => {
                     <div className="settings-list-row">
                         <h3>Difficulty</h3>
                         <div className="settings-list-row-content">
-                            <button className="word-button" onClick={handleDifficultyChange}>{difficulty}</button>
+                            <button className="word-button" onClick={handleDifficultyChange} style={{cursor: "pointer"}}>{difficulty}</button>
                         </div>
                     </div>
                 }
@@ -138,7 +138,7 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false }) => {
                 <div className="settings-list-row" style={{height: pauseMenu ? "20%" : "15%"}}>
                     <h3>Theme</h3>
                     <div className="settings-list-row-content">
-                        <button id="theme-button" onClick={handleThemeToggle} style={{backgroundImage: `url(${theme == "dark" ? darkTheme : lightTheme})`}}></button>
+                        <button id="theme-button" onClick={handleThemeToggle} style={{backgroundImage: `url(${theme == "dark" ? darkTheme : lightTheme})`, cursor: "pointer"}}></button>
                     </div>
                 </div>
                 <div className="settings-list-row" style={{height: pauseMenu ? "20%" : "15%"}}>
@@ -176,7 +176,7 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false }) => {
                     <div className="settings-list-row">
                         <h3>Smooth Animations</h3>
                         <div className="settings-list-row-content">
-                            <button className="word-button" onClick={handleSmoothAnimationsToggle}>{smoothAnimations ? "On" : "Off"}</button>
+                            <button className="word-button" onClick={handleSmoothAnimationsToggle} style={{cursor: "pointer"}}>{smoothAnimations ? "On" : "Off"}</button>
                         </div>
                     </div>
                 }
@@ -185,14 +185,14 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false }) => {
                     <div className="settings-list-row">
                         <h3>Beat Notes</h3>
                         <div className="settings-list-row-content">
-                            <button className="word-button" onClick={handleBeatNotesToggle}>{beatNotes ? "On" : "Off"}</button>
+                            <button className="word-button" onClick={handleBeatNotesToggle} style={{cursor: "pointer"}}>{beatNotes ? "On" : "Off"}</button>
                         </div>
                     </div>
                 }
                 <div className="settings-list-row" style={{height: pauseMenu ? "20%" : "15%"}}>
                     <h3>Lower Volume On Misses</h3>
                     <div className="settings-list-row-content">
-                        <button className="word-button" onClick={handleLowerVolumeOnMissesToggle}>{lowerVolumeOnMisses ? "On" : "Off"}</button>
+                        <button className="word-button" onClick={handleLowerVolumeOnMissesToggle} style={{cursor: "pointer"}}>{lowerVolumeOnMisses ? "On" : "Off"}</button>
                     </div>
                 </div>
             </div>

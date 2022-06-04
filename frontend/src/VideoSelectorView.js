@@ -232,8 +232,8 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
                 </div>
 
                 <div className="video-buttons" style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
-                    <button className="back-button" onClick={handleBackButtonClick}>Back</button>
-                    <button className="next-button" onClick={handleNextButtonClick}>{nextButtonText}</button>
+                    <button className="back-button" onClick={handleBackButtonClick} style={{cursor: "pointer"}}>Back</button>
+                    <button className="next-button" onClick={handleNextButtonClick} style={{cursor: "pointer"}}>{nextButtonText}</button>
                 </div>
 
                 <div className="background-video-wrapper"> 
