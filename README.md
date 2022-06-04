@@ -3,11 +3,11 @@
 - backend
   1. make new terminal
   2. cd into backend
-  3. run '''npm run devStart'''
+  3. run ```npm run devStart```
 - frontend
   1. make new terminal
   2. cd into frontent
-  3. run '''npm start'''
+  3. run ```npm start```
 - go to localhost:3000 using Chrome
 
-I've given up on writing docs
+yes i dont doc my functions
