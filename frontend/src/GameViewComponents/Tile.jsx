@@ -16,6 +16,7 @@ const Tile = ({ type, tileSpeed, targetTime, onMount, onMiss, id }) => {
             onMount(type, targetTime, controller)
         }
         loadTile()
+        window.addEventListener("keypress", () => {tapTile("perfect")})
     }, [])
 
     const controller = (instructions, options = null) => {
@@ -56,8 +57,8 @@ const Tile = ({ type, tileSpeed, targetTime, onMount, onMiss, id }) => {
         const tile = tileRef.current
         tile.style.animationPlayState = "paused"
         if (accuracy == "perfect") {
-            animationHeight.current = (window.innerHeight * 35.7 / 646 * 450 / 120 * 0.9) + "px"
-            animationWidth.current = (window.innerWidth * 130 / 1146 * 700 / 500 * 0.9) + "px"
+            animationHeight.current = (window.innerHeight * 35.7 / 646 * 450 / 120 * 0.93) + "px"
+            animationWidth.current = (window.innerWidth * 130 / 1146 * 700 / 500 * 0.93) + "px"
             animationY.current = "calc(100vh * 679 / 800)"
             switch (type) {
                 case "left":
@@ -75,8 +76,8 @@ const Tile = ({ type, tileSpeed, targetTime, onMount, onMiss, id }) => {
             }
         } else {
             const rect = tile.getBoundingClientRect()
-            animationHeight.current = (rect.height * 450 / 120 * 0.9) + "px"
-            animationWidth.current = (rect.width * 700 / 500 * 0.9) + "px"
+            animationHeight.current = (rect.height * 450 / 120 * 0.93) + "px"
+            animationWidth.current = (rect.width * 700 / 500 * 0.93) + "px"
             animationX.current = (rect.left + rect.width / 2) + "px"
             animationY.current = (rect.top + rect.height / 2) + "px"
         }
@@ -106,16 +107,17 @@ const Tile = ({ type, tileSpeed, targetTime, onMount, onMiss, id }) => {
         isUnloaded ? "" :
         <div className="tile-wrapper" style={{zIndex: id}}>
             {playAnimation ?
-                <AnimationView 
-                    height={animationHeight.current} 
-                    width={animationWidth.current} 
-                    x={animationX.current} 
-                    y={animationY.current} 
-                    dirName={"tap-good"} 
-                    start={0} end={29} elapseTime={0.65} 
-                    onComplete={unloadTile}
-                    style={{filter: "hue-rotate(354deg)"}}
-                ></AnimationView> :
+                <div style={{filter: "hue-rotate(354deg)", zIndex: 1000}}>
+                    <AnimationView 
+                        height={animationHeight.current} 
+                        width={animationWidth.current} 
+                        x={animationX.current} 
+                        y={animationY.current} 
+                        dirName={animationName.current} 
+                        start={0} end={29} loop={false} loopStart={0} loopEnd={false}
+                        onComplete={unloadTile}
+                    ></AnimationView> 
+                </div> :
                 ""
             }
             <div className="tile" ref={tileRef} onAnimationEnd={handleMiss}>

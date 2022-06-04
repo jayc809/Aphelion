@@ -18,11 +18,21 @@ const HoldTile = ({ type, tileSpeed, targetTime, elapseBeatCount, elapseTime, on
     const barHeightRef = useRef(null)
 
     //initializations
+    const tapped = useRef(false)
     useEffect(() => {
         if (type != "placeholder") {
             onMount(type, targetTime, controller)
         }
         loadTile()
+        window.addEventListener("keydown", () => {
+            if (!tapped.current) {
+                tapTile("perfect")
+                tapped.current = true
+            }
+        })
+        window.addEventListener("keyup", () => {
+            releaseTile()
+        })
     }, [])
 
     const controller = (instructions, options = null) => {
@@ -91,13 +101,62 @@ const HoldTile = ({ type, tileSpeed, targetTime, elapseBeatCount, elapseTime, on
         const tile = tileRef.current
         if (tile != null) {
             if (accuracy == "miss") {
-                unloadTile()
-            } else {
                 tile.style.animationPlayState = "paused"
-                const tileBox = tile.getBoundingClientRect()
-                setTapPositionY(tileBox.top + tileBox.height / 2)
+                const rect = tile.getBoundingClientRect()
+                tile.style.animation = "none"
+                tile.style.opacity = 1
+                tile.style.height = rect.height + "px"
+                tile.style.width = rect.width + "px"
+                tile.style.left = rect.left + "px"
+                tile.style.top = rect.top + "px"
+                unloadTile()
+            } else if (accuracy == "perfect") {
+                tile.style.animationPlayState = "paused"
+                tile.style.animation = "none"
+                tile.style.opacity = 1
+                const windowHeight = window.innerHeight
+                const windowWidth = window.innerWidth
+                setTapPositionY(windowHeight * 679 / 800)
+                const tileHeight = windowHeight * 35.7 / 646
+                const tileWidth = windowWidth * 130 / 1146
+                tile.style.height = tileHeight + "px"
+                tile.style.width = tileWidth + "px"
+                tile.style.top = (windowHeight * 679 / 800 - tileHeight / 2) + "px"
+                switch (type) {
+                    case "left":
+                        tile.style.left = (windowWidth * 386 / 1280 - tileWidth / 2) + "px"
+                        // animationX.current = "calc(100vw * 386 / 1280)"
+                        break
+                    case "middle-left":
+                        tile.style.left = (windowWidth * 557 / 1280 - tileWidth / 2) + "px"
+                        // animationX.current = "calc(100vw * 557 / 1280)"
+                        break
+                    case "middle-right":
+                        tile.style.left = (windowWidth * 725 / 1280 - tileWidth / 2) + "px"
+                        // animationX.current = "calc(100vw * 725 / 1280)"
+                        break
+                    case "right":
+                        tile.style.left = (windowWidth * 896 / 1280 - tileWidth / 2) + "px"
+                        // animationX.current = "calc(100vw * 896 / 1280)"
+                        break
+                }
                 const bar = barRef.current
-                bar.style.animation = `move-y-bar-tapped-${id} ${elapseTime + "s"} ${timingFunctionMoveBar}`
+                bar.style.animation = `move-y-bar-tapped-${id} ${elapseTime + "s"} ${timingFunctionMoveBar} forwards`
+                scoreIncrementer.current = setInterval(() => {
+                    updateScoreAndCombo(accuracy)
+                }, (elapseTime - 0.15) / (elapseBeatCount - 1) * 1000)
+            } else  {
+                tile.style.animationPlayState = "paused"
+                const rect = tile.getBoundingClientRect()
+                tile.style.animation = "none"
+                tile.style.opacity = 1
+                tile.style.height = rect.height + "px"
+                tile.style.width = rect.width + "px"
+                tile.style.left = rect.left + "px"
+                tile.style.top = rect.top + "px"
+                setTapPositionY(rect.top + rect.height / 2)
+                const bar = barRef.current
+                bar.style.animation = `move-y-bar-tapped-${id} ${elapseTime + "s"} ${timingFunctionMoveBar} forwards`
                 scoreIncrementer.current = setInterval(() => {
                     updateScoreAndCombo(accuracy)
                 }, (elapseTime - 0.15) / (elapseBeatCount - 1) * 1000)
@@ -105,23 +164,26 @@ const HoldTile = ({ type, tileSpeed, targetTime, elapseBeatCount, elapseTime, on
         }
     }
 
-    const releaseTile = () => {
-        unloadTile()
-    }
-
     const unloadTile = () => {
         clearInterval(scoreIncrementer.current)
         const tile = tileRef.current
         if (tile != null) {
-            tile.style.animation = "none"
-            tile.style.opacity = 0
+            tile.style.animation = "opacity-1-0 0.3s linear forwards"
         }
         const bar = barRef.current
         if (bar != null) {
-            bar.style.animation = "none"
-            bar.style.opacity = 0
+            console.log("yee")
+            bar.style.animationPlayState = "paused"
+            const rect = bar.getBoundingClientRect()
+            bar.style.left = rect.left + "px"
+            bar.style.top = rect.top + "px"
+            bar.style.animation = "opacity-1-0 0.3s linear forwards"
         }
-        setIsUnloaded(true)
+        // setIsUnloaded(true)
+    }
+
+    const releaseTile = () => {
+        unloadTile()
     }
 
     const handleMiss = () => {
@@ -153,7 +215,7 @@ const HoldTile = ({ type, tileSpeed, targetTime, elapseBeatCount, elapseTime, on
                                     opacity: 1;
                                 }
                                 to { 
-                                    bottom: calc(${(window.innerHeight - tapPositionY) - barHeightRef.current}px);
+                                    bottom: calc(${(window.innerHeight - tapPositionY) - barHeightRef.current * 1.075}px);
                                     opacity: 1;
                                 }
                             }

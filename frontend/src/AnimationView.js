@@ -1,19 +1,37 @@
 import React, { useEffect, useState } from 'react'
 
-const AnimationView = ({ height, width, x, y, dirName, start, end, elapseTime, onComplete }) => {
+const AnimationView = ({ height, width, x, y, dirName, start, end, loop, loopStart, loopEnd, onComplete }) => {
 
     const [frameCount, setFrameCount] = useState(start)
     const [showView, setShowView] = useState(true)
 
     useEffect(() => {
         const frameCounter = setInterval(() => {
-            if (frameCount < end) {
-                setFrameCount(frameCount + 1)
+            if (!loop) {
+                if (frameCount < end) {
+                    setFrameCount(frameCount + 1)
+                } else {
+                    clearInterval(frameCounter)
+                    setShowView(false)
+                    onComplete()
+                }
             } else {
-                setShowView(false)
-                onComplete()
+                if (loopEnd) {
+                    if (frameCount > start) {
+                        setFrameCount(frameCount - 1)
+                    } else {
+                        clearInterval(frameCounter)
+                        setShowView(false)
+                        onComplete()
+                    }
+                }
+                else if (frameCount < end) {
+                    setFrameCount(frameCount + 1)
+                } else {
+                    setFrameCount(loopStart)
+                }
             }
-        }, elapseTime * 1000 / (end - start + 1))
+        }, 20)
         return () => {
             clearInterval(frameCounter)
         }
