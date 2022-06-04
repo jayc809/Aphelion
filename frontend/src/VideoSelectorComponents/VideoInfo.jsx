@@ -29,7 +29,6 @@ const VideoInfo = ({ videoInfo, settingsObj, onMount }) => {
     }, [videoInfo])
 
     const handleInvalidThumbnailImg = () => {
-        console.log(thumbnailImgRef.current.naturalHeight)
         if (thumbnailImgRef.current.naturalHeight == 90 && currentResRef.current == "max") {
             currentResRef.current = "high"
             setThumbnailSrc(`https://img.youtube.com/vi/${videoInfo.id.videoId}/hqdefault.jpg`)

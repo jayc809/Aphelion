@@ -33,14 +33,12 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
 
   const [mouseMoved, setMouseMoved] = useState(false)
   const handleMouseMove = (e) => {
-    console.log("mouse moving")
     setMouseMoved(true)
   }
 
   useEffect(() => {
     if (mouseMoved) {
       setTimeout(() => {
-        console.log("mouse not moving")
         setMouseMoved(false)
       }, 2000)
     }
