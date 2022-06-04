@@ -23,7 +23,7 @@ const Tile = ({ type, tileSpeed, targetTime, onMount, onMiss, id }) => {
             case "getClass":
                 return "tap"
             case "tap":
-                tapTile()
+                tapTile(options)
                 break
             case "pauseAnimation":
                 tileRef.current.style.animationPlayState = "paused"
@@ -51,14 +51,40 @@ const Tile = ({ type, tileSpeed, targetTime, onMount, onMiss, id }) => {
     const animationWidth = useRef("0px")
     const animationX = useRef("0px")
     const animationY = useRef("0px")
-    const tapTile = () => {
+    const animationName = useRef(null)
+    const tapTile = (accuracy) => {
         const tile = tileRef.current
         tile.style.animationPlayState = "paused"
-        const rect = tileRef.current.getBoundingClientRect()
-        animationHeight.current = (rect.height * 450 / 120) + "px"
-        animationWidth.current = (rect.width * 700 / 500) + "px"
-        animationX.current = (rect.left + rect.width / 2) + "px"
-        animationY.current = (rect.top + rect.height / 2) + "px"
+        if (accuracy == "perfect") {
+            animationHeight.current = (window.innerHeight * 35.7 / 646 * 450 / 120 * 0.9) + "px"
+            animationWidth.current = (window.innerWidth * 130 / 1146 * 700 / 500 * 0.9) + "px"
+            animationY.current = "calc(100vh * 679 / 800)"
+            switch (type) {
+                case "left":
+                    animationX.current = "calc(100vw * 386 / 1280)"
+                    break
+                case "middle-left":
+                    animationX.current = "calc(100vw * 557 / 1280)"
+                    break
+                case "middle-right":
+                    animationX.current = "calc(100vw * 725 / 1280)"
+                    break
+                case "right":
+                    animationX.current = "calc(100vw * 896 / 1280)"
+                    break
+            }
+        } else {
+            const rect = tile.getBoundingClientRect()
+            animationHeight.current = (rect.height * 450 / 120 * 0.9) + "px"
+            animationWidth.current = (rect.width * 700 / 500 * 0.9) + "px"
+            animationX.current = (rect.left + rect.width / 2) + "px"
+            animationY.current = (rect.top + rect.height / 2) + "px"
+        }
+        if (accuracy == "great") {
+            animationName.current = "tap-good"
+        } else {
+            animationName.current = `tap-${accuracy}`
+        }
         tile.style.animation = "none"
         tile.style.opacity = 0
         setPlayAnimation(true)
@@ -88,6 +114,7 @@ const Tile = ({ type, tileSpeed, targetTime, onMount, onMiss, id }) => {
                     dirName={"tap-good"} 
                     start={0} end={29} elapseTime={0.65} 
                     onComplete={unloadTile}
+                    style={{filter: "hue-rotate(354deg)"}}
                 ></AnimationView> :
                 ""
             }

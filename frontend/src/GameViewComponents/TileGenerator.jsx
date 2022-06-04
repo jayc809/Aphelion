@@ -173,7 +173,7 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
             const controller = tileControllers.current[key]
             const accuracy = getTileAccuracy(closestTargetTime)
             if (controller("getClass") == "tap") {
-                controller("tap")
+                controller("tap", accuracy)
                 updateScoreAndCombo(accuracy)
             }
             else if (controller("getClass") == "hold") {
@@ -190,7 +190,7 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
         const timeDifference = Math.abs(currTimeRef.current - targetCrossTime)
         if (timeDifference <= accuracyUnit) {
             return "perfect"
-        } else if (timeDifference <= 2 * accuracyUnit) {
+        } else if (timeDifference <= 1 * accuracyUnit) {
             return "great"
         } else if (timeDifference <= 3 * accuracyUnit) {
             return "good"
@@ -228,46 +228,40 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
     
     const pauseTiles = () => {
         const tiles = currentTilesRef.current
-        for (let i = 0; i < tiles.length; i += 1) {
-            const key = tiles[i].type + String(tiles[i].targetTime)
-            //finds the first instance in currentTiles where the tile is of type and has not been tapped yet
-            if (!tappedTiles.current.includes(key) && 
-                !missedTiles.current.includes(key) &&
-                key in tileControllers.current) {
-                tileControllers.current[key]("pauseAnimation")
+        const pause = () => {
+            for (let i = 0; i < tiles.length; i += 1) {
+                const key = tiles[i].type + String(tiles[i].targetTime)
+                //finds the first instance in currentTiles where the tile is of type and has not been tapped yet
+                if (!tappedTiles.current.includes(key) && 
+                    !missedTiles.current.includes(key) &&
+                    key in tileControllers.current) {
+                    tileControllers.current[key]("pauseAnimation")
+                }
             }
         }
-        for (let i = 0; i < tiles.length; i += 1) {
-            const key = tiles[i].type + String(tiles[i].targetTime)
-            //finds the first instance in currentTiles where the tile is of type and has not been tapped yet
-            if (!tappedTiles.current.includes(key) && 
-                !missedTiles.current.includes(key) &&
-                key in tileControllers.current) {
-                tileControllers.current[key]("pauseAnimation")
-            }
-        }
+        pause()
+        setTimeout(() => {
+            pause()
+        }, 100);
     }
 
     const playTiles = () => {
         const tiles = currentTilesRef.current
-        for (let i = 0; i < tiles.length; i += 1) {
-            const key = tiles[i].type + String(tiles[i].targetTime)
-            //finds the first instance in currentTiles where the tile is of type and has not been tapped yet
-            if (!tappedTiles.current.includes(key) && 
-                !missedTiles.current.includes(key) &&
-                key in tileControllers.current) {
-                tileControllers.current[key]("playAnimation")
+        const play = () => {
+            for (let i = 0; i < tiles.length; i += 1) {
+                const key = tiles[i].type + String(tiles[i].targetTime)
+                //finds the first instance in currentTiles where the tile is of type and has not been tapped yet
+                if (!tappedTiles.current.includes(key) && 
+                    !missedTiles.current.includes(key) &&
+                    key in tileControllers.current) {
+                    tileControllers.current[key]("playAnimation")
+                }
             }
         }
-        for (let i = 0; i < tiles.length; i += 1) {
-            const key = tiles[i].type + String(tiles[i].targetTime)
-            //finds the first instance in currentTiles where the tile is of type and has not been tapped yet
-            if (!tappedTiles.current.includes(key) && 
-                !missedTiles.current.includes(key) &&
-                key in tileControllers.current) {
-                tileControllers.current[key]("playAnimation")
-            }
-        }
+        play()
+        setTimeout(() => {
+            play()
+        }, 100);
     }
 
     return (

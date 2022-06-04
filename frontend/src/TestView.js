@@ -8,8 +8,8 @@ const TestView = () => {
 
     return (
         <div>
-            <Tile type={"left"} tileSpeed={1.3} targetTime={0} onMount={(type, targetTime, controller) => {}} onMiss={(type, targetTime) => {}} id={1}/>
-            <Platform></Platform>
+            <img src={require("./images/a-tier.png")}></img>
+            <img src={require("./animations/tap-perfect/tap-perfect-00.png")} style={{filter: "hue-rotate(354deg)"}}></img>
         </div>
     )
 }
