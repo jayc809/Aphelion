@@ -51,7 +51,7 @@ function App() {
       uiSaturation: 1.6,
       uiBrightness: 1.0,
       videoSaturation: 2.0,
-      videoBrightness: 0.9,
+      videoBrightness: 0.85,
       smoothAnimations: true,
       beatNotes: true,
       lowerVolumeOnMisses: false

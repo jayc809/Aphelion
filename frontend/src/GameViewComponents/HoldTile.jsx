@@ -19,7 +19,7 @@ const HoldTile = ({ type, tileSpeed, targetTime, elapseBeatCount, elapseTime, on
     const barHeightRef = useRef(null)
 
     //initializations
-    const tapped = useRef(false)
+    // const tapped = useRef(false)
     useEffect(() => {
         if (type != "placeholder") {
             onMount(type, targetTime, controller)
@@ -37,6 +37,8 @@ const HoldTile = ({ type, tileSpeed, targetTime, elapseBeatCount, elapseTime, on
     }, [])
 
     const controller = (instructions, options = null) => {
+        const tile = tileRef.current
+        const bar = barRef.current
         switch (instructions) {
             case "getClass":
                 return "hold"
@@ -47,19 +49,19 @@ const HoldTile = ({ type, tileSpeed, targetTime, elapseBeatCount, elapseTime, on
                 handleFinish()
                 break
             case "pauseAnimation":
-                if (tileRef.current.style) {
-                    tileRef.current.style.animationPlayState = "paused"
+                if (tile && tile.style) {
+                    tile.style.animationPlayState = "paused"
                 }
-                if (barRef.current.style) {
-                    barRef.current.style.animationPlayState = "paused"
+                if (bar && bar.style) {
+                    bar.style.animationPlayState = "paused"
                 }
                 break
             case "playAnimation":
-                if (tileRef.current.style) {
-                    tileRef.current.style.animationPlayState = "running"
+                if (tile && tile.style) {
+                    tile.style.animationPlayState = "running"
                 }
-                if (barRef.current.style) {
-                    barRef.current.style.animationPlayState = "running"
+                if (bar && bar.style) {
+                    bar.style.animationPlayState = "running"
                 }
                 break
         }
@@ -117,7 +119,7 @@ const HoldTile = ({ type, tileSpeed, targetTime, elapseBeatCount, elapseTime, on
 
     const tapTile = (accuracy) => {
         const tile = tileRef.current
-        if (tile != null) {
+        if (tile) {
             tile.style.animationPlayState = "paused"
             if (accuracy == "miss") {
                 const rect = tile.getBoundingClientRect()
@@ -181,13 +183,13 @@ const HoldTile = ({ type, tileSpeed, targetTime, elapseBeatCount, elapseTime, on
         isUnloadedRef.current = true
         clearInterval(scoreIncrementer.current)
         const tile = tileRef.current
-        if (tile != null) {
+        if (tile) {
             if (directMiss) {
                 tile.style.opacity = 0
             }
         }
         const bar = barRef.current
-        if (bar != null) {
+        if (bar) {
             bar.style.animationPlayState = "paused"
             const rect = bar.getBoundingClientRect()
             bar.style.left = rect.left + "px"

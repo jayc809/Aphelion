@@ -20,6 +20,7 @@ const Tile = ({ type, tileSpeed, targetTime, onMount, onMiss, id }) => {
     }, [])
 
     const controller = (instructions, options = null) => {
+        const tile = tileRef.current
         switch (instructions) {
             case "getClass":
                 return "tap"
@@ -27,13 +28,13 @@ const Tile = ({ type, tileSpeed, targetTime, onMount, onMiss, id }) => {
                 tapTile(options)
                 break
             case "pauseAnimation":
-                if (tileRef.current.style) {
-                    tileRef.current.style.animationPlayState = "paused"
+                if (tile && tile.style) {
+                    tile.style.animationPlayState = "paused"
                 }
                 break
             case "playAnimation":
-                if (tileRef.current.style) {
-                    tileRef.current.style.animationPlayState = "running"
+                if (tile && tile.style) {
+                    tile.style.animationPlayState = "running"
                 }
                 break
         }
@@ -60,46 +61,50 @@ const Tile = ({ type, tileSpeed, targetTime, onMount, onMiss, id }) => {
 
     const tapTile = (accuracy) => {
         const tile = tileRef.current
-        tile.style.animationPlayState = "paused"
-        if (accuracy == "perfect") {
-            animationHeight.current = (window.innerHeight * 35.7 / 646 * 450 / 120 * 0.93) + "px"
-            animationWidth.current = (window.innerWidth * 130 / 1146 * 700 / 500 * 0.93) + "px"
-            animationY.current = "calc(100vh * 679 / 800)"
-            switch (type) {
-                case "left":
-                    animationX.current = "calc(100vw * 386 / 1280)"
-                    break
-                case "middle-left":
-                    animationX.current = "calc(100vw * 557 / 1280)"
-                    break
-                case "middle-right":
-                    animationX.current = "calc(100vw * 725 / 1280)"
-                    break
-                case "right":
-                    animationX.current = "calc(100vw * 896 / 1280)"
-                    break
+        if (tile) {
+            tile.style.animationPlayState = "paused"
+            if (accuracy == "perfect") {
+                animationHeight.current = (window.innerHeight * 35.7 / 646 * 450 / 120 * 0.93) + "px"
+                animationWidth.current = (window.innerWidth * 130 / 1146 * 700 / 500 * 0.93) + "px"
+                animationY.current = "calc(100vh * 679 / 800)"
+                switch (type) {
+                    case "left":
+                        animationX.current = "calc(100vw * 386 / 1280)"
+                        break
+                    case "middle-left":
+                        animationX.current = "calc(100vw * 557 / 1280)"
+                        break
+                    case "middle-right":
+                        animationX.current = "calc(100vw * 725 / 1280)"
+                        break
+                    case "right":
+                        animationX.current = "calc(100vw * 896 / 1280)"
+                        break
+                }
+            } else {
+                const rect = tile.getBoundingClientRect()
+                animationHeight.current = (rect.height * 450 / 120 * 0.93) + "px"
+                animationWidth.current = (rect.width * 700 / 500 * 0.93) + "px"
+                animationX.current = (rect.left + rect.width / 2) + "px"
+                animationY.current = (rect.top + rect.height / 2) + "px"
             }
-        } else {
-            const rect = tile.getBoundingClientRect()
-            animationHeight.current = (rect.height * 450 / 120 * 0.93) + "px"
-            animationWidth.current = (rect.width * 700 / 500 * 0.93) + "px"
-            animationX.current = (rect.left + rect.width / 2) + "px"
-            animationY.current = (rect.top + rect.height / 2) + "px"
+            if (accuracy == "great") {
+                animationName.current = "tap-good"
+            } else {
+                animationName.current = `tap-${accuracy}`
+            }
+            tile.style.animation = "none"
+            tile.style.opacity = 0
+            setPlayAnimation(true)
         }
-        if (accuracy == "great") {
-            animationName.current = "tap-good"
-        } else {
-            animationName.current = `tap-${accuracy}`
-        }
-        tile.style.animation = "none"
-        tile.style.opacity = 0
-        setPlayAnimation(true)
     }
 
     const unloadTile = () => {
         const tile = tileRef.current
-        tile.style.animation = "none"
-        tile.style.opacity = 0
+        if (tile) {
+            tile.style.animation = "none"
+            tile.style.opacity = 0
+        }
         setIsUnloaded(true)
     }
 

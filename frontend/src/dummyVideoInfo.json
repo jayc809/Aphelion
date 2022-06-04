@@ -110,39 +110,6 @@
     {
       "id": {
         "kind": "youtube#video",
-        "videoId": "zLak0dxBKpM"
-      },
-      "snippet": {
-        "publishedAt": "2019-03-22T10:58:46Z",
-        "channelId": "UC5CwaMl1eIgY8h02uZw7u8A",
-        "title": "天球、彗星は夜を跨いで / 星街すいせい(official)",
-        "description": "アイドルVtuber星街すいせい 一周年記念2ndオリジナルソング 「天球、彗星は夜を跨いで」 作詞/作編曲：キタニタツヤ YouTube[ ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/zLak0dxBKpM/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/zLak0dxBKpM/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/zLak0dxBKpM/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "Suisei Channel",
-        "liveBroadcastContent": "none",
-        "publishTime": "2019-03-22T10:58:46Z",
-        "duration": "4:19"
-      }
-    },
-    {
-      "id": {
-        "kind": "youtube#video",
         "videoId": "3DrYQMK4hJE"
       },
       "snippet": {
@@ -204,6 +171,39 @@
         "liveBroadcastContent": "none",
         "publishTime": "2021-08-17T03:12:48Z",
         "duration": "2:41"
+      }
+    },
+    {
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "zLak0dxBKpM"
+      },
+      "snippet": {
+        "publishedAt": "2019-03-22T10:58:46Z",
+        "channelId": "UC5CwaMl1eIgY8h02uZw7u8A",
+        "title": "天球、彗星は夜を跨いで / 星街すいせい(official)",
+        "description": "アイドルVtuber星街すいせい 一周年記念2ndオリジナルソング 「天球、彗星は夜を跨いで」 作詞/作編曲：キタニタツヤ YouTube[ ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/zLak0dxBKpM/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/zLak0dxBKpM/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/zLak0dxBKpM/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Suisei Channel",
+        "liveBroadcastContent": "none",
+        "publishTime": "2019-03-22T10:58:46Z",
+        "duration": "4:19"
       }
     },
     {
