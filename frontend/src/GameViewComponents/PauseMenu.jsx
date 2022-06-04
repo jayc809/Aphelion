@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import "../styles/PauseMenu.css"
 import pauseIcon from "../images/pause-button-icon.png"
 import playIcon from "../images/play-button-icon.png"
+import SettingsList from '../VideoSelectorComponents/SettingsList'
 
-const PauseMenu = ({ pauseGame, restartGame, endGame }) => {
+const PauseMenu = ({ pauseGame, restartGame, endGame, settingsObj, setSettingsObj }) => {
 
     const [currIcon, setCurrIcon] = useState(pauseIcon)
     const [showMenu, setShowMenu] = useState(false)
@@ -63,9 +64,14 @@ const PauseMenu = ({ pauseGame, restartGame, endGame }) => {
             {
                 showMenu ? 
                 <div className="pause-menu">
-                    <button className="pause-menu-button" onClick={handlePausePlay}>Resume</button>
-                    <button className="pause-menu-button" onClick={handleRestart}>Restart</button>
-                    <button className="pause-menu-button" onClick={handleExit}>Quit</button>
+                    <div className="pause-menu-settings-wrapper">
+                        <SettingsList settingsObj={settingsObj} setSettingsObj={setSettingsObj} pauseMenu={true}></SettingsList>
+                    </div>
+                    <div className="pause-menu-button-wrapper">
+                        <button className="pause-menu-button" onClick={handlePausePlay}>Resume</button>
+                        <button className="pause-menu-button" onClick={handleRestart}>Restart</button>
+                        <button className="pause-menu-button" onClick={handleExit}>Quit</button>
+                    </div>
                 </div> :
                 ""
             }

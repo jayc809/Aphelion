@@ -80,7 +80,7 @@ const HoldTile = ({ type, tileSpeed, targetTime, elapseBeatCount, elapseTime, on
         } else {
             switch (type) {
                 case "left":
-                    barClip.style.clipPath = "polygon(47.2vw 40vh, 47vw 40vh, 22.6vw 100vh, 26.6vw 100vh)"
+                    barClip.style.clipPath = "polygon(47.3vw 40vh, 47.1vw 40vh, 22.6vw 100vh, 26.6vw 100vh)"
                     break
                 case "middle-left":
                     barClip.style.clipPath = "polygon(49.2vw 40vh, 48.8vw 40vh, 39vw 100vh, 44vw 100vh)"

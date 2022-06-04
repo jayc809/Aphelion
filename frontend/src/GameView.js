@@ -15,7 +15,7 @@ const testVideoId = "IKKar5SS29E"
 const orangeVideoId = "3DrYQMK4hJE"
 const blueVideoId = "IKKar5SS29E" 
 
-const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, beatmapObj }) => {
+const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, setSettingsObj, beatmapObj }) => {
 
   // console.log("rerendered GameView")
 
@@ -262,7 +262,7 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
         <div className="component" id="ending-black-screen" ref={endingBlackScreenRef}></div>
         
         <div className="component" id="pause-menu">
-          <PauseMenu pauseGame={pauseGame} restartGame={restartGame} endGame={endGame}/>
+          <PauseMenu pauseGame={pauseGame} restartGame={restartGame} endGame={endGame} settingsObj={settingsObj} setSettingsObj={setSettingsObj}/>
         </div>
 
         <div className="component" id="start-message">

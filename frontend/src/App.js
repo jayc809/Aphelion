@@ -51,7 +51,7 @@ function App() {
       uiSaturation: 1.6,
       uiBrightness: 1.0,
       videoSaturation: 2.0,
-      videoBrightness: 0.8,
+      videoBrightness: 0.9,
       smoothAnimations: true,
       beatNotes: true,
       lowerVolumeOnMisses: false
@@ -91,7 +91,7 @@ function App() {
         {
           "videos": <VideoSelectorView setView={setView} setVideoInfoRef={setVideoInfoRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj}/>,
           "analyzer": <AnalyzerView setView={setView} setBeatmapObjRef={setBeatmapObjRef} settingsObj={settingsObj} videoId={videoInfoRef.current.id.videoId}/>,
-          "game": <GameView setView={setView} incrementGameId={incrementGameId} setResultsObjRef={setResultsObjRef} settingsObj={settingsObj} beatmapObj={beatmapObjRef.current} key={gameId}/>,
+          "game": <GameView setView={setView} incrementGameId={incrementGameId} setResultsObjRef={setResultsObjRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj} beatmapObj={beatmapObjRef.current} key={gameId}/>,
           "results": <ResultsView setView={setView} incrementGameId={incrementGameId} resultsObj={resultsObjRef.current} settingsObj={settingsObj} videoInfo={videoInfoRef.current}/>
         } [view]
       }
