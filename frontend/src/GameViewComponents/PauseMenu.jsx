@@ -65,7 +65,7 @@ const PauseMenu = ({ pauseGame, restartGame, endGame }) => {
                 <div className="pause-menu">
                     <button className="pause-menu-button" onClick={handlePausePlay}>Resume</button>
                     <button className="pause-menu-button" onClick={handleRestart}>Restart</button>
-                    <button className="pause-menu-button" onClick={handleExit}>Exit</button>
+                    <button className="pause-menu-button" onClick={handleExit}>Quit</button>
                 </div> :
                 ""
             }

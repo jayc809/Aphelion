@@ -1,25 +1,12 @@
 import React, { useCallback, useEffect, useReducer, useRef, useState } from 'react';
-import HoldTile from './GameViewComponents/HoldTile';
-import Platform from './GameViewComponents/Platform';
-import CircleProgressBar from './ResultsViewComponents/CircleProgressBar'
+import AnimationView from './AnimationView';
 import "./GameView.css"
 
 const TestView = () => {
 
-    const videoId = "tuZty35Fk7M"
-    const imgRef = useRef(null)
-    const [thumbnailSrc, setThumbnailSrc] = useState(`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`)
-    const defaultThumbnailSrc = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`
-
-    const handleImgValidity = () => {
-        if (imgRef.current.naturalHeight == 90) {
-            setThumbnailSrc(defaultThumbnailSrc)
-        }
-    }
-
     return (
-        <div>      
-            <CircleProgressBar size={"30vh"} numerator={260} denominator={300} delay={1} duration={1}/>
+        <div>
+            <AnimationView height="30vh" width={"40vw"} dirName={"tap-perfect"} start={0} end={29} elapseTime={0.8}/>
         </div>
     )
 }

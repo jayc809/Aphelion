@@ -74,6 +74,7 @@
     font-size: 5.2vh;
     padding-left: 12vh;
     margin-top: 4.5vh;
+    white-space: nowrap;
     /* background-color: red; */
     /* border: 1px solid red; */
 }
@@ -86,6 +87,7 @@
     font-size: 3.4vh;
     padding-left: 12vh;
     padding-top: calc(5vh + 3.3vh);
+    white-space: nowrap;
     /* background-color: red; */
     /* border: 1px solid red; */
 }

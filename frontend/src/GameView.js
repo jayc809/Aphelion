@@ -31,6 +31,21 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
     }
   }, [])
 
+  const [mouseMoved, setMouseMoved] = useState(false)
+  const handleMouseMove = (e) => {
+    console.log("mouse moving")
+    setMouseMoved(true)
+  }
+
+  useEffect(() => {
+    if (mouseMoved) {
+      setTimeout(() => {
+        console.log("mouse not moving")
+        setMouseMoved(false)
+      }, 2000)
+    }
+  }, [mouseMoved])
+
   //update score and combo
   const scoreRef = useRef(null)
   const setScoreRef = useRef(null)
@@ -110,17 +125,6 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
         break
     }
   }
-
-  const [mouseMoved, setMouseMoved] = useState(false)
-  const handleMouseMove = (e) => {
-    setMouseMoved(true)
-  }
-  useEffect(() => {
-    const mouseTimer = setTimeout(() => {
-      setMouseMoved(false)
-    }, 2000)
-    return () => clearTimeout(mouseTimer)
-  }, [handleMouseMove])
 
 
   //control tile generator
@@ -255,7 +259,7 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, bea
           nextViewDestinationRef.current == "game" ? nextViewGame : nextViewResults
         } 
         start={transitionOut} settingsObj={settingsObj}></TransitionOutView>
-      <div className="game-view-wrapper" style={{cursor: mouseMoved ? "default" : "none", opacity: showGame ? 1 : 0}}>
+      <div className="game-view-wrapper" style={{ cursor: mouseMoved ? "default" : "none", opacity: showGame ? 1 : 0}}>
 
         <div className="component" id="ending-black-screen" ref={endingBlackScreenRef}></div>
         
