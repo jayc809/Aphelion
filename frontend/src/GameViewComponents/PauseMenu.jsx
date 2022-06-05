@@ -3,6 +3,7 @@ import "../styles/PauseMenu.css"
 import pauseIcon from "../images/pause-button-icon.png"
 import playIcon from "../images/play-button-icon.png"
 import SettingsList from '../VideoSelectorComponents/SettingsList'
+import pauseMenuBackground from "../images/pause-menu.png"
 
 const PauseMenu = ({ pauseGame, restartGame, endGame, settingsObj, setSettingsObj }) => {
 
@@ -55,7 +56,7 @@ const PauseMenu = ({ pauseGame, restartGame, endGame, settingsObj, setSettingsOb
     }
 
     return (
-        <div className="pause-menu-wrapper" style={{opacity: 0}}>
+        <div className="pause-menu-wrapper">
             <button 
                 className="pause-button" 
                 style={{backgroundImage: `url(${currIcon})`, backgroundSize: "contain", cursor: "pointer"}}
@@ -64,14 +65,17 @@ const PauseMenu = ({ pauseGame, restartGame, endGame, settingsObj, setSettingsOb
             {
                 showMenu ? 
                 <div className="pause-menu">
-                    <div className="pause-menu-settings-wrapper">
-                        <SettingsList settingsObj={settingsObj} setSettingsObj={setSettingsObj} pauseMenu={true}></SettingsList>
-                    </div>
-                    <div className="pause-menu-button-wrapper">
-                        <button className="pause-menu-button" onClick={handlePausePlay} style={{cursor: "pointer"}}>Resume</button>
-                        <button className="pause-menu-button" onClick={handleRestart} style={{cursor: "pointer"}}>Restart</button>
-                        <button className="pause-menu-button" onClick={handleExit} style={{cursor: "pointer"}}>Quit</button>
-                    </div>
+                    <img src={pauseMenuBackground}></img>
+                    <div className="pause-menu-content">
+                        <div className="pause-menu-settings-wrapper">
+                            <SettingsList settingsObj={settingsObj} setSettingsObj={setSettingsObj} pauseMenu={true}></SettingsList>
+                        </div>
+                        <div className="pause-menu-button-wrapper">
+                            <button className="pause-menu-button" onClick={handlePausePlay} style={{cursor: "pointer"}}>Resume</button>
+                            <button className="pause-menu-button" onClick={handleRestart} style={{cursor: "pointer"}}>Restart</button>
+                            <button className="pause-menu-button" onClick={handleExit} style={{cursor: "pointer"}}>Quit</button>
+                        </div>
+                    </div> 
                 </div> :
                 ""
             }

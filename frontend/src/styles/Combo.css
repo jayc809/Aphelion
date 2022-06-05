@@ -6,9 +6,25 @@
 
 @keyframes move-combo-animation {
     from {
-        right: -25vw;
+        opacity: 1;
+        right: calc(-14vh * 6)
     }
     to {
-        right: 2.5vw
+        opacity: 1;
+        right: calc(-14vh * 2.15)
     }
 }
+
+.perfect-content-showing {
+    position: absolute;
+    top: 52vh;
+    right: 3vw;
+}
+
+.perfect-content-hidden {
+    position: absolute;
+    top: 52vh;
+    right: 3vw;
+    transition: opacity 0.3s;
+}
+

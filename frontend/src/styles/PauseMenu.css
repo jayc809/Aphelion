@@ -18,27 +18,42 @@
 }
 
 .pause-menu {
-    height: 50vh;
+    height: 45vh;
     width: 41vw;
     position: absolute;
     top: 25vh;
     left: 29.5vw;
-    background-color: black;
-    opacity: 0.9;
-    box-sizing: border-box;
-    border: 2px solid white;
     z-index: 20;
-    padding: 1vw;
+    /* border: 1px solid red; */
+}
+
+.pause-menu img {
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+    position: absolute;
+    z-index: 10;
+}
+
+.pause-menu-content {
+    height: 100%;
+    width: 100%;
+    /* border: 1px solid blue; */
+    position: absolute;
+    z-index: 100;
 }
 
 .pause-menu-button {
-    height: calc(100% - 2vw);
     width: 11vw;
-    margin: 1vw;
+    aspect-ratio: 757 / 200;
+    margin-left: 1vw;
+    margin-right: 1vw;
     color: white;
     background-color: transparent;
-    box-sizing: border-box;
-    border: 2px solid white;
+    border: 0;
+    background-image: url(../images/basic-button.png);
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 
 .pause-menu-button-wrapper {
@@ -46,12 +61,14 @@
     height: 20%;
     /* border: 1px solid red; */
     display: flex;
+    margin-left: 1vw;
+    place-items: center;
 }
 
 .pause-menu-settings-wrapper {
     width: calc(100% - 2vw);
     height: calc(80% - 2vw);
-    /* border: 1px solid red; */
     margin-left: 1vw;
     margin-top: 1vw;
+    /* border: 1px solid green; */
 }
