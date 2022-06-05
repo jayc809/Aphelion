@@ -55,7 +55,7 @@ const PauseMenu = ({ pauseGame, restartGame, endGame, settingsObj, setSettingsOb
     }
 
     return (
-        <div className="pause-menu-wrapper">
+        <div className="pause-menu-wrapper" style={{opacity: 0}}>
             <button 
                 className="pause-button" 
                 style={{backgroundImage: `url(${currIcon})`, backgroundSize: "contain", cursor: "pointer"}}
