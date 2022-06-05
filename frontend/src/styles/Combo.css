@@ -3,20 +3,6 @@
     width: 100%;
 }
 
-.combo-wrapper h3 {
-    position: absolute;
-    text-align: center;
-    font-family: "Futura-Medium-Italic";
-    margin: 0;
-}
-
-.combo-number {
-    font-size: 80px;
-    letter-spacing: 4px;
-    top: 37%;
-    right: 40px;
-}
-
 .perfect-text {
     font-size: 45px;
     letter-spacing: 2.5px;

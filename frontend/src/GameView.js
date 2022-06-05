@@ -274,10 +274,10 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, set
         </div>
 
         <div className="component" id="combo">
-          <Combo onMount={onComboMount}/>
+          <Combo onMount={onComboMount} settingsObj={settingsObj}/>
         </div>
         <div className="component" id="perfect-display">
-          <PerfectDisplay onMount={onPerfectDisplayMount}></PerfectDisplay>
+          <PerfectDisplay onMount={onPerfectDisplayMount} settingsObj={settingsObj}></PerfectDisplay>
         </div>
 
         <div className="component" id="tile-generator" style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>

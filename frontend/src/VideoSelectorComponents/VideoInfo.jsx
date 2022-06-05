@@ -3,6 +3,11 @@ import "../styles/VideoInfo.css"
 import thumbnailFrame from "../images/video-thumbnail-frame.png"
 import highScoreBackground from "../images/high-score.png"
 import aTier from "../images/a-tier.png"
+import bTier from "../images/b-tier.png"
+import cTier from "../images/c-tier.png"
+import fier from "../images/f-tier.png"
+import sTier from "../images/s-tier.png"
+import naTier from "../images/na-tier.png"
 import ReactPlayer from 'react-player';
 
 const VideoInfo = ({ videoInfo, settingsObj, onMount }) => {
@@ -46,7 +51,7 @@ const VideoInfo = ({ videoInfo, settingsObj, onMount }) => {
                 <div className="video-high-score" style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
                     <img src={highScoreBackground}></img>
                     <h4>High Score</h4>
-                    <h3>000001373928</h3>
+                    <h3>000038205929</h3>
                 </div>
                 {useVideo ? (
                     videoId != null ?
