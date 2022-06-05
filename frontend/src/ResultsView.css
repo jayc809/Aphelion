@@ -67,6 +67,7 @@
 }
 
 .results-view-top h3 {
+    width: 80vw;
     grid-row-start: 1;
     grid-column-start: 1;
     color: white;
