@@ -103,6 +103,7 @@ const Video = ({ updateCurrTime, beatmapObj, tileSpeed, getAllowStart, onAllowSt
                     onReady={handlePlayerReady}
                     volume={volume}
                     onEnded={handleVideoEnd}
+                    style={{ pointerEvents: "none"}}
                     // onEnded={console.log("video ended")}
                     // onError={console.log("video error")}
                 />
@@ -114,6 +115,7 @@ const Video = ({ updateCurrTime, beatmapObj, tileSpeed, getAllowStart, onAllowSt
                     ref={audioRef}
                     onReady={handlePlayerReady}
                     onEnded={handleAudioEnd}
+                    style={{ pointerEvents: "none"}}
                     // onEnded={console.log("video ended")}
                     // onError={console.log("video error")}
                 />
