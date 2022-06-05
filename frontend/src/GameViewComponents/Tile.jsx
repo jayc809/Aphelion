@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import "../styles/Tile.css"
 import AnimationView from '../AnimationView'
 import tileImage from "../images/tile.png"
+import tileImageLight from "../images/tile-light.png"
 
-const Tile = ({ type, tileSpeed, targetTime, onMount, onMiss, id }) => {
+const Tile = ({ type, tileSpeed, theme, targetTime, onMount, onMiss, id }) => {
 
     const tileRef = useRef(null)
     const timingFunctionMove = "cubic-bezier(0.4, 0.1, 0.7, 0.4)"
@@ -117,7 +118,7 @@ const Tile = ({ type, tileSpeed, targetTime, onMount, onMiss, id }) => {
         isUnloaded ? "" :
         <div className="tile-wrapper" style={{zIndex: id}}>
             {playAnimation ?
-                <div style={{filter: "hue-rotate(356deg)", zIndex: 1000}}>
+                <div style={{filter: "hue-rotate(0deg)", zIndex: 1000}}>
                     <AnimationView 
                         height={animationHeight.current} 
                         width={animationWidth.current} 
@@ -132,7 +133,7 @@ const Tile = ({ type, tileSpeed, targetTime, onMount, onMiss, id }) => {
             }
             <div className="tile" ref={tileRef} onAnimationEnd={handleMiss}>
                 <img 
-                    src={tileImage} 
+                    src={theme == "light" ? tileImageLight : tileImage} 
                     alt="tile"
                 />
             </div>

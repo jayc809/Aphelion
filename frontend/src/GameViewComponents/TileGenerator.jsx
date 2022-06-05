@@ -4,7 +4,7 @@ import HoldTile from './HoldTile'
 import "../styles/TileGenerator.css"
 import TestView from '../TestView'
 
-const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, getAllowStart }) => {
+const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, getAllowStart, theme }) => {
 
     const [beatmapIndex, setBeatmapIndex] = useState(null)
     const [currentTiles, setCurrentTiles] = useState(
@@ -271,6 +271,7 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
                                 type={tile.type} 
                                 tileSpeed={tileSpeed} 
                                 targetTime={tile.targetTime}
+                                theme={theme}
                                 onMount={onTileMount}
                                 onMiss={onTileMiss}
                                 id={tile.id}
@@ -281,6 +282,7 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
                                 type={tile.type} 
                                 tileSpeed={tileSpeed} 
                                 targetTime={tile.targetTime}
+                                theme={theme}
                                 elapseBeatCount={tile.elapseBeatCount}
                                 elapseTime={tile.elapseTime}
                                 onMount={onTileMount}

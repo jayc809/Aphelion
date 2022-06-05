@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import "../styles/Tile.css"
 import AnimationView from '../AnimationView'
 import tileImage from "../images/tile-hold.png"
-import barImage from "../images/hold-bar.png"
+import tileImageLight from "../images/tile-hold-light.png"
 
-const HoldTile = ({ type, tileSpeed, targetTime, elapseBeatCount, elapseTime, onMount, onMiss, updateScoreAndCombo, id }) => {
+const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseTime, onMount, onMiss, updateScoreAndCombo, id }) => {
 
     const tileRef = useRef(null)
     const barRef = useRef(null)
@@ -230,7 +230,7 @@ const HoldTile = ({ type, tileSpeed, targetTime, elapseBeatCount, elapseTime, on
         <div className="tile-wrapper" style={{zIndex: id}}>
             <div style={{height: "100vh", width: "100vw", position: "absolute", zIndex: 1000}}>
                 {playHoldAnimation ?
-                    <div style={{filter: "hue-rotate(356deg)"}}>
+                    <div style={{filter: "hue-rotate(0deg)"}}>
                         <AnimationView 
                             height={animationHeight.current} 
                             width={animationWidth.current} 
@@ -243,7 +243,7 @@ const HoldTile = ({ type, tileSpeed, targetTime, elapseBeatCount, elapseTime, on
                     ""
                 }
                 {playEndAnimation ? 
-                    (<div style={{filter: `hue-rotate(356deg) saturate(${endWasAMissRef.current ? 0 : 1})`}}>
+                    (<div style={{filter: `hue-rotate(0deg) saturate(${endWasAMissRef.current ? 0 : 1})`}}>
                         <AnimationView 
                             height={animationHeight.current} 
                             width={animationWidth.current} 
@@ -259,7 +259,7 @@ const HoldTile = ({ type, tileSpeed, targetTime, elapseBeatCount, elapseTime, on
             </div>
             <div className="tile" ref={tileRef} onAnimationEnd={handleMiss}>
                 <img 
-                    src={tileImage} 
+                    src={theme == "light" ? tileImageLight : tileImage} 
                     alt="tile"
                 />
             </div>

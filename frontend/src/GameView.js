@@ -287,6 +287,7 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, set
             tileSpeed={tileSpeed} 
             updateScoreAndCombo={updateScoreAndCombo}
             getAllowStart={getAllowStart}
+            theme={settingsObj.theme}
           />
         </div>
 
