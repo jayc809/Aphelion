@@ -4,10 +4,6 @@ const AnimationView = ({ height, width, x, y, dirName, start, end, loop, loopSta
 
     const [frameCount, setFrameCount] = useState(start)
     const [showView, setShowView] = useState(true)
-
-    // useEffect(() => {
-    //     console.log(x, y)
-    // }, [])
     
     useEffect(() => {
         const frameCounter = setInterval(() => {

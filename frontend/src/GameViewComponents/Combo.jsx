@@ -34,7 +34,7 @@ const Combo = ({ onMount, settingsObj }) => {
             <div ref={mainContentRef} style={{position: "absolute", height: "100%", width: "100%"}}>
                 {
                     combo != 0 ?
-                    <div style={{position: "absolute", zIndex: 10, overflow: "hidden"}}>
+                    <div style={{position: "absolute", zIndex: 10, height: "100%", width: "100%", overflow: "hidden"}}>
                         <AnimationView 
                             height={`${size * 2}vh`} width={`calc(${size * 2}vh * 2)`} x="93vw" y="45vh" dirName="combo" 
                             start={0} end={19} loop={false} onComplete={() => {}} key={comboKey}
