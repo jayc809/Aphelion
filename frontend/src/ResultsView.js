@@ -141,8 +141,6 @@ const ResultsView = ({ setView, incrementGameId, resultsObj, settingsObj, videoI
         }
     }
 
-    console.log(resultsObj)
-
     return (
         <div className="screen-wrapper">
             <TransitionInView delay={1} settingsObj={settingsObj}></TransitionInView>

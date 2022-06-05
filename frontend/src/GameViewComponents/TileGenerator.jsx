@@ -161,7 +161,6 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
                 break
             }
         }
-        console.log(currTimeRef.current - (closestTargetTime + tileSpeed))
         if (closestTargetTime != null) {
             //runs the animation
             const key = type + String(closestTargetTime)

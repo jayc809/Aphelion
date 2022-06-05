@@ -1,11 +1,14 @@
 .combo-wrapper {
     height: 100%;
     width: 100%;
+    overflow: hidden;
 }
 
-.perfect-text {
-    font-size: 45px;
-    letter-spacing: 2.5px;
-    top: calc(37% + 80px);
-    right: 40px;
+@keyframes move-combo-animation {
+    from {
+        right: -25vw;
+    }
+    to {
+        right: 2.5vw
+    }
 }
