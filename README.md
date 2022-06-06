@@ -10,4 +10,4 @@
   3. run ```npm start```
 - go to localhost:3000 using Chrome
 
-yes i dont doc my functions
+apologies for this poorly documented codebase
