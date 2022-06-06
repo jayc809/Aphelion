@@ -6,10 +6,10 @@
 }
 
 .main-view-buttons-wrapper {
-    height: 3.5vw;
-    width: 14.1vw;
-    margin-right: 1.2vw;
-    margin-top: 1.2vw;
+    height: 6vh;
+    width: 25.5vh;
+    margin-right: 2.5vh;
+    margin-top: 2.5vh;
     position: absolute;
     right: 0;
     top: 0;
@@ -18,11 +18,11 @@
 }
 
 .main-view-buttons-wrapper button {
-    height: 3.5vw;
-    width: 3.5vw;
+    height: 6vh;
+    width: 6vh;
     /* border: 1px solid blue; */
     border: 0;
-    margin-left: 1.2vw;
+    margin-left: 2.5vh;
     background-color: transparent;
     background-repeat: no-repeat;
     background-size: contain;

@@ -39,13 +39,13 @@ const ComboSubCompnent = ({ combo }) => {
                 <svg style={{fontFamily: "Futura-Light-Italic", fontSize: `${size * 0.8}vh`, width : `calc(${size * 3.6}vh)`, height: `${size * 1.6}vh`, textAnchor: "end"}}>
                     <text x={"100%"} y={"75%"} 
                         style={{fill: "white", stroke: "#6142b8", strokeWidth: (size / 25) + "vh", strokeLinejoin: "miter-clip", margin: "0",
-                        letterSpacing: (size / 30) + "vh", filter: `blur(${size / 100}vh)`}}
+                        letterSpacing: (size / 30) + "vh", filter: `blur(${size / 40}vh)`}}
                     >
                         {"x" + initialComboRef.current}
                     </text>
                     <text x={"100%"} y={"75%"} 
                             style={{fill: "white", strokeLinejoin: "miter-clip", margin: "0",
-                            letterSpacing: (size / 30) + "vh"}}
+                            letterSpacing: (size / 30) + "vh", filter: `blur(${size / 350}vh)`}}
                         >
                         {"x" + initialComboRef.current}
                     </text>

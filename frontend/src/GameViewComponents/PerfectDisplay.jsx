@@ -27,13 +27,13 @@ const PerfectDisplay = ({ onMount, settingsObj }) => {
                 <svg style={{fontFamily: "Futura-Light-Italic", fontSize: `${size * 0.8}vh`, width : "50vh", height: `${size}vh`, textAnchor: "end"}}>
                     <text x={"100%"} y={"75%"} 
                         style={{fill: "white", stroke: "#6142b8", strokeWidth: (size / 18) + "vh", strokeLinejoin: "miter-clip", margin: "0",
-                        letterSpacing: (size / 28) + "vh", filter: `blur(${size / 50}vh)`}}
+                        letterSpacing: (size / 28) + "vh", filter: `blur(${size / 25}vh)`}}
                     >
                         perfect
                     </text>
                     <text x={"100%"} y={"75%"} 
                             style={{fill: "white", strokeLinejoin: "miter-clip", margin: "0",
-                            letterSpacing: (size / 28) + "vh"}}
+                            letterSpacing: (size / 28) + "vh", filter: `blur(${size / 200}vh)`}}
                         >
                         perfect
                     </text>

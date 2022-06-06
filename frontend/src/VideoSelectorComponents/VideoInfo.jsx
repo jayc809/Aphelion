@@ -65,7 +65,7 @@ const VideoInfo = ({ videoInfo, settingsObj, onMount }) => {
                                         config={{youtube: {playerVars: {start: 60}}}}
                                         width="100%"
                                         height="100%"
-                                        volume={0.5}
+                                        volume={0.4}
                                         loop={true}
                                     />
                                 </div>

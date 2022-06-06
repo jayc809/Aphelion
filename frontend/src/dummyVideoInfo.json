@@ -44,6 +44,39 @@
     {
       "id": {
         "kind": "youtube#video",
+        "videoId": "LpkWFnRPd-M"
+      },
+      "snippet": {
+        "publishedAt": "2021-01-29T10:00:12Z",
+        "channelId": "UC5CwaMl1eIgY8h02uZw7u8A",
+        "title": "シド「乱舞のメロディ」 / 星街すいせい(Cover)",
+        "description": "TVアニメ「BLEACH」OP主題歌 乱舞のメロディ / シド 様 オケ制作 / すずやみ 様 https://twitter.com/7suzuyami7 映像 ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/LpkWFnRPd-M/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/LpkWFnRPd-M/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/LpkWFnRPd-M/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Suisei Channel",
+        "liveBroadcastContent": "none",
+        "publishTime": "2021-01-29T10:00:12Z",
+        "duration": "3:49"
+      }
+    },
+    {
+      "id": {
+        "kind": "youtube#video",
         "videoId": "3cqV5BKJHyk"
       },
       "snippet": {
@@ -138,39 +171,6 @@
         "liveBroadcastContent": "none",
         "publishTime": "2021-12-25T09:30:12Z",
         "duration": "3:36"
-      }
-    },
-    {
-      "id": {
-        "kind": "youtube#video",
-        "videoId": "LpkWFnRPd-M"
-      },
-      "snippet": {
-        "publishedAt": "2021-01-29T10:00:12Z",
-        "channelId": "UC5CwaMl1eIgY8h02uZw7u8A",
-        "title": "シド「乱舞のメロディ」 / 星街すいせい(Cover)",
-        "description": "TVアニメ「BLEACH」OP主題歌 乱舞のメロディ / シド 様 オケ制作 / すずやみ 様 https://twitter.com/7suzuyami7 映像 ...",
-        "thumbnails": {
-          "default": {
-            "url": "https://i.ytimg.com/vi/LpkWFnRPd-M/default.jpg",
-            "width": 120,
-            "height": 90
-          },
-          "medium": {
-            "url": "https://i.ytimg.com/vi/LpkWFnRPd-M/mqdefault.jpg",
-            "width": 320,
-            "height": 180
-          },
-          "high": {
-            "url": "https://i.ytimg.com/vi/LpkWFnRPd-M/hqdefault.jpg",
-            "width": 480,
-            "height": 360
-          }
-        },
-        "channelTitle": "Suisei Channel",
-        "liveBroadcastContent": "none",
-        "publishTime": "2021-01-29T10:00:12Z",
-        "duration": "3:49"
       }
     },
     {
