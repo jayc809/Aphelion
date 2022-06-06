@@ -19,21 +19,21 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
     const barHeightRef = useRef(null)
 
     //initializations
-    const tapped = useRef(false)
+    // const tapped = useRef(false)
     useEffect(() => {
         if (type != "placeholder") {
             onMount(type, targetTime, controller)
         }
         loadTile()
-        window.addEventListener("keydown", () => {
-            if (!tapped.current) {
-                tapTile("good")
-                tapped.current = true
-            }
-        })
-        window.addEventListener("keyup", () => {
-            handleFinish()
-        })
+        // window.addEventListener("keydown", () => {
+        //     if (!tapped.current) {
+        //         tapTile("good")
+        //         tapped.current = true
+        //     }
+        // })
+        // window.addEventListener("keyup", () => {
+        //     handleFinish()
+        // })
     }, [])
 
     const controller = (instructions, options = null) => {

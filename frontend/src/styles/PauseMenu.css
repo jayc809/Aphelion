@@ -51,6 +51,8 @@
     color: white;
     background-color: transparent;
     border: 0;
+    font-family: "Futura-Light";
+    font-size: 2.5vh;
     background-image: url(../images/basic-button.png);
     background-repeat: no-repeat;
     background-size: contain;

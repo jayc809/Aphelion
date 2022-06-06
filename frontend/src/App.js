@@ -4,11 +4,12 @@ import AnalyzerView from './AnalyzerView'
 import ResultsView from './ResultsView'
 import VideoSelectorView from './VideoSelectorView'
 import TestView from "./TestView"
+import MainView from './MainView'
 import { useRef, useState } from 'react'
 
 function App() {
 
-  const [view, setView] = useState("videos")
+  const [view, setView] = useState("main")
   const [gameId, setGameId] = useState(0)
   const videoInfoRef = useRef({
     "id": {
@@ -47,7 +48,7 @@ function App() {
       difficulty: "Hard",
       tileSpeed: 1.3,
       theme: "dark",
-      uiHue: 342,
+      uiHue: 345,
       uiSaturation: 1.6,
       uiBrightness: 1.0,
       videoSaturation: 2.0,
@@ -68,6 +69,7 @@ function App() {
     fullPerfect: false,
     tier: "A"
   })
+  const showMainViewTransitionInRef = useRef(false)
 
   const setBeatmapObjRef = (beatmapObj) => {
     beatmapObjRef.current = beatmapObj
@@ -85,17 +87,22 @@ function App() {
     resultsObjRef.current = resultsObj
   }
 
+  const setShowMainViewTransitionInRef = (tf) => {
+    showMainViewTransitionInRef.current = tf
+  }
+
   return (
     <div id="app">
-      {/* {
+      {
         {
+          "main": <MainView setView={setView} settingsObj={settingsObj} showTransition={showMainViewTransitionInRef.current} setShowTransition={setShowMainViewTransitionInRef}></MainView>,
           "videos": <VideoSelectorView setView={setView} setVideoInfoRef={setVideoInfoRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj}/>,
           "analyzer": <AnalyzerView setView={setView} setBeatmapObjRef={setBeatmapObjRef} settingsObj={settingsObj} videoId={videoInfoRef.current.id.videoId}/>,
           "game": <GameView setView={setView} incrementGameId={incrementGameId} setResultsObjRef={setResultsObjRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj} beatmapObj={beatmapObjRef.current} key={gameId}/>,
           "results": <ResultsView setView={setView} incrementGameId={incrementGameId} resultsObj={resultsObjRef.current} settingsObj={settingsObj} videoInfo={videoInfoRef.current}/>
         } [view]
-      } */}
-      <TestView/>
+      }
+      {/* <TestView/> */}
     </div>
   )
 }

@@ -73,7 +73,7 @@ const PauseMenu = ({ pauseGame, restartGame, endGame, settingsObj, setSettingsOb
                         <div className="pause-menu-button-wrapper">
                             <button className="pause-menu-button" onClick={handlePausePlay} style={{cursor: "pointer"}}>Resume</button>
                             <button className="pause-menu-button" onClick={handleRestart} style={{cursor: "pointer"}}>Restart</button>
-                            <button className="pause-menu-button" onClick={handleExit} style={{cursor: "pointer"}}>Quit</button>
+                            <button className="pause-menu-button" onClick={handleExit} style={{cursor: "pointer"}}>Exit</button>
                         </div>
                     </div> 
                 </div> :

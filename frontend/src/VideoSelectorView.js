@@ -147,11 +147,13 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
     }
     
     const [nextButtonText, setNextButtonText] = useState("Continue")
+    const [backButtonText, setBackButtonText] = useState("Exit")
     const showSettings = () => {
         if (!settingsShowingRef.current) {    
             scrollListRef.current.style.animation = `hide-scroll-list ${animationTime}s ease-out forwards`
             selectedVideoRef.current.style.animation = `hide-selected-video ${animationTime}s ease-out forwards`
             setNextButtonText("Start")
+            setBackButtonText("Back")
             setUseVideoRef.current(true)
             setTimeout(() => {
                 settingsRef.current.style.animation =  `show-settings ${animationTime}s ease-out forwards`
@@ -165,6 +167,7 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
             settingsRef.current.style.animation =  `hide-settings ${animationTime}s ease-out forwards`
             setUseVideoRef.current(false)
             setNextButtonText("Continue")
+            setBackButtonText("Exit")
             setTimeout(() => {  
                 scrollListRef.current.style.animation = `show-scroll-list ${animationTime}s ease-out forwards`
                 selectedVideoRef.current.style.animation = `show-selected-video ${animationTime}s ease-out forwards`
@@ -176,27 +179,38 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
     const handleBackButtonClick = () => {
         if (settingsShowingRef.current) {
             hideSettings()
+        } else {
+            nextViewDestinationRef.current = "main"
+            setTransitionOut(true)
+            setVideoPlayRef.current(false)
         }
     }
     
     const [transitionOut, setTransitionOut] = useState(false)
+    const nextViewDestinationRef = useRef(null)
     const handleNextButtonClick = () => {
         if (!settingsShowingRef.current) {
             showSettings()
         } else {
             setVideoInfoRef(selectedVideo)
+            nextViewDestinationRef.current = "analyzer"
             setTransitionOut(true)
             setVideoPlayRef.current(false)
         }
     }
-    const nextView = () => {
+    const nextViewAnalyzer = () => {
         setView("analyzer")
+    }
+    const nextViewMain = () => {
+        setView("main")
     }
 
     return (
         <div className="screen-wrapper">
             <TransitionInView delay={1} settingsObj={settingsObj}></TransitionInView>
-            <TransitionOutView nextView={nextView} start={transitionOut} settingsObj={settingsObj}></TransitionOutView>
+            <TransitionOutView nextView={
+                nextViewDestinationRef.current == "analyzer" ? nextViewAnalyzer : nextViewMain
+            } start={transitionOut} settingsObj={settingsObj}></TransitionOutView>
             <div className="video-selector-view-wrapper" key={viewKey} style={{opacity: showView ? 1 : 0}}>
                 <div className="search-bar">
                     <img className="search-bar-background" src={searchBarBackground}></img>
@@ -232,7 +246,7 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
                 </div>
 
                 <div className="video-buttons" style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
-                    <button className="back-button" onClick={handleBackButtonClick} style={{cursor: "pointer"}}>Back</button>
+                    <button className="back-button" onClick={handleBackButtonClick} style={{cursor: "pointer"}}>{backButtonText}</button>
                     <button className="next-button" onClick={handleNextButtonClick} style={{cursor: "pointer"}}>{nextButtonText}</button>
                 </div>
 
