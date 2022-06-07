@@ -25,7 +25,10 @@ const AnalyzerView = ({ setView, setBeatmapObjRef, settingsObj, videoId }) => {
             setShowAnalyzer(true)
         }, 700)
         socket.on("connected-to-server", () => {
-            socket.emit("request-beatmap", videoUrl)
+            socket.emit("request-beatmap", {
+                videoUrl: videoUrl,
+                settingsObj: settingsObj
+            })
             socket.on("progress-update", (message) => {
                 setDisplayText(message)
                 if (message == "ERROR: Decoding Audio Data Failed") {

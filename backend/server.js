@@ -16,8 +16,9 @@ io.on("connect", socket => {
     console.log(`client ${socket.id} has connected`)
     socket.emit("connected-to-server", "connected to server")
 
-    socket.on("request-beatmap", (videoUrl) => {
+    socket.on("request-beatmap", (requestObj) => {
         const filePath = path.resolve(__dirname, 'video.mkv')
+        const videoUrl = requestObj.videoUrl
         const video = ytdl(videoUrl, { filter: "audio" })
 
         //download the video
@@ -55,7 +56,7 @@ io.on("connect", socket => {
             socket.emit("progress-update", "Generating Beatmap")
             console.log("calculating BPM")
             const audioData = getAudioData(buffer)
-            const startIndex = getAudioStartIndex(audioData, buffer)
+            const startIndex = getAudioStartIndex(audioData, buffer, requestObj.settingsObj.musicStartTime)
             const startTime = startIndex / buffer.sampleRate
             const bpm = getBPM(audioData)
 
@@ -225,8 +226,11 @@ const getAudioData = (buffer) => {
     }
     return audioData
 }
-const getAudioStartIndex = (audioData, buffer) => {
+const getAudioStartIndex = (audioData, buffer, startTime) => {
     let pcmStartTime = null
+    if (parseFloat(startTime) > 0) {
+        return parseFloat(startTime) * buffer.sampleRate 
+    }
     for (let i = 0; i < audioData.length; i += 1) {
         if (audioData[i] != 0) {
             pcmStartTime = i

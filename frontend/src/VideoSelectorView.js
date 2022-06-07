@@ -46,11 +46,9 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
     }, [])
 
     const handleKeyPress = (e) => {
-        if (e.key == "Enter") {
+        if (e.key == "Enter" && document.getElementById("search-input-el") == document.activeElement) {
             handleSearchSubmit()
-        } else {
-            document.getElementById("search-input-el").focus()
-        }
+        } 
     }
 
     const handleSearchInputChange = (e) => {
@@ -234,7 +232,7 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
                 </div>
 
                 <div className="settings" ref={settingsRef}>
-                    <SettingsList settingsObj={settingsObj} setSettingsObj={setSettingsObj}></SettingsList>
+                    <SettingsList settingsObj={settingsObj} setSettingsObj={setSettingsObj} selectedVideo={selectedVideo}></SettingsList>
                 </div>
 
                 <div className="scroll-list" ref={scrollListRef} style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>

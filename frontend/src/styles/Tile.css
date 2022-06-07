@@ -40,7 +40,7 @@
     margin: 0;
     opacity: 0;
     /* background-color: red; */
-    background-image: linear-gradient(0deg, black 0%, black 12.5%, #6142b8 25%, white 37.5%, white 90%, transparent 100%);
+    background-image: linear-gradient(0deg, black 0%, black 10%, #6142b8 25%, white 40%, white 90%, transparent 100%);
 }
 
 .bar img {

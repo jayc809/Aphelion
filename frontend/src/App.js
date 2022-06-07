@@ -5,7 +5,7 @@ import ResultsView from './ResultsView'
 import VideoSelectorView from './VideoSelectorView'
 import TestView from "./TestView"
 import MainView from './MainView'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 function App() {
 
@@ -53,6 +53,7 @@ function App() {
       uiBrightness: 1.0,
       videoSaturation: 2.0,
       videoBrightness: 0.85,
+      musicStartTime: 0.0,
       smoothAnimations: true,
       beatNotes: true,
       lowerVolumeOnMisses: false

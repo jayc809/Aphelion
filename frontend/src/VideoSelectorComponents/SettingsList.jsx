@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import "../styles/SettingsList.css"
 import StepperButton from './StepperButton';
 import darkTheme from "../images/tile.png"
 import lightTheme from "../images/tile-light.png"
 import settingsBackground from "../images/test-bg.png"
 
-const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false }) => {
+const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVideo }) => {
 
     const [difficulty, setDifficulty] = useState(settingsObj.difficulty)
     const [tileSpeed, setTileSpeed] = useState(settingsObj.tileSpeed)
@@ -14,6 +14,7 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false }) => {
     const [uiBrightness, setUiBrightness] = useState(settingsObj.uiBrightness)
     const [videoSaturation, setVideoSaturation] = useState(settingsObj.videoSaturation)
     const [videoBrightness, setVideoBrightness] = useState(settingsObj.videoBrightness)
+    const [musicStartTime, setMusicStartTime] = useState(settingsObj.musicStartTime)
     const [smoothAnimations, setSmoothAnimations] = useState(settingsObj.smoothAnimations)
     const [beatNotes, setBeatNotes] = useState(settingsObj.beatNotes)
     const [lowerVolumeOnMisses, setLowerVolumeOnMisses] = useState(settingsObj.lowerVolumeOnMisses)
@@ -23,6 +24,19 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false }) => {
         settingsObjCopy[name] = val
         setSettingsObj(settingsObjCopy)
     }
+
+    useEffect(() => {
+        window.addEventListener("keypress", handleKeyPress)
+        if (!pauseMenu) {
+            document.getElementById("start-time-input-el").addEventListener("focusout", handleUnFocus)
+        }
+        return () => {
+            window.removeEventListener("keypress", handleKeyPress)
+            if (!pauseMenu) {
+                document.getElementById("start-time-input-el").removeEventListener("focusout", handleUnFocus)
+            }
+        }
+    }, [])
 
     const handleDifficultyChange = () => {
         switch (difficulty) {
@@ -108,6 +122,43 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false }) => {
         }
     }
 
+    const handleKeyPress = (e) => {
+        if (e.key == "Enter" && document.getElementById("start-time-input-el") == document.activeElement) {
+            const temp = document.createElement("input");
+            document.body.appendChild(temp);
+            temp.focus();
+            document.body.removeChild(temp);
+        } 
+    }
+    const lastValidStartTime = useRef(settingsObj.musicStartTime)
+    const selectedVideoRef = useRef(null)
+    const handleUnFocus = useCallback(() => {
+        const currInput = document.getElementById("start-time-input-el").value.slice(0, -1)
+        const minutes = parseInt(/^\d+(?=:)/.exec(selectedVideoRef.current.snippet.duration))
+        const seconds = parseInt(/(?<=:)\d+$/.exec(selectedVideoRef.current.snippet.duration))
+        const durationInSeconds = (minutes * 60 + seconds - 1)
+        if (currInput.match(/^[0-9]+([.][0-9]*)?$/) && Number(currInput) <= durationInSeconds) {
+            const inputRounded = parseFloat(Number(currInput).toFixed(2))
+            updateSettingObj("musicStartTime", inputRounded)
+            lastValidStartTime.current = inputRounded
+            setMusicStartTime(inputRounded)
+        } else if (currInput == "") {
+            updateSettingObj("musicStartTime", 0)
+            lastValidStartTime.current = 0
+            setMusicStartTime(0)
+        } else {
+            setMusicStartTime(lastValidStartTime.current)
+        }
+    })
+    const handleStartTimeChange = (e) => {
+        const input = e.target.value.slice(0, -1)
+        setMusicStartTime(input)
+    }
+
+    useEffect(() => {
+        selectedVideoRef.current = selectedVideo
+    }, [selectedVideo])
+
     return (
         <div className="settings-list-wrapper" style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
             {
@@ -171,6 +222,16 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false }) => {
                         <StepperButton min={0.3} max={1.5} start={videoBrightness} step={0.05} round={2} setVal={setVideoBrightness}></StepperButton>
                     </div>
                 </div>
+                {
+                    pauseMenu ? "" :
+                    <div className="settings-list-row">
+                        <h3>Music Start Time (Optional)</h3>
+                        <div className="settings-list-row-content-stacked">
+                            <input className="settings-list-start-time" id="start-time-input-el" type="text" value={musicStartTime + "s"} 
+                            onChange={handleStartTimeChange} autoComplete="off"></input>
+                        </div>
+                    </div>
+                }
                 {
                     pauseMenu ? "" :
                     <div className="settings-list-row">

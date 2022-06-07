@@ -209,7 +209,7 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
                     barOutline1.style.opacity = 0
                     barOutline2.style.opacity = 0
                     barOutlineUnloadedRef.current = true
-                }, elapseTime / 2 * 1000)
+                }, elapseTime * 0.4 * 1000)
 
                 scoreIncrementer.current = setInterval(() => {
                     updateScoreAndCombo(accuracy)
@@ -234,7 +234,7 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
                     barOutline1.style.opacity = 0
                     barOutline2.style.opacity = 0
                     barOutlineUnloadedRef.current = true
-                }, elapseTime * 0.375 * 1000)
+                }, elapseTime * 0.4 * 1000)
 
                 scoreIncrementer.current = setInterval(() => {
                     updateScoreAndCombo(accuracy)
