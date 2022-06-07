@@ -9,7 +9,11 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
     const tileRef = useRef(null)
     const barRef = useRef(null)
     const barClipRef = useRef(null)
-    const barClipTapRef = useRef(null)
+    const barOutline1Ref = useRef(null)
+    const barOutline2Ref = useRef(null)
+    const barOutlineClip1Ref = useRef(null)
+    const barOutlineClip2Ref = useRef(null)
+    const barLowerClipRef = useRef(null)
     const timingFunctionMove = "cubic-bezier(0.4, 0.1, 0.7, 0.4)"
     const timingFunctionMoveBar = "cubic-bezier(1.0, 0.9, 1.0, 0.9)"
     const timingFunctionOpacity = "cubic-bezier(0.0, 0.7, 0.0, 0.9)"
@@ -39,6 +43,8 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
     const controller = (instructions, options = null) => {
         const tile = tileRef.current
         const bar = barRef.current
+        const barOutline1 = barOutline1Ref.current
+        const barOutline2 = barOutline2Ref.current
         switch (instructions) {
             case "getClass":
                 return "hold"
@@ -55,6 +61,10 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
                 if (bar && bar.style) {
                     bar.style.animationPlayState = "paused"
                 }
+                if (barOutline1 && barOutline2) {
+                    barOutline1.style.animationPlayState = "paused"
+                    barOutline2.style.animationPlayState = "paused"
+                }
                 break
             case "playAnimation":
                 if (tile && tile.style) {
@@ -62,6 +72,10 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
                 }
                 if (bar && bar.style) {
                     bar.style.animationPlayState = "running"
+                }
+                if (barOutline1 && barOutline2) {
+                    barOutline1.style.animationPlayState = "running"
+                    barOutline2.style.animationPlayState = "running"
                 }
                 break
         }
@@ -75,14 +89,23 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
         const bar = barRef.current
         barHeightRef.current = getBarHeight()
         bar.style.height = String(barHeightRef.current) + "px"
+        const barOutline1 = barOutline1Ref.current
+        const barOutline2 = barOutline2Ref.current
+        barOutline1.style.height = String(barHeightRef.current * 0.5) + "px"
+        barOutline2.style.height = String(barHeightRef.current * 0.5) + "px"
+
         const tile = tileRef.current
         const barClip = barClipRef.current
+        const barOutlineClip1 = barOutlineClip1Ref.current
+        const barOutlineClip2 = barOutlineClip2Ref.current
         if (type == "placeholder") {
             tile.style.opacity = 0
         } else {
             switch (type) {
                 case "left":
                     barClip.style.clipPath = "polygon(47.3vw 40vh, 47.1vw 40vh, 22.6vw 100vh, 26.6vw 100vh)"
+                    barOutlineClip1.style.clipPath = "polygon(47.1vw 40vh, 22.5vw 100vh, 22.8vw 100vh)"
+                    barOutlineClip2.style.clipPath = "polygon(47.3vw 40vh, 26.6vw 100vh, 26.3vw 100vh)"
                     break
                 case "middle-left":
                     barClip.style.clipPath = "polygon(49.2vw 40vh, 48.8vw 40vh, 39vw 100vh, 44vw 100vh)"
@@ -92,6 +115,8 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
                     break
                 case "right":
                     barClip.style.clipPath = "polygon(53.2vw 40vh, 53vw 40vh, 73.6vw 100vh, 77.6vw 100vh)"
+                    barOutlineClip1.style.clipPath = "polygon(53vw 40vh, 73.5vw 100vh, 73.8vw 100vh)"
+                    barOutlineClip2.style.clipPath = "polygon(53.2vw 40vh, 77.6vw 100vh, 77.3vw 100vh)"
                     break
             }
             
@@ -101,11 +126,15 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
                                     increase-opacity ${tileSpeed + "s"} ${timingFunctionOpacity}`
             bar.style.animation = `move-y-bar ${tileSpeed + "s"} ${timingFunctionMove}, 
                                    increase-opacity-bar ${tileSpeed + "s"} ${timingFunctionOpacity}`
+            barOutline1.style.animation = `move-y-bar ${tileSpeed + "s"} ${timingFunctionMove}`
+            barOutline1.style.opacity = 1
+            barOutline2.style.animation = `move-y-bar ${tileSpeed + "s"} ${timingFunctionMove}`
+            barOutline2.style.opacity = 1
         }
     }
 
     useEffect(() => {
-        barClipTapRef.current.style.clipPath = `polygon(100vw 0px, 0px 0px, 0px ${tapPositionY}px, 100vw ${tapPositionY}px)`
+     barLowerClipRef.current.style.clipPath = `polygon(100vw 0px, 0px 0px, 0px ${tapPositionY}px, 100vw ${tapPositionY}px)`
     }, [tapPositionY])
 
     const [playHoldAnimation, setPlayHoldAnimation] = useState(false)
@@ -116,9 +145,16 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
     const animationY = useRef("0px")
     const animationName = useRef(null)
     const endWasAMissRef = useRef(false)
+    const tappableRef = useRef(true)
+    const barOutlineUnloadedRef = useRef(false)
 
     const tapTile = (accuracy) => {
         const tile = tileRef.current
+        const barOutline1 = barOutline1Ref.current
+        const barOutline2 = barOutline2Ref.current
+        if (!tappableRef.current) {
+            return
+        }
         if (tile) {
             tile.style.animationPlayState = "paused"
             if (accuracy == "miss") {
@@ -127,7 +163,18 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
                 animationWidth.current = (rect.width * 700 / 500 * 0.93) + "px"
                 animationX.current = (rect.left + rect.width / 2) + "px"
                 animationY.current = (rect.top + rect.height / 2) + "px"
+
+                barOutline1.style.animation = "none"
+                barOutline2.style.animation = "none"
+                barOutline1.style.opacity = 1
+                barOutline2.style.opacity = 1
+                barOutline1.style.height = "100vh"
+                barOutline2.style.height = "100vh"
+                barOutline1.style.bottom = "0px"
+                barOutline2.style.bottom = "0px"
+
                 endWasAMissRef.current = true
+                setTapPositionY(rect.top + rect.height / 2)
                 setPlayEndAnimation(true)
                 handleTapMiss()
             } else if (accuracy == "perfect") {
@@ -149,11 +196,21 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
                         animationX.current = "calc(100vw * 896 / 1280)"
                         break
                 }
-                setPlayHoldAnimation(true)
 
                 setTapPositionY(window.innerHeight * 679 / 800)
+                setPlayHoldAnimation(true)
                 const bar = barRef.current
                 bar.style.animation = `move-y-bar-tapped-${id} ${elapseTime + "s"} ${timingFunctionMoveBar} forwards`
+                barOutline1.style.opacity = 1
+                barOutline2.style.opacity = 1
+                barOutline1.style.animation = `move-y-bar-tapped-${id} ${elapseTime + "s"} ${timingFunctionMoveBar} forwards`
+                barOutline2.style.animation = `move-y-bar-tapped-${id} ${elapseTime + "s"} ${timingFunctionMoveBar} forwards`
+                setTimeout(() => {
+                    barOutline1.style.opacity = 0
+                    barOutline2.style.opacity = 0
+                    barOutlineUnloadedRef.current = true
+                }, elapseTime / 2 * 1000)
+
                 scoreIncrementer.current = setInterval(() => {
                     updateScoreAndCombo(accuracy)
                 }, (elapseTime - 0.15) / (elapseBeatCount - 1) * 1000)
@@ -164,11 +221,21 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
                 animationWidth.current = (rect.width * 700 / 500 * 0.93) + "px"
                 animationX.current = (rect.left + rect.width / 2) + "px"
                 animationY.current = (rect.top + rect.height / 2) + "px"
-                setPlayHoldAnimation(true)
 
                 setTapPositionY(rect.top + rect.height / 2)
+                setPlayHoldAnimation(true)
                 const bar = barRef.current
                 bar.style.animation = `move-y-bar-tapped-${id} ${elapseTime + "s"} ${timingFunctionMoveBar} forwards`
+                barOutline1.style.opacity = 1
+                barOutline2.style.opacity = 1
+                barOutline1.style.animation = `move-y-bar-tapped-${id} ${elapseTime + "s"} ${timingFunctionMoveBar} forwards`
+                barOutline2.style.animation = `move-y-bar-tapped-${id} ${elapseTime + "s"} ${timingFunctionMoveBar} forwards`
+                setTimeout(() => {
+                    barOutline1.style.opacity = 0
+                    barOutline2.style.opacity = 0
+                    barOutlineUnloadedRef.current = true
+                }, elapseTime * 0.375 * 1000)
+
                 scoreIncrementer.current = setInterval(() => {
                     updateScoreAndCombo(accuracy)
                 }, (elapseTime - 0.15) / (elapseBeatCount - 1) * 1000)
@@ -180,12 +247,28 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
 
     const isUnloadedRef = useRef(false)
     const unloadTile = (directMiss) => {
+        if (directMiss) {
+            tappableRef.current = false
+        }
         isUnloadedRef.current = true
         clearInterval(scoreIncrementer.current)
         const tile = tileRef.current
         if (tile) {
             if (directMiss) {
                 tile.style.opacity = 0
+            }
+        }
+        const barOutline1 = barOutline1Ref.current
+        const barOutline2 = barOutline2Ref.current
+        if (barOutline1 && barOutline2) {
+            if (!barOutlineUnloadedRef.current) {
+                barOutline1.style.animation = "opacity-1-0 0.3s cubic-bezier(0.0, 0.5, 0.2, 0.8) forwards"
+                barOutline2.style.animation = "opacity-1-0 0.3s cubic-bezier(0.0, 0.55, 0.2, 0.8) forwards"
+            } else {
+                barOutline1.style.animation = "none" 
+                barOutline2.style.animation = "none" 
+                barOutline1.style.opacity = 0 
+                barOutline2.style.opacity = 0
             }
         }
         const bar = barRef.current
@@ -207,6 +290,14 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
     }
 
     const handleMiss = () => {
+        const barOutline1 = barOutline1Ref.current
+        const barOutline2 = barOutline2Ref.current
+        barOutline1.style.bottom = "0vh"
+        barOutline2.style.bottom = "0vh"
+        barOutline1.style.height = (barHeightRef.current * 0.9) + "px"
+        barOutline2.style.height = (barHeightRef.current * 0.9) + "px"
+        barOutline1.style.animation = "none"
+        barOutline2.style.animation = "none"
         onMiss(type, targetTime)
         unloadTile(true)
     }
@@ -263,7 +354,14 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
                     alt="tile"
                 />
             </div>
-            <div className="bar-wrapper" ref={barClipTapRef}>
+            
+            <div className="bar-wrapper" ref={barLowerClipRef}>
+                <div className="bar-outline-clip-1" ref={barOutlineClip1Ref}>
+                    <div className="bar-outline" ref={barOutline1Ref}></div>
+                </div>
+                <div className="bar-outline-clip-2" ref={barOutlineClip2Ref}>
+                    <div className="bar-outline" ref={barOutline2Ref}></div>
+                </div>
                 <div className="bar-clip" ref={barClipRef}>
                     <div className="bar" ref={barRef} onAnimationEnd={handleFinish}>
                         <style>{`

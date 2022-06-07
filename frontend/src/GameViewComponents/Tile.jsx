@@ -59,8 +59,12 @@ const Tile = ({ type, tileSpeed, theme, targetTime, onMount, onMiss, id }) => {
     const animationX = useRef("0px")
     const animationY = useRef("0px")
     const animationName = useRef(null)
+    const tappableRef = useRef(true)
 
     const tapTile = (accuracy) => {
+        if (!tappableRef.current) {
+            return
+        }
         const tile = tileRef.current
         if (tile) {
             tile.style.animationPlayState = "paused"
@@ -101,6 +105,7 @@ const Tile = ({ type, tileSpeed, theme, targetTime, onMount, onMiss, id }) => {
     }
 
     const unloadTile = () => {
+        tappableRef.current = false
         const tile = tileRef.current
         if (tile) {
             tile.style.animation = "none"

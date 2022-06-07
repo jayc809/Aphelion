@@ -131,7 +131,7 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false }) => {
                     <div className="settings-list-row">
                         <h3>Note Speed</h3>
                         <div className="settings-list-row-content">
-                            <StepperButton min={0.7} max={1.8} start={tileSpeed} step={0.1} round={1} setVal={setTileSpeed}></StepperButton>
+                            <StepperButton min={1.0} max={1.6} start={tileSpeed} step={0.1} round={1} setVal={setTileSpeed}></StepperButton>
                         </div>
                     </div>
                 }

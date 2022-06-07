@@ -49,6 +49,30 @@
     object-fit: fill;
 }
 
+.bar-outline-clip-1 {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    z-index: 15;
+}
+
+.bar-outline-clip-2 {
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    z-index: 16;
+}
+
+.bar-outline {
+    height: 0vh;
+    width: 100vw;
+    position: absolute;
+    bottom: 0;
+    margin: 0;
+    opacity: 0;
+    background-color: white;
+}
+
 
 @keyframes increase-opacity {
     from {

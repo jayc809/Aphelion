@@ -24,11 +24,11 @@ const ComboSubCompnent = ({ combo }) => {
     }, [combo])
 
     return (
-        <div ref={mainContentRef} style={{position: "absolute", height: `${size * 2}vh`, width: `calc(${size * 6}vh)`, overflow: "hidden",
-        top: "34vh", display: "grid", placeItems: "center", opacity: 0}}>
+        <div ref={mainContentRef} style={{position: "absolute", height: `${size * 3}vh`, width: `calc(${size * 6}vh)`, overflow: "hidden",
+        top: "27.5vh", display: "grid", placeItems: "center", opacity: 0}}>
             {
                 combo != 0 ?
-                <div style={{position: "absolute", zIndex: 10}}>
+                <div style={{position: "absolute", zIndex: 10, height: `${size * 3}vh`, width: `calc(${size * 6}vh)`}}>
                     <AnimationViewContained
                         dirName="combo" start={0} end={19} loop={false} onComplete={() => {}}
                     ></AnimationViewContained> 

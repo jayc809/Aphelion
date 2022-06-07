@@ -48,7 +48,7 @@ function App() {
       difficulty: "Hard",
       tileSpeed: 1.3,
       theme: "dark",
-      uiHue: 345,
+      uiHue: 343,
       uiSaturation: 1.6,
       uiBrightness: 1.0,
       videoSaturation: 2.0,

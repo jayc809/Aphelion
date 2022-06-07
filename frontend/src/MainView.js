@@ -47,8 +47,9 @@ const MainView = ({ setView, settingsObj, showTransition, setShowTransition }) =
         <h5> - Added customizable start time <h5>
         <h5> - Added option to use image as game background <h5>
         <h5> - Added rainbow UI <h5>
-        <h4> In Porgress... <h4>
-        <h5> - One more tile? <h5>
+        <h4> Coming Soon... <h4>
+        <h5> - Fix hold note not properly pausing when game is paused <h5>
+        <h5> - One more note? <h5>
         <br>
         <br>
         <h3> That's all folks! You've reached the end! Thank you and most importantly... Have fun! <h3>
@@ -56,8 +57,10 @@ const MainView = ({ setView, settingsObj, showTransition, setShowTransition }) =
     `
 
     useEffect(() => {
-        setTimeout(() => {    
-            blackScreenRef.current.style.animation = "opacity-1-0 1s ease-in forwards"
+        setTimeout(() => {
+            if (blackScreenRef.current) {
+                blackScreenRef.current.style.animation = "opacity-1-0 1s ease-in forwards"
+            }
             setTimeout(() => {
                 setShowBlackScreen(false)
             }, 1000)
