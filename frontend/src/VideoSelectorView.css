@@ -83,77 +83,69 @@ input:focus {
 }
 
 .scroll-list {
-    height: 109vh;
+    height: 100vh;
     width: 63vw;
     position: absolute;
-    top: -9vh;
-    left: 46vw;
+    right: -9vw;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     position: absolute;
     z-index: 10;
-    /* border: 2px red solid; */
     overflow: hidden;
 }
 
 .video-selected {
-    aspect-ratio: 5.4;
+    height: 16vh;
     width: 50vw;
-    right: 3.9vw;
+    right: 2.4vw;
     top: 50vh;
     position: absolute;
     z-index: 20;
     display: grid;
     grid-template-columns: 1fr;
+    /* border: 1px solid red; */
 }
 
-.video-selected button {
-    grid-row-start: 1;
-    grid-column-start: 1;
-    font-family: "Futura";
-    border: 0;
-    color: white;
-    background-color: transparent;
-    white-space: nowrap;
-    text-align: left;
-}
-
-.video-selected-button {
-    height: 100%;
-    width: 100%;
-    white-space: nowrap;
-    background-color: transparent;
-    background-size: contain;
-    background-image: url("./images/video-row.png");
-    background-repeat: no-repeat;
-}
 
 .video-selected-title-text {
-    height: 100%;
-    width: 90%;
-    text-indent: 6vw;
-    font-size: 4.6vh;
-    padding-bottom: 2.9vh;
+    position: absolute;
+    top: 15%;
+    left: 10vh;
+    height: 55%;
+    width: 82%;
+    /* border: 1px solid blue; */
+    font-family: "Futura-Medium";
+    white-space: nowrap;
     overflow: hidden;
+    font-size: 5.2vh;
 }
 
 .video-selected-artist-text {
-    height: 100%;
-    width: 90%;
-    text-indent: 5.9vw;
-    font-size: 2.9vh;
-    padding-top: 7.3vh;
+    position: absolute;
+    top: 60%;
+    left: 10vh;
+    height: 35%;
+    width: 85%;
+    /* border: 1px solid blue; */
+    font-family: "Futura-Medium";
+    white-space: nowrap;
     overflow: hidden;
+    font-size: 2.6vh;
 }
 
 .video-selected-duration-text {
-    height: 100%;
-    width: 90%;
-    text-indent: 36vw;
-    font-size: 2.65vh;
-    padding-top: 7.9vh;
+    position: absolute;
+    top: 60%;
+    left: 10vh;
+    height: 35%;
+    width: 78%;
+    /* border: 1px solid blue; */
+    font-family: "Futura-Medium";
+    white-space: nowrap;
     overflow: hidden;
+    font-size: 2.6vh;
+    text-align: right;
 }
 
 .video-info {
@@ -163,6 +155,7 @@ input:focus {
     z-index: 5;
     overflow: hidden;
     bottom: 2vh;
+    left: 0vw;
     /* border: 2px solid red; */
 }
 
@@ -249,18 +242,18 @@ pre {
 
 @keyframes hide-scroll-list {
     from {
-        left: 46vw;
+        right: -9vw;
     }
     to {
-        left: calc(46vw + 63vw);
+        right: calc(-9vw - 63vw);
     }
 }
 @keyframes hide-selected-video {
     from {
-        right: 3.9vw;
+        right: 2.4vw;
     }
     to {
-        right: calc(3.9vw - 63vw);
+        right: calc(2.4vw - 63vw);
     }
 }
 @keyframes hide-settings {
@@ -276,18 +269,18 @@ pre {
 
 @keyframes show-scroll-list {
     from {
-        left: calc(46vw + 63vw);
+        right: calc(-9vw - 63vw);
     }
     to {
-        left: 46vw;
+        right: -9vw;
     }
 }
 @keyframes show-selected-video{
     from {
-        right: calc(3.9vw - 63vw);
+        right: calc(2.4vw - 63vw);
     }
     to {
-        right: 3.9vw;
+        right: 2.4vw;
     }
 }
 @keyframes show-settings {

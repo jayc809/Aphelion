@@ -3,25 +3,33 @@ import "../styles/ScrollList.css"
 const ScrollList = ({ videosInput, setSelectedVideo }) => {
 
     useEffect(() => {
+        handelResize()
+        window.addEventListener("resize", handelResize)
+        return () => {
+            window.removeEventListener("resize", handelResize)
+        }
+    }, [])
+
+    useEffect(() => {
         if (videosInput.length > 0) {
             handleNewVideosInput()
         }
     }, [videosInput])
 
     const [videos, setVideos] = useState( 
-        Array.apply(null, Array(6)).map((nul, index) => {
+        Array.apply(null, Array(11)).map((nul, index) => {
             return {snippet: {title: "", channelTitle: "", thumbnails: {high: {url: ""}}}}
         })
     )
 
     const handleNewVideosInput = () => {
         setVideos(
-            Array.apply(null, Array(5)).map((nul, index) => {
+            Array.apply(null, Array(6)).map((nul, index) => {
                 return {snippet: {title: "", channelTitle: "", thumbnails: {high: {url: ""}}}}
             }).concat(
                 videosInput
             ).concat(
-                Array.apply(null, Array(2)).map((nul, index) => {
+                Array.apply(null, Array(5)).map((nul, index) => {
                     return {snippet: {title: "", channelTitle: "", thumbnails: {high: {url: ""}}}}
                 }
             ))
@@ -49,33 +57,55 @@ const ScrollList = ({ videosInput, setSelectedVideo }) => {
         }
     }, [videos])
 
+    const [style, setStyle] = useState({})
+    const handelResize = () => {
+        const aspectRatio = window.innerWidth / window.innerHeight
+        //height 150vh / 9 * 0.8/0.2
+        //width 100%
+        if (aspectRatio > 1108 / 653) {
+            
+        } else {
+
+        }
+    }
+
     return (
         <div className="scroll-list-wrapper">
             <ul className="scroll-list-ul">
                 {videos.map((videoSnippet, index) => { 
                     return (
-                        <div className="scroll-list-button-wrapper" key={index}>
-                            <button className="scroll-list-button" id={"videoButton" + index} >
-                            </button>
-                            <button className="scroll-list-button-title-text" id={"videoButton" + index}>
-                                {index != selectedVideoIndex && videoSnippet.snippet.title != "" ? 
-                                    videoSnippet.snippet.title : 
-                                    ""
-                                }
-                            </button>
-                            <button className="scroll-list-button-artist-text" id={"videoButton" + index}>
-                                {index != selectedVideoIndex && videoSnippet.snippet.title != "" ? 
-                                    "- " + videoSnippet.snippet.channelTitle :
-                                    ""
-                                }
-                            </button>
-                            <button className="scroll-list-button-duration-text" id={"videoButton" + index}>
-                                {index != selectedVideoIndex && videoSnippet.snippet.title != "" ? 
-                                    videoSnippet.snippet.duration : 
-                                    ""
-                                }
-                            </button>
+                        <div className="scroll-list-block" key={index} style={{opacity: index != selectedVideoIndex ? 1 : 0.5}}>
+                            <div className="scroll-list-block-background-1"></div>
+                            <div className="scroll-list-block-background-2"></div>
+                            <div className="scroll-list-block-background-3"></div>
+                            <div className="scoll-list-text-wrapper">
+                                <div className="scroll-list-button-title-text" id={"videoButton" + index}>
+                                    {index != selectedVideoIndex && videoSnippet.snippet.title != "" ? 
+                                        videoSnippet.snippet.title : 
+                                        ""
+                                    }
+                                </div>
+                            </div>
+                            <div className="scoll-list-text-wrapper">
+                                <div className="scroll-list-button-artist-text" id={"videoButton" + index}>
+                                    {index != selectedVideoIndex && videoSnippet.snippet.title != "" ? 
+                                        "- " + videoSnippet.snippet.channelTitle :
+                                        ""
+                                    }
+                                </div>
+                            </div>
+                            <div className="scoll-list-text-wrapper">
+                                <div className="scroll-list-button-duration-text" id={"videoButton" + index}>
+                                    {index != selectedVideoIndex && videoSnippet.snippet.title != "" ? 
+                                        videoSnippet.snippet.duration : 
+                                        ""
+                                    }
+                                </div>
+                            </div>
                         </div>
+                        // <div className="scroll-list-button-wrapper" key={index} style={style}>
+                            
+                        // </div>
                     )
                 })}
             </ul>

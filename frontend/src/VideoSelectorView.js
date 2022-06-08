@@ -218,47 +218,54 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
                 nextViewDestinationRef.current == "analyzer" ? nextViewAnalyzer : nextViewMain
             } start={transitionOut} settingsObj={settingsObj}></TransitionOutView>
             <div className="video-selector-view-wrapper" key={viewKey} style={{opacity: showView ? 1 : 0}}>
-                <div className="search-bar">
-                    <img className="search-bar-background" src={searchBarBackground}></img>
-                    {showYT ? <div className="search-YT">Search</div> : ""}
-                    {showYT ? <img className="search-YT-logo" src={ytLogo}></img> : ""}
-                    <input className="search-input" id="search-input-el" ref={inputRef} type="text" onChange={handleSearchInputChange} onFocus={() => {setShowYT(false)}} autoComplete="off"></input>
-                </div>
+                <div>
+                    <div className="search-bar">
+                        <img className="search-bar-background" src={searchBarBackground}></img>
+                        {showYT ? <div className="search-YT">Search</div> : ""}
+                        {showYT ? <img className="search-YT-logo" src={ytLogo}></img> : ""}
+                        <input className="search-input" id="search-input-el" ref={inputRef} type="text" onChange={handleSearchInputChange} onFocus={() => {setShowYT(false)}} autoComplete="off"></input>
+                    </div>
 
-                <div className="video-selected" ref={selectedVideoRef} style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
-                    <button className="video-selected-button">
-                    </button>
-                    <button className="video-selected-title-text">
-                        {selectedVideo.snippet.title}
-                    </button>
-                    <button className="video-selected-artist-text">
-                        {"- " + selectedVideo.snippet.channelTitle}
-                    </button>
-                    <button className="video-selected-duration-text">
-                        {selectedVideo.snippet.duration} 
-                    </button>
-                </div>
+                    <div className="video-selected" ref={selectedVideoRef} 
+                        style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}
+                    >
+                        <div className="scroll-list-block-background-1"></div>
+                        <div className="scroll-list-block-background-2"></div>
+                        <div className="scroll-list-block-background-3"></div>
+                        <div className="scoll-list-text-wrapper">
+                            <div className="video-selected-title-text">
+                                {selectedVideo.snippet.title}
+                            </div>
+                            <div className="video-selected-artist-text">
+                                {selectedVideo.snippet.channelTitle != "" ? "- " + selectedVideo.snippet.channelTitle : ""}
+                            </div>
+                            <div className="video-selected-duration-text">
+                                {selectedVideo.snippet.duration} 
+                            </div>
+                        </div>
+                    </div>
 
-                <div className="settings" ref={settingsRef}>
-                    <SettingsList settingsObj={settingsObj} setSettingsObj={setSettingsObj} selectedVideo={selectedVideo}></SettingsList>
-                </div>
+                    <div className="settings" ref={settingsRef}>
+                        <SettingsList settingsObj={settingsObj} setSettingsObj={setSettingsObj} selectedVideo={selectedVideo}></SettingsList>
+                    </div>
 
-                <div className="scroll-list" ref={scrollListRef} style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
-                    <ScrollList videosInput={videos} setSelectedVideo={setSelectedVideo}/>
-                </div>
+                    <div className="scroll-list" ref={scrollListRef} style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
+                        <ScrollList videosInput={videos} setSelectedVideo={setSelectedVideo}/>
+                    </div>
 
-                <div className="video-info">
-                    <VideoInfo videoInfo={selectedVideo} settingsObj={settingsObj} onMount={onVideoInfoMount}/>
-                </div>
+                    <div className="video-info">
+                        <VideoInfo videoInfo={selectedVideo} settingsObj={settingsObj} onMount={onVideoInfoMount}/>
+                    </div>
 
-                <div className="video-buttons" style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
-                    <button className="back-button" onClick={handleBackButtonClick} style={{cursor: "pointer"}}>{backButtonText}</button>
-                    <button className="next-button" onClick={handleNextButtonClick} style={{cursor: "pointer"}}>{nextButtonText}</button>
-                </div>
+                    <div className="video-buttons" style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
+                        <button className="back-button" onClick={handleBackButtonClick} style={{cursor: "pointer"}}>{backButtonText}</button>
+                        <button className="next-button" onClick={handleNextButtonClick} style={{cursor: "pointer"}}>{nextButtonText}</button>
+                    </div>
 
-                <div className="background-video-wrapper"> 
-                    <div className="background-video" >
-                        <ReactPlayer url={backgroundVideo} width="100%" height="100%" playing={true} loop={true} muted={true} style={{ pointerEvents: "none"}}></ReactPlayer>
+                    <div className="background-video-wrapper"> 
+                        <div className="background-video" >
+                            <ReactPlayer url={backgroundVideo} width="100%" height="100%" playing={true} loop={true} muted={true} style={{ pointerEvents: "none"}}></ReactPlayer>
+                        </div>
                     </div>
                 </div>
             </div>

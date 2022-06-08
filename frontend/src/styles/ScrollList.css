@@ -1,20 +1,23 @@
 .scroll-list-wrapper {
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     overflow: hidden;
+    display: grid;
+    place-items: center;
+    /* border: 2px red solid; */
 }
 
 .scroll-list-ul {
-    height: 150vh;
-    width: 66%;
+    height: 200vh;
+    width: 42vw;
     position: absolute;
-    top: -25vh;
-    left: 17%;
+    top: -50vh;
     margin: 0;
     padding: 0;
+    /* padding-top: calc(150vh / 9 * 0.); */
     transform: rotate(15deg);
-    transform-origin: center;
-    /* border: 2px green solid; */
+    display: grid;
+    place-items: center;
     overflow-y: scroll;
     overflow-x: hidden;
     scrollbar-color: transparent transparent;
@@ -33,60 +36,101 @@
     border-radius: 10px; 
 }
 
-.scroll-list-button-wrapper {
-    aspect-ratio: 5.4;
-    width: 100%;
-    margin-bottom: calc(100vh / 27);
+.scroll-list-block {
+    height: calc(150vh / 9 * 0.8);
+    width: 42vw;
+    margin-bottom: calc(150vh / 9 * 0.22);
     transform: rotate(-15deg);
+    transform-origin: center;
     overflow: hidden;
     display: grid;
     grid-template-columns: 1fr;
+    place-items: center;
+    /* border: 1px solid cyan; */
 }
 
-.scroll-list-button-wrapper button {
-    grid-row-start: 1;
-    grid-column-start: 1;
-    font-family: "Futura-Light";
-    border: 0;
-    color: white;
-    background-color: transparent;
-    white-space: nowrap;
-    text-align: left;
-}
-
-.scroll-list-button {
+.scroll-list-block-background-1 {
     height: 100%;
     width: 100%;
-    white-space: nowrap;
-    background-color: transparent;
-    background-size: contain;
-    background-image: url("../images/video-row.png");
+    grid-row-start: 1;
+    grid-column-start: 1;
+    box-sizing: border-box;
+    /* border: 1px solid purple; */
+    background-image: url(../images/video-row-1.png);
     background-repeat: no-repeat;
+    background-size: contain;
+    background-position: left;
+}
+
+.scroll-list-block-background-2 {
+    height: 100%;
+    width: 100%;
+    grid-row-start: 1;
+    grid-column-start: 1;
+    box-sizing: border-box;
+    /* border: 1px solid yellow; */
+    background-image: url(../images/video-row-2.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right;
+}
+
+.scroll-list-block-background-3 {
+    height: 100%;
+    width: 100%;
+    grid-row-start: 1;
+    grid-column-start: 1;
+    box-sizing: border-box;
+    /* border: 1px solid yellow; */
+    background-image: url(../images/video-row-3.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.scoll-list-text-wrapper {
+    height: 100%;
+    width: 100%;
+    grid-row-start: 1;
+    grid-column-start: 1;
 }
 
 .scroll-list-button-title-text {
-    height: 100%;
-    width: 90%;
-    text-indent: 5vw;
-    font-size: 3.6vh;
-    padding-bottom: 2.7vh;
+    position: absolute;
+    top: 15%;
+    left: 8vh;
+    height: 55%;
+    width: 82%;
+    /* border: 1px solid blue; */
+    font-family: "Futura-Light";
+    white-space: nowrap;
     overflow: hidden;
+    font-size: 4vh;
 }
 
 .scroll-list-button-artist-text {
-    height: 100%;
-    width: 90%;
-    text-indent: 4.9vw;
-    font-size: 2.3vh;
-    padding-top: 5.9vh;
+    position: absolute;
+    top: 60%;
+    left: 8vh;
+    height: 35%;
+    width: 85%;
+    /* border: 1px solid blue; */
+    font-family: "Futura-Light";
+    white-space: nowrap;
     overflow: hidden;
+    font-size: 2.5vh;
 }
 
 .scroll-list-button-duration-text {
-    height: 100%;
-    width: 90%;
-    text-indent: 30vw;
-    font-size: 2.1vh;
-    padding-top: 6vh;
+    position: absolute;
+    top: 60%;
+    left: 8vh;
+    height: 35%;
+    width: 78%;
+    /* border: 1px solid blue; */
+    font-family: "Futura-Light";
+    white-space: nowrap;
     overflow: hidden;
+    font-size: 2.5vh;
+    text-align: right;
 }
