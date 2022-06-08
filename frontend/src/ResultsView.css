@@ -25,7 +25,7 @@
     aspect-ratio: 1280 / 540;
     position: absolute;
     object-fit: cover;
-    right: -42vw;
+    right: calc(-75vh * 1280 / 540 / 2);
 }
 
 .results-img-left-clip {
@@ -41,7 +41,7 @@
     aspect-ratio: 1280 / 540;
     position: absolute;
     object-fit: cover;
-    left: -42vw;
+    left: calc(-75vh * 1280 / 540 / 2);
     opacity: 0.45;
 }
 

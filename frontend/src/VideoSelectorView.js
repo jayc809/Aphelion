@@ -190,6 +190,9 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
     const [transitionOut, setTransitionOut] = useState(false)
     const nextViewDestinationRef = useRef(null)
     const handleNextButtonClick = () => {
+        if (selectedVideo.snippet.title == "") {
+            return
+        }
         if (!settingsShowingRef.current) {
             showSettings()
         } else {
