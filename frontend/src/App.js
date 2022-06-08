@@ -51,6 +51,7 @@ function App() {
       uiHue: 343,
       uiSaturation: 1.6,
       uiBrightness: 1.0,
+      rainbowUi: false,
       videoSaturation: 2.0,
       videoBrightness: 0.85,
       musicStartTime: 0.0,
@@ -91,6 +92,10 @@ function App() {
   const setShowMainViewTransitionInRef = (tf) => {
     showMainViewTransitionInRef.current = tf
   }
+
+  // useEffect(() => {
+  //   console.log(settingsObj.rainbowUi)
+  // }, [settingsObj])
 
   return (
     <div id="app">

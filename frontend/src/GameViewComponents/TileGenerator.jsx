@@ -48,7 +48,6 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
             if (currTime >= beatmapObj.beatmap[i].time - beatmapObj.refreshTolerance &&
                 currTime <= beatmapObj.beatmap[i].time + beatmapObj.refreshTolerance)  {
                 setBeatmapIndex(i)
-                // console.log(currTime)
                 // console.log("found at " + i)
                 break
             } 

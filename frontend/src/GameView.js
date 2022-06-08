@@ -65,7 +65,9 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, set
   const onPerfectDisplayMount = (setPerfectDisplay) => {
     setPerfectDisplayRef.current = setPerfectDisplay
   }
-
+  
+  const [uiHue, setUiHue] = useState(settingsObj.uiHue)
+  const originalUiHueRef = useRef(settingsObj.uiHue)
   const updateScoreAndCombo = (accuracy) => {
     const incrementScore = (amount) => {
       scoreRef.current += amount
@@ -76,6 +78,12 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, set
       totalComboRef.current += 1
       maxComboRef.current = Math.max(comboRef.current, maxComboRef.current)
       setComboRef.current(comboRef.current)
+      if (comboRef.current % 100 == 0 && comboRef.current != 0 && settingsObj.rainbowUi == true) {
+        const temp = settingsObj
+        temp.uiHue += 60
+        setSettingsObj(temp)
+        setUiHue(temp.uiHue)
+      } 
     }
     switch (accuracy) {
       case "perfect":  
@@ -120,10 +128,15 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, set
         if (settingsObj.lowerVolumeOnMisses) {
           setVideoVolumeRef.current("low")
         }
+        if (settingsObj.rainbowUi) {
+          const temp = settingsObj
+          temp.uiHue = originalUiHueRef.current
+          setSettingsObj(temp)
+          setUiHue(temp.uiHue)
+        }
         break
     }
   }
-
 
   //control tile generator
   const tileSpeed = settingsObj.tileSpeed
@@ -246,6 +259,15 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, set
     setView("results")
   }
 
+  useEffect(() => {
+    if (transitionOut) {
+      const temp = settingsObj
+      temp.uiHue = originalUiHueRef.current
+      setSettingsObj(temp)
+      setUiHue(temp.uiHue)
+    }
+  }, [transitionOut])
+
 
   return (
     <div className="screen-wrapper">
@@ -278,7 +300,7 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, set
           <PerfectDisplay onMount={onPerfectDisplayMount} settingsObj={settingsObj}></PerfectDisplay>
         </div>
 
-        <div className="component" id="tile-generator" style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
+        <div className="component" id="tile-generator" style={{filter: `hue-rotate(${uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
           <TileGenerator 
             beatmapObj={beatmapObj} 
             onMount={onTileGeneratorMount} 

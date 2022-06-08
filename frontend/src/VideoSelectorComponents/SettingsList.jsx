@@ -12,6 +12,7 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
     const [theme, setTheme] = useState(settingsObj.theme)
     const [uiSaturation, setUiSaturation] = useState(settingsObj.uiSaturation)
     const [uiBrightness, setUiBrightness] = useState(settingsObj.uiBrightness)
+    const [rainbowUi, setRainbowUi] = useState(settingsObj.rainbowUi)
     const [videoSaturation, setVideoSaturation] = useState(settingsObj.videoSaturation)
     const [videoBrightness, setVideoBrightness] = useState(settingsObj.videoBrightness)
     const [musicStartTime, setMusicStartTime] = useState(settingsObj.musicStartTime)
@@ -83,6 +84,16 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
     useEffect(() => {
         updateSettingObj("uiBrightness", uiBrightness)
     }, [uiBrightness])
+
+    const handleRainbowUiToggle = () => {
+        if (rainbowUi) {
+            setRainbowUi(false)
+            updateSettingObj("rainbowUi", false)
+        } else {
+            setRainbowUi(true)
+            updateSettingObj("rainbowUi", true)
+        }
+    }
 
     useEffect(() => {
         updateSettingObj("videoSaturation", videoSaturation)
@@ -210,6 +221,12 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
                         <StepperButton min={0.5} max={1.8} start={uiBrightness} step={0.05} round={2} setVal={setUiBrightness}></StepperButton>
                     </div>
                 </div>
+                <div className="settings-list-row">
+                        <h3>Rainbow UI</h3>
+                        <div className="settings-list-row-content">
+                            <button className="word-button" onClick={handleRainbowUiToggle} style={{cursor: "pointer"}}>{rainbowUi ? "On" : "Off"}</button>
+                        </div>
+                    </div>
                 <div className="settings-list-row" style={{height: pauseMenu ? "20%" : "15%"}}>
                     <h3>Video Saturation</h3>
                     <div className="settings-list-row-content">
@@ -225,7 +242,7 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
                 {
                     pauseMenu ? "" :
                     <div className="settings-list-row">
-                        <h3>Music Start Time (Default 0)</h3>
+                        <h3>Music Start Time (Default 0s)</h3>
                         <div className="settings-list-row-content-stacked">
                             <input className="settings-list-start-time" id="start-time-input-el" type="text" value={musicStartTime + "s"} 
                             onChange={handleStartTimeChange} autoComplete="off"></input>
