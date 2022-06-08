@@ -318,7 +318,7 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
 
     return (
         isUnloaded ? "" :
-        <div className="tile-wrapper" style={{zIndex: id}}>
+        <div className="tile-wrapper" style={{zIndex: id, filter: "saturate(1.4) brightness(1.3)"}}>
             <div style={{height: "100vh", width: "100vw", position: "absolute", zIndex: 1000}}>
                 {playHoldAnimation ?
                     <div style={{filter: "hue-rotate(0deg)"}}>
@@ -348,7 +348,7 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
                     ""
                 }
             </div>
-            <div className="tile" ref={tileRef} onAnimationEnd={handleMiss}>
+            <div className="tile" ref={tileRef} onAnimationEnd={handleMiss} style={{filter: "saturate(1.4)"}}>
                 <img 
                     src={theme == "light" ? tileImageLight : tileImage} 
                     alt="tile"

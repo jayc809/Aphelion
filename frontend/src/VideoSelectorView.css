@@ -78,7 +78,7 @@ input:focus {
     object-fit: contain;
     grid-row-start: 1;
     grid-column-start: 1;
-    margin-left: 10.5vw;
+    margin-left: 22%;
     margin-top: 1.5vh;
 }
 
@@ -126,7 +126,7 @@ input:focus {
     top: 60%;
     left: 10vh;
     height: 35%;
-    width: 85%;
+    width: 70%;
     /* border: 1px solid blue; */
     font-family: "Futura-Medium";
     white-space: nowrap;
@@ -177,38 +177,44 @@ input:focus {
     height: 10vh;
     width: 50vw;
     position: absolute;
-    top: 85vh;
+    bottom: 5vh;
     left: 6vw;
     display: block;
     z-index: 50;
 }
 
 .back-button {
-    width: 21vw;
-    aspect-ratio: 1300 / 359;
+    width: 40%;
+    height: 100%;
+    /* aspect-ratio: 1300 / 359; */
     background-image: url("./images/backward-button.png");
     background-repeat: no-repeat;
     background-size: contain;
     background-color: transparent;
+    background-position: center;
     color: white;
     text-align: center;
     text-indent: 1vw;
-    font-size: 4vh;
+    font-size: 2.3vw;
     font-family: "Futura-Light";
     border: 0;
+    /* border: 1px solid red; */
 }
 
 .next-button {
-    width: 21vw;
-    aspect-ratio: 1300 / 359;
+    width: 40%;
+    height: 100%;
+    /* width: 21vw; */
+    /* aspect-ratio: 1300 / 359; */
     background-image: url("./images/forward-button.png");
     background-repeat: no-repeat;
     background-size: contain;
     background-color: transparent;
+    background-position: center;
     color: white;
     text-align: center;
     text-indent: -1vw;
-    font-size: 4vh;
+    font-size: 2.3vw;
     font-family: "Futura-Light";
     border: 0;
 }

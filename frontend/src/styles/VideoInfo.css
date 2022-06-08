@@ -4,12 +4,13 @@
     position: absolute;
     /* border: 2px solid red; */
     display: grid;
-    place-items: center right;
+    place-items: center left;
 }
 
 .video-thumbnail-wrapper {
     aspect-ratio: 1650 / 950;
     width: 85%;
+    margin-left: 14%;
     object-fit: cover;
     position: absolute;
     background-color: transparent;
@@ -67,9 +68,10 @@
 
 .video-high-score {
     aspect-ratio: 1585 / 386;
-    width: 30vw;
-    margin-top: 27vw;
-    margin-right: 20vw;
+    height: 13vh;
+    margin-top: 39vh;
+    margin-left: 2vw;
+    /* border: 1px solid red; */
     z-index: 100;
     display: grid;
     grid-template-columns: 1fr;
@@ -108,10 +110,10 @@
 .video-tier {
     position: absolute;
     z-index: 200;
-    height: 11vw;
-    width: 11vw;
-    margin-top: 16.5vw;
-    margin-right: 35vw;
+    height: 19vh;
+    width: 19vh;
+    margin-top: 28vh;
+    margin-left: 5vw;
 }
 
 .video-tier img {
