@@ -104,8 +104,8 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
             switch (type) {
                 case "left":
                     barClip.style.clipPath = "polygon(47.3vw 40vh, 47.1vw 40vh, 22.6vw 100vh, 26.6vw 100vh)"
-                    barOutlineClip1.style.clipPath = "polygon(47.1vw 40vh, 22.5vw 100vh, 22.8vw 100vh)"
-                    barOutlineClip2.style.clipPath = "polygon(47.3vw 40vh, 26.6vw 100vh, 26.3vw 100vh)"
+                    barOutlineClip1.style.clipPath = "polygon(47.1vw 40vh, 22.3vw 100vh, 22.8vw 100vh)"
+                    barOutlineClip2.style.clipPath = "polygon(47.3vw 40vh, 26.6vw 100vh, 26.1vw 100vh)"
                     break
                 case "middle-left":
                     barClip.style.clipPath = "polygon(49.2vw 40vh, 48.8vw 40vh, 39vw 100vh, 44vw 100vh)"
@@ -115,8 +115,8 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
                     break
                 case "right":
                     barClip.style.clipPath = "polygon(53.2vw 40vh, 53vw 40vh, 73.6vw 100vh, 77.6vw 100vh)"
-                    barOutlineClip1.style.clipPath = "polygon(53vw 40vh, 73.5vw 100vh, 73.8vw 100vh)"
-                    barOutlineClip2.style.clipPath = "polygon(53.2vw 40vh, 77.6vw 100vh, 77.3vw 100vh)"
+                    barOutlineClip1.style.clipPath = "polygon(53vw 40vh, 73.3vw 100vh, 73.8vw 100vh)"
+                    barOutlineClip2.style.clipPath = "polygon(53.2vw 40vh, 77.6vw 100vh, 77.1vw 100vh)"
                     break
             }
             
@@ -318,10 +318,10 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
 
     return (
         isUnloaded ? "" :
-        <div className="tile-wrapper" style={{zIndex: id, filter: "saturate(1.4) brightness(1.3)"}}>
+        <div className="tile-wrapper" style={{zIndex: id}}>
             <div style={{height: "100vh", width: "100vw", position: "absolute", zIndex: 1000}}>
                 {playHoldAnimation ?
-                    <div style={{filter: "hue-rotate(0deg)"}}>
+                    <div style={{filter: "saturate(1.35) brightness(1.05)"}}>
                         <AnimationView 
                             height={animationHeight.current} 
                             width={animationWidth.current} 
@@ -334,7 +334,7 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
                     ""
                 }
                 {playEndAnimation ? 
-                    (<div style={{filter: `hue-rotate(0deg) saturate(${endWasAMissRef.current ? 0 : 1})`}}>
+                    (<div style={{filter: `hue-rotate(0deg) saturate(${endWasAMissRef.current ? 0 : 1.35}) brightness(1.05)`}}>
                         <AnimationView 
                             height={animationHeight.current} 
                             width={animationWidth.current} 
@@ -348,7 +348,7 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
                     ""
                 }
             </div>
-            <div className="tile" ref={tileRef} onAnimationEnd={handleMiss} style={{filter: "saturate(1.4)"}}>
+            <div className="tile" ref={tileRef} onAnimationEnd={handleMiss}>
                 <img 
                     src={theme == "light" ? tileImageLight : tileImage} 
                     alt="tile"

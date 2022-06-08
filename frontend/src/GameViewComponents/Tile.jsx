@@ -121,9 +121,9 @@ const Tile = ({ type, tileSpeed, theme, targetTime, onMount, onMiss, id }) => {
 
     return (
         isUnloaded ? "" :
-        <div className="tile-wrapper" style={{zIndex: id, filter: "saturate(1.4) brightness(1.3)"}}>
+        <div className="tile-wrapper" style={{zIndex: id}}>
             {playAnimation ?
-                <div style={{filter: "hue-rotate(0deg)", zIndex: 1000}}>
+                <div style={{filter: "saturate(1.35) brightness(1.05)", zIndex: 1000}}>
                     <AnimationView 
                         height={animationHeight.current} 
                         width={animationWidth.current} 
@@ -136,7 +136,7 @@ const Tile = ({ type, tileSpeed, theme, targetTime, onMount, onMiss, id }) => {
                 </div> :
                 ""
             }
-            <div className="tile" ref={tileRef} onAnimationEnd={handleMiss} style={{filter: "saturate(1.4)"}}>
+            <div className="tile" ref={tileRef} onAnimationEnd={handleMiss}>
                 <img 
                     src={theme == "light" ? tileImageLight : tileImage} 
                     alt="tile"

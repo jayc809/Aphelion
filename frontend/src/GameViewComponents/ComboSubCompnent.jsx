@@ -28,7 +28,7 @@ const ComboSubCompnent = ({ combo }) => {
         top: "27.5vh", display: "grid", placeItems: "center", opacity: 0}}>
             {
                 combo != 0 ?
-                <div style={{position: "absolute", zIndex: 10, height: `${size * 3}vh`, width: `calc(${size * 6}vh)`}}>
+                <div style={{position: "absolute", zIndex: 10, height: `${size * 3}vh`, width: `calc(${size * 6}vh)`, filter: "saturate(1.35) brightness(1.05)"}}>
                     <AnimationViewContained
                         dirName="combo" start={0} end={19} loop={false} onComplete={() => {}}
                     ></AnimationViewContained> 

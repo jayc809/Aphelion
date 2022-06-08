@@ -226,7 +226,7 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
                 <div className="settings-list-row" style={{height: pauseMenu ? "20%" : "15%"}}>
                     <h3>Note Theme</h3>
                     <div className="settings-list-row-content">
-                        <button id="theme-button" onClick={handleThemeToggle} style={{backgroundImage: `url(${theme == "dark" ? darkTheme : lightTheme})`, cursor: "pointer", filter: "saturate(1.9) brightness(1.3)"}}></button>
+                        <button id="theme-button" onClick={handleThemeToggle} style={{backgroundImage: `url(${theme == "dark" ? darkTheme : lightTheme})`, cursor: "pointer"}}></button>
                     </div>
                 </div>
                 {
