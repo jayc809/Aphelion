@@ -4,8 +4,8 @@
 }
 
 .start-message-wrapper {
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
 }
 
 .start-message-wrapper h3 {
@@ -15,30 +15,43 @@
     margin: 0;
 }
 
+.start-message-wrapper h4 {
+    position: absolute;
+    color: white;
+    text-align: center;
+    margin: 0;
+}
+
 #press-key {
-    width: 100%;
-    font-size: 40px;
-    top: 20%;
+    width: 100vw;
+    font-size: 5vh;
+    top: 21vh;
+}
+
+#check-keyboard {
+    width: 100vw;
+    font-size: 3vh;
+    top: 28.5vh;
 }
 
 .keys {
     width: auto;
     font-size: 30px;
-    top: 91%;
+    top: 91vh;
 }
 
 #d {
-    left: 26.5%;
+    left: 26.5vw;
 }
 
 #f {
-    left: 42%;
+    left: 42vw;
 }
 
 #j {
-    right: 42%;
+    right: 42vw;
 }
 
 #k {
-    right: 26.5%;
+    right: 26.5vw;
 }

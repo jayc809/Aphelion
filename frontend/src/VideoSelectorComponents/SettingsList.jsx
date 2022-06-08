@@ -193,6 +193,9 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
         reader.readAsDataURL(image)
     }
 
+    const defaultMinHueRef = useRef(settingsObj.uiHue)
+    const defaultMaxHueRef = useRef(settingsObj.uiHue + 359)
+
     return (
         <div className="settings-list-wrapper" style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
             {
@@ -238,7 +241,7 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
                 {
                     !pauseMenu && showImageSelector ?
                     <div className="settings-list-row">
-                        <h3>Background Image</h3>
+                        <h3>Upload Custom Game Background</h3>
                         <div className="settings-list-row-content">
                             <input className="settings-list-image-selector" ref={imageSelectorRef} type="file" onInputCapture={handleNewImageUpload} accept=".jpg, jpeg, .png, .webp"></input>
                         </div>
@@ -248,7 +251,7 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
                 <div className="settings-list-row" style={{height: pauseMenu ? "20%" : "15%"}}>
                     <h3>UI Hue</h3>
                     <div className="settings-list-row-content">
-                        <input className="hue-slider" type="range" min="0" max="359" defaultValue={settingsObj.uiHue} onChange={handleUiHueChange}></input>
+                        <input className="hue-slider" type="range" min="343" max="702" defaultValue={settingsObj.uiHue} onChange={handleUiHueChange}></input>
                     </div>
                 </div>
                 <div className="settings-list-row" style={{height: pauseMenu ? "20%" : "15%"}}>

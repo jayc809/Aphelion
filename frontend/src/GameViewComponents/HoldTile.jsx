@@ -181,7 +181,7 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
                 animationName.current = "hold-perfect"
                 animationHeight.current = (window.innerHeight * 35.7 / 646 * 450 / 120 * 0.93) + "px"
                 animationWidth.current = (window.innerWidth * 130 / 1146 * 700 / 500 * 0.93) + "px"
-                animationY.current = "calc(100vh * 679 / 800)"
+                animationY.current = "calc(100vh * 680 / 800)"
                 switch (type) {
                     case "left":
                         animationX.current = "calc(100vw * 386 / 1280)"

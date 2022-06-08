@@ -21,6 +21,7 @@ const StartMessage = ({ getAllowStart }) => {
     return (
         <div className="start-message-wrapper" style={{animation: show ? "" : "fade-out 1s forwards"}}>
             <h3 id="press-key">Press Any Key To Start</h3>
+            <h4 id="check-keyboard">Keyboard Input Must Be English</h4>
             <h3 id="d" className="keys">D</h3>
             <h3 id="f" className="keys">F</h3>
             <h3 id="j" className="keys">J</h3>

@@ -82,7 +82,6 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, set
         const temp = settingsObj
         temp.uiHue += 60
         setSettingsObj(temp)
-        setUiHue(temp.uiHue)
       } 
     }
     switch (accuracy) {
@@ -132,7 +131,6 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, set
           const temp = settingsObj
           temp.uiHue = originalUiHueRef.current
           setSettingsObj(temp)
-          setUiHue(temp.uiHue)
         }
         break
     }
@@ -267,10 +265,12 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, set
       const temp = settingsObj
       temp.uiHue = originalUiHueRef.current
       setSettingsObj(temp)
-      setUiHue(temp.uiHue)
     }
   }, [transitionOut])
 
+  useEffect(() => {
+    setUiHue(settingsObj.uiHue)
+  }, [settingsObj])
 
   return (
     <div className="screen-wrapper">
