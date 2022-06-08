@@ -170,6 +170,29 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
         selectedVideoRef.current = selectedVideo
     }, [selectedVideo])
 
+    const [showImageSelector, setShowImageSelector] = useState(!settingsObj.useVideoForBackground)
+    const [useVideoForBackground, setUseVideoForBackground] = useState(settingsObj.useVideoForBackground)
+    const handleGameBackgroundToggle = () => {
+        if (useVideoForBackground) {
+            setUseVideoForBackground(false)
+            updateSettingObj("useVideoForBackground", false)
+            setShowImageSelector(true)
+        } else {
+            setUseVideoForBackground(true)
+            updateSettingObj("useVideoForBackground", true)
+            setShowImageSelector(false)
+        }
+    }
+    const imageSelectorRef = useRef(null)
+    const handleNewImageUpload = () => {
+        const reader = new FileReader() 
+        const image = imageSelectorRef.current.files[0]
+        reader.addEventListener("load", () => {
+            localStorage.setItem("game-background", reader.result)
+        })
+        reader.readAsDataURL(image)
+    }
+
     return (
         <div className="settings-list-wrapper" style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
             {
@@ -203,6 +226,25 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
                         <button id="theme-button" onClick={handleThemeToggle} style={{backgroundImage: `url(${theme == "dark" ? darkTheme : lightTheme})`, cursor: "pointer"}}></button>
                     </div>
                 </div>
+                {
+                    pauseMenu ? "" :
+                    <div className="settings-list-row">
+                        <h3>Game Background</h3>
+                        <div className="settings-list-row-content">
+                            <button className="word-button" onClick={handleGameBackgroundToggle} style={{cursor: "pointer"}}>{useVideoForBackground ? "Video" : "Image"}</button>
+                        </div>
+                    </div>
+                }
+                {
+                    !pauseMenu && showImageSelector ?
+                    <div className="settings-list-row">
+                        <h3>Background Image</h3>
+                        <div className="settings-list-row-content">
+                            <input className="settings-list-image-selector" ref={imageSelectorRef} type="file" onInputCapture={handleNewImageUpload} accept=".jpg, jpeg, .png, .webp"></input>
+                        </div>
+                    </div> : 
+                    ""
+                }
                 <div className="settings-list-row" style={{height: pauseMenu ? "20%" : "15%"}}>
                     <h3>UI Hue</h3>
                     <div className="settings-list-row-content">
@@ -221,12 +263,6 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
                         <StepperButton min={0.5} max={1.8} start={uiBrightness} step={0.05} round={2} setVal={setUiBrightness}></StepperButton>
                     </div>
                 </div>
-                <div className="settings-list-row">
-                        <h3>Rainbow UI</h3>
-                        <div className="settings-list-row-content">
-                            <button className="word-button" onClick={handleRainbowUiToggle} style={{cursor: "pointer"}}>{rainbowUi ? "On" : "Off"}</button>
-                        </div>
-                    </div>
                 <div className="settings-list-row" style={{height: pauseMenu ? "20%" : "15%"}}>
                     <h3>Video Saturation</h3>
                     <div className="settings-list-row-content">
@@ -271,6 +307,12 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
                     <h3>Lower Volume On Misses</h3>
                     <div className="settings-list-row-content">
                         <button className="word-button" onClick={handleLowerVolumeOnMissesToggle} style={{cursor: "pointer"}}>{lowerVolumeOnMisses ? "On" : "Off"}</button>
+                    </div>
+                </div>
+                <div className="settings-list-row">
+                    <h3>Rainbow UI</h3>
+                    <div className="settings-list-row-content">
+                        <button className="word-button" onClick={handleRainbowUiToggle} style={{cursor: "pointer"}}>{rainbowUi ? "On" : "Off"}</button>
                     </div>
                 </div>
             </div>

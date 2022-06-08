@@ -28,6 +28,9 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
         window.addEventListener("keypress", handleKeyPress)
         setVideos(dummyVideoInfo.items)
         hideSettings() //?
+        if (localStorage.getItem("game-background")) {
+            localStorage.removeItem("game-background")
+        }
         const checkEmptyInput = setInterval(() => {
             const inputEl = document.getElementById("search-input-el")
             if (inputEl.value == "" && document.activeElement != inputEl) {
@@ -190,6 +193,11 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
         if (!settingsShowingRef.current) {
             showSettings()
         } else {
+            if (!settingsObj.useVideoForBackground && !localStorage.getItem("game-background")) {
+                const temp = settingsObj
+                temp.useVideoForBackground = true
+                setSettingsObj(temp)
+            }
             setVideoInfoRef(selectedVideo)
             nextViewDestinationRef.current = "analyzer"
             setTransitionOut(true)

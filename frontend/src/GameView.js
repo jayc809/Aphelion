@@ -241,6 +241,9 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, set
  
   const endGame = (delay) => {
     // endingBlackScreenRef.current.style.animation = "fade-in 2s forwards"
+    if (localStorage.getItem("game-background")) {
+      localStorage.removeItem("game-background")
+    }
     const resultsObj = getResultsObj()
     setResultsObjRef(resultsObj)
     setShowVideo(false)
@@ -321,6 +324,7 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, set
             <Video 
               updateCurrTime={updateCurrTime} 
               beatmapObj={beatmapObj} 
+              settingsObj={settingsObj}
               tileSpeed={tileSpeed}
               getAllowStart={getAllowStart}
               onAllowStart={handleAllowStart}

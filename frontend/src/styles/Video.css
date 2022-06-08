@@ -39,6 +39,8 @@
     height: 100%;
     background-color: black;
     z-index: 10;
+    transition: opacity 2s;
+    position: absolute;
 }
 
 .video {
@@ -74,4 +76,12 @@
         /* width = 100 / (9 / 16) = 177.777777 */
         width: 177.78vh;
     }
+}
+
+.image-background {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+    object-fit: cover;
 }

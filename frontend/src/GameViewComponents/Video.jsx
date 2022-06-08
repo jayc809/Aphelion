@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import ReactPlayer from 'react-player'
 import "../styles/Video.css"
 
-const Video = ({ updateCurrTime, beatmapObj, tileSpeed, getAllowStart, onAllowStart, onVideoEnd, onMount, blackScreenPresent }) => {
+const Video = ({ updateCurrTime, beatmapObj, settingsObj, tileSpeed, getAllowStart, onAllowStart, onVideoEnd, onMount, blackScreenPresent }) => {
 
     const [playAudio, setPlayAudio] = useState(false)
     const [playVideo, setPlayVideo] = useState(false)
@@ -50,7 +50,7 @@ const Video = ({ updateCurrTime, beatmapObj, tileSpeed, getAllowStart, onAllowSt
             setTimeout(() => {
                 setPlayVideo(true)
                 setTimeout(() => {
-                    blackScreen.style.animation = "fade-out 3s forwards"
+                    blackScreen.style.opacity = 0
                     blackScreenPresent.current = false
                 }, 1000)
             }, tileSpeed * 0.853 * 1000)
@@ -69,7 +69,7 @@ const Video = ({ updateCurrTime, beatmapObj, tileSpeed, getAllowStart, onAllowSt
 
     const handleNearEnd = () => {
         const blackScreen = blackScreenRef.current
-        blackScreen.style.animation = "fade-in 2s forwards"
+        blackScreen.style.opacity = 0
     }
     const handleAudioEnd = () => {
         audioEndedRef.current = true
@@ -91,8 +91,13 @@ const Video = ({ updateCurrTime, beatmapObj, tileSpeed, getAllowStart, onAllowSt
         <div className="video-parent">
             <div className="clip-top"></div>
             <div className="clip-bottom"></div>
-            <div className="video-wrapper">
-                <div className="black-screen" ref={blackScreenRef}></div>
+            <div className="black-screen" ref={blackScreenRef}></div>
+            {
+                !settingsObj.useVideoForBackground ?
+                <img className="image-background" src={localStorage.getItem("game-background")}></img> :
+                ""
+            }
+            <div className="video-wrapper" style={{opacity: settingsObj.useVideoForBackground ? 1 : 0}}>
                 <ReactPlayer 
                     className="video"
                     url={beatmapObj.videoUrl}

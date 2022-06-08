@@ -48,6 +48,7 @@ function App() {
       difficulty: "Hard",
       tileSpeed: 1.3,
       theme: "dark",
+      useVideoForBackground: true,
       uiHue: 343,
       uiSaturation: 1.6,
       uiBrightness: 1.0,
@@ -94,7 +95,7 @@ function App() {
   }
 
   // useEffect(() => {
-  //   console.log(settingsObj.rainbowUi)
+  //   console.log(settingsObj.useVideoForBackground)
   // }, [settingsObj])
 
   return (

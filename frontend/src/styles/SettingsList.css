@@ -187,3 +187,11 @@
     border-radius: 100%;
     cursor: move;
 }
+
+.settings-list-image-selector {
+    width: 100%;
+    padding-left: 25%;
+    display: grid;
+    place-content: center;
+    font-family: "Futura";
+}
