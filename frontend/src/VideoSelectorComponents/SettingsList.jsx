@@ -225,7 +225,7 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
                 {
                     pauseMenu ? "" :
                     <div className="settings-list-row">
-                        <h3>Music Start Time (Optional)</h3>
+                        <h3>Music Start Time (Default 0)</h3>
                         <div className="settings-list-row-content-stacked">
                             <input className="settings-list-start-time" id="start-time-input-el" type="text" value={musicStartTime + "s"} 
                             onChange={handleStartTimeChange} autoComplete="off"></input>

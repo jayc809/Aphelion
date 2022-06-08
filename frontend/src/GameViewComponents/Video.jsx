@@ -34,10 +34,10 @@ const Video = ({ updateCurrTime, beatmapObj, tileSpeed, getAllowStart, onAllowSt
                 updateCurrTime(currTime)
             } else {
                 const processTimeOffset = 0.05
-                updateCurrTime((videoRef.current.getCurrentTime() + (tileSpeed * 0.86) - processTimeOffset))
+                updateCurrTime((videoRef.current.getCurrentTime() + (tileSpeed * 0.853) - processTimeOffset))
             }
         } 
-        if (beatmapObj.totalTime - (currTime - tileSpeed * 0.86) <= 1.9) {
+        if (beatmapObj.totalTime - (currTime - tileSpeed * 0.853) <= 1.9) {
             handleNearEnd()
         }
     }
@@ -53,7 +53,7 @@ const Video = ({ updateCurrTime, beatmapObj, tileSpeed, getAllowStart, onAllowSt
                     blackScreen.style.animation = "fade-out 3s forwards"
                     blackScreenPresent.current = false
                 }, 1000)
-            }, tileSpeed * 0.86 * 1000)
+            }, tileSpeed * 0.853 * 1000)
             window.removeEventListener("keypress", handlePress)
         }
     }

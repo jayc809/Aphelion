@@ -6,6 +6,7 @@ const readline = require('readline')
 const ytdl = require('ytdl-core')
 const webAudioApi = require("web-audio-api")
 const MusicTempo = require("music-tempo")
+const { builtinModules } = require("module")
 const fft = require('fft-js').fft
 const fftUtil = require('fft-js').util
 const io = require("socket.io")(5000, {
@@ -56,18 +57,13 @@ io.on("connect", socket => {
             socket.emit("progress-update", "Generating Beatmap")
             console.log("calculating BPM")
             const audioData = getAudioData(buffer)
-            const startIndex = getAudioStartIndex(audioData, buffer, requestObj.settingsObj.musicStartTime)
-            const startTime = startIndex / buffer.sampleRate
-            const bpm = getBPM(audioData)
+            const [bpm, startIndex, startTime] = getBPM(audioData, buffer, requestObj.settingsObj.musicStartTime)
 
             console.log("analyzing audio using FFT")
-            const beatTime = getBeatTime(audioData, buffer, startIndex, bpm)
             const fftMap= getFFTMap(audioData, buffer, startIndex, bpm) 
 
             console.log("generating beatmap")
-            const response = getBeatmap(fftMap, beatTime, bpm)
-            const beatmap = response[0]
-            const maxCombo = response[1]
+            const [beatmap, maxCombo] = getBeatmap(fftMap, bpm)
 
             const beatmapObj = {
                 videoUrl: videoUrl,
@@ -130,72 +126,15 @@ app.get("/getAudio", (req, res) => {
         console.log("calculating BPM")
         const audioData = getAudioData(buffer)
 
-        const startIndex = getAudioStartIndex(audioData, buffer)
-        const startTime = startIndex / buffer.sampleRate
-        const bpm = getBPM(audioData)
+        const [bpm, startIndex, startTime]  = getBPM(audioData, buffer, 0)
+        
+        // res.json(audioData)
 
         console.log("analyzing audio using FFT")
-        const beatTime = getBeatTime(audioData, buffer, startIndex, bpm)
         const fftMap= getFFTMap(audioData, buffer, startIndex, bpm) 
 
         console.log("generating beatmap")
-        const response = getBeatmap(fftMap, beatTime, bpm)
-        const beatmap = response[0]
-        const maxCombo = response[1]
-        const beatmapObj = {
-            beatmap: beatmap
-        }
-        console.log("process completed")
-        res.json(beatmapObj)
-    }
-})
-
-app.get("/getBeatmap", (req, res) => {
-
-    const filePath = path.resolve(__dirname, 'video.mp3')
-    const video = ytdl(req.query.videoUrl, {filter: "audio"})
-
-    //download the video
-    let starttime
-    video.pipe(fs.createWriteStream(filePath))
-    video.once('response', () => {
-        starttime = Date.now()
-    })
-    console.log("downloading video")
-    video.on('progress', (chunkLength, downloaded, total) => {
-        const percent = downloaded / total
-        readline.cursorTo(process.stdout, 0)
-        process.stdout.write(`${(percent * 100).toFixed(2)}% downloaded`)
-        process.stdout.write(`(${(downloaded / 1024 / 1024).toFixed(2)}MB of ${(total / 1024 / 1024).toFixed(2)}MB)\n`)
-        readline.moveCursor(process.stdout, 0, -1)
-    })
-
-    //analyze audio
-    video.on('end', () => {
-        process.stdout.write('\n\n')
-        const data = fs.readFileSync(filePath)
-        const buffer = data.buffer
-        const audioCtx = new webAudioApi.AudioContext()
-        console.log("decoding audio data")
-        audioCtx.decodeAudioData(buffer, analyzeAudio, (e) => {console.log(e)})
-    })
-    
-    const analyzeAudio = (buffer) => {
-        console.log("calculating BPM")
-        const audioData = getAudioData(buffer)
-
-        const startIndex = getAudioStartIndex(audioData, buffer)
-        const startTime = startIndex / buffer.sampleRate
-        const bpm = getBPM(audioData)
-
-        console.log("analyzing audio using FFT")
-        const beatTime = getBeatTime(audioData, buffer, startIndex, bpm)
-        const fftMap= getFFTMap(audioData, buffer, startIndex, bpm) 
-
-        console.log("generating beatmap")
-        const response = getBeatmap(fftMap, beatTime, bpm)
-        const beatmap = response[0]
-        const maxCombo = response[1]
+        const [beatmap, maxCombo] = getBeatmap(fftMap, bpm)
         const beatmapObj = {
             beatmap: beatmap
         }
@@ -226,21 +165,41 @@ const getAudioData = (buffer) => {
     }
     return audioData
 }
-const getAudioStartIndex = (audioData, buffer, startTime) => {
-    let pcmStartTime = null
+const getBPM = (audioData, buffer, startTime) => {
+
+    const mt = new MusicTempo(audioData)
+    const bpm = parseFloat(mt.tempo)
+    const beats = mt.beats
+    beats.forEach((val, index) => {
+        beats[index] = val - Math.round((1024 / buffer.sampleRate) * 100) / 100
+    })
+
+    let start = 0
     if (parseFloat(startTime) > 0) {
-        return parseFloat(startTime) * buffer.sampleRate 
+       start = parseInt(parseFloat(startTime) * buffer.sampleRate)
     }
-    for (let i = 0; i < audioData.length; i += 1) {
+
+    // let startIndex = null
+    // const mtStartIndex = parseInt((mt.beats[0] - 0.053) * buffer.sampleRate) - 1024
+    // for (let i = 0; i < audioData.length; i += 1) {
+    //     if (audioData[i] != 0 && Math.abs(i - mtStartIndex) <= 1) {
+    //         return [parseFloat(mt.tempo), i, i / buffer.sampleRate]
+    //     } else if (audioData[i] != 0 && i - mtStartIndex > 1) {
+    //         return [parseFloat(mt.tempo), i, i / buffer.sampleRate]
+    //     }
+    // }
+    // return [parseFloat(mt.tempo), 0, 0]
+
+    let pcmStartIndex = null
+    for (let i = start; i < audioData.length; i += 1) {
         if (audioData[i] != 0) {
-            pcmStartTime = i
+            pcmStartIndex = i
             break
         }
     }
-
-    let fftStartTime = null
+    let fftStartIndex = null
     const sampleRate = 512
-    for (let i = 0; i < audioData.length; i += sampleRate) {
+    for (let i = start; i < audioData.length; i += sampleRate) {
         const interval = audioData.slice(i, i + sampleRate)
         const phasors= fft(interval)
         const frequencies = fftUtil.fftFreq(phasors, buffer.sampleRate)
@@ -251,20 +210,47 @@ const getAudioStartIndex = (audioData, buffer, startTime) => {
         const metaSorted = meta.sort((a, b) => b.magnitude - a.magnitude)
         // console.log(metaSorted[0])
         if (metaSorted[0].magnitude > 1 && metaSorted[0].frequency < 10000) {
-            fftStartTime = i
+            fftStartIndex = i
             break
         }
     }
-    
-    if (Math.abs(pcmStartTime - fftStartTime) < sampleRate) {
-        return pcmStartTime
-    } else {
-        return fftStartTime
+
+    if ((fftStartIndex == null && pcmStartIndex == null) || !beats) {
+        return [bpm, 0, 0]
     }
-}
-const getBPM = (audioData) => {
-    const mt = new MusicTempo(audioData)
-    return parseFloat(mt.tempo)
+    
+    let bestStartIndex = null
+    if (Math.abs(pcmStartIndex - fftStartIndex) < sampleRate) {
+        bestStartIndex = pcmStartIndex
+    } else {
+        bestStartIndex = fftStartIndex
+    }
+
+    const bestStartTime = bestStartIndex / buffer.sampleRate
+    let mtStartTime = null
+    if (startTime > 0) {
+        for (let i = 0; i < beats.length; i += 1) {
+            if (beats[i] > startTime) {
+                mtStartTime = beats[i]
+                break
+            }
+        }
+    } else {
+        mtStartTime = beats[0]
+    }
+    if (bestStartTime > mtStartTime) {
+        return [bpm, parseInt(mtStartTime * buffer.sampleRate), mtStartTime]
+    } else {
+        const toAdd = (mtStartTime - bestStartTime) % (60 / bpm)
+        const nextStartTime = bestStartTime + toAdd
+        const prevStartTime = nextStartTime - (60 / bpm)
+        if (prevStartTime >= 0 && (Math.abs(prevStartTime - bestStartTime) < Math.abs(nextStartTime - bestStartTime))) {
+            return [bpm, parseInt(prevStartTime * buffer.sampleRate), prevStartTime]
+        } else {
+            return [bpm, parseInt(nextStartTime * buffer.sampleRate), nextStartTime]
+        }
+    }
+
 } 
 const getBeatTime = (audioData, buffer, startIndex, bpm) => {
     const beats = []
@@ -288,7 +274,7 @@ const getFFTMap = (audioData, buffer, startIndex, bpm) => {
     }
     return fftMap 
 }
-const getBeatmap = (fftMap, beatTime, bpm) => {
+const getBeatmap = (fftMap, bpm) => {
     const frequencies = []
     for (let i = 0; i < fftMap.length; i += 1) {
         for (let j = 0; j < fftMap[i].meta.length; j += 1) {
