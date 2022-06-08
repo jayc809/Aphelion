@@ -6,11 +6,11 @@
 }
 
 .pause-button {
-    height: 35px;
-    width: 35px;
+    height: 4.6vh;
+    width: 4.6vh;
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 3.3vh;
+    right: 3vh;
     background-color: transparent;
     border: 0;
     z-index: 10;

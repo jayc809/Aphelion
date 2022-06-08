@@ -161,16 +161,14 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, set
     let tier = null
     if (fullCombo || fullPerfect) {
       tier = "S"
-    } else if (totalCombo / totalNotes > 0.95 && noMisses) {
+    } else if (totalCombo / totalNotes > 0.99 && noMisses) {
       tier = "S"
     } else if (totalCombo / totalNotes > 0.95) {
       tier = "A"
-    } else if (totalCombo / totalNotes > 0.9) {
+    } else if (totalCombo / totalNotes > 0.75) {
       tier = "B"
-    } else if (totalCombo / totalNotes > 0.85) {
+    } else if (totalCombo / totalNotes > 0.55) {
       tier = "C"
-    } else if (totalCombo / totalNotes > 0.8) {
-      tier = "D"
     } else {
       tier = "F"
     }

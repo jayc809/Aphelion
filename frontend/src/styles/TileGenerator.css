@@ -2,4 +2,15 @@
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    position: absolute;
+    z-index: 10;
+}
+
+.video-progress-bar {
+    height: 0.3vh;
+    /* border: 1px solid red; */
+    transition: width 0.5s;
+    background-image: linear-gradient(90deg, black 0%, white 15%, white 65%, #6142b8 85%, black 100%);
+    position: absolute;
+    z-index: 100;
 }

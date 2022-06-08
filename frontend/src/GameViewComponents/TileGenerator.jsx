@@ -261,38 +261,41 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
     }
 
     return (
-        <div className="tile-generator-wrapper">
-            {
-                currentTiles.map((tile, index) => {
-                    switch (tile.class) {
-                        case "tap":
-                            return <Tile 
-                                type={tile.type} 
-                                tileSpeed={tileSpeed} 
-                                targetTime={tile.targetTime}
-                                theme={theme}
-                                onMount={onTileMount}
-                                onMiss={onTileMiss}
-                                id={tile.id}
-                                key={tile.id}
-                            ></Tile>
-                        case "hold":
-                            return <HoldTile 
-                                type={tile.type} 
-                                tileSpeed={tileSpeed} 
-                                targetTime={tile.targetTime}
-                                theme={theme}
-                                elapseBeatCount={tile.elapseBeatCount}
-                                elapseTime={tile.elapseTime}
-                                onMount={onTileMount}
-                                onMiss={onTileMiss}
-                                updateScoreAndCombo={updateScoreAndCombo}
-                                id={tile.id}
-                                key={tile.id}
-                            ></HoldTile>
-                    }
-                })
-            }
+        <div className="screen">
+            <div className="tile-generator-wrapper">
+                {
+                    currentTiles.map((tile, index) => {
+                        switch (tile.class) {
+                            case "tap":
+                                return <Tile 
+                                    type={tile.type} 
+                                    tileSpeed={tileSpeed} 
+                                    targetTime={tile.targetTime}
+                                    theme={theme}
+                                    onMount={onTileMount}
+                                    onMiss={onTileMiss}
+                                    id={tile.id}
+                                    key={tile.id}
+                                ></Tile>
+                            case "hold":
+                                return <HoldTile 
+                                    type={tile.type} 
+                                    tileSpeed={tileSpeed} 
+                                    targetTime={tile.targetTime}
+                                    theme={theme}
+                                    elapseBeatCount={tile.elapseBeatCount}
+                                    elapseTime={tile.elapseTime}
+                                    onMount={onTileMount}
+                                    onMiss={onTileMiss}
+                                    updateScoreAndCombo={updateScoreAndCombo}
+                                    id={tile.id}
+                                    key={tile.id}
+                                ></HoldTile>
+                        }
+                    })
+                }
+            </div>
+            <div className="video-progress-bar" style={{width: `calc(${beatmapIndex / beatmapObj.beatmap.length} * 100vw)`}}></div>
         </div>
     )
 }
