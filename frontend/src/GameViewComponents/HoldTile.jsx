@@ -91,8 +91,8 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
         bar.style.height = String(barHeightRef.current) + "px"
         const barOutline1 = barOutline1Ref.current
         const barOutline2 = barOutline2Ref.current
-        barOutline1.style.height = String(barHeightRef.current * 0.5) + "px"
-        barOutline2.style.height = String(barHeightRef.current * 0.5) + "px"
+        barOutline1.style.height = String(barHeightRef.current) + "px"
+        barOutline2.style.height = String(barHeightRef.current) + "px"
 
         const tile = tileRef.current
         const barClip = barClipRef.current
@@ -146,12 +146,9 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
     const animationName = useRef(null)
     const endWasAMissRef = useRef(false)
     const tappableRef = useRef(true)
-    const barOutlineUnloadedRef = useRef(false)
 
     const tapTile = (accuracy) => {
         const tile = tileRef.current
-        const barOutline1 = barOutline1Ref.current
-        const barOutline2 = barOutline2Ref.current
         if (!tappableRef.current) {
             return
         }
@@ -163,15 +160,6 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
                 animationWidth.current = (rect.width * 700 / 500 * 0.93) + "px"
                 animationX.current = (rect.left + rect.width / 2) + "px"
                 animationY.current = (rect.top + rect.height / 2) + "px"
-
-                barOutline1.style.animation = "none"
-                barOutline2.style.animation = "none"
-                barOutline1.style.opacity = 1
-                barOutline2.style.opacity = 1
-                barOutline1.style.height = "100vh"
-                barOutline2.style.height = "100vh"
-                barOutline1.style.bottom = "0px"
-                barOutline2.style.bottom = "0px"
 
                 endWasAMissRef.current = true
                 setTapPositionY(rect.top + rect.height / 2)
@@ -200,16 +188,11 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
                 setTapPositionY(window.innerHeight * 679 / 800)
                 setPlayHoldAnimation(true)
                 const bar = barRef.current
+                const barOutline1 = barOutline1Ref.current
+                const barOutline2 = barOutline2Ref.current
                 bar.style.animation = `move-y-bar-tapped-${id} ${elapseTime + "s"} ${timingFunctionMoveBar} forwards`
-                barOutline1.style.opacity = 1
-                barOutline2.style.opacity = 1
                 barOutline1.style.animation = `move-y-bar-tapped-${id} ${elapseTime + "s"} ${timingFunctionMoveBar} forwards`
                 barOutline2.style.animation = `move-y-bar-tapped-${id} ${elapseTime + "s"} ${timingFunctionMoveBar} forwards`
-                setTimeout(() => {
-                    barOutline1.style.opacity = 0
-                    barOutline2.style.opacity = 0
-                    barOutlineUnloadedRef.current = true
-                }, elapseTime * 0.4 * 1000)
 
                 scoreIncrementer.current = setInterval(() => {
                     updateScoreAndCombo(accuracy)
@@ -225,16 +208,11 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
                 setTapPositionY(rect.top + rect.height / 2)
                 setPlayHoldAnimation(true)
                 const bar = barRef.current
+                const barOutline1 = barOutline1Ref.current
+                const barOutline2 = barOutline2Ref.current
                 bar.style.animation = `move-y-bar-tapped-${id} ${elapseTime + "s"} ${timingFunctionMoveBar} forwards`
-                barOutline1.style.opacity = 1
-                barOutline2.style.opacity = 1
                 barOutline1.style.animation = `move-y-bar-tapped-${id} ${elapseTime + "s"} ${timingFunctionMoveBar} forwards`
                 barOutline2.style.animation = `move-y-bar-tapped-${id} ${elapseTime + "s"} ${timingFunctionMoveBar} forwards`
-                setTimeout(() => {
-                    barOutline1.style.opacity = 0
-                    barOutline2.style.opacity = 0
-                    barOutlineUnloadedRef.current = true
-                }, elapseTime * 0.4 * 1000)
 
                 scoreIncrementer.current = setInterval(() => {
                     updateScoreAndCombo(accuracy)
@@ -258,19 +236,6 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
                 tile.style.opacity = 0
             }
         }
-        const barOutline1 = barOutline1Ref.current
-        const barOutline2 = barOutline2Ref.current
-        if (barOutline1 && barOutline2) {
-            if (!barOutlineUnloadedRef.current) {
-                barOutline1.style.animation = "opacity-1-0 0.3s cubic-bezier(0.0, 0.5, 0.2, 0.8) forwards"
-                barOutline2.style.animation = "opacity-1-0 0.3s cubic-bezier(0.0, 0.55, 0.2, 0.8) forwards"
-            } else {
-                barOutline1.style.animation = "none" 
-                barOutline2.style.animation = "none" 
-                barOutline1.style.opacity = 0 
-                barOutline2.style.opacity = 0
-            }
-        }
         const bar = barRef.current
         if (bar) {
             bar.style.animationPlayState = "paused"
@@ -283,6 +248,25 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
                 bar.style.animation = "opacity-1-0 0.3s linear forwards"
             }
         }
+        const barOutline1 = barOutline1Ref.current
+        const barOutline2 = barOutline2Ref.current
+        if (barOutline1 && barOutline2) {
+            barOutline1.style.animationPlayState = "paused"
+            barOutline2.style.animationPlayState = "paused"
+            const rect = barOutline1.getBoundingClientRect()
+            barOutline1.style.left = rect.left + "px"
+            barOutline2.style.left = rect.left + "px"
+            barOutline1.style.top = rect.top + "px"
+            barOutline2.style.top = rect.top + "px"
+            if (directMiss) {
+                barOutline1.style.animation = "opacity-06-0 0.3s linear forwards"
+                barOutline2.style.animation = "opacity-06-0 0.3s linear forwards"
+            } else {
+                barOutline1.style.animation = "opacity-06-0 0.3s linear forwards"                
+                barOutline2.style.animation = "opacity-06-0 0.3s linear forwards"
+
+            }
+        }
     }
 
     const trueUnload = () => {
@@ -290,14 +274,6 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
     }
 
     const handleMiss = () => {
-        const barOutline1 = barOutline1Ref.current
-        const barOutline2 = barOutline2Ref.current
-        barOutline1.style.bottom = "0vh"
-        barOutline2.style.bottom = "0vh"
-        barOutline1.style.height = (barHeightRef.current * 0.9) + "px"
-        barOutline2.style.height = (barHeightRef.current * 0.9) + "px"
-        barOutline1.style.animation = "none"
-        barOutline2.style.animation = "none"
         onMiss(type, targetTime)
         unloadTile(true)
     }
