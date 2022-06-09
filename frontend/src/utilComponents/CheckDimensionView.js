@@ -15,7 +15,6 @@ const CheckDimensionView = () => {
 
     const handleResize = () => {
         const aspectRatio = window.innerWidth / window.innerHeight 
-        console.log(aspectRatio)
         if (aspectRatio > 2.2 || aspectRatio < 1.32) {
             setHeight("100vh")
             setWidth("100vw")

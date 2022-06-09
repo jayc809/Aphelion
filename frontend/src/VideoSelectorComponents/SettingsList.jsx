@@ -145,8 +145,8 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
     const selectedVideoRef = useRef(null)
     const handleUnFocus = useCallback(() => {
         const currInput = document.getElementById("start-time-input-el").value.slice(0, -1)
-        const minutes = parseInt(/^\d+(?=:)/.exec(selectedVideoRef.current.snippet.duration))
-        const seconds = parseInt(/(?<=:)\d+$/.exec(selectedVideoRef.current.snippet.duration))
+        const minutes = parseInt(/^\d+[:]/.exec(selectedVideoRef.current.snippet.duration)[0].slice(0, -1))
+        const seconds = parseInt(/[:]\d+$/.exec(selectedVideoRef.current.snippet.duration)[0].slice(1))
         const durationInSeconds = (minutes * 60 + seconds - 1)
         if (currInput.match(/^[0-9]+([.][0-9]*)?$/) && Number(currInput) <= durationInSeconds) {
             const inputRounded = parseFloat(Number(currInput).toFixed(2))

@@ -4,6 +4,7 @@ import AnalyzerView from './AnalyzerView'
 import ResultsView from './ResultsView'
 import VideoSelectorView from './VideoSelectorView'
 import CheckDimensionView from './utilComponents/CheckDimensionView'
+import CheckBrowserView from './utilComponents/CheckBrowserView'
 import TestView from "./utilComponents/TestView"
 import MainView from './MainView'
 import { useEffect, useRef, useState } from 'react'
@@ -100,7 +101,8 @@ function App() {
   // }, [settingsObj])
 
   return (
-    <div id="app">
+    <div id="app" style={{backgroundColor: "black"}}>
+      <CheckBrowserView></CheckBrowserView>
       <CheckDimensionView></CheckDimensionView>
       <div style={{position: "absolute", zIndex: 10, height: "100vh", width: "100vw"}}>
         {
