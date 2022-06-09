@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import "./MainView.css"
 import ReactPlayer from 'react-player'
-import TransitionInView from './TransitionInView'
-import TransitionOutView from './TransitionOutView'
+import TransitionInView from './utilComponents/TransitionInView'
+import TransitionOutView from './utilComponents/TransitionOutView'
 import githubBackground from "./images/github-button.png"
 import instructionsBackground from "./images/instructions-button.png"
 import loginBackground from "./images/login-button.png"
-import PopUpView from './PopUpView'
+import PopUpView from './utilComponents/PopUpView'
 
 const MainView = ({ setView, settingsObj, showTransition, setShowTransition }) => {
 

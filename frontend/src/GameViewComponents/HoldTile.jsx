@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import "../styles/Tile.css"
-import AnimationView from '../AnimationView'
+import AnimationView from '../utilComponents/AnimationView'
 import tileImage from "../images/tile-hold.png"
 import tileImageLight from "../images/tile-hold-light.png"
 

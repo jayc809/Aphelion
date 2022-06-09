@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Tile from "./Tile"
 import HoldTile from './HoldTile'
 import "../styles/TileGenerator.css"
-import TestView from '../TestView'
 
 const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, getAllowStart, theme }) => {
 

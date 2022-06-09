@@ -3,7 +3,8 @@ import GameView from "./GameView"
 import AnalyzerView from './AnalyzerView'
 import ResultsView from './ResultsView'
 import VideoSelectorView from './VideoSelectorView'
-import TestView from "./TestView"
+import CheckDimensionView from './utilComponents/CheckDimensionView'
+import TestView from "./utilComponents/TestView"
 import MainView from './MainView'
 import { useEffect, useRef, useState } from 'react'
 
@@ -100,16 +101,19 @@ function App() {
 
   return (
     <div id="app">
-      {
+      <CheckDimensionView></CheckDimensionView>
+      <div style={{position: "absolute", zIndex: 10, height: "100vh", width: "100vw"}}>
         {
-          "main": <MainView setView={setView} settingsObj={settingsObj} showTransition={showMainViewTransitionInRef.current} setShowTransition={setShowMainViewTransitionInRef}></MainView>,
-          "videos": <VideoSelectorView setView={setView} setVideoInfoRef={setVideoInfoRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj}/>,
-          "analyzer": <AnalyzerView setView={setView} setBeatmapObjRef={setBeatmapObjRef} settingsObj={settingsObj} videoId={videoInfoRef.current.id.videoId}/>,
-          "game": <GameView setView={setView} incrementGameId={incrementGameId} setResultsObjRef={setResultsObjRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj} beatmapObj={beatmapObjRef.current} key={gameId}/>,
-          "results": <ResultsView setView={setView} incrementGameId={incrementGameId} resultsObj={resultsObjRef.current} settingsObj={settingsObj} videoInfo={videoInfoRef.current}/>
-        } [view]
-      }
+          {
+            "main": <MainView setView={setView} settingsObj={settingsObj} showTransition={showMainViewTransitionInRef.current} setShowTransition={setShowMainViewTransitionInRef}></MainView>,
+            "videos": <VideoSelectorView setView={setView} setVideoInfoRef={setVideoInfoRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj}/>,
+            "analyzer": <AnalyzerView setView={setView} setBeatmapObjRef={setBeatmapObjRef} settingsObj={settingsObj} videoId={videoInfoRef.current.id.videoId}/>,
+            "game": <GameView setView={setView} incrementGameId={incrementGameId} setResultsObjRef={setResultsObjRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj} beatmapObj={beatmapObjRef.current} key={gameId}/>,
+            "results": <ResultsView setView={setView} incrementGameId={incrementGameId} resultsObj={resultsObjRef.current} settingsObj={settingsObj} videoInfo={videoInfoRef.current}/>
+          } [view]
+        }
       {/* <TestView/> */}
+      </div>
     </div>
   )
 }

@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import "./ResultsView.css"
 import CircleProgressBar from './ResultsViewComponents/CircleProgressBar';
-import TransitionInView from './TransitionInView';
-import TransitionOutView from './TransitionOutView';
+import TransitionInView from './utilComponents/TransitionInView';
+import TransitionOutView from './utilComponents/TransitionOutView';
 import ReactPlayer from 'react-player';
 import resultsBackground from "./images/results-background.png"
 import resultsTop from "./images/results-top.png"

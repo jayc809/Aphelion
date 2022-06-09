@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import "../styles/Combo.css"
-import AnimationViewContained from '../AnimationViewContained'
+import AnimationViewContained from '../utilComponents/AnimationViewContained'
 
 const ComboSubCompnent = ({ combo }) => {
 

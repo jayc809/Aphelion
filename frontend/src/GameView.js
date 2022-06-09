@@ -9,8 +9,8 @@ import Combo from './GameViewComponents/Combo'
 import PerfectDisplay from "./GameViewComponents/PerfectDisplay"
 import TileGenerator from './GameViewComponents/TileGenerator'
 import PauseMenu from './GameViewComponents/PauseMenu'
-import TransitionInView from './TransitionInView'
-import TransitionOutView from "./TransitionOutView"
+import TransitionInView from './utilComponents/TransitionInView'
+import TransitionOutView from "./utilComponents/TransitionOutView"
 const testVideoId = "IKKar5SS29E" 
 const orangeVideoId = "3DrYQMK4hJE"
 const blueVideoId = "IKKar5SS29E" 

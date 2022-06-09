@@ -5,8 +5,8 @@ import dummyVideoInfo from "./dummyVideoInfo.json"
 import ScrollList from './VideoSelectorComponents/ScrollList'
 import VideoInfo from './VideoSelectorComponents/VideoInfo'
 import SettingsList from './VideoSelectorComponents/SettingsList'
-import TransitionInView from './TransitionInView'
-import TransitionOutView from './TransitionOutView'
+import TransitionInView from './utilComponents/TransitionInView'
+import TransitionOutView from './utilComponents/TransitionOutView'
 import searchBarBackground from "./images/search-bar.png"
 import ytLogo from "./images/yt-logo.png"
 import bg from "./images/video-selector-bg.png"

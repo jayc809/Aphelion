@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react'
 import socketIOClient from "socket.io-client"
 import ReactPlayer from 'react-player'
-import TransitionInView from './TransitionInView'
-import TransitionOutView from './TransitionOutView'
+import TransitionInView from './utilComponents/TransitionInView'
+import TransitionOutView from './utilComponents/TransitionOutView'
 import "./App.css"
 import "./AnalyzerView.css"
 
