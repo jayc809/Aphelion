@@ -65,6 +65,7 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
             return  
         }
         lastSubmittedSearchKeywordRef.current = searchKeywordRef.current
+        
         hideSettings()
         let firstSearchResult = []
         let secondSearchResult = []
