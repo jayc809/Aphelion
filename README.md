@@ -9,5 +9,3 @@
   2. cd into frontent
   3. run ```npm start```
 - go to localhost:3000 using Chrome
-
-apologies for this poorly documented codebase
