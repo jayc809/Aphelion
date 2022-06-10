@@ -18,7 +18,7 @@ io.on("connect", socket => {
     socket.emit("connected-to-server", "connected to server")
 
     socket.on("request-beatmap", (requestObj) => {
-        const filePath = path.resolve(__dirname, 'video.mkv')
+        const filePath = path.resolve(__dirname, `video${socket.id}.mkv`)
         const videoUrl = requestObj.videoUrl
         const video = ytdl(videoUrl, { filter: "audio" })
 
@@ -77,6 +77,9 @@ io.on("connect", socket => {
             socket.emit("progress-update", "Process Completed")
             console.log("process completed")
             socket.emit("respond-beatmap", beatmapObj)
+            fs.unlink(filePath, () => {
+                console.log("video deleted")
+            })
         }
     })
 

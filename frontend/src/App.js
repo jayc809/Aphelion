@@ -51,7 +51,7 @@ function App() {
       tileSpeed: 1.3,
       theme: "dark",
       useVideoForBackground: true,
-      uiHue: 343,
+      uiHue: 346,
       uiSaturation: 1.6,
       uiBrightness: 1.0,
       rainbowUi: false,

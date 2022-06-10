@@ -251,7 +251,7 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
                 <div className="settings-list-row" style={{height: pauseMenu ? "20%" : "15%"}}>
                     <h3>UI Hue</h3>
                     <div className="settings-list-row-content">
-                        <input className="hue-slider" type="range" min="343" max="702" defaultValue={settingsObj.uiHue} onChange={handleUiHueChange}></input>
+                        <input className="hue-slider" type="range" min="346" max="705" defaultValue={settingsObj.uiHue} onChange={handleUiHueChange}></input>
                     </div>
                 </div>
                 <div className="settings-list-row" style={{height: pauseMenu ? "20%" : "15%"}}>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import "../styles/ScrollList.css"
 const ScrollList = ({ videosInput, setSelectedVideo }) => {
 
@@ -10,10 +10,12 @@ const ScrollList = ({ videosInput, setSelectedVideo }) => {
         }
     }, [])
 
+    const ulRef = useRef(null)
     useEffect(() => {
         if (videosInput.length > 0) {
+            ulRef.current.scrollTop = "300px" //document.getElementById("li0").getBoundingClientRect().top
             handleNewVideosInput()
-        }
+        } 
     }, [videosInput])
 
     const [videos, setVideos] = useState( 
@@ -71,10 +73,10 @@ const ScrollList = ({ videosInput, setSelectedVideo }) => {
 
     return (
         <div className="scroll-list-wrapper">
-            <ul className="scroll-list-ul">
+            <ul className="scroll-list-ul" ref={ulRef}>
                 {videos.map((videoSnippet, index) => { 
                     return (
-                        <div className="scroll-list-block" key={index} style={{opacity: index != selectedVideoIndex ? 1 : 0.5}}>
+                        <div className="scroll-list-block" key={index} style={{opacity: index != selectedVideoIndex ? 1 : 0.5}} id={"li" + index}>
                             <div className="scroll-list-block-background-1"></div>
                             <div className="scroll-list-block-background-2"></div>
                             <div className="scroll-list-block-background-3"></div>
