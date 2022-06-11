@@ -7,6 +7,7 @@ import platformMiddleLeft from "../images/platform-middle-left-new.png"
 import platformMiddleRight from "../images/platform-middle-right-new.png"
 import platformRight from "../images/platform-right-new.png"
 import circleOut from "../images/tile-circle-out.png"
+import circleLight from "../images/tile-circle-light.png"
 
 
 const Platform = ({ settingsObj }) => {
@@ -17,6 +18,8 @@ const Platform = ({ settingsObj }) => {
     const [fPressed, setFPressed] = useState(false)
     const [jPressed, setJPressed] = useState(false)
     const [kPressed, setKPressed] = useState(false)
+    const [sPressed, setSPressed] = useState(false)
+    const [lPressed, setLPressed] = useState(false)
 
     const handleDownLocal = (e) => {
         const key = e.key
@@ -32,6 +35,12 @@ const Platform = ({ settingsObj }) => {
                 break
             case "k":
                 setKPressed(true)
+                break
+            case "s":
+                setSPressed(true)
+                break
+            case "l":
+                setLPressed(true)
                 break
         }
     }
@@ -50,10 +59,14 @@ const Platform = ({ settingsObj }) => {
             case "k":
                 setKPressed(false)
                 break
+            case "s":
+                setSPressed(false)
+                break
+            case "l":
+                setLPressed(false)
+                break
         }
     }
-
-    console.log(settingsObj.difficulty)
 
     useEffect(() => {
         window.addEventListener("keydown", handleDownLocal)
@@ -96,17 +109,21 @@ const Platform = ({ settingsObj }) => {
                 style={{opacity: kPressed ? opacityWhenDown : 0}}
             />
             {
-                settingsObj.difficulty == "Hard" || settingsObj.difficulty == "Extreme" ? 
-                <div className="circle-tile-wrapper" style={{right: "9vw", opacity: 0.88}}>
-                    <img className="circle-tile-out" src={circleOut}></img>
+                settingsObj.difficulty == "Hard" || settingsObj.difficulty == "Extreme" ?
+                <div>
+                    <div className="circle-tile-wrapper" style={{right: "9vw", opacity: lPressed ? opacityWhenDown : 0, zIndex: 8}}>
+                        <img className="circle-tile-out" src={circleLight}></img>
+                    </div> 
+                    <div className="circle-tile-wrapper" style={{left: "9vw", opacity: sPressed ? opacityWhenDown : 0, zIndex: 7}}>
+                        <img className="circle-tile-out" src={circleLight}></img>
+                    </div> 
+                    <div className="circle-tile-wrapper" style={{right: "9vw", opacity: 0.88, zIndex: 6}}>
+                        <img className="circle-tile-out" src={circleOut}></img>
+                    </div> 
+                    <div className="circle-tile-wrapper" style={{left: "9vw", opacity: 0.88, zIndex: 5}}>
+                        <img className="circle-tile-out" src={circleOut}></img>
+                    </div> 
                 </div> :
-                ""
-            }
-            {
-                settingsObj.difficulty == "Hard" || settingsObj.difficulty == "Extreme" ? 
-                <div className="circle-tile-wrapper" style={{left: "9vw", opacity: 0.88}}>
-                    <img className="circle-tile-out" src={circleOut}></img>
-                </div> : 
                 ""
             }
             <img src={platformBase} className="platform-base" alt="platformBase" draggable="false"/>

@@ -14,7 +14,7 @@ const CircleTile = ({ type, tileSpeed, theme, targetTime, onMount, onMiss, id })
     //initializations
     useEffect(() => {
         if (type != "placeholder") {
-            // onMount(type, targetTime, controller)
+            onMount(type, targetTime, controller)
         }
         loadTile()
         // window.addEventListener("keypress", () => {tapTile("perfect")})
@@ -58,30 +58,35 @@ const CircleTile = ({ type, tileSpeed, theme, targetTime, onMount, onMiss, id })
     const animationY = useRef("0px")
     const animationName = useRef(null)
     const tappableRef = useRef(true)
+    const tappedRef = useRef(false)
 
     const tapTile = (accuracy) => {
         if (!tappableRef.current) {
             return
         }
+        tappedRef.current = true
         const circleIn = circleInRef.current
-        if (circleIn) {
+        const circleInWrapper = circleInWrapperRef.current
+        if (circleIn && circleInWrapper) {
             circleIn.style.animationPlayState = "paused"
+            circleInWrapper.style.animationPlayState = "paused"
+            circleIn.style.animation = "none"
             if (accuracy == "perfect") {
-                animationHeight.current = "100%"
-                animationWidth.current = "100%"
-                animationY.current = "22vh"
+                animationHeight.current = "calc(26.5vh * 1500 / 850)"
+                animationWidth.current = "calc(26.5vh * 1500 / 850)"
+                animationY.current = "calc(100vh - (16.5vh + 26.5vh / 2))"
                 switch (type) {
                     case "left":
-                        animationX.current = "calc(8vw + 11vh)"
+                        animationX.current = "calc(9vw + 26.5vh / 2)"
                         break
                     case "right":
-                        animationX.current = "calc(92vw - 11vh)"
+                        animationX.current = "calc(91vw - 26.5vh / 2)"
                         break
                 }
             } else {
-                const rect = circleIn.getBoundingClientRect()
-                animationHeight.current = (rect.height) + "px"
-                animationWidth.current = (rect.width) + "px"
+                const rect = circleInWrapper.getBoundingClientRect()
+                animationHeight.current = (rect.height * 1500 / 850) + "px"
+                animationWidth.current = (rect.height * 1500 / 850) + "px"
                 animationX.current = (rect.left + rect.width / 2) + "px"
                 animationY.current = (rect.top + rect.height / 2) + "px"
             }
@@ -90,32 +95,40 @@ const CircleTile = ({ type, tileSpeed, theme, targetTime, onMount, onMiss, id })
             } else {
                 animationName.current = `circle-${accuracy}`
             }
-            circleIn.style.animation = "none"
-            circleIn.style.opacity = 0
+            circleInWrapper.style.animation = "none"
             setPlayAnimation(true)
         }
     }
 
-    const unloadTile = () => {
+    const unloadTile = (directMiss=false) => {
         tappableRef.current = false
         const circleIn = circleInRef.current
         if (circleIn) {
-            circleIn.style.animation = "none"
-            circleIn.style.opacity = 0
+            if (directMiss) {
+                circleIn.style.animation = `decrease-opacity 0.3s linear forwards`
+                setTimeout(() => {
+                    setIsUnloaded(true)
+                }, 300);
+            } else {
+                circleIn.style.animation = "none"
+                circleIn.style.opacity = 0
+                setIsUnloaded(true)
+            }
         }
-        setIsUnloaded(true)
     }
 
     const handleMiss = () => {
-        onMiss(type, targetTime)
-        unloadTile()
+        if (!tappedRef.current) {
+            onMiss(type, targetTime)
+            unloadTile(true)
+        }
     }
 
     return (
         isUnloaded ? "" :
         <div className="screen" style={{zIndex: id}}>
-            {/* {playAnimation ?
-                <div style={{filter: "saturate(1.35) brightness(1.05)", zIndex: 1000}}>
+            {playAnimation ?
+                <div style={{zIndex: 1000}}>
                     <AnimationView 
                         height={animationHeight.current} 
                         width={animationWidth.current} 
@@ -127,19 +140,13 @@ const CircleTile = ({ type, tileSpeed, theme, targetTime, onMount, onMiss, id })
                     ></AnimationView> 
                 </div> :
                 ""
-            } */}
+            }
             <div className="circle-tile-wrapper" style={{right: type == "right" ? "9vw" : "auto", left: type == "left" ? "9vw" : "auto"}}>
-                {/* <img className="circle-tile-out" src={circleOut}></img> */}
-                <div className="circle-tile-in" ref={circleInRef} onAnimationEnd={() => {
-                    setTimeout(() => {
-                        circleInRef.current.style.animation = `decrease-opacity 0.3s linear forwards`
-                        console.log(circleInRef.current.style.animation)
-                        setTimeout(() => {
-                            // handleMiss()
-                        }, 300);
+                <div className="circle-tile-in" ref={circleInRef} style={{transform: "rotate(180deg)"}} onAnimationEnd={() => {
+                    setTimeout(() => {     
+                        handleMiss()
                     }, (tileSpeed * 0.16) * 1000)
-                }}
-                >
+                }}>
                     <div className="circle-tile-in-wrapper" ref={circleInWrapperRef}>
                         <img src={theme == "light" ? circleIn : circleIn} alt="circle" />
                     </div>

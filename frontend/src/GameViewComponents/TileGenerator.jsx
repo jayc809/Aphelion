@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Tile from "./Tile"
 import HoldTile from './HoldTile'
 import "../styles/TileGenerator.css"
+import CircleTile from './CircleTile'
 
 const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, getAllowStart, theme }) => {
 
@@ -288,6 +289,17 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
                                     id={tile.id}
                                     key={tile.id}
                                 ></HoldTile>
+                            case "circle":
+                                return <CircleTile 
+                                    type={tile.type} 
+                                    tileSpeed={tileSpeed} 
+                                    targetTime={tile.targetTime}
+                                    theme={theme}
+                                    onMount={onTileMount}
+                                    onMiss={onTileMiss}
+                                    id={tile.id}
+                                    key={tile.id}
+                                ></CircleTile>
                         }
                     })
                 }

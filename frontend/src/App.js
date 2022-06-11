@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from 'react'
 
 function App() {
 
-  const [view, setView] = useState("main")
+  const [view, setView] = useState("test")
   const [gameId, setGameId] = useState(0)
   const videoInfoRef = useRef({
     "id": {
