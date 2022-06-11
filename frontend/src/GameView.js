@@ -315,7 +315,7 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, set
         </div>
 
         <div className="component" id="platform"> 
-          <Platform/>
+          <Platform settingsObj={settingsObj}/>
         </div>
 
         {

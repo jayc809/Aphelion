@@ -17,13 +17,13 @@
 
 .perfect-content-showing {
     position: absolute;
-    top: 52vh;
+    top: 48vh;
     right: 3vw;
 }
 
 .perfect-content-hidden {
     position: absolute;
-    top: 52vh;
+    top: 48vh;
     right: 3vw;
     transition: opacity 0.3s;
 }

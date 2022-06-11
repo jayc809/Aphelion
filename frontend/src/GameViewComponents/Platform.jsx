@@ -6,9 +6,10 @@ import platformLeft from "../images/platform-left-new.png"
 import platformMiddleLeft from "../images/platform-middle-left-new.png"
 import platformMiddleRight from "../images/platform-middle-right-new.png"
 import platformRight from "../images/platform-right-new.png"
+import circleOut from "../images/tile-circle-out.png"
 
 
-const Platform = () => {
+const Platform = ({ settingsObj }) => {
 
     const opacityWhenDown = 0.175
 
@@ -52,6 +53,8 @@ const Platform = () => {
         }
     }
 
+    console.log(settingsObj.difficulty)
+
     useEffect(() => {
         window.addEventListener("keydown", handleDownLocal)
         window.addEventListener("keyup", handleUpLocal)
@@ -92,6 +95,20 @@ const Platform = () => {
                 draggable="false"
                 style={{opacity: kPressed ? opacityWhenDown : 0}}
             />
+            {
+                settingsObj.difficulty == "Hard" || settingsObj.difficulty == "Extreme" ? 
+                <div className="circle-tile-wrapper" style={{right: "9vw", opacity: 0.88}}>
+                    <img className="circle-tile-out" src={circleOut}></img>
+                </div> :
+                ""
+            }
+            {
+                settingsObj.difficulty == "Hard" || settingsObj.difficulty == "Extreme" ? 
+                <div className="circle-tile-wrapper" style={{left: "9vw", opacity: 0.88}}>
+                    <img className="circle-tile-out" src={circleOut}></img>
+                </div> : 
+                ""
+            }
             <img src={platformBase} className="platform-base" alt="platformBase" draggable="false"/>
         </div>
     );

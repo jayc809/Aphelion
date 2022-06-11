@@ -39,7 +39,6 @@ const CheckBrowserView = () => {
                 setWarning(true)
             }
         }
-        console.log(browser && browser.name)
         switch (browser && browser.name) {
             case 'chrome':
                 succeeded("")

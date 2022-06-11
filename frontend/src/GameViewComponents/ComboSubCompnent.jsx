@@ -25,7 +25,7 @@ const ComboSubCompnent = ({ combo }) => {
 
     return (
         <div ref={mainContentRef} style={{position: "absolute", height: `${size * 3}vh`, width: `calc(${size * 6}vh)`, overflow: "hidden",
-        top: "27.5vh", display: "grid", placeItems: "center", opacity: 0}}>
+        top: "23.5vh", display: "grid", placeItems: "center", opacity: 0}}>
             {
                 combo != 0 ?
                 <div style={{position: "absolute", zIndex: 10, height: `${size * 3}vh`, width: `calc(${size * 6}vh)`, filter: "saturate(1.35) brightness(1.05)"}}>

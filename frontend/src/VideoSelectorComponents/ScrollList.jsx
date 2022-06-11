@@ -89,7 +89,7 @@ const ScrollList = ({ videosInput, setSelectedVideo }) => {
                                 </div>
                             </div>
                             <div className="scoll-list-text-wrapper">
-                                <div className="scroll-list-button-artist-text" id={"videoButton" + index}>
+                                <div className="scroll-list-button-artist-text">
                                     {index != selectedVideoIndex && videoSnippet.snippet.title != "" ? 
                                         "- " + videoSnippet.snippet.channelTitle :
                                         ""
@@ -97,7 +97,7 @@ const ScrollList = ({ videosInput, setSelectedVideo }) => {
                                 </div>
                             </div>
                             <div className="scoll-list-text-wrapper">
-                                <div className="scroll-list-button-duration-text" id={"videoButton" + index}>
+                                <div className="scroll-list-button-duration-text">
                                     {index != selectedVideoIndex && videoSnippet.snippet.title != "" ? 
                                         videoSnippet.snippet.duration : 
                                         ""
