@@ -79,8 +79,8 @@ const ScrollList = ({ videosInput, setSelectedVideo }) => {
                             <div className="scroll-list-block-background-1"></div>
                             <div className="scroll-list-block-background-2"></div>
                             <div className="scroll-list-block-background-3"></div>
-                            <div className="scoll-list-text-wrapper">
-                                <div className="scroll-list-button-title-text" id={"videoButton" + index}>
+                            <div className="scoll-list-text-wrapper" id={"videoButton" + index}>
+                                <div className="scroll-list-button-title-text">
                                     {index != selectedVideoIndex && videoSnippet.snippet.title != "" ? 
                                         videoSnippet.snippet.title : 
                                         ""
