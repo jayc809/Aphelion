@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import "../styles/StartMessage.css"
 
-const StartMessage = ({ getAllowStart }) => {
+const StartMessage = ({ getAllowStart, difficulty }) => {
 
     const [show, setShow] = useState(true)
     const handlePress = (e) => {
@@ -26,6 +26,16 @@ const StartMessage = ({ getAllowStart }) => {
             <h3 id="f" className="keys">F</h3>
             <h3 id="j" className="keys">J</h3>
             <h3 id="k" className="keys">K</h3>
+            {
+                difficulty == "Extreme" ? 
+                <h3 id="s" className="keys">S</h3> : 
+                ""
+            }
+            {
+                difficulty == "Extreme" ? 
+                <h3 id="l" className="keys">L</h3> : 
+                ""
+            }
         </div>
     )
 }

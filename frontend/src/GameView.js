@@ -289,7 +289,7 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, set
         </div>
 
         <div className="component" id="start-message">
-          <StartMessage getAllowStart={getAllowStart}/>
+          <StartMessage getAllowStart={getAllowStart} difficulty={settingsObj.difficulty}/>
         </div>
 
         <div className="component" id="score">

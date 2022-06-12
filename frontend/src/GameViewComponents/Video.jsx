@@ -69,7 +69,7 @@ const Video = ({ updateCurrTime, beatmapObj, settingsObj, tileSpeed, getAllowSta
 
     const handleNearEnd = () => {
         const blackScreen = blackScreenRef.current
-        blackScreen.style.opacity = 0
+        blackScreen.style.opacity = 1
     }
     const handleAudioEnd = () => {
         audioEndedRef.current = true

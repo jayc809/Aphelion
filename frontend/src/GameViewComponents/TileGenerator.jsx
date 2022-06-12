@@ -3,13 +3,14 @@ import Tile from "./Tile"
 import HoldTile from './HoldTile'
 import "../styles/TileGenerator.css"
 import CircleTile from './CircleTile'
+import HalfTile from './HalfTile'
 
 const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, getAllowStart, theme, difficulty }) => {
 
     const [beatmapIndex, setBeatmapIndex] = useState(null)
     const [currentTiles, setCurrentTiles] = useState(
-        Array.apply(null, Array(40)).map((nul, index) => {
-            return {beatNumber: -1, type: "placeholder", id: index - 40}
+        Array.apply(null, Array(60)).map((nul, index) => {
+            return {beatNumber: -1, type: "placeholder", id: index - 60}
         })
     )
     const currentTilesRef = useRef(currentTiles)
@@ -186,7 +187,7 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
                 currTimeRef.current < (tiles[i].targetTime + tileSpeed)) {
                 closestTargetTime = tiles[i].targetTime
                 tappedTiles.current.push(key)
-                if (tappedTiles.current.length > 40) {
+                if (tappedTiles.current.length > 60) {
                     tappedTiles.current.shift()
                 }
                 break
@@ -268,7 +269,7 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
         pause()
         setTimeout(() => {
             pause()
-        }, 100);
+        }, 300);
     }
 
     const playTiles = () => {
@@ -286,7 +287,7 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
         play()
         setTimeout(() => {
             play()
-        }, 100);
+        }, 300);
     }
 
     return (
@@ -320,6 +321,18 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
                                     id={tile.id}
                                     key={tile.id}
                                 ></HoldTile>
+                            case "half": 
+                                return <HalfTile 
+                                    type={tile.type} 
+                                    tileSpeed={tileSpeed} 
+                                    targetTime={tile.targetTime}
+                                    theme={theme}
+                                    delay={30 / beatmapObj.bpm}
+                                    onMount={onTileMount}
+                                    onMiss={onTileMiss}
+                                    id={tile.id}
+                                    key={tile.id}
+                                ></HalfTile>
                             case "circle":
                                 return <CircleTile 
                                     type={tile.type} 

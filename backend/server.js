@@ -60,23 +60,24 @@ io.on("connect", socket => {
             const [bpm, startIndex, startTime] = getBPM(audioData, buffer, requestObj.settingsObj.musicStartTime)
 
             console.log("analyzing audio using FFT")
-            const fftMap= getFFTMap(audioData, buffer, startIndex, bpm) 
+            const fftMap = getFFTMap(audioData, buffer, startIndex, bpm) 
 
             console.log("generating beatmap")
             let beatmap
             let maxCombo
+            const fftMapHalf = getFFTMapHalf(audioData, buffer, startIndex, bpm)
             switch (requestObj.settingsObj.difficulty) {
                 case "Easy":
-                    [beatmap, maxCombo] = getBeatmapEasy(fftMap, bpm)
+                    [beatmap, maxCombo] = getBeatmapEasy(fftMap, bpm, requestObj.settingsObj.tileSpeed)
                     break
                 case "Medium": 
                     [beatmap, maxCombo] = getBeatmapMedium(fftMap, bpm, requestObj.settingsObj.tileSpeed)
                     break
                 case "Hard":
-                    [beatmap, maxCombo] = getBeatmapHard(fftMap, bpm, requestObj.settingsObj.tileSpeed)
+                    [beatmap, maxCombo] = getBeatmapHard(fftMap, fftMapHalf, bpm, requestObj.settingsObj.tileSpeed)
                     break
                 case "Extreme":
-                    [beatmap, maxCombo] = getBeatmapExtreme(fftMap, bpm, requestObj.settingsObj.tileSpeed)
+                    [beatmap, maxCombo] = getBeatmapExtreme(fftMap, fftMapHalf, bpm, requestObj.settingsObj.tileSpeed)
                     break
             }
 
@@ -292,6 +293,150 @@ const getFFTMap = (audioData, buffer, startIndex, bpm) => {
     }
     return fftMap 
 }
+const getFFTMapHalf = (audioData, buffer, startIndex, bpm) => {
+    const fftMap = []
+    for (let sample = startIndex + parseInt(buffer.sampleRate * 30 / bpm); sample < audioData.length - 2048; sample += parseInt(buffer.sampleRate * 60 / bpm)) {
+        const interval = audioData.slice(sample, sample + 2048)
+        const phasors= fft(interval)
+        const frequencies = fftUtil.fftFreq(phasors, buffer.sampleRate)
+        const magnitudes = fftUtil.fftMag(phasors)
+        let meta = frequencies.map((f, i) => {
+            return {frequency: f, magnitude: magnitudes[i]}
+        })
+        const metaSorted = meta.sort((a, b) => b.magnitude - a.magnitude)
+        fftMap.push({time: sample / buffer.sampleRate, meta: metaSorted.slice(0, 4)})
+    }
+    return fftMap 
+}
+const getBeatmapEasy = (fftMap, bpm, tileSpeed) => {
+    const frequencies = []
+    for (let i = 0; i < fftMap.length; i += 1) {
+        for (let j = 0; j < fftMap[i].meta.length; j += 1) {
+            frequencies.push(fftMap[i].meta[j].frequency)
+        }
+    }
+    const frequenciesSorted = frequencies.sort((a, b) => a - b)
+    const quartiles = [
+        frequenciesSorted[parseInt(frequenciesSorted.length * 0.25)],
+        frequenciesSorted[parseInt(frequenciesSorted.length * 0.5)],
+        frequenciesSorted[parseInt(frequenciesSorted.length * 0.75)],
+        frequenciesSorted[frequenciesSorted.length - 1]
+    ]
+    
+    let maxCombo = 0
+    const beatmap = []
+    for (let i = 0; i < fftMap.length; i += 1) {
+        const top4 = fftMap[i].meta
+        let leftPresent = false
+        let middleLeftPresent = false
+        let middleRightPresent = false
+        let rightPresent = false
+        for (let j = 0; j < 2; j += 1) {
+            const fft = top4[j]
+            if (fft.frequency <= quartiles[0] && (fft.magnitude > 1)) {
+                leftPresent = true
+            } else if (fft.frequency <= quartiles[1] && (fft.magnitude > 1)) {
+                middleLeftPresent = true
+            } else if (fft.frequency <= quartiles[2] && (fft.magnitude > 1)) {
+                middleRightPresent = true
+            } else if (fft.frequency <= quartiles[3] && (fft.magnitude > 1)) {
+                rightPresent = true
+            } 
+        }
+        const tiles = []
+        if (leftPresent) {
+            tiles.push({
+                targetTime: fftMap[i].time,
+                class: "tap",
+                type: "left",
+                id: i * 4
+            })
+        }
+        if (middleLeftPresent) {
+            tiles.push({
+                targetTime: fftMap[i].time, 
+                class: "tap",
+                type: "middle-left",
+                id: (i * 4) + 1
+            })
+        }
+        if (middleRightPresent) {
+            tiles.push({
+                targetTime: fftMap[i].time,
+                class: "tap",
+                type: "middle-right",
+                id: (i * 4) + 2
+            })
+        }
+        if (rightPresent) {
+            tiles.push({
+                targetTime: fftMap[i].time,
+                class: "tap",
+                type: "right",
+                id: (i * 4) + 3
+            })
+        }
+        beatmap.push({
+            time: fftMap[i].time,
+            tiles: tiles
+        })
+        maxCombo += tiles.length
+    }
+
+    const beatsPerTile = tileSpeed / (60 / bpm)
+    const minimumDistance = Number.isInteger(beatsPerTile) ? parseInt(beatsPerTile) :  parseInt(beatsPerTile) + 1
+    
+    const tranformHoldTiles = (tile, beat, chain, prevIndex, limit) => {
+        if (beat == prevIndex[0] + 1) {
+            chain.push(tile)
+            if (chain.length == limit) {
+                chain[0].class = "hold"
+                chain[0].elapseBeatCount = chain.length - 1
+                chain[0].elapseTime = 60 / bpm * (chain.length - 1)
+                for (let k = 1; k < chain.length; k += 1) {
+                    chain[k].class = "blank"
+                }
+                chain.length = 0
+                maxCombo -= 1
+            }
+        } else if (beat > prevIndex[0] + 1) {
+            if (chain.length >= minimumDistance && chain.length <= limit) {
+                chain[0].class = "hold"
+                chain[0].elapseBeatCount = chain.length
+                chain[0].elapseTime = 60 / bpm * chain.length
+                for (let k = 1; k < chain.length; k += 1) {
+                    chain[k].class = "blank"
+                }
+            }
+            chain.length = 0
+            chain.push(tile)
+        }
+        prevIndex[0] = beat
+    }
+
+    let leftChain = []
+    let leftPrevIndex = [-1]
+    let rightChain = []
+    let rightPrevIndex = [-1]
+    for (let i = 0; i < beatmap.length; i += 1) {
+        const tiles = beatmap[i].tiles
+        for (let j = 0; j < tiles.length; j += 1) {
+            const tile = tiles[j]
+            if (tile.type == "left") {
+                tranformHoldTiles(tile, i, leftChain, leftPrevIndex, 8)
+            }
+            else if (tile.type == "right") {
+                tranformHoldTiles(tile, i, rightChain, rightPrevIndex, 8)
+            }
+        }
+    }
+    
+    beatmap.forEach((meta) => {
+        meta.tiles = meta.tiles.filter((tile) => {return tile.class != "blank"})
+    })
+
+    return [beatmap, maxCombo]
+}
 const getBeatmapMedium = (fftMap, bpm, tileSpeed) => {
     const frequencies = []
     for (let i = 0; i < fftMap.length; i += 1) {
@@ -421,7 +566,7 @@ const getBeatmapMedium = (fftMap, bpm, tileSpeed) => {
 
     return [beatmap, maxCombo]
 }
-const getBeatmapExtreme = (fftMap, bpm, tileSpeed) => {
+const getBeatmapHard = (fftMap, fftMapHalf, bpm, tileSpeed) => {
     const frequencies = []
     for (let i = 0; i < fftMap.length; i += 1) {
         for (let j = 0; j < fftMap[i].meta.length; j += 1) {
@@ -443,7 +588,28 @@ const getBeatmapExtreme = (fftMap, bpm, tileSpeed) => {
         }
     }
     const magnitudesSorted = magnitudes.sort((a, b) => a - b)
-    const magnitudeCutoff = magnitudesSorted[parseInt(magnitudesSorted.length * 0.7)]
+    let magnitudeCutOff
+    if (bpm <= 100) {
+        magnitudeCutOff = magnitudesSorted[parseInt(magnitudesSorted.length * 0.35)]
+    } else if (bpm <= 110) {
+        magnitudeCutOff = magnitudesSorted[parseInt(magnitudesSorted.length * 0.4)]
+    } else if (bpm <= 120) {
+        magnitudeCutOff = magnitudesSorted[parseInt(magnitudesSorted.length * 0.45)]
+    } else if (bpm <= 130) {
+        magnitudeCutOff = magnitudesSorted[parseInt(magnitudesSorted.length * 0.5)]
+    } else if (bpm <= 140) {
+        magnitudeCutOff = magnitudesSorted[parseInt(magnitudesSorted.length * 0.55)]
+    } else if (bpm <= 150) {
+        magnitudeCutOff = magnitudesSorted[parseInt(magnitudesSorted.length * 0.6)]
+    } else if (bpm <= 160) {
+        magnitudeCutOff = magnitudesSorted[parseInt(magnitudesSorted.length * 0.65)]
+    } else if (bpm <= 170) {
+        magnitudeCutOff = magnitudesSorted[parseInt(magnitudesSorted.length * 0.7)]
+    } else if (bpm <= 180) {
+        magnitudeCutOff = magnitudesSorted[parseInt(magnitudesSorted.length * 0.75)]
+    } else {
+        magnitudeCutOff = magnitudesSorted[parseInt(magnitudesSorted.length * 0.8)]
+    }
     
     let maxCombo = 0
     const beatmap = []
@@ -453,28 +619,221 @@ const getBeatmapExtreme = (fftMap, bpm, tileSpeed) => {
         let middleLeftPresent = false
         let middleRightPresent = false
         let rightPresent = false
+        let leftHalfPresent = false
+        let rightHalfPresent = false
+        for (let j = 0; j < 4; j += 1) {
+            const fft = top4[j]
+            if (fft.frequency <= quartiles[0] && (fft.magnitude > 1)) {
+                leftPresent = true
+            } else if (fft.frequency <= quartiles[1] && (fft.magnitude > 1)) {
+                middleLeftPresent = true
+                if (fftMapHalf[i].meta[j].magnitude >= magnitudeCutOff && fftMapHalf[i].meta[j].frequency <= quartiles[1]) {
+                    leftHalfPresent = true
+                }
+            } else if (fft.frequency <= quartiles[2] && (fft.magnitude > 1)) {
+                middleRightPresent = true
+                if (fftMapHalf[i].meta[j].magnitude >= magnitudeCutOff && fftMapHalf[i].meta[j].frequency > quartiles[1]) {
+                    rightHalfPresent = true
+                }
+            } else if (fft.frequency <= quartiles[3] && (fft.magnitude > 1)) {
+                rightPresent = true
+            } 
+
+        }
+
+        const tiles = []
+        if (leftPresent) {
+            tiles.push({
+                targetTime: fftMap[i].time,
+                class: "tap",
+                type: "left",
+                id: i * 8
+            })
+        }
+        if (middleLeftPresent) {
+            tiles.push({
+                targetTime: fftMap[i].time, 
+                class: "tap",
+                type: "middle-left",
+                id: (i * 8) + 1
+            })
+        }
+        if (middleRightPresent) {
+            tiles.push({
+                targetTime: fftMap[i].time,
+                class: "tap",
+                type: "middle-right",
+                id: (i * 8) + 2
+            })
+        }
+        if (rightPresent) {
+            tiles.push({
+                targetTime: fftMap[i].time,
+                class: "tap",
+                type: "right",
+                id: (i * 8) + 3
+            })
+        }
+        if (leftHalfPresent) {
+            tiles.push({
+                targetTime: fftMapHalf[i].time,
+                class: "half",
+                type: "middle-left",
+                id: (i * 8) + 4
+            })
+        }
+        if (rightHalfPresent) {
+            tiles.push({
+                targetTime: fftMapHalf[i].time,
+                class: "half",
+                type: "middle-right",
+                id: (i * 8) + 5
+            })
+        }
+        beatmap.push({
+            time: fftMap[i].time,
+            tiles: tiles
+        })
+        maxCombo += tiles.length
+    }
+
+    const beatsPerTile = tileSpeed / (60 / bpm)
+    const minimumDistance = Number.isInteger(beatsPerTile) ? parseInt(beatsPerTile) :  parseInt(beatsPerTile) + 1
+
+    const tranformHoldTiles = (tile, beat, chain, prevIndex, limit) => {
+        if (beat == prevIndex[0] + 1) {
+            chain.push(tile)
+            if (chain.length == limit) {
+                chain[0].class = "hold"
+                chain[0].elapseBeatCount = chain.length - 1
+                chain[0].elapseTime = 60 / bpm * (chain.length - 1)
+                for (let k = 1; k < chain.length; k += 1) {
+                    chain[k].class = "blank"
+                }
+                chain.length = 0
+                maxCombo -= 1
+            }
+        } else if (beat > prevIndex[0] + 1) {
+            if (chain.length >= minimumDistance && chain.length <= limit) {
+                chain[0].class = "hold"
+                chain[0].elapseBeatCount = chain.length
+                chain[0].elapseTime = 60 / bpm * chain.length
+                for (let k = 1; k < chain.length; k += 1) {
+                    chain[k].class = "blank"
+                }
+            }
+            chain.length = 0
+            chain.push(tile)
+        }
+        prevIndex[0] = beat
+    }
+
+    let leftChain = []
+    let leftPrevIndex = [-1]
+    let rightChain = []
+    let rightPrevIndex = [-1]
+    for (let i = 0; i < beatmap.length; i += 1) {
+        const tiles = beatmap[i].tiles
+        for (let j = 0; j < tiles.length; j += 1) {
+            const tile = tiles[j]
+            if (tile.type == "left") {
+                tranformHoldTiles(tile, i, leftChain, leftPrevIndex, 8)
+            } 
+            else if (tile.type == "right") {
+                tranformHoldTiles(tile, i, rightChain, rightPrevIndex, 8)
+            }
+        }
+    }
+
+    beatmap.forEach((meta) => {
+        meta.tiles = meta.tiles.filter((tile) => {return tile.class != "blank"})
+    })
+
+    return [beatmap, maxCombo]
+}
+const getBeatmapExtreme = (fftMap, fftMapHalf, bpm, tileSpeed) => {
+    const frequencies = []
+    for (let i = 0; i < fftMap.length; i += 1) {
+        for (let j = 0; j < fftMap[i].meta.length; j += 1) {
+            frequencies.push(fftMap[i].meta[j].frequency)
+        }
+    }
+    const frequenciesSorted = frequencies.sort((a, b) => a - b)
+    const quartiles = [
+        frequenciesSorted[parseInt(frequenciesSorted.length * 0.25)],
+        frequenciesSorted[parseInt(frequenciesSorted.length * 0.5)],
+        frequenciesSorted[parseInt(frequenciesSorted.length * 0.75)],
+        frequenciesSorted[frequenciesSorted.length - 1]
+    ]
+
+    const magnitudes = []
+    for (let i = 0; i < fftMap.length; i += 1) {
+        for (let j = 0; j < fftMap[i].meta.length; j += 1) {
+            magnitudes.push(fftMap[i].meta[j].magnitude)
+        }
+    }
+    const magnitudesSorted = magnitudes.sort((a, b) => a - b)
+    let magnitudeCutOff
+    if (bpm <= 100) {
+        magnitudeCutOff = magnitudesSorted[parseInt(magnitudesSorted.length * 0.35)]
+    } else if (bpm <= 110) {
+        magnitudeCutOff = magnitudesSorted[parseInt(magnitudesSorted.length * 0.4)]
+    } else if (bpm <= 120) {
+        magnitudeCutOff = magnitudesSorted[parseInt(magnitudesSorted.length * 0.45)]
+    } else if (bpm <= 130) {
+        magnitudeCutOff = magnitudesSorted[parseInt(magnitudesSorted.length * 0.5)]
+    } else if (bpm <= 140) {
+        magnitudeCutOff = magnitudesSorted[parseInt(magnitudesSorted.length * 0.55)]
+    } else if (bpm <= 150) {
+        magnitudeCutOff = magnitudesSorted[parseInt(magnitudesSorted.length * 0.6)]
+    } else if (bpm <= 160) {
+        magnitudeCutOff = magnitudesSorted[parseInt(magnitudesSorted.length * 0.65)]
+    } else if (bpm <= 170) {
+        magnitudeCutOff = magnitudesSorted[parseInt(magnitudesSorted.length * 0.7)]
+    } else if (bpm <= 180) {
+        magnitudeCutOff = magnitudesSorted[parseInt(magnitudesSorted.length * 0.75)]
+    } else {
+        magnitudeCutOff = magnitudesSorted[parseInt(magnitudesSorted.length * 0.8)]
+    }
+    
+    let maxCombo = 0
+    const beatmap = []
+    for (let i = 0; i < fftMap.length; i += 1) {
+        const top4 = fftMap[i].meta
+        let leftPresent = false
+        let middleLeftPresent = false
+        let middleRightPresent = false
+        let rightPresent = false
+        let leftHalfPresent = false
+        let rightHalfPresent = false
         let leftCirclePresent = false
         let rightCirclePresent = false
         for (let j = 0; j < 4; j += 1) {
             const fft = top4[j]
             if (fft.frequency <= quartiles[0] && (fft.magnitude > 1)) {
                 leftPresent = true
-                if (fft.magnitude >= magnitudeCutoff) {
+                if (fft.magnitude >= magnitudeCutOff) {
                     leftCirclePresent = true
                 }
             } else if (fft.frequency <= quartiles[1] && (fft.magnitude > 1)) {
                 middleLeftPresent = true
-                if (fft.magnitude >= magnitudeCutoff) {
+                if (fftMapHalf[i].meta[j].magnitude >= magnitudeCutOff && fftMapHalf[i].meta[j].frequency <= quartiles[1]) {
+                    leftHalfPresent = true
+                }
+                if (fft.magnitude >= magnitudeCutOff) {
                     leftCirclePresent = true
                 }
             } else if (fft.frequency <= quartiles[2] && (fft.magnitude > 1)) {
                 middleRightPresent = true
-                if (fft.magnitude >= magnitudeCutoff) {
+                if (fftMapHalf[i].meta[j].magnitude >= magnitudeCutOff && fftMapHalf[i].meta[j].frequency > quartiles[1]) {
+                    rightHalfPresent = true
+                }
+                if (fft.magnitude >= magnitudeCutOff) {
                     rightCirclePresent = true
                 }
             } else if (fft.frequency <= quartiles[3] && (fft.magnitude > 1)) {
                 rightPresent = true
-                if (fft.magnitude >= magnitudeCutoff) {
+                if (fft.magnitude >= magnitudeCutOff) {
                     rightCirclePresent = true
                 }
             } 
@@ -487,7 +846,7 @@ const getBeatmapExtreme = (fftMap, bpm, tileSpeed) => {
                 targetTime: fftMap[i].time,
                 class: "tap",
                 type: "left",
-                id: i * 6
+                id: i * 8
             })
         }
         if (middleLeftPresent) {
@@ -495,7 +854,7 @@ const getBeatmapExtreme = (fftMap, bpm, tileSpeed) => {
                 targetTime: fftMap[i].time, 
                 class: "tap",
                 type: "middle-left",
-                id: (i * 6) + 1
+                id: (i * 8) + 1
             })
         }
         if (middleRightPresent) {
@@ -503,7 +862,7 @@ const getBeatmapExtreme = (fftMap, bpm, tileSpeed) => {
                 targetTime: fftMap[i].time,
                 class: "tap",
                 type: "middle-right",
-                id: (i * 6) + 2
+                id: (i * 8) + 2
             })
         }
         if (rightPresent) {
@@ -511,7 +870,23 @@ const getBeatmapExtreme = (fftMap, bpm, tileSpeed) => {
                 targetTime: fftMap[i].time,
                 class: "tap",
                 type: "right",
-                id: (i * 6) + 3
+                id: (i * 8) + 3
+            })
+        }
+        if (leftHalfPresent) {
+            tiles.push({
+                targetTime: fftMapHalf[i].time,
+                class: "half",
+                type: "middle-left",
+                id: (i * 8) + 4
+            })
+        }
+        if (rightHalfPresent) {
+            tiles.push({
+                targetTime: fftMapHalf[i].time,
+                class: "half",
+                type: "middle-right",
+                id: (i * 8) + 5
             })
         }
         if (leftCirclePresent) {
@@ -519,7 +894,7 @@ const getBeatmapExtreme = (fftMap, bpm, tileSpeed) => {
                 targetTime: fftMap[i].time,
                 class: "circle",
                 type: "left-circle",
-                id: (i * 6) + 4
+                id: (i * 8) + 6
             })
         }
         if (rightCirclePresent) {
@@ -527,7 +902,7 @@ const getBeatmapExtreme = (fftMap, bpm, tileSpeed) => {
                 targetTime: fftMap[i].time,
                 class: "circle",
                 type: "right-circle",
-                id: (i * 6) + 5
+                id: (i * 8) + 7
             })
         }
         beatmap.push({
@@ -612,5 +987,6 @@ const getBeatmapExtreme = (fftMap, bpm, tileSpeed) => {
 
     return [beatmap, maxCombo]
 }
+
 
 
