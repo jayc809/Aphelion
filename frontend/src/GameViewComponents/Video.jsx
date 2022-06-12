@@ -94,7 +94,7 @@ const Video = ({ updateCurrTime, beatmapObj, settingsObj, tileSpeed, getAllowSta
             <div className="black-screen" ref={blackScreenRef}></div>
             {
                 !settingsObj.useVideoForBackground ?
-                <img className="image-background" src={localStorage.getItem("game-background")}></img> :
+                <img className="image-background" src={localStorage.getItem("game-background")} alt="bg"></img> :
                 ""
             }
             <div className="video-wrapper" style={{opacity: settingsObj.useVideoForBackground ? 1 : 0}}>

@@ -9,7 +9,6 @@ import TransitionInView from './utilComponents/TransitionInView'
 import TransitionOutView from './utilComponents/TransitionOutView'
 import searchBarBackground from "./images/search-bar.png"
 import ytLogo from "./images/yt-logo.png"
-import bg from "./images/video-selector-bg.png"
 import "./VideoSelectorView.css"
 import "./App.css"
 
@@ -224,9 +223,9 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
             <div className="video-selector-view-wrapper" key={viewKey} style={{opacity: showView ? 1 : 0}}>
                 <div>
                     <div className="search-bar">
-                        <img className="search-bar-background" src={searchBarBackground}></img>
+                        <img className="search-bar-background" src={searchBarBackground} alt="search-bar"></img>
                         {showYT ? <div className="search-YT">Search</div> : ""}
-                        {showYT ? <img className="search-YT-logo" src={ytLogo}></img> : ""}
+                        {showYT ? <img className="search-YT-logo" src={ytLogo} alt="yt-logo"></img> : ""}
                         <input className="search-input" id="search-input-el" ref={inputRef} type="text" onChange={handleSearchInputChange} onFocus={() => {setShowYT(false)}} autoComplete="off"></input>
                     </div>
 

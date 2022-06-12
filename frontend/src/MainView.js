@@ -94,7 +94,6 @@ const MainView = ({ setView, settingsObj, showTransition, setShowTransition }) =
     }
 
     const [showInstructions, setShowInstructions] = useState(false)
-    const showInstructionsRef = useRef(false)
     const handleInstructionsClick = useCallback(() => {
         if (showInstructions) {
             setShowInstructions(false)

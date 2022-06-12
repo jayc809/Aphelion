@@ -38,6 +38,9 @@ const Tile = ({ type, tileSpeed, theme, targetTime, onMount, onMiss, id }) => {
                     tile.style.animationPlayState = "running"
                 }
                 break
+            default:
+                console.log("error in tile")
+                break
         }
     }
 
@@ -84,6 +87,9 @@ const Tile = ({ type, tileSpeed, theme, targetTime, onMount, onMiss, id }) => {
                         break
                     case "right":
                         animationX.current = "calc(100vw * 896 / 1280)"
+                        break
+                    default:
+                        console.log("error in tile 1")
                         break
                 }
             } else {

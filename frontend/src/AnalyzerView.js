@@ -117,20 +117,6 @@ const AnalyzerView = ({ setView, setBeatmapObjRef, settingsObj, videoId }) => {
             </div>
         </div>
     )
-
-    const fetchExpress = () => {
-        // fetch(`/getBeatmap?videoUrl=${test}`)
-        // .then(response => response.json())
-        // .then(json => {
-        //     console.log(json)
-        //     const beatmapObj = json
-        //     beatmapObj.refreshRate = 0.01 * 1000
-        //     beatmapObj.refreshTolerance = 0.0099
-        //     setDisplayText("analysis completed")
-        //     setBeatmapObjRef(beatmapObj)
-        //     setShowButton(true)
-        // })
-    }
 }
 
 export default AnalyzerView;

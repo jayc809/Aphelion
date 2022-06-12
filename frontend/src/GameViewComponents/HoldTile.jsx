@@ -78,6 +78,9 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
                     barOutline2.style.animationPlayState = "running"
                 }
                 break
+            default:
+                console.log("error in hold tile")
+                break
         }
     }
     
@@ -117,6 +120,9 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
                     barClip.style.clipPath = "polygon(53.2vw 40vh, 53vw 40vh, 73.6vw 100vh, 77.6vw 100vh)"
                     barOutlineClip1.style.clipPath = "polygon(53vw 40vh, 73.3vw 100vh, 73.8vw 100vh)"
                     barOutlineClip2.style.clipPath = "polygon(53.2vw 40vh, 77.6vw 100vh, 77.1vw 100vh)"
+                    break
+                default:
+                    console.log("error in hold tile 1")
                     break
             }
             
@@ -182,6 +188,9 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
                         break
                     case "right":
                         animationX.current = "calc(100vw * 896 / 1280)"
+                        break
+                    default:
+                        console.log("error in hold tile 2")
                         break
                 }
 

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Tile from "./Tile"
 import HoldTile from './HoldTile'
 import "../styles/TileGenerator.css"
@@ -106,12 +106,6 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
                         onTileTap("right")
                     }
                     break
-                case "k":
-                    if (!kPressed.current) {
-                        kPressed.current = true
-                        onTileTap("right")
-                    }
-                    break
                 case "s":
                     if (!sPressed.current && difficulty == "Extreme") {
                         sPressed.current = true
@@ -123,6 +117,8 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
                         lPressed.current = true
                         onTileTap("right-circle")
                     }
+                    break
+                default:
                     break
             }
         }
@@ -158,6 +154,8 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
                         lPressed.current = false
                         onTileRelease("right-circle")
                     }
+                    break
+                default:
                     break
             }
         }
@@ -344,6 +342,9 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
                                     id={tile.id}
                                     key={tile.id}
                                 ></CircleTile>
+                            default:
+                                console.log("error in tile generator")
+                                return
                         }
                     })
                 }

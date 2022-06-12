@@ -43,6 +43,9 @@ const HalfTile = ({ type, tileSpeed, theme, delay, targetTime, onMount, onMiss, 
                     tile.style.animationPlayState = "running"
                 }
                 break
+            default:
+                console.log("error in half tile")
+                break
         }
     }
 
@@ -89,6 +92,9 @@ const HalfTile = ({ type, tileSpeed, theme, delay, targetTime, onMount, onMiss, 
                         break
                     case "right":
                         animationX.current = "calc(100vw * 896 / 1280)"
+                        break
+                    default:
+                        console.log("error in half tile 1")
                         break
                 }
             } else {

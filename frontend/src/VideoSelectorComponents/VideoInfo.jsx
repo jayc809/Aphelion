@@ -46,10 +46,10 @@ const VideoInfo = ({ videoInfo, settingsObj, onMount }) => {
     return (videoInfo.snippet.thumbnails.high.url != "" ? 
             <div className="video-info-wrapper">
                 <div className="video-tier" style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
-                    <img src={aTier}></img>
+                    <img src={aTier} alt="tier"></img>
                 </div>
                 <div className="video-high-score" style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
-                    <img src={highScoreBackground}></img>
+                    <img src={highScoreBackground} alt="high-score"></img>
                     <h4>High Score</h4>
                     <h3>000038205929</h3>
                 </div>
@@ -70,17 +70,17 @@ const VideoInfo = ({ videoInfo, settingsObj, onMount }) => {
                                     />
                                 </div>
                             </div>
-                            <img className="video-thumbnail-frame" src={thumbnailFrame}></img> 
+                            <img className="video-thumbnail-frame" src={thumbnailFrame} alt="frame"></img> 
                         </div>  
                             : 
                         <div className="video-thumbnail-wrapper" style={{filter: `saturate(${settingsObj.videoSaturation}) brightness(${settingsObj.videoBrightness})`}}> 
-                            <img className="video-thumbnail-frame" src={thumbnailFrame}></img> 
+                            <img className="video-thumbnail-frame" src={thumbnailFrame} alt="frame"></img> 
                         </div>
                     ) 
                     : 
                     <div className="video-thumbnail-wrapper" style={{filter: `saturate(${settingsObj.videoSaturation}) brightness(${settingsObj.videoBrightness})`}}>      
-                        <img className="video-thumbnail-img" ref={thumbnailImgRef} src={thumbnailSrc} onLoad={handleInvalidThumbnailImg}></img>
-                        <img className="video-thumbnail-frame" src={thumbnailFrame}></img> 
+                        <img className="video-thumbnail-img" ref={thumbnailImgRef} src={thumbnailSrc} onLoad={handleInvalidThumbnailImg} alt="thumbnail"></img>
+                        <img className="video-thumbnail-frame" src={thumbnailFrame} alt="frame"></img> 
                     </div>
                 } 
             </div>:

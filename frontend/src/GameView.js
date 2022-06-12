@@ -11,13 +11,8 @@ import TileGenerator from './GameViewComponents/TileGenerator'
 import PauseMenu from './GameViewComponents/PauseMenu'
 import TransitionInView from './utilComponents/TransitionInView'
 import TransitionOutView from "./utilComponents/TransitionOutView"
-const testVideoId = "IKKar5SS29E" 
-const orangeVideoId = "3DrYQMK4hJE"
-const blueVideoId = "IKKar5SS29E" 
 
 const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, setSettingsObj, beatmapObj }) => {
-
-  // console.log("rerendered GameView")
 
   const [showGame, setShowGame] = useState(false)
   //initialization
@@ -132,6 +127,9 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, set
           temp.uiHue = originalUiHueRef.current
           setSettingsObj(temp)
         }
+        break
+      default:
+        console.log("error in game view")
         break
     }
   }

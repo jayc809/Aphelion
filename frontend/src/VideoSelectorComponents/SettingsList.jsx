@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import "../styles/SettingsList.css"
 import StepperButton from './StepperButton';
 import darkTheme from "../images/tile.png"
@@ -17,7 +17,7 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
     const [videoBrightness, setVideoBrightness] = useState(settingsObj.videoBrightness)
     const [musicStartTime, setMusicStartTime] = useState(settingsObj.musicStartTime)
     const [smoothAnimations, setSmoothAnimations] = useState(settingsObj.smoothAnimations)
-    const [beatNotes, setBeatNotes] = useState(settingsObj.beatNotes)
+    // const [beatNotes, setBeatNotes] = useState(settingsObj.beatNotes)
     const [lowerVolumeOnMisses, setLowerVolumeOnMisses] = useState(settingsObj.lowerVolumeOnMisses)
 
     const updateSettingObj = (name, val) => {
@@ -57,6 +57,9 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
                 setDifficulty("Easy")
                 updateSettingObj("difficulty", "Easy")
                 break 
+            default:
+                console.log("error in settings list")
+                break
         }
     }
 
@@ -113,15 +116,15 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
         }
     }
 
-    const handleBeatNotesToggle = () => {
-        if (beatNotes) {
-            setBeatNotes(false)
-            updateSettingObj("beatNotes", false)
-        } else {
-            setBeatNotes(true)
-            updateSettingObj("beatNotes", true)
-        }
-    }
+    // const handleBeatNotesToggle = () => {
+    //     if (beatNotes) {
+    //         setBeatNotes(false)
+    //         updateSettingObj("beatNotes", false)
+    //     } else {
+    //         setBeatNotes(true)
+    //         updateSettingObj("beatNotes", true)
+    //     }
+    // }
 
     const handleLowerVolumeOnMissesToggle = () => {
         if (lowerVolumeOnMisses) {
@@ -143,7 +146,7 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
     }
     const lastValidStartTime = useRef(settingsObj.musicStartTime)
     const selectedVideoRef = useRef(null)
-    const handleUnFocus = useCallback(() => {
+    const handleUnFocus = () => {
         const currInput = document.getElementById("start-time-input-el").value.slice(0, -1)
         const minutes = parseInt(/^\d+[:]/.exec(selectedVideoRef.current.snippet.duration)[0].slice(0, -1))
         const seconds = parseInt(/[:]\d+$/.exec(selectedVideoRef.current.snippet.duration)[0].slice(1))
@@ -160,7 +163,7 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
         } else {
             setMusicStartTime(lastValidStartTime.current)
         }
-    })
+    }
     const handleStartTimeChange = (e) => {
         const input = e.target.value.slice(0, -1)
         setMusicStartTime(input)
@@ -192,9 +195,6 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
         })
         reader.readAsDataURL(image)
     }
-
-    const defaultMinHueRef = useRef(settingsObj.uiHue)
-    const defaultMaxHueRef = useRef(settingsObj.uiHue + 359)
 
     return (
         <div className="settings-list-wrapper" style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
@@ -297,7 +297,7 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
                         </div>
                     </div>
                 }
-                {
+                {/* {
                     pauseMenu ? "" :
                     <div className="settings-list-row">
                         <h3>Beat Notes</h3>
@@ -305,7 +305,7 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
                             <button className="word-button" onClick={handleBeatNotesToggle} style={{cursor: "pointer"}}>{beatNotes ? "On" : "Off"}</button>
                         </div>
                     </div>
-                }
+                } */}
                 <div className="settings-list-row" style={{height: pauseMenu ? "20%" : "15%"}}>
                     <h3>Lower Volume On Misses</h3>
                     <div className="settings-list-row-content">
@@ -313,7 +313,7 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
                     </div>
                 </div>
                 <div className="settings-list-row">
-                    <h3>Rainbow UI</h3>
+                    <h3>Rainbow UI (Buggy)</h3>
                     <div className="settings-list-row-content">
                         <button className="word-button" onClick={handleRainbowUiToggle} style={{cursor: "pointer"}}>{rainbowUi ? "On" : "Off"}</button>
                     </div>

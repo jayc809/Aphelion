@@ -55,7 +55,7 @@ const ResultsView = ({ setView, incrementGameId, resultsObj, settingsObj, videoI
     useEffect(() => {
         if (startAddingScore.current ) {
             const intervals = 30
-            const scoreAdder = setTimeout(() => {
+            setTimeout(() => {
                 let currScore = scoreDisplay
                 currScore += parseInt(resultsObj.score / intervals)
                 if ((resultsObj.score - currScore < parseInt(resultsObj.score / intervals)) ||
@@ -138,6 +138,9 @@ const ResultsView = ({ setView, incrementGameId, resultsObj, settingsObj, videoI
                 return cTier
             case "F":
                 return fTier
+            default:
+                console.log("error in results view")
+                break
         }
     }
 
@@ -161,15 +164,15 @@ const ResultsView = ({ setView, incrementGameId, resultsObj, settingsObj, videoI
                 <div className="results-main-content">
                     <div className="results-tier-wrapper">
                         <h4>Rank</h4>
-                        <img src={getTierSrc()} ref={tierRef} style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}></img>
+                        <img src={getTierSrc()} ref={tierRef} style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}} alt="tier"></img>
                     </div>
                     <div className="results-metrics-wrapper">
                         <h4>Score</h4>
                         <h2>{String(scoreDisplay).padStart(12, "0")}</h2>
                         <div className="results-sign-wrapper">
-                            <img src={noMisses} style={{width: signSize, marginBottom: `calc(${circleSize} / 8)`, opacity: resultsObj.noMisses ? 1 : 0.35}}></img>
-                            <img src={fullCombo} style={{width: signSize, marginBottom: `calc(${circleSize} / 8)`, opacity: resultsObj.fullCombo ? 1 : 0.35}}></img>
-                            <img src={fullPerfect} style={{width: signSize, marginBottom: `calc(${circleSize} / 8)`, opacity: resultsObj.fullPerfect ? 1 : 0.4}}></img>
+                            <img src={noMisses} style={{width: signSize, marginBottom: `calc(${circleSize} / 8)`, opacity: resultsObj.noMisses ? 1 : 0.35}} alt="no-misses"></img>
+                            <img src={fullCombo} style={{width: signSize, marginBottom: `calc(${circleSize} / 8)`, opacity: resultsObj.fullCombo ? 1 : 0.5}} alt="full-combo"></img>
+                            <img src={fullPerfect} style={{width: signSize, marginBottom: `calc(${circleSize} / 8)`, opacity: resultsObj.fullPerfect ? 1 : 0.4}} alt="full-perfect"></img>
                         </div>
                         <div className="results-circle-wrapper">
                             <div style={{height: `calc(${circleSize} * 1.6)`, width: circleSize}}>
@@ -184,16 +187,16 @@ const ResultsView = ({ setView, incrementGameId, resultsObj, settingsObj, videoI
                     </div>
                 </div>
                 <div className="results-img-right-clip" style={{clipPath: clipRight, filter: `saturate(${settingsObj.videoSaturation}) brightness(${settingsObj.videoBrightness})`}}>
-                    <img className="results-img-right-clip-content" ref={thumbnailImgRef} src={thumbnailSrc} onLoad={handleInvalidThumbnailImg}></img>
+                    <img className="results-img-right-clip-content" ref={thumbnailImgRef} src={thumbnailSrc} onLoad={handleInvalidThumbnailImg} alt="right-img"></img>
                 </div>
                 <div className="results-img-left-clip" style={{clipPath: clipLeft, filter: `saturate(${settingsObj.videoSaturation}) brightness(${settingsObj.videoBrightness})`}}>
-                    <img className="results-img-left-clip-content" src={thumbnailSrc}></img>
+                    <img className="results-img-left-clip-content" src={thumbnailSrc} alt="left-img"></img>
                 </div>
-                <img className="results-view-background" src={resultsBackground} style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}></img>
+                <img className="results-view-background" src={resultsBackground} style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}} alt="bg"></img>
                 <div className="results-view-top">
                     <h3>{videoInfo.snippet.title}</h3>
                     <h4>{videoInfo.snippet.channelTitle}</h4>
-                    <img src={resultsTop}></img>
+                    <img src={resultsTop} alt="top"></img>
                 </div>
                 <div className="background-video-wrapper"> 
                     <div className="background-video" >

@@ -42,6 +42,8 @@ const Platform = ({ settingsObj }) => {
             case "l":
                 setLPressed(true)
                 break
+            default:
+                break
         }
     }
     const handleUpLocal = (e) => {
@@ -65,6 +67,8 @@ const Platform = ({ settingsObj }) => {
             case "l":
                 setLPressed(false)
                 break
+            default:
+                break
         }
     }
 
@@ -75,7 +79,7 @@ const Platform = ({ settingsObj }) => {
             window.removeEventListener('keydown', handleDownLocal)
             window.removeEventListener('keyup', handleUpLocal)
         }
-    }, [handleDownLocal, handleUpLocal])
+    }, [])
 
     return (
         <div className="platform-parent">

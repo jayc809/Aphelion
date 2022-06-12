@@ -59,7 +59,6 @@ const ScrollList = ({ videosInput, setSelectedVideo }) => {
         }
     }, [videos])
 
-    const [style, setStyle] = useState({})
     const handelResize = () => {
         const aspectRatio = window.innerWidth / window.innerHeight
         //height 150vh / 9 * 0.8/0.2

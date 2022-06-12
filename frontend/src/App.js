@@ -7,7 +7,7 @@ import CheckDimensionView from './utilComponents/CheckDimensionView'
 import CheckBrowserView from './utilComponents/CheckBrowserView'
 import TestView from "./utilComponents/TestView"
 import MainView from './MainView'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 function App() {
 
@@ -47,7 +47,7 @@ function App() {
     }
   })
   const [settingsObj, setSettingsObj] = useState({
-      difficulty: "Hard",
+      difficulty: "Medium",
       tileSpeed: 1.3,
       theme: "dark",
       useVideoForBackground: true,
@@ -95,10 +95,6 @@ function App() {
   const setShowMainViewTransitionInRef = (tf) => {
     showMainViewTransitionInRef.current = tf
   }
-
-  // useEffect(() => {
-  //   console.log(settingsObj.useVideoForBackground)
-  // }, [settingsObj])
 
   return (
     <div id="app" style={{backgroundColor: "black"}}>

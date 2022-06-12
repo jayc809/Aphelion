@@ -48,6 +48,9 @@ const CircleTile = ({ type, tileSpeed, theme, targetTime, onMount, onMiss, id })
                     circleInWrapper.style.animationPlayState = "running"
                 }
                 break
+            default:
+                console.log("error in circle tile")
+                break
         }
     }
 
@@ -91,6 +94,9 @@ const CircleTile = ({ type, tileSpeed, theme, targetTime, onMount, onMiss, id })
                         break
                     case "right-circle":
                         animationX.current = "calc(87vw - 26.5vh / 2)"
+                        break
+                    default:
+                        console.log("error in circle tile 1")
                         break
                 }
             } else {
