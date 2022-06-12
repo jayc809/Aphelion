@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import "../styles/Tile.css"
 import AnimationView from '../utilComponents/AnimationView'
-import circleIn from "../images/tile-circle-in.png"
+import circleInLeft from "../images/tile-circle-in-left.png"
+import circleInRight from "../images/tile-circle-in-right.png"
+import circleInLeftLight from "../images/tile-circle-in-left-light.png"
+import circleInRightLight from "../images/tile-circle-in-right-light.png"
 
 const CircleTile = ({ type, tileSpeed, theme, targetTime, onMount, onMiss, id }) => {
 
@@ -22,9 +25,10 @@ const CircleTile = ({ type, tileSpeed, theme, targetTime, onMount, onMiss, id })
 
     const controller = (instructions, options = null) => {
         const circleIn = circleInRef.current
+        const circleInWrapper = circleInWrapperRef.current
         switch (instructions) {
             case "getClass":
-                return "tap"
+                return "circle"
             case "tap":
                 tapTile(options)
                 break
@@ -32,10 +36,16 @@ const CircleTile = ({ type, tileSpeed, theme, targetTime, onMount, onMiss, id })
                 if (circleIn && circleIn.style) {
                     circleIn.style.animationPlayState = "paused"
                 }
+                if (circleInWrapper && circleInWrapper.style) {
+                    circleInWrapper.style.animationPlayState = "paused"
+                }
                 break
             case "playAnimation":
                 if (circleIn && circleIn.style) {
                     circleIn.style.animationPlayState = "running"
+                }
+                if (circleInWrapper && circleInWrapper.style) {
+                    circleInWrapper.style.animationPlayState = "running"
                 }
                 break
         }
@@ -47,7 +57,7 @@ const CircleTile = ({ type, tileSpeed, theme, targetTime, onMount, onMiss, id })
         if (type != "placeholder") {
             circleInWrapper.style.animation = `increase-size-circle ${(tileSpeed * 0.84) + "s"} ${timingFunctionMove} forwards, 
                                                increase-opacity ${(tileSpeed * 0.84) + "s"} ${timingFunctionOpacity} forwards`
-            circleIn.style.animation = `rotate-circle ${(tileSpeed * 0.84) + "s"} ${timingFunctionMove} forwards`
+            circleIn.style.animation = `rotate-circle-${type} ${(tileSpeed * 0.84) + "s"} ${timingFunctionMove} forwards`
         }
     }
 
@@ -74,13 +84,13 @@ const CircleTile = ({ type, tileSpeed, theme, targetTime, onMount, onMiss, id })
             if (accuracy == "perfect") {
                 animationHeight.current = "calc(26.5vh * 1500 / 850)"
                 animationWidth.current = "calc(26.5vh * 1500 / 850)"
-                animationY.current = "calc(100vh - (16.5vh + 26.5vh / 2))"
+                animationY.current = "calc(100vh - (25vh + 26.5vh / 2))"
                 switch (type) {
-                    case "left":
-                        animationX.current = "calc(9vw + 26.5vh / 2)"
+                    case "left-circle":
+                        animationX.current = "calc(13vw + 26.5vh / 2)"
                         break
-                    case "right":
-                        animationX.current = "calc(91vw - 26.5vh / 2)"
+                    case "right-circle":
+                        animationX.current = "calc(87vw - 26.5vh / 2)"
                         break
                 }
             } else {
@@ -141,14 +151,18 @@ const CircleTile = ({ type, tileSpeed, theme, targetTime, onMount, onMiss, id })
                 </div> :
                 ""
             }
-            <div className="circle-tile-wrapper" style={{right: type == "right" ? "9vw" : "auto", left: type == "left" ? "9vw" : "auto"}}>
+            <div className="circle-tile-wrapper" style={{right: type == "right-circle" ? "13vw" : "auto", left: type == "left-circle" ? "13vw" : "auto"}}>
                 <div className="circle-tile-in" ref={circleInRef} style={{transform: "rotate(180deg)"}} onAnimationEnd={() => {
                     setTimeout(() => {     
                         handleMiss()
                     }, (tileSpeed * 0.16) * 1000)
                 }}>
                     <div className="circle-tile-in-wrapper" ref={circleInWrapperRef}>
-                        <img src={theme == "light" ? circleIn : circleIn} alt="circle" />
+                        {
+                            type == "left-circle" ?
+                            <img src={theme == "light" ? circleInLeftLight : circleInLeft} alt="circle"/> :
+                            <img src={theme == "light" ? circleInRightLight : circleInRight} alt="circle"/>
+                        }
                     </div>
                 </div>
             </div>

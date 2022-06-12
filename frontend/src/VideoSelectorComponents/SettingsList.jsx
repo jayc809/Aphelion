@@ -33,7 +33,7 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
         }
         return () => {
             window.removeEventListener("keypress", handleKeyPress)
-            if (!pauseMenu) {
+            if (!pauseMenu && document.getElementById("start-time-input-el")) {
                 document.getElementById("start-time-input-el").removeEventListener("focusout", handleUnFocus)
             }
         }

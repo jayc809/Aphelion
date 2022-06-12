@@ -63,7 +63,22 @@ io.on("connect", socket => {
             const fftMap= getFFTMap(audioData, buffer, startIndex, bpm) 
 
             console.log("generating beatmap")
-            const [beatmap, maxCombo] = getBeatmap(fftMap, bpm)
+            let beatmap
+            let maxCombo
+            switch (requestObj.settingsObj.difficulty) {
+                case "Easy":
+                    [beatmap, maxCombo] = getBeatmapEasy(fftMap, bpm)
+                    break
+                case "Medium": 
+                    [beatmap, maxCombo] = getBeatmapMedium(fftMap, bpm, requestObj.settingsObj.tileSpeed)
+                    break
+                case "Hard":
+                    [beatmap, maxCombo] = getBeatmapHard(fftMap, bpm, requestObj.settingsObj.tileSpeed)
+                    break
+                case "Extreme":
+                    [beatmap, maxCombo] = getBeatmapExtreme(fftMap, bpm, requestObj.settingsObj.tileSpeed)
+                    break
+            }
 
             const beatmapObj = {
                 videoUrl: videoUrl,
@@ -277,7 +292,7 @@ const getFFTMap = (audioData, buffer, startIndex, bpm) => {
     }
     return fftMap 
 }
-const getBeatmap = (fftMap, bpm) => {
+const getBeatmapMedium = (fftMap, bpm, tileSpeed) => {
     const frequencies = []
     for (let i = 0; i < fftMap.length; i += 1) {
         for (let j = 0; j < fftMap[i].meta.length; j += 1) {
@@ -351,14 +366,9 @@ const getBeatmap = (fftMap, bpm) => {
         })
         maxCombo += tiles.length
     }
-    let leftChain = []
-    let leftPrevIndex = [0]
-    let middleLeftChain = []
-    let middleLeftPrevIndex = [0]
-    let middleRightChain = []
-    let middleRightPrevIndex = [0]
-    let rightChain = [0]
-    let rightPrevIndex = [0]
+
+    const beatsPerTile = tileSpeed / (60 / bpm)
+    const minimumDistance = Number.isInteger(beatsPerTile) ? parseInt(beatsPerTile) :  parseInt(beatsPerTile) + 1
     
     const tranformHoldTiles = (tile, beat, chain, prevIndex, limit) => {
         if (beat == prevIndex[0] + 1) {
@@ -374,7 +384,7 @@ const getBeatmap = (fftMap, bpm) => {
                 maxCombo -= 1
             }
         } else if (beat > prevIndex[0] + 1) {
-            if (chain.length >= 4 && chain.length <= limit) {
+            if (chain.length >= minimumDistance && chain.length <= limit) {
                 chain[0].class = "hold"
                 chain[0].elapseBeatCount = chain.length
                 chain[0].elapseTime = 60 / bpm * chain.length
@@ -388,18 +398,17 @@ const getBeatmap = (fftMap, bpm) => {
         prevIndex[0] = beat
     }
 
+    let leftChain = []
+    let leftPrevIndex = [-1]
+    let rightChain = []
+    let rightPrevIndex = [-1]
     for (let i = 0; i < beatmap.length; i += 1) {
         const tiles = beatmap[i].tiles
         for (let j = 0; j < tiles.length; j += 1) {
             const tile = tiles[j]
             if (tile.type == "left") {
                 tranformHoldTiles(tile, i, leftChain, leftPrevIndex, 8)
-            } 
-            // else if (tile.type == "middle-left") {
-            //     // tranformHoldTiles(tile, i, middleLeftChain, middleLeftPrevIndex, 4)
-            // } else if (tile.type == "middle-right") {
-            //     // tranformHoldTiles(tile, i, middleRightChain, middleRightPrevIndex, 4)
-            // } 
+            }
             else if (tile.type == "right") {
                 tranformHoldTiles(tile, i, rightChain, rightPrevIndex, 8)
             }
@@ -412,4 +421,196 @@ const getBeatmap = (fftMap, bpm) => {
 
     return [beatmap, maxCombo]
 }
+const getBeatmapExtreme = (fftMap, bpm, tileSpeed) => {
+    const frequencies = []
+    for (let i = 0; i < fftMap.length; i += 1) {
+        for (let j = 0; j < fftMap[i].meta.length; j += 1) {
+            frequencies.push(fftMap[i].meta[j].frequency)
+        }
+    }
+    const frequenciesSorted = frequencies.sort((a, b) => a - b)
+    const quartiles = [
+        frequenciesSorted[parseInt(frequenciesSorted.length * 0.25)],
+        frequenciesSorted[parseInt(frequenciesSorted.length * 0.5)],
+        frequenciesSorted[parseInt(frequenciesSorted.length * 0.75)],
+        frequenciesSorted[frequenciesSorted.length - 1]
+    ]
+
+    const magnitudes = []
+    for (let i = 0; i < fftMap.length; i += 1) {
+        for (let j = 0; j < fftMap[i].meta.length; j += 1) {
+            magnitudes.push(fftMap[i].meta[j].magnitude)
+        }
+    }
+    const magnitudesSorted = magnitudes.sort((a, b) => a - b)
+    const magnitudeCutoff = magnitudesSorted[parseInt(magnitudesSorted.length * 0.7)]
+    
+    let maxCombo = 0
+    const beatmap = []
+    for (let i = 0; i < fftMap.length; i += 1) {
+        const top4 = fftMap[i].meta
+        let leftPresent = false
+        let middleLeftPresent = false
+        let middleRightPresent = false
+        let rightPresent = false
+        let leftCirclePresent = false
+        let rightCirclePresent = false
+        for (let j = 0; j < 4; j += 1) {
+            const fft = top4[j]
+            if (fft.frequency <= quartiles[0] && (fft.magnitude > 1)) {
+                leftPresent = true
+                if (fft.magnitude >= magnitudeCutoff) {
+                    leftCirclePresent = true
+                }
+            } else if (fft.frequency <= quartiles[1] && (fft.magnitude > 1)) {
+                middleLeftPresent = true
+                if (fft.magnitude >= magnitudeCutoff) {
+                    leftCirclePresent = true
+                }
+            } else if (fft.frequency <= quartiles[2] && (fft.magnitude > 1)) {
+                middleRightPresent = true
+                if (fft.magnitude >= magnitudeCutoff) {
+                    rightCirclePresent = true
+                }
+            } else if (fft.frequency <= quartiles[3] && (fft.magnitude > 1)) {
+                rightPresent = true
+                if (fft.magnitude >= magnitudeCutoff) {
+                    rightCirclePresent = true
+                }
+            } 
+
+        }
+
+        const tiles = []
+        if (leftPresent) {
+            tiles.push({
+                targetTime: fftMap[i].time,
+                class: "tap",
+                type: "left",
+                id: i * 6
+            })
+        }
+        if (middleLeftPresent) {
+            tiles.push({
+                targetTime: fftMap[i].time, 
+                class: "tap",
+                type: "middle-left",
+                id: (i * 6) + 1
+            })
+        }
+        if (middleRightPresent) {
+            tiles.push({
+                targetTime: fftMap[i].time,
+                class: "tap",
+                type: "middle-right",
+                id: (i * 6) + 2
+            })
+        }
+        if (rightPresent) {
+            tiles.push({
+                targetTime: fftMap[i].time,
+                class: "tap",
+                type: "right",
+                id: (i * 6) + 3
+            })
+        }
+        if (leftCirclePresent) {
+            tiles.push({
+                targetTime: fftMap[i].time,
+                class: "circle",
+                type: "left-circle",
+                id: (i * 6) + 4
+            })
+        }
+        if (rightCirclePresent) {
+            tiles.push({
+                targetTime: fftMap[i].time,
+                class: "circle",
+                type: "right-circle",
+                id: (i * 6) + 5
+            })
+        }
+        beatmap.push({
+            time: fftMap[i].time,
+            tiles: tiles
+        })
+        maxCombo += tiles.length
+    }
+
+    const beatsPerTile = tileSpeed / (60 / bpm)
+    const minimumDistance = Number.isInteger(beatsPerTile) ? parseInt(beatsPerTile) :  parseInt(beatsPerTile) + 1
+
+    const tranformHoldTiles = (tile, beat, chain, prevIndex, limit) => {
+        if (beat == prevIndex[0] + 1) {
+            chain.push(tile)
+            if (chain.length == limit) {
+                chain[0].class = "hold"
+                chain[0].elapseBeatCount = chain.length - 1
+                chain[0].elapseTime = 60 / bpm * (chain.length - 1)
+                for (let k = 1; k < chain.length; k += 1) {
+                    chain[k].class = "blank"
+                }
+                chain.length = 0
+                maxCombo -= 1
+            }
+        } else if (beat > prevIndex[0] + 1) {
+            if (chain.length >= minimumDistance && chain.length <= limit) {
+                chain[0].class = "hold"
+                chain[0].elapseBeatCount = chain.length
+                chain[0].elapseTime = 60 / bpm * chain.length
+                for (let k = 1; k < chain.length; k += 1) {
+                    chain[k].class = "blank"
+                }
+            }
+            chain.length = 0
+            chain.push(tile)
+        }
+        prevIndex[0] = beat
+    }
+
+    let leftChain = []
+    let leftPrevIndex = [-1]
+    let rightChain = []
+    let rightPrevIndex = [-1]
+    for (let i = 0; i < beatmap.length; i += 1) {
+        const tiles = beatmap[i].tiles
+        for (let j = 0; j < tiles.length; j += 1) {
+            const tile = tiles[j]
+            if (tile.type == "left") {
+                tranformHoldTiles(tile, i, leftChain, leftPrevIndex, 8)
+            } 
+            else if (tile.type == "right") {
+                tranformHoldTiles(tile, i, rightChain, rightPrevIndex, 8)
+            }
+        }
+    }
+
+    const cleanCircleTiles = (tile, beat, prevIndex) => {
+        if (beat < prevIndex[0] + minimumDistance - 1) {
+            tile.class = "blank"
+        }
+        prevIndex[0] = beat
+    }
+
+    let leftCirclePrevIndex = [-100]
+    let rightCirclePrevIndex = [-100]
+    for (let i = 0; i < beatmap.length; i += 1) {
+        const tiles = beatmap[i].tiles
+        for (let j = 0; j < tiles.length; j += 1) {
+            const tile = tiles[j]
+            if (tile.type == "left-circle") {
+                cleanCircleTiles(tile, i, leftCirclePrevIndex)
+            } else if (tile.type == "right-circle") {
+                cleanCircleTiles(tile, i, rightCirclePrevIndex)
+            }
+        }
+    }
+
+    beatmap.forEach((meta) => {
+        meta.tiles = meta.tiles.filter((tile) => {return tile.class != "blank"})
+    })
+
+    return [beatmap, maxCombo]
+}
+
 

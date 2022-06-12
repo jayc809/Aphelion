@@ -109,18 +109,18 @@ const Platform = ({ settingsObj }) => {
                 style={{opacity: kPressed ? opacityWhenDown : 0}}
             />
             {
-                settingsObj.difficulty == "Hard" || settingsObj.difficulty == "Extreme" ?
+                settingsObj.difficulty == "Extreme" ?
                 <div>
-                    <div className="circle-tile-wrapper" style={{right: "9vw", opacity: lPressed ? opacityWhenDown : 0, zIndex: 8}}>
+                    <div className="circle-tile-wrapper" style={{right: "13vw", opacity: lPressed ? opacityWhenDown : 0, zIndex: 8}}>
                         <img className="circle-tile-out" src={circleLight}></img>
                     </div> 
-                    <div className="circle-tile-wrapper" style={{left: "9vw", opacity: sPressed ? opacityWhenDown : 0, zIndex: 7}}>
+                    <div className="circle-tile-wrapper" style={{left: "13vw", opacity: sPressed ? opacityWhenDown : 0, zIndex: 7}}>
                         <img className="circle-tile-out" src={circleLight}></img>
                     </div> 
-                    <div className="circle-tile-wrapper" style={{right: "9vw", opacity: 0.88, zIndex: 6}}>
+                    <div className="circle-tile-wrapper" style={{right: "13vw", opacity: 0.88, zIndex: 6}}>
                         <img className="circle-tile-out" src={circleOut}></img>
                     </div> 
-                    <div className="circle-tile-wrapper" style={{left: "9vw", opacity: 0.88, zIndex: 5}}>
+                    <div className="circle-tile-wrapper" style={{left: "13vw", opacity: 0.88, zIndex: 5}}>
                         <img className="circle-tile-out" src={circleOut}></img>
                     </div> 
                 </div> :

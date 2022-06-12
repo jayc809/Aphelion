@@ -311,6 +311,7 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, set
             updateScoreAndCombo={updateScoreAndCombo}
             getAllowStart={getAllowStart}
             theme={settingsObj.theme}
+            difficulty={settingsObj.difficulty}
           />
         </div>
 

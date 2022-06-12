@@ -10,6 +10,7 @@
     margin: 0;
     opacity: 0;
     z-index: 20;
+    width: 0;
 }
 
 .tile img {
@@ -179,7 +180,7 @@
     aspect-ratio: 1;
     /* border: 1px solid red; */
     position: absolute;
-    bottom: 16.5vh;
+    bottom: 25vh;
 }
 
 .circle-tile-out {
@@ -224,7 +225,7 @@
     }
 }
 
-@keyframes rotate-circle {
+@keyframes rotate-circle-left-circle {
     from {
         transform: rotate(0deg);
     }
@@ -233,3 +234,11 @@
     }
 }
 
+@keyframes rotate-circle-right-circle {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-180deg);
+    }
+}

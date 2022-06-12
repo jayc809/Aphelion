@@ -4,7 +4,7 @@ import HoldTile from './HoldTile'
 import "../styles/TileGenerator.css"
 import CircleTile from './CircleTile'
 
-const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, getAllowStart, theme }) => {
+const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, getAllowStart, theme, difficulty }) => {
 
     const [beatmapIndex, setBeatmapIndex] = useState(null)
     const [currentTiles, setCurrentTiles] = useState(
@@ -75,6 +75,8 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
     const fPressed = useRef(false)
     const jPressed = useRef(false)
     const kPressed = useRef(false)
+    const sPressed = useRef(false)
+    const lPressed = useRef(false)
 
     const handleDown = (e) => {
         if (getAllowStart() && allowKeyboardRef.current) {
@@ -103,6 +105,24 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
                         onTileTap("right")
                     }
                     break
+                case "k":
+                    if (!kPressed.current) {
+                        kPressed.current = true
+                        onTileTap("right")
+                    }
+                    break
+                case "s":
+                    if (!sPressed.current && difficulty == "Extreme") {
+                        sPressed.current = true
+                        onTileTap("left-circle")
+                    }
+                    break
+                case "l":
+                    if (!lPressed.current && difficulty == "Extreme") {
+                        lPressed.current = true
+                        onTileTap("right-circle")
+                    }
+                    break
             }
         }
     }
@@ -125,6 +145,18 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
                 case "k":
                     kPressed.current = false
                     onTileRelease("right")
+                    break
+                case "s":
+                    if (difficulty == "Extreme") {
+                        sPressed.current = false
+                        onTileRelease("left-circle")
+                    }
+                    break
+                case "l":
+                    if (difficulty == "Extreme") {
+                        lPressed.current = false
+                        onTileRelease("right-circle")
+                    }
                     break
             }
         }
@@ -167,13 +199,12 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
             const accuracy = getTileAccuracy(closestTargetTime)
             if (controller("getClass") == "tap") {
                 controller("tap", accuracy)
-                updateScoreAndCombo(accuracy)
-            }
-            else if (controller("getClass") == "hold") {
+            } else if (controller("getClass") == "hold") {
                 controller("hold", accuracy)
-                updateScoreAndCombo(accuracy)
+            } else if (controller("getClass") == "circle") {
+                controller("tap", accuracy)
             }
-
+            updateScoreAndCombo(accuracy)
         }
     }
     const getTileAccuracy = (closestTargetTime) => {
