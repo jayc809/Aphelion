@@ -2,9 +2,9 @@
     "name": "aphelion-tests",
     "version": "1.0.0",
     "description": "",
-    "main": "./backend/server.js",
+    "main": "app",
     "scripts": {
-        "start": "node ./backend/server.js",
+        "start": "node app",
         "heroku-postbuild": "cd frontend && npm install --legacy-peer-deps --only=dev && npm install --legacy-peer-deps && npm run build"
     },
     "engines": {
