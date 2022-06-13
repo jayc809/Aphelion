@@ -20,7 +20,7 @@ const AnalyzerView = ({ setView, setBeatmapObjRef, settingsObj, videoId }) => {
 
     useEffect(() => {
         const videoUrl = `https://www.youtube.com/watch?v=${videoId}`
-        const socket = socketIOClient("http://localhost:5000")
+        const socket = socketIOClient("https://jayc809-aphelion.herokuapp.com")
         setTimeout(() => {
             setShowAnalyzer(true)
         }, 700)

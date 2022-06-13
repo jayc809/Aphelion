@@ -1,5 +1,4 @@
 const express = require("express")
-const app = express()
 const fs = require('fs')
 const path = require("path")
 const readline = require('readline')
@@ -9,10 +8,25 @@ const MusicTempo = require("music-tempo")
 const { builtinModules } = require("module")
 const fft = require('fft-js').fft
 const fftUtil = require('fft-js').util
+const cors = require('cors');
 
-const io = require("socket.io")(5000, {
-    cors: {origin: ["http://localhost:3000"]}
+
+const port = process.env.PORT || 4000
+const app = express()
+const server = require('http').createServer(app)
+
+app.use(cors())
+app.use(express.static("../frontend/build"))
+app.get("/", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"))
 })
+app.listen(port, (err) => {
+    if (err) return console.log(err)
+    console.log("app running on port: " + port)
+})
+
+const io = require("socket.io")(server)
+
 io.on("connect", socket => {
     console.log(`client ${socket.id} has connected`)
     socket.emit("connected-to-server", "connected to server")
