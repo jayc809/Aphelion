@@ -25,102 +25,102 @@ app.listen(port, (err) => {
     console.log("app running on port: " + port)
 })
 
-const io = require("socket.io")(server)
+// const io = require("socket.io")(server)
 
-io.on("connect", socket => {
-    console.log(`client ${socket.id} has connected`)
-    socket.emit("connected-to-server", "connected to server")
+// io.on("connect", socket => {
+//     console.log(`client ${socket.id} has connected`)
+//     socket.emit("connected-to-server", "connected to server")
 
-    socket.on("request-beatmap", (requestObj) => {
-        const filePath = path.resolve(__dirname, `video${socket.id}.mkv`)
-        const videoUrl = requestObj.videoUrl
-        const video = ytdl(videoUrl, { filter: "audio" })
+//     socket.on("request-beatmap", (requestObj) => {
+//         const filePath = path.resolve(__dirname, `video${socket.id}.mkv`)
+//         const videoUrl = requestObj.videoUrl
+//         const video = ytdl(videoUrl, { filter: "audio" })
 
-        //download the video
-        let starttime
-        video.pipe(fs.createWriteStream(filePath))
-        video.once('response', () => {
-            starttime = Date.now()
-        })
-        socket.emit("progress-update", "Downloading Video")
-        console.log("downloading video")
-        video.on('progress', (chunkLength, downloaded, total) => {
-            const percent = downloaded / total
-            readline.cursorTo(process.stdout, 0)
-            process.stdout.write(`${(percent * 100).toFixed(2)}% downloaded`)
-            process.stdout.write(`(${(downloaded / 1024 / 1024).toFixed(2)}MB of ${(total / 1024 / 1024).toFixed(2)}MB)\n`)
-            readline.moveCursor(process.stdout, 0, -1)
-        })
+//         //download the video
+//         let starttime
+//         video.pipe(fs.createWriteStream(filePath))
+//         video.once('response', () => {
+//             starttime = Date.now()
+//         })
+//         socket.emit("progress-update", "Downloading Video")
+//         console.log("downloading video")
+//         video.on('progress', (chunkLength, downloaded, total) => {
+//             const percent = downloaded / total
+//             readline.cursorTo(process.stdout, 0)
+//             process.stdout.write(`${(percent * 100).toFixed(2)}% downloaded`)
+//             process.stdout.write(`(${(downloaded / 1024 / 1024).toFixed(2)}MB of ${(total / 1024 / 1024).toFixed(2)}MB)\n`)
+//             readline.moveCursor(process.stdout, 0, -1)
+//         })
 
-        //analyze audio
-        video.on('end', () => {
-            process.stdout.write('\n')
-            const data = fs.readFileSync(filePath)
-            const buffer = data.buffer
-            if (checkADTSValidity(buffer)) {  
-                const audioCtx = new webAudioApi.AudioContext()
-                socket.emit("progress-update", "Decoding Audio Data")
-                console.log("decoding audio data")
-                audioCtx.decodeAudioData(buffer, analyzeAudio)
-            } else {
-                socket.emit("progress-update", "ERROR: Decoding Audio Data Failed")
-            }
-        })
+//         //analyze audio
+//         video.on('end', () => {
+//             process.stdout.write('\n')
+//             const data = fs.readFileSync(filePath)
+//             const buffer = data.buffer
+//             if (checkADTSValidity(buffer)) {  
+//                 const audioCtx = new webAudioApi.AudioContext()
+//                 socket.emit("progress-update", "Decoding Audio Data")
+//                 console.log("decoding audio data")
+//                 audioCtx.decodeAudioData(buffer, analyzeAudio)
+//             } else {
+//                 socket.emit("progress-update", "ERROR: Decoding Audio Data Failed")
+//             }
+//         })
 
-        const analyzeAudio = (buffer) => {
-            socket.emit("progress-update", "Generating Beatmap")
-            console.log("calculating BPM")
-            const audioData = getAudioData(buffer)
-            const [bpm, startIndex, startTime] = getBPM(audioData, buffer, requestObj.settingsObj.musicStartTime)
+//         const analyzeAudio = (buffer) => {
+//             socket.emit("progress-update", "Generating Beatmap")
+//             console.log("calculating BPM")
+//             const audioData = getAudioData(buffer)
+//             const [bpm, startIndex, startTime] = getBPM(audioData, buffer, requestObj.settingsObj.musicStartTime)
 
-            console.log("analyzing audio using FFT")
-            const fftMap = getFFTMap(audioData, buffer, startIndex, bpm) 
+//             console.log("analyzing audio using FFT")
+//             const fftMap = getFFTMap(audioData, buffer, startIndex, bpm) 
 
-            console.log("generating beatmap")
-            let beatmap
-            let maxCombo
-            const fftMapHalf = getFFTMapHalf(audioData, buffer, startIndex, bpm)
-            switch (requestObj.settingsObj.difficulty) {
-                case "Easy":
-                    [beatmap, maxCombo] = getBeatmapEasy(fftMap, bpm, requestObj.settingsObj.tileSpeed)
-                    break
-                case "Medium": 
-                    [beatmap, maxCombo] = getBeatmapMedium(fftMap, bpm, requestObj.settingsObj.tileSpeed)
-                    break
-                case "Hard":
-                    [beatmap, maxCombo] = getBeatmapHard(fftMap, fftMapHalf, bpm, requestObj.settingsObj.tileSpeed)
-                    break
-                case "Extreme":
-                    [beatmap, maxCombo] = getBeatmapExtreme(fftMap, fftMapHalf, bpm, requestObj.settingsObj.tileSpeed)
-                    break
-            }
+//             console.log("generating beatmap")
+//             let beatmap
+//             let maxCombo
+//             const fftMapHalf = getFFTMapHalf(audioData, buffer, startIndex, bpm)
+//             switch (requestObj.settingsObj.difficulty) {
+//                 case "Easy":
+//                     [beatmap, maxCombo] = getBeatmapEasy(fftMap, bpm, requestObj.settingsObj.tileSpeed)
+//                     break
+//                 case "Medium": 
+//                     [beatmap, maxCombo] = getBeatmapMedium(fftMap, bpm, requestObj.settingsObj.tileSpeed)
+//                     break
+//                 case "Hard":
+//                     [beatmap, maxCombo] = getBeatmapHard(fftMap, fftMapHalf, bpm, requestObj.settingsObj.tileSpeed)
+//                     break
+//                 case "Extreme":
+//                     [beatmap, maxCombo] = getBeatmapExtreme(fftMap, fftMapHalf, bpm, requestObj.settingsObj.tileSpeed)
+//                     break
+//             }
 
-            const beatmapObj = {
-                videoUrl: videoUrl,
-                bpm: bpm,
-                startTime: startTime,
-                totalTime: audioData.length / buffer.sampleRate,
-                beatmap: beatmap,
-                maxCombo: maxCombo
-            }
+//             const beatmapObj = {
+//                 videoUrl: videoUrl,
+//                 bpm: bpm,
+//                 startTime: startTime,
+//                 totalTime: audioData.length / buffer.sampleRate,
+//                 beatmap: beatmap,
+//                 maxCombo: maxCombo
+//             }
 
-            socket.emit("progress-update", "Process Completed")
-            console.log("process completed")
-            socket.emit("respond-beatmap", beatmapObj)
-            fs.unlink(filePath, () => {
-                console.log("video deleted")
-            })
-        }
-    })
+//             socket.emit("progress-update", "Process Completed")
+//             console.log("process completed")
+//             socket.emit("respond-beatmap", beatmapObj)
+//             fs.unlink(filePath, () => {
+//                 console.log("video deleted")
+//             })
+//         }
+//     })
 
-    socket.on("disconnect", () => {
-        const filePath = path.resolve(__dirname, `video${socket.id}.mkv`)
-        fs.unlink(filePath, () => {
-            console.log("video deleted")
-        })
-        console.log(`client ${socket.id} has disconnected\n\n`)
-    })
-})
+//     socket.on("disconnect", () => {
+//         const filePath = path.resolve(__dirname, `video${socket.id}.mkv`)
+//         fs.unlink(filePath, () => {
+//             console.log("video deleted")
+//         })
+//         console.log(`client ${socket.id} has disconnected\n\n`)
+//     })
+// })
 
 
 //tests
