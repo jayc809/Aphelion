@@ -8,8 +8,9 @@ const MusicTempo = require("music-tempo")
 const { builtinModules } = require("module")
 const fft = require('fft-js').fft
 const fftUtil = require('fft-js').util
-const cors = require('cors');
 
+
+const cors = require('cors');
 
 const port = process.env.PORT || 4000
 const app = express()
