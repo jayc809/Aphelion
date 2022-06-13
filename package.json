@@ -1,0 +1,12 @@
+{
+    "name": "aphelion-tests",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app",
+    "scripts": {
+      "start": "node app"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}

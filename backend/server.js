@@ -9,10 +9,10 @@ const MusicTempo = require("music-tempo")
 const { builtinModules } = require("module")
 const fft = require('fft-js').fft
 const fftUtil = require('fft-js').util
+
 const io = require("socket.io")(5000, {
     cors: {origin: ["http://localhost:3000"]}
 })
-
 io.on("connect", socket => {
     console.log(`client ${socket.id} has connected`)
     socket.emit("connected-to-server", "connected to server")
@@ -100,67 +100,71 @@ io.on("connect", socket => {
     })
 
     socket.on("disconnect", () => {
+        const filePath = path.resolve(__dirname, `video${socket.id}.mkv`)
+        fs.unlink(filePath, () => {
+            console.log("video deleted")
+        })
         console.log(`client ${socket.id} has disconnected\n\n`)
     })
 })
 
 
 //tests
-app.listen(4000, () => {console.log("server running on port 4000")})
+// app.listen(4000, () => {console.log("server running on port 4000")})
 
-app.get("/getAudio", (req, res) => {
-    const filePath = path.resolve(__dirname, 'test.mkv')
-    const video = ytdl(req.query.videoUrl, { filter: "audio"})
+// app.get("/getAudio", (req, res) => {
+//     const filePath = path.resolve(__dirname, 'test.mkv')
+//     const video = ytdl(req.query.videoUrl, { filter: "audio"})
 
-    //download the video
-    let starttime
-    video.pipe(fs.createWriteStream(filePath))
-    video.once('response', () => {
-        starttime = Date.now()
-    })
-    console.log("downloading video")
-    video.on('progress', (chunkLength, downloaded, total) => {
-        const percent = downloaded / total
-        readline.cursorTo(process.stdout, 0)
-        process.stdout.write(`${(percent * 100).toFixed(2)}% downloaded`)
-        process.stdout.write(`(${(downloaded / 1024 / 1024).toFixed(2)}MB of ${(total / 1024 / 1024).toFixed(2)}MB)\n`)
-        readline.moveCursor(process.stdout, 0, -1)
-    })
+//     //download the video
+//     let starttime
+//     video.pipe(fs.createWriteStream(filePath))
+//     video.once('response', () => {
+//         starttime = Date.now()
+//     })
+//     console.log("downloading video")
+//     video.on('progress', (chunkLength, downloaded, total) => {
+//         const percent = downloaded / total
+//         readline.cursorTo(process.stdout, 0)
+//         process.stdout.write(`${(percent * 100).toFixed(2)}% downloaded`)
+//         process.stdout.write(`(${(downloaded / 1024 / 1024).toFixed(2)}MB of ${(total / 1024 / 1024).toFixed(2)}MB)\n`)
+//         readline.moveCursor(process.stdout, 0, -1)
+//     })
 
-    //analyze audio
-    video.on('end', () => {
-        process.stdout.write('\n\n')
-        const data = fs.readFileSync(filePath)
-        const buffer = data.buffer
-        if (checkADTSValidity(buffer)) {  
-            const audioCtx = new webAudioApi.AudioContext()
-            console.log("decoding audio data")
-            audioCtx.decodeAudioData(buffer, analyzeAudio, (e) => {console.log(e)})
-        } else {
-            res.json({ res: "bad" })
-        }
-    })
+//     //analyze audio
+//     video.on('end', () => {
+//         process.stdout.write('\n\n')
+//         const data = fs.readFileSync(filePath)
+//         const buffer = data.buffer
+//         if (checkADTSValidity(buffer)) {  
+//             const audioCtx = new webAudioApi.AudioContext()
+//             console.log("decoding audio data")
+//             audioCtx.decodeAudioData(buffer, analyzeAudio, (e) => {console.log(e)})
+//         } else {
+//             res.json({ res: "bad" })
+//         }
+//     })
     
-    const analyzeAudio = (buffer) => {
-        console.log("calculating BPM")
-        const audioData = getAudioData(buffer)
+//     const analyzeAudio = (buffer) => {
+//         console.log("calculating BPM")
+//         const audioData = getAudioData(buffer)
 
-        const [bpm, startIndex, startTime]  = getBPM(audioData, buffer, 0)
+//         const [bpm, startIndex, startTime]  = getBPM(audioData, buffer, 0)
         
-        // res.json(audioData)
+//         // res.json(audioData)
 
-        console.log("analyzing audio using FFT")
-        const fftMap= getFFTMap(audioData, buffer, startIndex, bpm) 
+//         console.log("analyzing audio using FFT")
+//         const fftMap= getFFTMap(audioData, buffer, startIndex, bpm) 
 
-        console.log("generating beatmap")
-        const [beatmap, maxCombo] = getBeatmap(fftMap, bpm)
-        const beatmapObj = {
-            beatmap: beatmap
-        }
-        console.log("process completed")
-        res.json(beatmapObj)
-    }
-})
+//         console.log("generating beatmap")
+//         const [beatmap, maxCombo] = getBeatmap(fftMap, bpm)
+//         const beatmapObj = {
+//             beatmap: beatmap
+//         }
+//         console.log("process completed")
+//         res.json(beatmapObj)
+//     }
+// })
 
 const checkADTSValidity = (buffer) => {
     const temp = new Uint8Array(buffer)
