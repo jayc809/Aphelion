@@ -4,9 +4,12 @@
     "description": "",
     "main": "app",
     "scripts": {
-      "start": "node app"
+        "start": "node app"
     },
     "keywords": [],
     "author": "",
-    "license": "ISC"
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.18.1"
+    }
 }
