@@ -5,7 +5,7 @@
     "main": "app",
     "scripts": {
         "start": "node app",
-        "heroku-postbuild": "cd frontend && npm install --only=dev && npm install && npm run build && cd .. && cd backend && npm install"
+        "heroku-postbuild": "cd frontend && npm install && npm run build && cd .. && cd backend && npm install"
     },
     "engines": {
         "node": "16.x",
