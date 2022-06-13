@@ -342,9 +342,6 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
                                     id={tile.id}
                                     key={tile.id}
                                 ></CircleTile>
-                            default:
-                                console.log("error in tile generator")
-                                return
                         }
                     })
                 }
