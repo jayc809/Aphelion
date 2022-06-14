@@ -24,6 +24,7 @@ app.get("/", (req, res) => {
 })
 
 app.get("/animation", (req, res) => {
+    res.setHeader('Cache-Control', "public, max-age=1800")
     res.sendFile(path.resolve(__dirname, `./public/animations/${req.query.dirName}/${req.query.dirName}-${String(req.query.index).padStart(2, "0")}.png`))
 })
 
