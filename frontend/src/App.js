@@ -97,60 +97,68 @@ function App() {
     showMainViewTransitionInRef.current = tf
   }
 
-  // const [isDownloadingImages, setIsDownloadingImages] = useState(true)
-  // const dirToArray = (dirName, start, end) => {
-  //   const arr = []
-  //   for (let i = start; i < end; i += 1) {
-  //     arr.push(`./animations/${dirName}/${dirName}-${String(i).padStart(2, "0")}.png`)
-  //   }
-  //   return arr
-  // }
-  // const cacheImages = async (imageSrcs) => {
-  //   const promises = await imageSrcs.map((src) => {
-  //     return new Promise((resolve, reject) => {
-  //       console.log(src)
-  //       const img = new Image()
-  //       img.src = require(src)
-  //       img.onload = resolve()
-  //       img.onerror = reject()
-  //     })
-  //   })
+  const [isDownloadingImages, setIsDownloadingImages] = useState(true)
+  const dirToArray = (dirName, start, end) => {
+    const arr = []
+    for (let i = start; i < end; i += 1) {
+      arr.push(`./animations/${dirName}/${dirName}-${String(i).padStart(2, "0")}.png`)
+    }
+    return arr
+  }
+  const cacheImages = async (imageSrcs) => {
+    for (let i = 0; i < 30; i += 1) {
+      const img = new Image()
+      img.src = require( `./animations/tap-perfect/tap-perfect-${String(i).padStart(2, "0")}.png`)
+      // img.src = require(imageSrcs[i])
+    }
+    // const promises = await imageSrcs.map((src) => {
+    //   return new Promise((resolve, reject) => {
+    //     console.log("yee")
+    //     const img = new Image()
+    //     img.src = require(src)
+    //     img.onload = resolve()
+    //     img.onerror = reject()
+    //   })
+    // })
 
-  //   await Promise.all(promises)
-  //   setIsDownloadingImages(false)
-  // }
-  // useEffect(() => {
-  //   const imageSrcs = 
-  //     dirToArray("tap-perfect", 0, 30).concat(
-  //       dirToArray("tap-good", 0, 30)
-  //     ).concat(
-  //       dirToArray("tap-miss", 0, 30)
-  //     ).concat(
-  //       dirToArray("hold-perfect", 0, 60)
-  //     ).concat(
-  //       dirToArray("hold-good", 0, 60)
-  //     ).concat(
-  //       dirToArray("hold-end", 0, 30)
-  //     ).concat(
-  //       dirToArray("circle-perfect", 0, 30)
-  //     ).concat(
-  //       dirToArray("circle-good", 0, 30)
-  //     ).concat(
-  //       dirToArray("circle-miss", 0, 30)
-  //     ).concat(
-  //       dirToArray("combo", 0, 20)
-  //     )
+    // await Promise.all(promises)
+    setIsDownloadingImages(false)
+  }
+  useEffect(() => {
+    const imageSrcs = []
+    // const imageSrcs = 
+    //   dirToArray("tap-perfect", 0, 30).concat(
+    //     dirToArray("tap-good", 0, 30)
+    //   ).concat(
+    //     dirToArray("tap-miss", 0, 30)
+    //   ).concat(
+    //     dirToArray("hold-perfect", 0, 60)
+    //   ).concat(
+    //     dirToArray("hold-good", 0, 60)
+    //   ).concat(
+    //     dirToArray("hold-end", 0, 30)
+    //   ).concat(
+    //     dirToArray("circle-perfect", 0, 30)
+    //   ).concat(
+    //     dirToArray("circle-good", 0, 30)
+    //   ).concat(
+    //     dirToArray("circle-miss", 0, 30)
+    //   ).concat(
+    //     dirToArray("combo", 0, 20)
+    //   )
     
-  //   console.log(imageSrcs)
-  //   cacheImages(imageSrcs)
-  // }, [])
+    // console.log(imageSrcs)
+    cacheImages(imageSrcs)
+  }, [])
 
   return (
     <div id="app" style={{backgroundColor: "black"}}>
       {/* <CheckBrowserView></CheckBrowserView>
       <CheckDimensionView></CheckDimensionView> */}
       <div style={{position: "absolute", zIndex: 10, height: "100vh", width: "100vw"}}>
-        <AnimationView 
+        {isDownloadingImages ?
+          "" :
+          <AnimationView 
             height={"100px"} 
             width={"100px"} 
             x={"100px"} 
@@ -158,17 +166,16 @@ function App() {
             dirName={"tap-perfect"} 
             start={0} end={29} loop={false}
             onComplete={() => {}}
-        ></AnimationView> 
-        {/* { 
-          {
-            "main": <MainView setView={setView} settingsObj={settingsObj} showTransition={showMainViewTransitionInRef.current} setShowTransition={setShowMainViewTransitionInRef}></MainView>,
-            "videos": <VideoSelectorView setView={setView} setVideoInfoRef={setVideoInfoRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj}/>,
-            "analyzer": <AnalyzerView setView={setView} setBeatmapObjRef={setBeatmapObjRef} settingsObj={settingsObj} videoId={videoInfoRef.current.id.videoId}/>,
-            "game": <GameView setView={setView} incrementGameId={incrementGameId} setResultsObjRef={setResultsObjRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj} beatmapObj={beatmapObjRef.current} key={gameId}/>,
-            "results": <ResultsView setView={setView} incrementGameId={incrementGameId} resultsObj={resultsObjRef.current} settingsObj={settingsObj} videoInfo={videoInfoRef.current}/>,
-            "test": <TestView/>
-          } [view]
-        } */}
+          ></AnimationView> 
+          // {
+          //   "main": <MainView setView={setView} settingsObj={settingsObj} showTransition={showMainViewTransitionInRef.current} setShowTransition={setShowMainViewTransitionInRef}></MainView>,
+          //   "videos": <VideoSelectorView setView={setView} setVideoInfoRef={setVideoInfoRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj}/>,
+          //   "analyzer": <AnalyzerView setView={setView} setBeatmapObjRef={setBeatmapObjRef} settingsObj={settingsObj} videoId={videoInfoRef.current.id.videoId}/>,
+          //   "game": <GameView setView={setView} incrementGameId={incrementGameId} setResultsObjRef={setResultsObjRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj} beatmapObj={beatmapObjRef.current} key={gameId}/>,
+          //   "results": <ResultsView setView={setView} incrementGameId={incrementGameId} resultsObj={resultsObjRef.current} settingsObj={settingsObj} videoInfo={videoInfoRef.current}/>,
+          //   "test": <TestView/>
+          // } [view]
+        }
       </div>
     </div>
   )
