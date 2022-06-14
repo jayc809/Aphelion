@@ -109,8 +109,16 @@ const MainView = ({ setView, settingsObj, showTransition, setShowTransition, isD
         }
     }
 
+    const [ready, setReady] = useState(false)
     useEffect(() => {
-        setStartButtonOpacity(0)
+        if (!isDownloadingImages) {
+            setStartButtonOpacity(0)
+            setTimeout(() => {        
+                setReady(true)
+            }, blinkInterval * 1000)
+        } else {
+            setReady(false)
+        }
     }, [isDownloadingImages])
 
     const [transitionOut, setTransitionOut] = useState(false)
@@ -141,11 +149,11 @@ const MainView = ({ setView, settingsObj, showTransition, setShowTransition, isD
                 <button className="main-view-start-button" 
                     style={{
                         opacity: startButtonOpacity, transition: startButtonOpacity == 1 ? `opacity ${blinkInterval}s ease-out` : `opacity ${blinkInterval}s ease-in`, 
-                        fontSize: isDownloadingImages ? "4vh" : "7vh"
+                        fontSize: ready ? "7vh" : "4vh"
                     }}
                     onClick={handleStartGame}
                 >
-                    {isDownloadingImages ? "Please Wait, Downlaoding Assets..." : "Start Game"}
+                    {ready ? "Start Game" : "Please Wait, Downlaoding Assets..." }
                 </button>
                 <div className="main-view-buttons-wrapper">
                     <button style={{backgroundImage: `url(${githubBackground})`}} onClick={handleGithubClick}></button>
