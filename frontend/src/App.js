@@ -98,36 +98,7 @@ function App() {
   }
 
   const [isDownloadingImages, setIsDownloadingImages] = useState(true)
-  const dirToArray = (dirName, start, end) => {
-    const arr = []
-    for (let i = start; i < end; i += 1) {
-      arr.push(`./animations/${dirName}/${dirName}-${String(i).padStart(2, "0")}.png`)
-    }
-    return arr
-  }
-  const cacheImages = async (imageSrcs) => {
-    for (let i = 0; i < 30; i += 1) {
-      const img = new Image()
-      img.src = require( `./animations/tap-perfect/tap-perfect-${String(i).padStart(2, "0")}.png`)
-      // img.src = require(imageSrcs[i])
-    }
-    // const promises = await imageSrcs.map((src) => {
-    //   return new Promise((resolve, reject) => {
-    //     console.log("yee")
-    //     const img = new Image()
-    //     img.src = require(src)
-    //     img.onload = resolve()
-    //     img.onerror = reject()
-    //   })
-    // })
-
-    // await Promise.all(promises)
-    setTimeout(() => {  
-      setIsDownloadingImages(false)
-    }, 5000);
-  }
-  useEffect(() => {
-    const imageSrcs = []
+  const cacheImages = async () => {
     // const imageSrcs = 
     //   dirToArray("tap-perfect", 0, 30).concat(
     //     dirToArray("tap-good", 0, 30)
@@ -148,9 +119,21 @@ function App() {
     //   ).concat(
     //     dirToArray("combo", 0, 20)
     //   )
-    
-    // console.log(imageSrcs)
-    cacheImages(imageSrcs)
+    const cache = () => new Promise((resolve, reject) => {
+      for (let i = 0; i < 30; i += 1) {
+        const img = new Image()
+        img.src = require(`./animations/tap-perfect/tap-perfect-${String(i).padStart(2, "0")}.png`)
+      }
+      resolve()
+    })
+    let done = await cache()
+
+    setTimeout(() => {  
+      setIsDownloadingImages(false)
+    }, 1000);
+  }
+  useEffect(() => {
+    cacheImages()
   }, [])
 
   return (
