@@ -7,7 +7,8 @@ import CheckDimensionView from './utilComponents/CheckDimensionView'
 import CheckBrowserView from './utilComponents/CheckBrowserView'
 import TestView from "./utilComponents/TestView"
 import MainView from './MainView'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import AnimationView from './utilComponents/AnimationView'
 
 function App() {
 
@@ -96,12 +97,69 @@ function App() {
     showMainViewTransitionInRef.current = tf
   }
 
+  // const [isDownloadingImages, setIsDownloadingImages] = useState(true)
+  // const dirToArray = (dirName, start, end) => {
+  //   const arr = []
+  //   for (let i = start; i < end; i += 1) {
+  //     arr.push(`./animations/${dirName}/${dirName}-${String(i).padStart(2, "0")}.png`)
+  //   }
+  //   return arr
+  // }
+  // const cacheImages = async (imageSrcs) => {
+  //   const promises = await imageSrcs.map((src) => {
+  //     return new Promise((resolve, reject) => {
+  //       console.log(src)
+  //       const img = new Image()
+  //       img.src = require(src)
+  //       img.onload = resolve()
+  //       img.onerror = reject()
+  //     })
+  //   })
+
+  //   await Promise.all(promises)
+  //   setIsDownloadingImages(false)
+  // }
+  // useEffect(() => {
+  //   const imageSrcs = 
+  //     dirToArray("tap-perfect", 0, 30).concat(
+  //       dirToArray("tap-good", 0, 30)
+  //     ).concat(
+  //       dirToArray("tap-miss", 0, 30)
+  //     ).concat(
+  //       dirToArray("hold-perfect", 0, 60)
+  //     ).concat(
+  //       dirToArray("hold-good", 0, 60)
+  //     ).concat(
+  //       dirToArray("hold-end", 0, 30)
+  //     ).concat(
+  //       dirToArray("circle-perfect", 0, 30)
+  //     ).concat(
+  //       dirToArray("circle-good", 0, 30)
+  //     ).concat(
+  //       dirToArray("circle-miss", 0, 30)
+  //     ).concat(
+  //       dirToArray("combo", 0, 20)
+  //     )
+    
+  //   console.log(imageSrcs)
+  //   cacheImages(imageSrcs)
+  // }, [])
+
   return (
     <div id="app" style={{backgroundColor: "black"}}>
-      <CheckBrowserView></CheckBrowserView>
-      <CheckDimensionView></CheckDimensionView>
+      {/* <CheckBrowserView></CheckBrowserView>
+      <CheckDimensionView></CheckDimensionView> */}
       <div style={{position: "absolute", zIndex: 10, height: "100vh", width: "100vw"}}>
-        {
+        <AnimationView 
+            height={"100px"} 
+            width={"100px"} 
+            x={"100px"} 
+            y={"100px"} 
+            dirName={"tap-perfect"} 
+            start={0} end={29} loop={false}
+            onComplete={() => {}}
+        ></AnimationView> 
+        {/* { 
           {
             "main": <MainView setView={setView} settingsObj={settingsObj} showTransition={showMainViewTransitionInRef.current} setShowTransition={setShowMainViewTransitionInRef}></MainView>,
             "videos": <VideoSelectorView setView={setView} setVideoInfoRef={setVideoInfoRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj}/>,
@@ -110,7 +168,7 @@ function App() {
             "results": <ResultsView setView={setView} incrementGameId={incrementGameId} resultsObj={resultsObjRef.current} settingsObj={settingsObj} videoInfo={videoInfoRef.current}/>,
             "test": <TestView/>
           } [view]
-        }
+        } */}
       </div>
     </div>
   )
