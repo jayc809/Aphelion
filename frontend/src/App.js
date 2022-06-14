@@ -99,27 +99,6 @@ function App() {
 
   const [isDownloadingImages, setIsDownloadingImages] = useState(true)
   const cacheImages = async () => {
-    // const imageSrcs = 
-    //   dirToArray("tap-perfect", 0, 30).concat(
-    //     dirToArray("tap-good", 0, 30)
-    //   ).concat(
-    //     dirToArray("tap-miss", 0, 30)
-    //   ).concat(
-    //     dirToArray("hold-perfect", 0, 60)
-    //   ).concat(
-    //     dirToArray("hold-good", 0, 60)
-    //   ).concat(
-    //     dirToArray("hold-end", 0, 30)
-    //   ).concat(
-    //     dirToArray("circle-perfect", 0, 30)
-    //   ).concat(
-    //     dirToArray("circle-good", 0, 30)
-    //   ).concat(
-    //     dirToArray("circle-miss", 0, 30)
-    //   ).concat(
-    //     dirToArray("combo", 0, 20)
-    //   )
-
     const promises = []
     const cache = async (name, i) => {
       return new Promise((resolve, reject) => {
@@ -135,40 +114,42 @@ function App() {
       }
     }
     helper("tap-perfect", 0, 29)
+    helper("tap-good", 0, 29)
+    helper("tap-miss", 0, 29)
+    helper("hold-perfect", 0, 59)
+    helper("hold-good", 0, 59)
+    helper("hold-end", 0, 29)
+    helper("circle-perfect", 0, 29)
+    helper("circle-good", 0, 29)
+    helper("circle-miss", 0, 29)
+    helper("combo", 0, 19)
+    console.log(promises.length)
     await Promise.all(promises)
     
     setTimeout(() => {  
       setIsDownloadingImages(false)
-    }, 0);
+    }, 1000);
   }
+  
   useEffect(() => {
     cacheImages()
   }, [])
 
   return (
     <div id="app" style={{backgroundColor: "black"}}>
-      {/* <CheckBrowserView></CheckBrowserView>
-      <CheckDimensionView></CheckDimensionView> */}
+      <CheckBrowserView></CheckBrowserView>
+      <CheckDimensionView></CheckDimensionView>
       <div style={{position: "absolute", zIndex: 10, height: "100vh", width: "100vw"}}>
         {isDownloadingImages ?
           "" :
-          <AnimationView 
-            height={"100px"} 
-            width={"100px"} 
-            x={"100px"} 
-            y={"100px"} 
-            dirName={"tap-perfect"} 
-            start={0} end={29} loop={false}
-            onComplete={() => {}}
-          ></AnimationView> 
-          // {
-          //   "main": <MainView setView={setView} settingsObj={settingsObj} showTransition={showMainViewTransitionInRef.current} setShowTransition={setShowMainViewTransitionInRef}></MainView>,
-          //   "videos": <VideoSelectorView setView={setView} setVideoInfoRef={setVideoInfoRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj}/>,
-          //   "analyzer": <AnalyzerView setView={setView} setBeatmapObjRef={setBeatmapObjRef} settingsObj={settingsObj} videoId={videoInfoRef.current.id.videoId}/>,
-          //   "game": <GameView setView={setView} incrementGameId={incrementGameId} setResultsObjRef={setResultsObjRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj} beatmapObj={beatmapObjRef.current} key={gameId}/>,
-          //   "results": <ResultsView setView={setView} incrementGameId={incrementGameId} resultsObj={resultsObjRef.current} settingsObj={settingsObj} videoInfo={videoInfoRef.current}/>,
-          //   "test": <TestView/>
-          // } [view]
+          {
+            "main": <MainView setView={setView} settingsObj={settingsObj} showTransition={showMainViewTransitionInRef.current} setShowTransition={setShowMainViewTransitionInRef}></MainView>,
+            "videos": <VideoSelectorView setView={setView} setVideoInfoRef={setVideoInfoRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj}/>,
+            "analyzer": <AnalyzerView setView={setView} setBeatmapObjRef={setBeatmapObjRef} settingsObj={settingsObj} videoId={videoInfoRef.current.id.videoId}/>,
+            "game": <GameView setView={setView} incrementGameId={incrementGameId} setResultsObjRef={setResultsObjRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj} beatmapObj={beatmapObjRef.current} key={gameId}/>,
+            "results": <ResultsView setView={setView} incrementGameId={incrementGameId} resultsObj={resultsObjRef.current} settingsObj={settingsObj} videoInfo={videoInfoRef.current}/>,
+            "test": <TestView/>
+          } [view]
         }
       </div>
     </div>
