@@ -122,7 +122,9 @@ function App() {
     // })
 
     // await Promise.all(promises)
-    setIsDownloadingImages(false)
+    setTimeout(() => {  
+      setIsDownloadingImages(false)
+    }, 5000);
   }
   useEffect(() => {
     const imageSrcs = []
