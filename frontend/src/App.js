@@ -97,7 +97,7 @@ function App() {
     showMainViewTransitionInRef.current = tf
   }
 
-  const [isDownloadingImages, setIsDownloadingImages] = useState(false)
+  const [isDownloadingImages, setIsDownloadingImages] = useState(true)
   const cacheImages = async () => {
     const promises = []
   
@@ -105,7 +105,7 @@ function App() {
       // fetches-and-caches the image wiht name and at index i
       return new Promise((resolve, reject) => {
         const img = new Image()
-        img.src = require(`./animations/${name}/${name}-${String(i).padStart(2, "0")}.png`)
+        img.src = require(`../../public/animations/${name}/${name}-${String(i).padStart(2, "0")}.png`)
         img.onload = () => {resolve()}
         img.onerror = () => {reject()}
       })
@@ -130,9 +130,10 @@ function App() {
   
     await Promise.all(promises)
   
-    setTimeout(() => {  
+    setTimeout(() => { 
+      console.log("yee") 
       setIsDownloadingImages(false) // show some view when done
-    }, 1000);
+    }, 5000);
   }
 
   useEffect(() => {
@@ -144,25 +145,25 @@ function App() {
       <CheckBrowserView></CheckBrowserView>
       <CheckDimensionView></CheckDimensionView>
       <div style={{position: "absolute", zIndex: 10, height: "100vh", width: "100vw"}}>
-        {isDownloadingImages ?
+        {isDownloadingImages ? 
           "" :
-          <AnimationView 
-              height={"400px"} 
-              width={"400px"} 
-              x={"400px"} 
-              y={"400px"} 
-              dirName={"tap-perfect"} 
-              start={0} end={29} loop={false}
-              onComplete={() => {}}
-          ></AnimationView> 
-          // {
-          //   "main": <MainView setView={setView} settingsObj={settingsObj} showTransition={showMainViewTransitionInRef.current} setShowTransition={setShowMainViewTransitionInRef}></MainView>,
-          //   "videos": <VideoSelectorView setView={setView} setVideoInfoRef={setVideoInfoRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj}/>,
-          //   "analyzer": <AnalyzerView setView={setView} setBeatmapObjRef={setBeatmapObjRef} settingsObj={settingsObj} videoId={videoInfoRef.current.id.videoId}/>,
-          //   "game": <GameView setView={setView} incrementGameId={incrementGameId} setResultsObjRef={setResultsObjRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj} beatmapObj={beatmapObjRef.current} key={gameId}/>,
-          //   "results": <ResultsView setView={setView} incrementGameId={incrementGameId} resultsObj={resultsObjRef.current} settingsObj={settingsObj} videoInfo={videoInfoRef.current}/>,
-          //   "test": <TestView/>
-          // } [view]
+          // <AnimationView 
+          //     height={"400px"} 
+          //     width={"400px"} 
+          //     x={"400px"} 
+          //     y={"400px"} 
+          //     dirName={"tap-perfect"} 
+          //     start={0} end={29} loop={false}
+          //     onComplete={() => {}}
+          // ></AnimationView>
+          {
+            "main": <MainView setView={setView} settingsObj={settingsObj} showTransition={showMainViewTransitionInRef.current} setShowTransition={setShowMainViewTransitionInRef}></MainView>,
+            "videos": <VideoSelectorView setView={setView} setVideoInfoRef={setVideoInfoRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj}/>,
+            "analyzer": <AnalyzerView setView={setView} setBeatmapObjRef={setBeatmapObjRef} settingsObj={settingsObj} videoId={videoInfoRef.current.id.videoId}/>,
+            "game": <GameView setView={setView} incrementGameId={incrementGameId} setResultsObjRef={setResultsObjRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj} beatmapObj={beatmapObjRef.current} key={gameId}/>,
+            "results": <ResultsView setView={setView} incrementGameId={incrementGameId} resultsObj={resultsObjRef.current} settingsObj={settingsObj} videoInfo={videoInfoRef.current}/>,
+            "test": <TestView/>
+          } [view]
         }
       </div>
     </div>
