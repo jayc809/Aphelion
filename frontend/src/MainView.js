@@ -109,6 +109,10 @@ const MainView = ({ setView, settingsObj, showTransition, setShowTransition, isD
         }
     }
 
+    useEffect(() => {
+        setStartButtonOpacity(0)
+    }, [isDownloadingImages])
+
     const [transitionOut, setTransitionOut] = useState(false)
     const nextView = () => {
         setShowInstructions(false)
