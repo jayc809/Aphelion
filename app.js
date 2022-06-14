@@ -18,16 +18,21 @@ const app = express()
 app.use(cors())
 app.use(express.static("./frontend/build"))
 app.use(express.static("./public"))
+
 app.get("/", (req, res) => {
     res.sendFile(path.resolve(__dirname, "./frontend/build/index.html"))
 })
+
+app.get("/animation", (req, res) => {
+    res.sendFile(path.resolve(__dirname, `./public/animations/${req.query.dirName}/${req.query.dirName}-${String(req.query.index).padStart(2, "0")}.png`))
+})
+
 const server = app.listen(port, (err) => {
     if (err) return console.log(err)
     console.log("app running on port: " + port)
 })
 
 const io = require("socket.io")(server)
-
 io.on("connect", socket => {
     console.log(`client ${socket.id} has connected`)
     socket.emit("connected-to-server", "connected to server")

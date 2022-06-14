@@ -31,7 +31,7 @@ const AnimationViewContained = ({dirName, start, end, loop, loopStart, onComplet
     return ( 
         showView ? 
         <div style={{height: "100%", width: "100%", overflow: "hidden"}}>
-            <img src={require(`../animations/${dirName}/${dirName}-${String(frameCount).padStart(2, "0")}.png`)} style={{height: "100%", width: "100%", objectFit: "contain"}} alt={`${dirName}-animation`}></img>
+            <img src={`/animation?dirName=${dirName}&index=${frameCount}`} style={{height: "100%", width: "100%", objectFit: "contain"}} alt={`${dirName}-animation`}></img>
         </div> : 
         ""
     )
