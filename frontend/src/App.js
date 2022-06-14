@@ -118,15 +118,15 @@ function App() {
     }
   
     helper("tap-perfect", 0, 29) //fetch-and-cache images named "tap-perfect-00.png" to "tap-perfect-29.png"
-    helper("tap-good", 0, 29)
-    helper("tap-miss", 0, 29)
-    helper("hold-perfect", 0, 59)
-    helper("hold-good", 0, 59)
-    helper("hold-end", 0, 29)
-    helper("circle-perfect", 0, 29)
-    helper("circle-good", 0, 29)
-    helper("circle-miss", 0, 29)
-    helper("combo", 0, 19)
+    // helper("tap-good", 0, 29)
+    // helper("tap-miss", 0, 29)
+    // helper("hold-perfect", 0, 59)
+    // helper("hold-good", 0, 59)
+    // helper("hold-end", 0, 29)
+    // helper("circle-perfect", 0, 29)
+    // helper("circle-good", 0, 29)
+    // helper("circle-miss", 0, 29)
+    // helper("combo", 0, 19)
   
     await Promise.all(promises)
   
