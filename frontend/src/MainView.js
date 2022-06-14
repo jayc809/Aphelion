@@ -135,7 +135,10 @@ const MainView = ({ setView, settingsObj, showTransition, setShowTransition, isD
                     ""
                 }
                 <button className="main-view-start-button" 
-                    style={{opacity: startButtonOpacity, transition: startButtonOpacity == 1 ? `opacity ${blinkInterval}s ease-out` : `opacity ${blinkInterval}s ease-in`}}
+                    style={{
+                        opacity: startButtonOpacity, transition: startButtonOpacity == 1 ? `opacity ${blinkInterval}s ease-out` : `opacity ${blinkInterval}s ease-in`, 
+                        fontSize: isDownloadingImages ? "4vh" : "7vh"
+                    }}
                     onClick={handleStartGame}
                 >
                     {isDownloadingImages ? "Please Wait, Downlaoding Assets..." : "Start Game"}

@@ -30,7 +30,7 @@ app.get("/animation", (req, res) => {
 
 app.get("/image", (req, res) => {
     res.setHeader('Cache-Control', "public, max-age=3600")
-    res.sendFile(path.resolve(__dirname, `./public/image/${req.query.fileName}.png`))
+    res.sendFile(path.resolve(__dirname, `./public/images/${req.query.fileName}.png`))
 })
 
 const server = app.listen(port, (err) => {
