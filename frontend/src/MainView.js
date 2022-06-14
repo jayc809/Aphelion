@@ -8,7 +8,7 @@ import instructionsBackground from "./images/instructions-button.png"
 import loginBackground from "./images/login-button.png"
 import PopUpView from './utilComponents/PopUpView'
 
-const MainView = ({ setView, settingsObj, showTransition, setShowTransition }) => {
+const MainView = ({ setView, settingsObj, showTransition, setShowTransition, isDownloadingImages }) => {
 
     const backgroundVideo = "https://www.youtube.com/watch?v=jH1LBL_v7Qs"
     const loadingVideo = "https://www.youtube.com/watch?v=JycQdXuAP0k"
@@ -103,8 +103,10 @@ const MainView = ({ setView, settingsObj, showTransition, setShowTransition }) =
     }, [showInstructions])
 
     const handleStartGame = () => {
-        setShowTransition(true)
-        setTransitionOut(true)
+        if (!isDownloadingImages) {
+            setShowTransition(true)
+            setTransitionOut(true)
+        }
     }
 
     const [transitionOut, setTransitionOut] = useState(false)
@@ -136,7 +138,7 @@ const MainView = ({ setView, settingsObj, showTransition, setShowTransition }) =
                     style={{opacity: startButtonOpacity, transition: startButtonOpacity == 1 ? `opacity ${blinkInterval}s ease-out` : `opacity ${blinkInterval}s ease-in`}}
                     onClick={handleStartGame}
                 >
-                    Start Game
+                    {isDownloadingImages ? "Please Wait, Downlaoding Assets..." : "Start Game"}
                 </button>
                 <div className="main-view-buttons-wrapper">
                     <button style={{backgroundImage: `url(${githubBackground})`}} onClick={handleGithubClick}></button>

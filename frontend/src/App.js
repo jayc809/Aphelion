@@ -100,25 +100,21 @@ function App() {
   const [isDownloadingImages, setIsDownloadingImages] = useState(true)
   const cacheImages = async () => {
     const promises = []
-    const cache = async (name, i) => {
-      // fetches-and-caches the image wiht name and at index i
+    const cacheAnimation = async (name, i) => {
       return new Promise((resolve, reject) => {
         const img = new Image()
         img.src = `/animation?dirName=${name}&index=${i}`
-        img.onload = () => {
-          resolve()
-        }
-        img.onerror = () => {reject()}
+        img.onload = () => { resolve() }
+        img.onerror = () => { reject() }
       })
     }
     const helper = (name, start, end) => {
         for (let i = start; i <= end; i += 1) {
-          // fetch-and-cache all images with name from start to end
-          promises.push(cache(name, i));
+          promises.push(cacheAnimation(name, i));
       }
     }
   
-    helper("tap-perfect", 0, 29) //fetch-and-cache images named "tap-perfect-00.png" to "tap-perfect-29.png"
+    helper("tap-perfect", 0, 29)
     helper("tap-good", 0, 29)
     helper("tap-miss", 0, 29)
     helper("hold-perfect", 0, 59)
@@ -128,12 +124,38 @@ function App() {
     helper("circle-good", 0, 29)
     helper("circle-miss", 0, 29)
     helper("combo", 0, 19)
+    
+    const cacheImage = async (name) => {
+      return new Promise((resolve, reject) => {
+        const img = new Image()
+        img.src = `/image?fileName=${name}`
+        img.onload = () => { resolve() }
+        img.onerror = () => { reject() }
+      })
+    }
+    promises.push(cacheImage("pause-menu"))
+    promises.push(cacheImage("platform-base-new"))
+    promises.push(cacheImage("platform-line-new"))
+    promises.push(cacheImage("platform-left-new"))
+    promises.push(cacheImage("platform-middle-left-new"))
+    promises.push(cacheImage("platform-middle-right-new"))
+    promises.push(cacheImage("platform-right-new"))
+    promises.push(cacheImage("tile-circle-out"))
+    promises.push(cacheImage("tile-circle-light"))
+    promises.push(cacheImage("tile-circle-in-left-light"))
+    promises.push(cacheImage("tile-circle-in-left"))
+    promises.push(cacheImage("tile-circle-in-right-light"))
+    promises.push(cacheImage("tile-circle-in-right"))
+    promises.push(cacheImage("tile-hold-light"))
+    promises.push(cacheImage("tile-hold"))
+    promises.push(cacheImage("tile-light"))
+    promises.push(cacheImage("tile"))
+    promises.push(cacheImage("transition-left"))
+    promises.push(cacheImage("transition-right"))
   
     await Promise.all(promises)
   
-    setTimeout(() => { 
-      setIsDownloadingImages(false) // show some view when done
-    }, 1000);
+    setIsDownloadingImages(false)
   }
 
   useEffect(() => {
@@ -145,19 +167,9 @@ function App() {
       <CheckBrowserView></CheckBrowserView>
       <CheckDimensionView></CheckDimensionView>
       <div style={{position: "absolute", zIndex: 10, height: "100vh", width: "100vw"}}>
-        {isDownloadingImages ? 
-          "" : 
-          // <AnimationView 
-          //     height={"400px"} 
-          //     width={"400px"} 
-          //     x={"400px"} 
-          //     y={"400px"} 
-          //     dirName={"tap-perfect"} 
-          //     start={0} end={29} loop={false}
-          //     onComplete={() => {}}
-          // ></AnimationView>
+        {
           {
-            "main": <MainView setView={setView} settingsObj={settingsObj} showTransition={showMainViewTransitionInRef.current} setShowTransition={setShowMainViewTransitionInRef}></MainView>,
+            "main": <MainView setView={setView} settingsObj={settingsObj} showTransition={showMainViewTransitionInRef.current} setShowTransition={setShowMainViewTransitionInRef} isDownloadingImages={isDownloadingImages}></MainView>,
             "videos": <VideoSelectorView setView={setView} setVideoInfoRef={setVideoInfoRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj}/>,
             "analyzer": <AnalyzerView setView={setView} setBeatmapObjRef={setBeatmapObjRef} settingsObj={settingsObj} videoId={videoInfoRef.current.id.videoId}/>,
             "game": <GameView setView={setView} incrementGameId={incrementGameId} setResultsObjRef={setResultsObjRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj} beatmapObj={beatmapObjRef.current} key={gameId}/>,

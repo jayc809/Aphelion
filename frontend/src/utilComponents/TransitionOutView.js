@@ -18,8 +18,8 @@ const TransitionOutView = ({ nextView, start, settingsObj }) => {
     return (
         start ? 
         <div className="transition-out-view-wrapper" style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
-            <img className="transition-left" src={transitionLeft} ref={left} onAnimationEnd={nextView} alt="left"></img>
-            <img className="transition-right" src={transitionRight} ref={right} alt="right"></img>
+            <img className="transition-left" src={`/image?fileName=${"transition-left"}`} ref={left} onAnimationEnd={nextView} alt="left"></img>
+            <img className="transition-right" src={`/image?fileName=${"transition-right"}`} ref={right} alt="right"></img>
         </div> : 
         ""
     );

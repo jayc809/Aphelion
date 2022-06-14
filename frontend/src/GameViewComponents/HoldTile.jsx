@@ -335,7 +335,7 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
             </div>
             <div className="tile" ref={tileRef} onAnimationEnd={handleMiss}>
                 <img 
-                    src={theme == "light" ? tileImageLight : tileImage} 
+                    src={theme == "light" ? `/image?fileName=${"tile-hold-light"}` : `/image?fileName=${"tile-hold"}`} 
                     alt="tile"
                 />
             </div>

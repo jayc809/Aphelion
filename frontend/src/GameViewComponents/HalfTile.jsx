@@ -152,7 +152,7 @@ const HalfTile = ({ type, tileSpeed, theme, delay, targetTime, onMount, onMiss, 
                     }
                     <div className="tile" ref={tileRef} onAnimationEnd={handleMiss}>
                         <img 
-                            src={theme == "light" ? tileImageLight : tileImage} 
+                            src={theme == "light" ? `/image?fileName=${"tile-light"}` : `/image?fileName=${"tile"}`} 
                             alt="tile"
                         />
                     </div>

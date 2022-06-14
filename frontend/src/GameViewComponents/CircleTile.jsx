@@ -166,8 +166,8 @@ const CircleTile = ({ type, tileSpeed, theme, targetTime, onMount, onMiss, id })
                     <div className="circle-tile-in-wrapper" ref={circleInWrapperRef}>
                         {
                             type == "left-circle" ?
-                            <img src={theme == "light" ? circleInLeftLight : circleInLeft} alt="circle"/> :
-                            <img src={theme == "light" ? circleInRightLight : circleInRight} alt="circle"/>
+                            <img src={theme == "light" ? `/image?fileName=${"tile-circle-in-left-light"}` : `/image?fileName=${"tile-circle-in-left"}`} alt="circle"/> :
+                            <img src={theme == "light" ? `/image?fileName=${"tile-circle-in-right-light"}` : `/image?fileName=${"tile-circle-in-right"}`} alt="circle"/>
                         }
                     </div>
                 </div>

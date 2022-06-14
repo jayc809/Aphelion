@@ -24,8 +24,13 @@ app.get("/", (req, res) => {
 })
 
 app.get("/animation", (req, res) => {
-    res.setHeader('Cache-Control', "public, max-age=1800")
+    res.setHeader('Cache-Control', "public, max-age=3600")
     res.sendFile(path.resolve(__dirname, `./public/animations/${req.query.dirName}/${req.query.dirName}-${String(req.query.index).padStart(2, "0")}.png`))
+})
+
+app.get("/image", (req, res) => {
+    res.setHeader('Cache-Control', "public, max-age=3600")
+    res.sendFile(path.resolve(__dirname, `./public/image/${req.query.fileName}.png`))
 })
 
 const server = app.listen(port, (err) => {

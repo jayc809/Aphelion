@@ -65,7 +65,7 @@ const PauseMenu = ({ pauseGame, restartGame, endGame, settingsObj, setSettingsOb
             {
                 showMenu ? 
                 <div className="pause-menu">
-                    <img src={pauseMenuBackground} alt="bg"></img>
+                    <img src={`/image?fileName=${"pause-menu"}`} alt="bg"></img>
                     <div className="pause-menu-content">
                         <div className="pause-menu-settings-wrapper">
                             <SettingsList settingsObj={settingsObj} setSettingsObj={setSettingsObj} pauseMenu={true}></SettingsList>
