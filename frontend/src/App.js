@@ -119,18 +119,27 @@ function App() {
     //   ).concat(
     //     dirToArray("combo", 0, 20)
     //   )
-    const cache = () => new Promise((resolve, reject) => {
-      for (let i = 0; i < 30; i += 1) {
-        const img = new Image()
-        img.src = require(`./animations/tap-perfect/tap-perfect-${String(i).padStart(2, "0")}.png`)
-      }
-      resolve()
-    })
-    let done = await cache()
 
+    const promises = []
+    const cache = async (name, i) => {
+      return new Promise((resolve, reject) => {
+        const img = new Image()
+        img.src = require(`./animations/${name}/${name}-${String(i).padStart(2, "0")}.png`)
+        img.onload = resolve()
+        img.onerror = reject()
+      })
+    }
+    const helper = (name, start, end) => {
+        for (let i = start; i <= end; i += 1) {
+          promises.push(cache(name, i));
+      }
+    }
+    helper("tap-perfect", 0, 29)
+    await Promise.all(promises)
+    
     setTimeout(() => {  
       setIsDownloadingImages(false)
-    }, 1000);
+    }, 0);
   }
   useEffect(() => {
     cacheImages()
