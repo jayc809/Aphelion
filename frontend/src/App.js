@@ -97,23 +97,27 @@ function App() {
     showMainViewTransitionInRef.current = tf
   }
 
-  const [isDownloadingImages, setIsDownloadingImages] = useState(true)
+  const [isDownloadingImages, setIsDownloadingImages] = useState(false)
   const cacheImages = async () => {
     const promises = []
+  
     const cache = async (name, i) => {
+      // fetches-and-caches the image wiht name and at index i
       return new Promise((resolve, reject) => {
         const img = new Image()
         img.src = require(`./animations/${name}/${name}-${String(i).padStart(2, "0")}.png`)
-        img.onload = resolve()
-        img.onerror = reject()
+        img.onload = () => {resolve()}
+        img.onerror = () => {reject()}
       })
     }
     const helper = (name, start, end) => {
         for (let i = start; i <= end; i += 1) {
+          // fetch-and-cache all images with name from start to end
           promises.push(cache(name, i));
       }
     }
-    helper("tap-perfect", 0, 29)
+  
+    helper("tap-perfect", 0, 29) //fetch-and-cache images named "tap-perfect-00.png" to "tap-perfect-29.png"
     helper("tap-good", 0, 29)
     helper("tap-miss", 0, 29)
     helper("hold-perfect", 0, 59)
@@ -123,14 +127,14 @@ function App() {
     helper("circle-good", 0, 29)
     helper("circle-miss", 0, 29)
     helper("combo", 0, 19)
-    console.log(promises.length)
+  
     await Promise.all(promises)
-    
+  
     setTimeout(() => {  
-      setIsDownloadingImages(false)
+      setIsDownloadingImages(false) // show some view when done
     }, 1000);
   }
-  
+
   useEffect(() => {
     cacheImages()
   }, [])
@@ -142,14 +146,23 @@ function App() {
       <div style={{position: "absolute", zIndex: 10, height: "100vh", width: "100vw"}}>
         {isDownloadingImages ?
           "" :
-          {
-            "main": <MainView setView={setView} settingsObj={settingsObj} showTransition={showMainViewTransitionInRef.current} setShowTransition={setShowMainViewTransitionInRef}></MainView>,
-            "videos": <VideoSelectorView setView={setView} setVideoInfoRef={setVideoInfoRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj}/>,
-            "analyzer": <AnalyzerView setView={setView} setBeatmapObjRef={setBeatmapObjRef} settingsObj={settingsObj} videoId={videoInfoRef.current.id.videoId}/>,
-            "game": <GameView setView={setView} incrementGameId={incrementGameId} setResultsObjRef={setResultsObjRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj} beatmapObj={beatmapObjRef.current} key={gameId}/>,
-            "results": <ResultsView setView={setView} incrementGameId={incrementGameId} resultsObj={resultsObjRef.current} settingsObj={settingsObj} videoInfo={videoInfoRef.current}/>,
-            "test": <TestView/>
-          } [view]
+          <AnimationView 
+              height={"400px"} 
+              width={"400px"} 
+              x={"400px"} 
+              y={"400px"} 
+              dirName={"tap-perfect"} 
+              start={0} end={29} loop={false}
+              onComplete={() => {}}
+          ></AnimationView> 
+          // {
+          //   "main": <MainView setView={setView} settingsObj={settingsObj} showTransition={showMainViewTransitionInRef.current} setShowTransition={setShowMainViewTransitionInRef}></MainView>,
+          //   "videos": <VideoSelectorView setView={setView} setVideoInfoRef={setVideoInfoRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj}/>,
+          //   "analyzer": <AnalyzerView setView={setView} setBeatmapObjRef={setBeatmapObjRef} settingsObj={settingsObj} videoId={videoInfoRef.current.id.videoId}/>,
+          //   "game": <GameView setView={setView} incrementGameId={incrementGameId} setResultsObjRef={setResultsObjRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj} beatmapObj={beatmapObjRef.current} key={gameId}/>,
+          //   "results": <ResultsView setView={setView} incrementGameId={incrementGameId} resultsObj={resultsObjRef.current} settingsObj={settingsObj} videoInfo={videoInfoRef.current}/>,
+          //   "test": <TestView/>
+          // } [view]
         }
       </div>
     </div>
