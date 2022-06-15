@@ -1,4 +1,4 @@
-## Visit http://jayc809-aphelion.com/ for the game
+## Visit https://jayc809-aphelion.com/ for the game
 
 
 ### setting up locally (run server on heroku, no controll server-side)
