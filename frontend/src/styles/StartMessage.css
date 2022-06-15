@@ -30,16 +30,9 @@
 
 #check-keyboard {
     width: 100vw;
-    font-size: 2.2vh;
+    font-size: 2.8vh;
     top: 28.5vh;
 }
-
-#pause-p {
-    width: 100vw;
-    font-size: 2.2vh;
-    top: 32vh;
-}
-
 .keys {
     width: auto;
     font-size: 30px;
@@ -70,4 +63,9 @@
 #l {
     top: 60vh;
     right: 20vw;
+}
+
+#p {
+    top: 10.4vh;
+    right: 4.2vh;
 }
