@@ -20,7 +20,7 @@ const AnalyzerView = ({ setView, setBeatmapObjRef, settingsObj, videoId }) => {
 
     useEffect(() => {
         const videoUrl = `https://www.youtube.com/watch?v=${videoId}`
-        const socket = socketIOClient("http://www.jayc809-aphelion.com")
+        const socket = socketIOClient("https://www.jayc809-aphelion.com")
         setTimeout(() => {
             setShowAnalyzer(true)
         }, 700)
