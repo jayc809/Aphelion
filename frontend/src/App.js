@@ -98,6 +98,7 @@ function App() {
   }
 
   const [isDownloadingImages, setIsDownloadingImages] = useState(true)
+  const [progressBarWidth, setProgressBarWidth] = useState(0)
   const cacheImages = async () => {
     const promises = []
     const cacheAnimation = async (name, i) => {
@@ -117,13 +118,21 @@ function App() {
     helper("tap-perfect", 0, 29)
     helper("tap-good", 0, 29)
     helper("tap-miss", 0, 29)
+    await Promise.all(promises)
+    setProgressBarWidth(20)
     helper("hold-perfect", 0, 59)
     helper("hold-good", 0, 59)
+    await Promise.all(promises)
+    setProgressBarWidth(40)
     helper("hold-end", 0, 29)
     helper("circle-perfect", 0, 29)
+    await Promise.all(promises)
+    setProgressBarWidth(60)
     helper("circle-good", 0, 29)
     helper("circle-miss", 0, 29)
     helper("combo", 0, 19)
+    await Promise.all(promises)
+    setProgressBarWidth(80)
     
     const cacheImage = async (name) => {
       return new Promise((resolve, reject) => {
@@ -152,8 +161,8 @@ function App() {
     promises.push(cacheImage("tile"))
     promises.push(cacheImage("transition-left"))
     promises.push(cacheImage("transition-right"))
-  
     await Promise.all(promises)
+    setProgressBarWidth(100)
   
     setIsDownloadingImages(false)
   }
@@ -169,7 +178,7 @@ function App() {
       <div style={{position: "absolute", zIndex: 10, height: "100vh", width: "100vw"}}>
         {
           {
-            "main": <MainView setView={setView} settingsObj={settingsObj} showTransition={showMainViewTransitionInRef.current} setShowTransition={setShowMainViewTransitionInRef} isDownloadingImages={isDownloadingImages}></MainView>,
+            "main": <MainView setView={setView} settingsObj={settingsObj} showTransition={showMainViewTransitionInRef.current} setShowTransition={setShowMainViewTransitionInRef} isDownloadingImages={isDownloadingImages} progressBarWidth={progressBarWidth}></MainView>,
             "videos": <VideoSelectorView setView={setView} setVideoInfoRef={setVideoInfoRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj}/>,
             "analyzer": <AnalyzerView setView={setView} setBeatmapObjRef={setBeatmapObjRef} settingsObj={settingsObj} videoId={videoInfoRef.current.id.videoId}/>,
             "game": <GameView setView={setView} incrementGameId={incrementGameId} setResultsObjRef={setResultsObjRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj} beatmapObj={beatmapObjRef.current} key={gameId}/>,

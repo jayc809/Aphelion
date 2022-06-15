@@ -8,7 +8,7 @@ import instructionsBackground from "./images/instructions-button.png"
 import loginBackground from "./images/login-button.png"
 import PopUpView from './utilComponents/PopUpView'
 
-const MainView = ({ setView, settingsObj, showTransition, setShowTransition, isDownloadingImages }) => {
+const MainView = ({ setView, settingsObj, showTransition, setShowTransition, isDownloadingImages, progressBarWidth }) => {
 
     const backgroundVideo = "https://www.youtube.com/watch?v=jH1LBL_v7Qs"
     const loadingVideo = "https://www.youtube.com/watch?v=JycQdXuAP0k"
@@ -46,13 +46,12 @@ const MainView = ({ setView, settingsObj, showTransition, setShowTransition, isD
         <h2> Patch Notes 6/6 <h2>
         <h5> - Added customizable start time <h5>
         <h5> - Added option to use image as game background <h5>
-        <h5> - Added rainbow UI <h5>
         <h4> Coming Soon... <h4>
         <h5> - Fix hold note not properly pausing when game is paused <h5>
-        <h5> - One more note? <h5>
+        <h5> - Login system <h5>
         <br>
         <br>
-        <h3> That's all folks! You've reached the end! Thank you and most importantly... Have fun! <h3>
+        <h3> You've reached the end! Thank you and most importantly... Have fun! <h3>
         <h3> - Jay <h3>
     `
 
@@ -75,7 +74,7 @@ const MainView = ({ setView, settingsObj, showTransition, setShowTransition, isD
                 setStartButtonOpacity(1)
             }
         }, blinkInterval * 1000)
-        return ( )=> {
+        return () => {
             clearInterval(blink)
         }
     }, [startButtonOpacity])
@@ -110,9 +109,11 @@ const MainView = ({ setView, settingsObj, showTransition, setShowTransition, isD
     }
 
     const [ready, setReady] = useState(false)
+    const progressBarRef = useRef(null)
     useEffect(() => {
         if (!isDownloadingImages) {
             setStartButtonOpacity(0)
+            progressBarRef.current.style.opacity = 0
             setTimeout(() => {        
                 setReady(true)
             }, blinkInterval * 1000)
@@ -153,13 +154,18 @@ const MainView = ({ setView, settingsObj, showTransition, setShowTransition, isD
                     }}
                     onClick={handleStartGame}
                 >
-                    {ready ? "Start Game" : "Please Wait, Downlaoding Assets..." }
+                    {ready ? "Start Game" : "Downlaoding Assets..." }
                 </button>
                 <div className="main-view-buttons-wrapper">
                     <button style={{backgroundImage: `url(${githubBackground})`}} onClick={handleGithubClick}></button>
                     <button style={{backgroundImage: `url(${instructionsBackground})`}} onClick={handleInstructionsClick}></button>
                     <button style={{backgroundImage: `url(${loginBackground})`}}></button>
                 </div>
+                <div className="progress-bar" ref={progressBarRef} style={{
+                    width: progressBarWidth + "vw", 
+                    filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`,
+                    transition: `opacity ${blinkInterval}s ease-out, width 0.5s linear`}}
+                ></div>
                 <div className="loading-video-wrapper">
                     <div className="loading-video">
                         <ReactPlayer url={loadingVideo} width="100%" height="100%" playing={true} loop={true} muted={true} style={{ pointerEvents: "none"}} onPlay={handleVideoReady}></ReactPlayer>

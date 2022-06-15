@@ -239,14 +239,13 @@ const SettingsList = ({ settingsObj, setSettingsObj, pauseMenu=false, selectedVi
                     </div>
                 }
                 {
-                    !pauseMenu && showImageSelector ?
+                    pauseMenu ? "" :
                     <div className="settings-list-row">
-                        <h3>Upload Custom Game Background</h3>
+                        <h3 style={{opacity: showImageSelector ? 1 : 0.3}}>Upload Image For Game Background</h3>
                         <div className="settings-list-row-content">
-                            <input className="settings-list-image-selector" ref={imageSelectorRef} type="file" onInputCapture={handleNewImageUpload} accept=".jpg, jpeg, .png, .webp"></input>
+                            <input className="settings-list-image-selector" ref={imageSelectorRef} type="file" onInputCapture={handleNewImageUpload} accept=".jpg, jpeg, .png, .webp" disabled={!showImageSelector}></input>
                         </div>
-                    </div> : 
-                    ""
+                    </div> 
                 }
                 <div className="settings-list-row" style={{height: pauseMenu ? "20%" : "15%"}}>
                     <h3>UI Hue</h3>
