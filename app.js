@@ -38,7 +38,12 @@ const server = app.listen(port, (err) => {
     console.log("app running on port: " + port)
 })
 
-const io = require("socket.io")(server)
+const io = require("socket.io")(server, {
+    cors: {
+      origin: true,
+      methods: ["GET", "POST"]
+    }
+  })
 io.on("connect", socket => {
     console.log(`client ${socket.id} has connected`)
     socket.emit("connected-to-server", "connected to server")
