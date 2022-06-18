@@ -8,8 +8,8 @@ const MusicTempo = require("music-tempo")
 const { builtinModules } = require("module")
 const fft = require('fft-js').fft
 const fftUtil = require('fft-js').util
-// const bcrypt = require("bcrypt")
-// const mongoose = require("mongoose") 
+const bcrypt = require("bcrypt")
+const mongoose = require("mongoose") 
 const cors = require('cors');
 
 const port = process.env.PORT || 5000
@@ -24,29 +24,114 @@ app.get("/", (req, res) => {
 })
 
 app.get("/animation", (req, res) => {
-    res.setHeader('Cache-Control', "public, max-age=3600")
+    res.setHeader('Cache-Control', "public, max-age=7200")
     res.sendFile(path.resolve(__dirname, `./public/animations/${req.query.dirName}/${req.query.dirName}-${String(req.query.index).padStart(2, "0")}.png`))
 })
 
 app.get("/image", (req, res) => {
-    res.setHeader('Cache-Control', "public, max-age=3600")
+    res.setHeader('Cache-Control', "public, max-age=7200")
     res.sendFile(path.resolve(__dirname, `./public/images/${req.query.fileName}.png`))
 })
 
-// mongoose.connect(process.env.NODE_ENV == "production" ? process.env.DATABASE_URL : "mongodb://localhost/aphelion", {useNewUrlParser: true})
-// const db = mongoose.connection
-// db.on("error", (err) => {console.log(err)})
-// db.once("open", () => {console.log("conencted to mongoose")})
+mongoose.connect("mongodb+srv://user:chiehyin123@aphelion.rimg6.mongodb.net/?retryWrites=true&w=majority" //process.env.NODE_ENV == "production" ? process.env.DATABASE_URL : "mongodb://localhost/aphelion"
+, {useNewUrlParser: true})
+const db = mongoose.connection
+const User = require("./models-mongo/user")
+db.on("error", (err) => {console.log(err)})
+db.once("open", () => {console.log("connected to mongoose")})
+const bodyParser = require('body-parser')
 
-// app.post("/users", async (req, res) => {
-//     try {
-//         const salt = await bcrypt.genSalt()
-//         const passwordHashed = await bcrypt.hash(req.query.password, salt)
-//         res.status(201).send()
-//     } catch {
-//         res.status(500).send()
-//     }
-// })
+app.use(bodyParser.urlencoded({extended : true}))
+app.use(bodyParser.json())
+app.post("/register-user", async (req, res) => {
+    try {
+        const username = req.body.username
+        const password = req.body.password
+        const user = User({
+            username: username,
+            password: password
+        })
+        try {
+            try {
+                const exisitngUsers = await User.find({ username: username }).exec()
+                if (exisitngUsers.length == 0) {
+                    user.save()
+                    res.status(201).send({
+                        success: true,
+                        message: "User Registered, Please Login"
+                    })
+                } else {
+                    res.status(500).send({
+                        success: false,
+                        message: "User Already Exists"
+                    })
+                }
+            } catch {
+                res.status(500).send({
+                    success: false,
+                    message: "An Error Occured (code: 3)"
+                })
+            }
+        } catch {
+            res.status(500).send({
+                success: false,
+                message: "An Error Occured (code: 2)"
+            })
+        }
+    } catch {
+        res.status(500).send({
+            success: false,
+            message: "An Error Occured (code: 1)"
+        })
+    }
+})
+
+app.post("/login-user", async (req, res) => {
+    try {
+        const username = req.body.username
+        const password = req.body.password
+        try {
+            const exisitngUser = await User.findOne({ username: username }).exec()
+            if (exisitngUser) {
+                exisitngUser.comparePassword(password, (err, matches) => {
+                    if (err) {
+                        res.status(500).send({
+                            success: false,
+                            message: "An Error Occured (code: 4)"
+                        })
+                    } 
+                    if (matches) {
+                        res.status(201).send({
+                            success: true,
+                            message: `User ${username} Logged In`,
+                            username: username
+                        })
+                    } else {
+                        res.status(500).send({
+                            success: false,
+                            message: "Password Incorrect"
+                        })
+                    }
+                })
+            } else {
+                res.status(500).send({
+                    success: false,
+                    message: "User Does Not Exist"
+                })
+            }
+        } catch {
+            res.status(500).send({
+                success: false,
+                message: "An Error Occured (code: 2)"
+            })
+        }
+    } catch {
+        res.status(500).send({
+            success: false,
+            message: "An Error Occured (code: 1)"
+        })
+    }
+})
 
 const server = app.listen(port, (err) => {
     if (err) return console.log(err)

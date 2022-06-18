@@ -9,7 +9,7 @@ import loginBackground from "./images/login-button.png"
 import PopUpView from './utilComponents/PopUpView'
 import LoginView from './utilComponents/LoginView'
 
-const MainView = ({ setView, settingsObj, showTransition, setShowTransition, isDownloadingImages, progressBarWidth }) => {
+const MainView = ({ setView, settingsObj, showTransition, setShowTransition, isDownloadingImages, progressBarWidth, user, setUser }) => {
 
     const backgroundVideo = "https://www.youtube.com/watch?v=jH1LBL_v7Qs"
     const loadingVideo = "https://www.youtube.com/watch?v=JycQdXuAP0k"
@@ -105,8 +105,13 @@ const MainView = ({ setView, settingsObj, showTransition, setShowTransition, isD
             }
             setShowInstructions(true)
         }
+        setCanStartRef(true)
     }, [showInstructions, showLogin])
 
+    const canStartRef = useRef(true)
+    const setCanStartRef = (tf) => {
+        canStartRef.current = tf
+    }
     const handleLoginClick = useCallback(() => {
         if (showLogin) {
             setShowLogin(false)
@@ -116,10 +121,11 @@ const MainView = ({ setView, settingsObj, showTransition, setShowTransition, isD
             }
             setShowLogin(true)
         }
+        setCanStartRef(true)
     }, [showInstructions, showLogin])
 
     const handleStartGame = () => {
-        if (!isDownloadingImages) {
+        if (!isDownloadingImages && canStartRef.current) {
             setShowTransition(true)
             setTransitionOut(true)
         }
@@ -156,12 +162,12 @@ const MainView = ({ setView, settingsObj, showTransition, setShowTransition, isD
             <div className="main-view-wrapper">
                 {
                     showInstructions ? 
-                    <PopUpView height="50vh" width="50vw" x="50vw" y="47.5vh" fontSize="3vh" text={patchnotes}></PopUpView> :
+                    <PopUpView height="50vh" width="50vw" x="49vw" y="47.5vh" fontSize="3vh" text={patchnotes}></PopUpView> :
                     ""
                 }
                 {
                     showLogin ? 
-                    <LoginView height="35vh" width="calc(35vh * 670 / 422)" x="50vw" y="47.5vh" fontSize="3vh"></LoginView> :
+                    <LoginView height="35vh" width="calc(35vh * 670 / 422)" x="49vw" y="47.5vh" fontSize="3vh" user={user} setUser={setUser} setCanStartRef={setCanStartRef}></LoginView> :
                     ""
                 }
                 {

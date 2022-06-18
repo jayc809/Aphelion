@@ -171,6 +171,8 @@ function App() {
     cacheImages()
   }, [])
 
+  const [user, setUser] = useState(null)
+
   return (
     <div id="app" style={{backgroundColor: "black"}}>
       <CheckBrowserView></CheckBrowserView>
@@ -178,7 +180,7 @@ function App() {
       <div style={{position: "absolute", zIndex: 10, height: "100vh", width: "100vw"}}>
         {
           {
-            "main": <MainView setView={setView} settingsObj={settingsObj} showTransition={showMainViewTransitionInRef.current} setShowTransition={setShowMainViewTransitionInRef} isDownloadingImages={isDownloadingImages} progressBarWidth={progressBarWidth}></MainView>,
+            "main": <MainView setView={setView} settingsObj={settingsObj} showTransition={showMainViewTransitionInRef.current} setShowTransition={setShowMainViewTransitionInRef} isDownloadingImages={isDownloadingImages} progressBarWidth={progressBarWidth} user={user} setUser={setUser}></MainView>,
             "videos": <VideoSelectorView setView={setView} setVideoInfoRef={setVideoInfoRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj}/>,
             "analyzer": <AnalyzerView setView={setView} setBeatmapObjRef={setBeatmapObjRef} settingsObj={settingsObj} videoId={videoInfoRef.current.id.videoId}/>,
             "game": <GameView setView={setView} incrementGameId={incrementGameId} setResultsObjRef={setResultsObjRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj} beatmapObj={beatmapObjRef.current} key={gameId}/>,
