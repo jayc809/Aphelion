@@ -33,10 +33,7 @@ app.get("/image", (req, res) => {
     res.sendFile(path.resolve(__dirname, `./public/images/${req.query.fileName}.png`))
 })
 
-if (process.env.NODE_ENV != "production") {
-    require("dotenv").parse()
-}
-mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true})
+mongoose.connect(process.env.NODE_ENV == "production" ? process.env.DATABASE_URL : "mongodb://localhost/aphelion", {useNewUrlParser: true})
 const db = mongoose.connection
 db.on("error", (err) => {console.log(err)})
 db.once("open", () => {console.log("conencted to mongoose")})
