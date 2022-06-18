@@ -75,7 +75,7 @@ const ScrollList = ({ videosInput, setSelectedVideo }) => {
             <ul className="scroll-list-ul" ref={ulRef}>
                 {videos.map((videoSnippet, index) => { 
                     return (
-                        <div className="scroll-list-block" key={index} style={{opacity: index != selectedVideoIndex ? 1 : 0.5}} id={"li" + index}>
+                        <div className="scroll-list-block" key={index} style={{opacity: index != selectedVideoIndex ? 1 : 0.4}} id={"li" + index}>
                             <div className="scroll-list-block-background-1"></div>
                             <div className="scroll-list-block-background-2"></div>
                             <div className="scroll-list-block-background-3"></div>

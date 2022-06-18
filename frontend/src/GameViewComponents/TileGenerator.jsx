@@ -8,9 +8,10 @@ import HalfTile from './HalfTile'
 const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, getAllowStart, theme, difficulty }) => {
 
     const [beatmapIndex, setBeatmapIndex] = useState(null)
+    const currentTilesSize = 50
     const [currentTiles, setCurrentTiles] = useState(
-        Array.apply(null, Array(60)).map((nul, index) => {
-            return {beatNumber: -1, type: "placeholder", id: index - 60}
+        Array.apply(null, Array(currentTilesSize)).map((nul, index) => {
+            return {beatNumber: -1, type: "placeholder", id: index - currentTilesSize}
         })
     )
     const currentTilesRef = useRef(currentTiles)
@@ -185,7 +186,7 @@ const TileGenerator = ({ beatmapObj, onMount, tileSpeed, updateScoreAndCombo, ge
                 currTimeRef.current < (tiles[i].targetTime + tileSpeed)) {
                 closestTargetTime = tiles[i].targetTime
                 tappedTiles.current.push(key)
-                if (tappedTiles.current.length > 60) {
+                if (tappedTiles.current.length > currentTilesSize) {
                     tappedTiles.current.shift()
                 }
                 break

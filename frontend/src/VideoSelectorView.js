@@ -47,6 +47,26 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
         }
     }, [])
 
+    const blinkInterval = 1.2
+    const [searchTextOpacity, setSearchTextOpacity] = useState(1)
+    useEffect(() => {
+        if (!showYT) {
+            setSearchTextOpacity(1)
+        }
+        else if (searchTextOpacity <= 1 && searchTextOpacity > 0) {
+            const blink = setInterval(() => {
+                if (searchTextOpacity == 1) {
+                    setSearchTextOpacity(0.2)
+                } else {
+                    setSearchTextOpacity(1)
+                }
+            }, blinkInterval * 1000)
+            return () => {
+                clearInterval(blink)
+            }
+        }
+    }, [searchTextOpacity, showYT])
+
     const handleKeyPress = (e) => {
         if (e.key == "Enter" && document.getElementById("search-input-el") == document.activeElement) {
             handleSearchSubmit()
@@ -214,6 +234,10 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
         setView("main")
     }
 
+    const focusInput = () => {
+        document.getElementById("search-input-el").focus()
+    }
+
     return (
         <div className="screen-wrapper">
             <TransitionInView delay={1} settingsObj={settingsObj}></TransitionInView>
@@ -222,11 +246,17 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
             } start={transitionOut} settingsObj={settingsObj}></TransitionOutView>
             <div className="video-selector-view-wrapper" key={viewKey} style={{opacity: showView ? 1 : 0}}>
                 <div>
-                    <div className="search-bar">
+                    <div className="search-bar" style={{cursor: "pointer"}}>
                         <img className="search-bar-background" src={searchBarBackground} alt="search-bar"></img>
-                        {showYT ? <div className="search-YT">Search</div> : ""}
-                        {showYT ? <img className="search-YT-logo" src={ytLogo} alt="yt-logo"></img> : ""}
-                        <input className="search-input" id="search-input-el" ref={inputRef} type="text" onChange={handleSearchInputChange} onFocus={() => {setShowYT(false)}} autoComplete="off"></input>
+                        {showYT ? <div className="search-YT" onClick={focusInput} style={{
+                            opacity: searchTextOpacity,
+                            transition: searchTextOpacity == 1 ? `opacity ${blinkInterval}s ease-out` : `opacity ${blinkInterval}s ease`, 
+                         }}>Search</div> : ""}
+                        {showYT ? <img className="search-YT-logo" src={ytLogo} alt="yt-logo" onClick={focusInput} style={{
+                            opacity: searchTextOpacity,
+                            transition: searchTextOpacity == 1 ? `opacity ${blinkInterval}s ease-out` : `opacity ${blinkInterval}s ease`, 
+                        }}></img> : ""}
+                        <input className="search-input" id="search-input-el" ref={inputRef} type="text" onChange={handleSearchInputChange} onFocus={() => {setShowYT(false)}} onClick={focusInput} autoComplete="off"></input>
                     </div>
 
                     <div className="video-selected" ref={selectedVideoRef} 

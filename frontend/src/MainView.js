@@ -7,13 +7,14 @@ import githubBackground from "./images/github-button.png"
 import instructionsBackground from "./images/instructions-button.png"
 import loginBackground from "./images/login-button.png"
 import PopUpView from './utilComponents/PopUpView'
+import LoginView from './utilComponents/LoginView'
 
 const MainView = ({ setView, settingsObj, showTransition, setShowTransition, isDownloadingImages, progressBarWidth }) => {
 
     const backgroundVideo = "https://www.youtube.com/watch?v=jH1LBL_v7Qs"
     const loadingVideo = "https://www.youtube.com/watch?v=JycQdXuAP0k"
     const [startButtonOpacity, setStartButtonOpacity] = useState(1)
-    const blinkInterval = 1.75
+    const blinkInterval = 1.2
     const blackScreenRef = useRef(null)
     const [showBlackScreen, setShowBlackScreen] = useState(true)
     const patchnotes = `
@@ -93,13 +94,29 @@ const MainView = ({ setView, settingsObj, showTransition, setShowTransition, isD
     }
 
     const [showInstructions, setShowInstructions] = useState(false)
+    const [showLogin, setShowLogin] = useState(false)
+
     const handleInstructionsClick = useCallback(() => {
         if (showInstructions) {
             setShowInstructions(false)
         } else {
+            if (showLogin) {
+                setShowLogin(false)
+            }
             setShowInstructions(true)
         }
-    }, [showInstructions])
+    }, [showInstructions, showLogin])
+
+    const handleLoginClick = useCallback(() => {
+        if (showLogin) {
+            setShowLogin(false)
+        } else {
+            if (showInstructions) {
+                setShowInstructions(false)
+            }
+            setShowLogin(true)
+        }
+    }, [showInstructions, showLogin])
 
     const handleStartGame = () => {
         if (!isDownloadingImages) {
@@ -143,23 +160,28 @@ const MainView = ({ setView, settingsObj, showTransition, setShowTransition, isD
                     ""
                 }
                 {
+                    showLogin ? 
+                    <LoginView height="35vh" width="35vw" x="50vw" y="47.5vh" fontSize="3vh"></LoginView> :
+                    ""
+                }
+                {
                     showBlackScreen ? 
                     <div ref={blackScreenRef} style={{height: "100vh", width: "100vw", backgroundColor: "black", position: "absolute", zIndex: 1000}}></div> :
                     ""
                 }
                 <button className="main-view-start-button" 
                     style={{
-                        opacity: startButtonOpacity, transition: startButtonOpacity == 1 ? `opacity ${blinkInterval}s ease-out` : `opacity ${blinkInterval}s ease-in`, 
+                        opacity: startButtonOpacity, transition: startButtonOpacity == 1 ? `opacity ${blinkInterval}s ease-out` : `opacity ${blinkInterval}s ease`, 
                         fontSize: ready ? "7vh" : "4vh"
                     }}
                     onClick={handleStartGame}
                 >
-                    {ready ? "Start Game" : "Downlaoding Assets..." }
+                    {ready ? "Start Game" : "Downloading Assets..." }
                 </button>
                 <div className="main-view-buttons-wrapper">
                     <button style={{backgroundImage: `url(${githubBackground})`}} onClick={handleGithubClick}></button>
                     <button style={{backgroundImage: `url(${instructionsBackground})`}} onClick={handleInstructionsClick}></button>
-                    <button style={{backgroundImage: `url(${loginBackground})`}}></button>
+                    <button style={{backgroundImage: `url(${loginBackground})`}} onClick={handleLoginClick}></button>
                 </div>
                 <div className="progress-bar" ref={progressBarRef} style={{
                     width: progressBarWidth + "vw", 
