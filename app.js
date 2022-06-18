@@ -8,8 +8,8 @@ const MusicTempo = require("music-tempo")
 const { builtinModules } = require("module")
 const fft = require('fft-js').fft
 const fftUtil = require('fft-js').util
-const bcrypt = require("bcrypt")
-const mongoose = require("mongoose") 
+// const bcrypt = require("bcrypt")
+// const mongoose = require("mongoose") 
 const cors = require('cors');
 
 const port = process.env.PORT || 5000
@@ -33,20 +33,20 @@ app.get("/image", (req, res) => {
     res.sendFile(path.resolve(__dirname, `./public/images/${req.query.fileName}.png`))
 })
 
-mongoose.connect(process.env.NODE_ENV == "production" ? process.env.DATABASE_URL : "mongodb://localhost/aphelion", {useNewUrlParser: true})
-const db = mongoose.connection
-db.on("error", (err) => {console.log(err)})
-db.once("open", () => {console.log("conencted to mongoose")})
+// mongoose.connect(process.env.NODE_ENV == "production" ? process.env.DATABASE_URL : "mongodb://localhost/aphelion", {useNewUrlParser: true})
+// const db = mongoose.connection
+// db.on("error", (err) => {console.log(err)})
+// db.once("open", () => {console.log("conencted to mongoose")})
 
-app.post("/users", async (req, res) => {
-    try {
-        const salt = await bcrypt.genSalt()
-        const passwordHashed = await bcrypt.hash(req.query.password, salt)
-        res.status(201).send()
-    } catch {
-        res.status(500).send()
-    }
-})
+// app.post("/users", async (req, res) => {
+//     try {
+//         const salt = await bcrypt.genSalt()
+//         const passwordHashed = await bcrypt.hash(req.query.password, salt)
+//         res.status(201).send()
+//     } catch {
+//         res.status(500).send()
+//     }
+// })
 
 const server = app.listen(port, (err) => {
     if (err) return console.log(err)
