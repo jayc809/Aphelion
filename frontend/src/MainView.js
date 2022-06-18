@@ -161,7 +161,7 @@ const MainView = ({ setView, settingsObj, showTransition, setShowTransition, isD
                 }
                 {
                     showLogin ? 
-                    <LoginView height="35vh" width="35vw" x="50vw" y="47.5vh" fontSize="3vh"></LoginView> :
+                    <LoginView height="35vh" width="calc(35vh * 670 / 422)" x="50vw" y="47.5vh" fontSize="3vh"></LoginView> :
                     ""
                 }
                 {

@@ -8,8 +8,8 @@ const MusicTempo = require("music-tempo")
 const { builtinModules } = require("module")
 const fft = require('fft-js').fft
 const fftUtil = require('fft-js').util
-
-
+const bcrypt = require("bcrypt")
+const mongoose = require("mongoose") 
 const cors = require('cors');
 
 const port = process.env.PORT || 5000
@@ -31,6 +31,24 @@ app.get("/animation", (req, res) => {
 app.get("/image", (req, res) => {
     res.setHeader('Cache-Control', "public, max-age=3600")
     res.sendFile(path.resolve(__dirname, `./public/images/${req.query.fileName}.png`))
+})
+
+if (process.env.NODE_ENV != "production") {
+    require("dotenv").parse()
+}
+mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true})
+const db = mongoose.connection
+db.on("error", (err) => {console.log(err)})
+db.once("open", () => {console.log("conencted to mongoose")})
+
+app.post("/users", async (req, res) => {
+    try {
+        const salt = await bcrypt.genSalt()
+        const passwordHashed = await bcrypt.hash(req.query.password, salt)
+        res.status(201).send()
+    } catch {
+        res.status(500).send()
+    }
 })
 
 const server = app.listen(port, (err) => {
