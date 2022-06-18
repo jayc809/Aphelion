@@ -9,6 +9,6 @@
 
 ### setting up locally (run server on localhost, full controll)
 
-1. go to `AnalyzerView.js` in `frontend` and change `const socket = socketIOClient("https://jayc809-aphelion.com")` to `const socket = socketIOClient("http://localhost:5000/")`
+1. go to `AnalyzerView.js` in `frontend` and change `const socket = socketIOClient("https://jayc809-aphelion.com")` to `const socket = socketIOClient("http://localhost:5000")`
 2. `cd frontend` -> `npm install` -> `npm run build`
 3. `cd ..` -> `npm install` -> `npm run dev`
