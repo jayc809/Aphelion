@@ -46,7 +46,6 @@ const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({extended : true}))
 app.use(bodyParser.json())
 app.post("/register-user", async (req, res) => {
-    res.status(306).send("yee")
     try {
         const username = req.body.username
         const password = req.body.password

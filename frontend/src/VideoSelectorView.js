@@ -157,7 +157,7 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
     }
 
     const getHighScores = async () => {
-        fetch("https://jayc809-aphelion.com/get-high-scores-user", {
+        fetch("/get-high-scores-user", {
             method: 'POST', 
             mode: 'cors', 
             headers: {"Content-Type": "application/json"},

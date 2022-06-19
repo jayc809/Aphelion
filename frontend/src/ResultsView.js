@@ -58,7 +58,7 @@ const ResultsView = ({ setView, incrementGameId, resultsObj, settingsObj, videoI
         if ((highScoreObj[videoInfo.id.videoId] && Number(resultsObj.score) > Number(highScoreObj[videoInfo.id.videoId].score)) ||
             (user && !highScoreObj[videoInfo.id.videoId])) {
             setShowNewHighScore(true)
-            fetch("https://jayc809-aphelion.com/update-high-scores-user", {
+            fetch("/update-high-scores-user", {
                 method: 'POST', 
                 mode: 'cors', 
                 headers: {"Content-Type": "application/json"},
