@@ -8,7 +8,7 @@ const MusicTempo = require("music-tempo")
 const { builtinModules } = require("module")
 const fft = require('fft-js').fft
 const fftUtil = require('fft-js').util
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcryptjs")
 const mongoose = require("mongoose") 
 const cors = require('cors');
 
