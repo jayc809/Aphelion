@@ -56,7 +56,7 @@ const ResultsView = ({ setView, incrementGameId, resultsObj, settingsObj, videoI
     const [showNewHighScore, setShowNewHighScore] = useState(false)
     const updateHighScore = () => {
         if ((highScoreObj[videoInfo.id.videoId] && Number(resultsObj.score) > Number(highScoreObj[videoInfo.id.videoId].score)) ||
-            !highScoreObj[videoInfo.id.videoId]) {
+            (user && !highScoreObj[videoInfo.id.videoId])) {
             setShowNewHighScore(true)
             fetch("https://jayc809-aphelion.com/update-high-scores-user", {
                 method: 'POST', 

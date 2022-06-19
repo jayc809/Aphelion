@@ -79,7 +79,7 @@ const LoginView = ({ height, width, x, y, text, fontSize, user, setUser, setCanS
             return
         }
         
-        fetch("https://jayc809-aphelion.com/register-user", {
+        fetch("/register-user", {
             method: 'POST', 
             mode: 'cors', 
             headers: {"Content-Type": "application/json"},
