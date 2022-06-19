@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import "./PopUpView.css"
 
-const LoginView = ({ height, width, x, y, text, fontSize, user, setUser, setCanStartRef }) => {
+const LoginView = ({ height, width, x, y, text, fontSize, user, setUser, setCanStartRef, handleLoginClick }) => {
 
     const [displayText, setDisplayText] = useState("User Login")
     const [responseCode, setResponseCode] = useState(0)
+    const [opacity, setOpacity] = useState(1)
 
     useEffect(() => {
         if (user) {
@@ -12,6 +13,7 @@ const LoginView = ({ height, width, x, y, text, fontSize, user, setUser, setCanS
             setDisplayText(`User ${user} Logged In`)
         }
         window.addEventListener("keypress", handleKeyPress)
+        setOpacity(1)
         return () => {
             window.removeEventListener("keypress", handleKeyPress)
         }
@@ -32,7 +34,13 @@ const LoginView = ({ height, width, x, y, text, fontSize, user, setUser, setCanS
     }
 
     const handleKeyPress = (e) => {
-        if (e.key == "Enter" && (document.getElementById("username-input-el") == document.activeElement || document.getElementById("password-input-el") == document.activeElement)) {
+        if (e.key != "Enter" && document.getElementById("username-input-el") != document.activeElement && document.getElementById("password-input-el") != document.activeElement) {
+            document.getElementById("username-input-el").focus()
+        }
+        else if (e.key == "Enter" && document.getElementById("username-input-el") == document.activeElement) {
+            document.getElementById("password-input-el").focus()
+        }
+        else if (e.key == "Enter" && document.getElementById("password-input-el") == document.activeElement) {
             handleLogin()
         } 
     }
@@ -62,8 +70,15 @@ const LoginView = ({ height, width, x, y, text, fontSize, user, setUser, setCanS
         }) 
         .then(res => {
             setDisplayText(res.message)
+            localStorage.setItem("user", username)
             if (res.success) {
                 setUser(res.username)
+                setTimeout(() => {
+                    setOpacity(0)
+                }, 500)
+                setTimeout(() => {
+                    handleLoginClick()
+                }, 2000)
             }
         })
         setCanStartRef(true)
@@ -101,7 +116,7 @@ const LoginView = ({ height, width, x, y, text, fontSize, user, setUser, setCanS
     return (
         <div className="pop-up-wrapper" style={{height: height, width: width, left: `calc(${x} - ${width} / 2)`, top: `calc(${y} - ${height} / 2)`,
             position: "absolute", zIndex: 100000, backgroundImage: "url('../images/pause-menu.png')", backgroundRepeat: "no-repeat", backgroundSize: "contain", backgroundColor: "black",
-            padding: `calc(${width} / 25)`}}
+            padding: `calc(${width} / 25)`, opacity: opacity, transition: "opacity 1.5s linear"}}
         >
             <div style={{ 
                 height: "24%", width: "100%", display: "flex", fontSize: "3.8vh", display: "grid", placeItems: "center", paddingTop: "1%", 

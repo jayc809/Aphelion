@@ -13,6 +13,7 @@ const AnalyzerView = ({ setView, setBeatmapObjRef, settingsObj, videoId }) => {
     const [showBackButton, setShowBackButton] = useState(false)
     const [progessBarWidth, setProgressBarWidth] = useState(0)
     const [showAnalyzer, setShowAnalyzer] = useState(false)
+    const [errored, setErrored] = useState(false)
     const displayTextRef = useRef(null)
     const startButtonRef = useRef(null)
     const backButtonRef = useRef(null)
@@ -32,10 +33,13 @@ const AnalyzerView = ({ setView, setBeatmapObjRef, settingsObj, videoId }) => {
             socket.on("progress-update", (message) => {
                 setDisplayText(message)
                 if (message == "ERROR: Decoding Audio Data Failed") {
+                    setErrored(true)
                     backButtonRef.current.style.animation = "opacity-0-1 0.7s linear forwards"
                     setTimeout(() => {
                         setShowBackButton(true)
-                    }, 700);
+                    }, 700)
+                } else {
+                    setErrored(false)
                 }
             })
             socket.on("respond-beatmap", (beatmapObjRes) => {
@@ -96,7 +100,7 @@ const AnalyzerView = ({ setView, setBeatmapObjRef, settingsObj, videoId }) => {
             } start={transitionOut} settingsObj={settingsObj}></TransitionOutView>
             <TransitionInView delay={1} settingsObj={settingsObj}></TransitionInView>
             <div className="analyzer-view-wrapper" style={{opacity: showAnalyzer ? 1 : 0}}>
-                <h1 className="progress-text" ref={displayTextRef}>{displayText}</h1>
+                <h1 className="progress-text" ref={displayTextRef} style={{color: errored ? "#ff445e" : "white"}}>{displayText}</h1>
                 <button 
                     className="start-game-button" onClick={handleStartGame} ref={startButtonRef} 
                     style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`, cursor: "pointer"}}>

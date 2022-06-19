@@ -6,6 +6,7 @@ import TransitionOutView from './utilComponents/TransitionOutView'
 import githubBackground from "./images/github-button.png"
 import instructionsBackground from "./images/instructions-button.png"
 import loginBackground from "./images/login-button.png"
+import loginBackgroundFilled from "./images/login-button-filled.png"
 import PopUpView from './utilComponents/PopUpView'
 import LoginView from './utilComponents/LoginView'
 
@@ -167,7 +168,7 @@ const MainView = ({ setView, settingsObj, showTransition, setShowTransition, isD
                 }
                 {
                     showLogin ? 
-                    <LoginView height="35vh" width="calc(35vh * 670 / 422)" x="49vw" y="47.5vh" fontSize="3vh" user={user} setUser={setUser} setCanStartRef={setCanStartRef}></LoginView> :
+                    <LoginView height="35vh" width="calc(35vh * 670 / 422)" x="49vw" y="47.5vh" fontSize="3vh" user={user} setUser={setUser} setCanStartRef={setCanStartRef} handleLoginClick={handleLoginClick}></LoginView> :
                     ""
                 }
                 {
@@ -187,7 +188,7 @@ const MainView = ({ setView, settingsObj, showTransition, setShowTransition, isD
                 <div className="main-view-buttons-wrapper">
                     <button style={{backgroundImage: `url(${githubBackground})`}} onClick={handleGithubClick}></button>
                     <button style={{backgroundImage: `url(${instructionsBackground})`}} onClick={handleInstructionsClick}></button>
-                    <button style={{backgroundImage: `url(${loginBackground})`}} onClick={handleLoginClick}></button>
+                    <button style={{backgroundImage: user ? `url(${loginBackgroundFilled})` : `url(${loginBackground})`}} onClick={handleLoginClick}></button>
                 </div>
                 <div className="progress-bar" ref={progressBarRef} style={{
                     width: progressBarWidth + "vw", 

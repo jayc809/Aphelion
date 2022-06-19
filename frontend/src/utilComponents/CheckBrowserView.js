@@ -16,8 +16,6 @@ const CheckBrowserView = () => {
     }
     
     useEffect(() => {
-        // const isUsingChrome = window.navigator.userAgent.indexOf("Chrome") > -1
-        const browser = detect()
         const succeeded = (message) => {
             setMessage(message)
             setHeight("0px")
@@ -39,6 +37,21 @@ const CheckBrowserView = () => {
                 setWarning(true)
             }
         }
+
+        let os = null
+        if (window.navigator.userAgent.indexOf("Windows NT 10.0")!= -1) os="Windows 10"
+        if (window.navigator.userAgent.indexOf("Windows NT 6.3") != -1) os="Windows 8.1"
+        if (window.navigator.userAgent.indexOf("Windows NT 6.2") != -1) os="Windows 8"
+        if (window.navigator.userAgent.indexOf("Windows NT 6.1") != -1) os="Windows 7"
+        if (window.navigator.userAgent.indexOf("Windows NT 6.0") != -1) os="Windows Vista"
+        if (window.navigator.userAgent.indexOf("Windows NT 5.1") != -1) os="Windows XP"
+        if (window.navigator.userAgent.indexOf("Windows NT 5.0") != -1) os="Windows 2000"
+        if (os != null) {
+            failed("Windows Version of This App Is Under Maintenance, Consider Using Another OS For Now")
+            return
+        }
+
+        const browser = detect()
         switch (browser && browser.name) {
             case 'chrome':
                 succeeded("")
@@ -71,8 +84,11 @@ const CheckBrowserView = () => {
             case "android": 
                 failed("Mobile Is Not Supported At The Moment. Consider Using A Computer")
                 return
+
+            default:
+                warning("Unable To Detect Browser Type. Errors May Arise. Consider Using Chrome For Best Performance")
+                return
         }
-        warning("Unable To Detect Browser Type. Errors May Arise. Consider Using Chrome For Best Performance")
     }, [])
 
     return (

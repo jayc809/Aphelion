@@ -62,7 +62,9 @@ const Video = ({ updateCurrTime, beatmapObj, settingsObj, tileSpeed, getAllowSta
     const handlePlayerReady = () => {
         numPlayersReady.current += 1
         if (numPlayersReady.current == 2) {
-            onAllowStart()
+            setTimeout(() => {    
+                onAllowStart()
+            }, 500)
             onMount(setPlayAudio, setPlayVideo, setVideoVolume)
         }
     }

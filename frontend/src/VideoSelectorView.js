@@ -95,6 +95,7 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
                 part: "snippet",
                 key: "AIzaSyBDJAkuO_5rZovFS6DNIrEKMziVx4vlBmw",
                 q: searchKeywordRef.current,
+                safeSearch: "strict",
                 type: "video",
                 maxResults: 50,
                 videoDimension: "2d",

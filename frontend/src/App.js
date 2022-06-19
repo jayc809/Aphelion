@@ -171,7 +171,7 @@ function App() {
     cacheImages()
   }, [])
 
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(localStorage.getItem("user") ? localStorage.getItem("user") : null)
   const [highScoreObj, setHighScoreObj] = useState({})
 
   return (
