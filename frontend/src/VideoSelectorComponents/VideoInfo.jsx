@@ -5,12 +5,12 @@ import highScoreBackground from "../images/high-score.png"
 import aTier from "../images/a-tier.png"
 import bTier from "../images/b-tier.png"
 import cTier from "../images/c-tier.png"
-import fier from "../images/f-tier.png"
+import fTier from "../images/f-tier.png"
 import sTier from "../images/s-tier.png"
 import naTier from "../images/na-tier.png"
 import ReactPlayer from 'react-player';
 
-const VideoInfo = ({ videoInfo, settingsObj, onMount }) => {
+const VideoInfo = ({ videoInfo, settingsObj, onMount, user, highScoreObj }) => {
 
     const [useVideo, setUseVideo] = useState(false)
     const [videoId, setVideoId] = useState(null)
@@ -43,15 +43,31 @@ const VideoInfo = ({ videoInfo, settingsObj, onMount }) => {
         }
     }
 
+    useEffect(() => {
+        console.log(user)
+    }, [highScoreObj, user])
+
     return (videoInfo.snippet.thumbnails.high.url != "" ? 
             <div className="video-info-wrapper">
                 <div className="video-tier" style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
-                    <img src={aTier} alt="tier"></img>
+                    {
+                        (user && highScoreObj[videoInfo.id.videoId] && highScoreObj[videoInfo.id.videoId].tier) ?
+                        <img src={
+                            {
+                                S: sTier,
+                                A: aTier,
+                                B: bTier,
+                                C: cTier,
+                                F: fTier,
+                            }[highScoreObj[videoInfo.id.videoId].tier]
+                        } alt="tier"></img> :
+                        ""
+                    }
                 </div>
                 <div className="video-high-score" style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
                     <img src={highScoreBackground} alt="high-score"></img>
-                    <h4>High Score</h4>
-                    <h3>000038205929</h3>
+                    <h4>{user ? "High Score" : "Login To View High Score"}</h4>
+                    <h3>{(user && highScoreObj[videoInfo.id.videoId] && Number(highScoreObj[videoInfo.id.videoId].score) > 0) ? String(highScoreObj[videoInfo.id.videoId].score).padStart(12, "0") : "000000000000"}</h3>
                 </div>
                 {useVideo ? (
                     videoId != null ?

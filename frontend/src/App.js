@@ -172,6 +172,7 @@ function App() {
   }, [])
 
   const [user, setUser] = useState(null)
+  const [highScoreObj, setHighScoreObj] = useState({})
 
   return (
     <div id="app" style={{backgroundColor: "black"}}>
@@ -181,10 +182,10 @@ function App() {
         {
           {
             "main": <MainView setView={setView} settingsObj={settingsObj} showTransition={showMainViewTransitionInRef.current} setShowTransition={setShowMainViewTransitionInRef} isDownloadingImages={isDownloadingImages} progressBarWidth={progressBarWidth} user={user} setUser={setUser}></MainView>,
-            "videos": <VideoSelectorView setView={setView} setVideoInfoRef={setVideoInfoRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj}/>,
+            "videos": <VideoSelectorView setView={setView} setVideoInfoRef={setVideoInfoRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj} user={user} highScoreObj={highScoreObj} setHighScoreObj={setHighScoreObj}/>,
             "analyzer": <AnalyzerView setView={setView} setBeatmapObjRef={setBeatmapObjRef} settingsObj={settingsObj} videoId={videoInfoRef.current.id.videoId}/>,
             "game": <GameView setView={setView} incrementGameId={incrementGameId} setResultsObjRef={setResultsObjRef} settingsObj={settingsObj} setSettingsObj={setSettingsObj} beatmapObj={beatmapObjRef.current} key={gameId}/>,
-            "results": <ResultsView setView={setView} incrementGameId={incrementGameId} resultsObj={resultsObjRef.current} settingsObj={settingsObj} videoInfo={videoInfoRef.current}/>,
+            "results": <ResultsView setView={setView} incrementGameId={incrementGameId} resultsObj={resultsObjRef.current} settingsObj={settingsObj} videoInfo={videoInfoRef.current} user={user} highScoreObj={highScoreObj}/>,
             "test": <TestView/>
           } [view]
         }

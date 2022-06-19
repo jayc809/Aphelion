@@ -37,6 +37,7 @@ mongoose.connect("mongodb+srv://user:chiehyin123@aphelion.rimg6.mongodb.net/?ret
 , {useNewUrlParser: true})
 const db = mongoose.connection
 const User = require("./models-mongo/user")
+const HighScore = require("./models-mongo/highScore")
 db.on("error", (err) => {console.log(err)})
 db.once("open", () => {console.log("connected to mongoose")})
 const bodyParser = require('body-parser')
@@ -48,6 +49,7 @@ app.post("/register-user", async (req, res) => {
         const username = req.body.username
         const password = req.body.password
         const user = User({
+            _id: username,
             username: username,
             password: password
         })
@@ -56,6 +58,19 @@ app.post("/register-user", async (req, res) => {
                 const exisitngUsers = await User.find({ username: username }).exec()
                 if (exisitngUsers.length == 0) {
                     user.save()
+
+                    const highScore = HighScore({
+                        _id: username,
+                        username: username,
+                        highScores: {
+                            "default": {
+                                "score": 0,
+                                "tier": "a"
+                            }
+                        }
+                    })
+                    await HighScore.replaceOne({ username: username }, highScore, { upsert: true }, (err, results) => {}).clone()
+                    
                     res.status(201).send({
                         success: true,
                         message: "User Registered, Please Login"
@@ -78,7 +93,8 @@ app.post("/register-user", async (req, res) => {
                 message: "An Error Occured (code: 2)"
             })
         }
-    } catch {
+    } catch (err) {
+        console.log(err)
         res.status(500).send({
             success: false,
             message: "An Error Occured (code: 1)"
@@ -129,6 +145,52 @@ app.post("/login-user", async (req, res) => {
         res.status(500).send({
             success: false,
             message: "An Error Occured (code: 1)"
+        })
+    }
+})
+
+app.post("/get-high-scores-user", async (req, res) => {
+    try {
+        const username = req.body.username
+        const highScoreObj = await HighScore.findOne({ username: username }).exec()
+        res.status(201).send({
+            success: true,
+            highScoreObj: highScoreObj.highScores
+        }) 
+    } catch {
+        res.status(500).send({
+            success: false,
+            highScoreObj: {}
+        })
+    }
+})
+
+app.post("/update-high-scores-user", async (req, res) => {
+    try {
+        const username = req.body.username
+        const videoId = req.body.videoId
+        const score = req.body.score
+        const tier = req.body.tier
+        const highScoreObj = await HighScore.findOne({ username: username }).exec()
+        try {
+            const temp = JSON.parse(JSON.stringify(highScoreObj))
+            temp.highScores[videoId] = {
+                score: score,
+                tier: tier
+            }
+            await HighScore.replaceOne({ username: username }, temp, { upsert: true }, (err, results) => {}).clone()
+        } catch {
+            res.status(500).send({
+                success: false,
+                highScoreObj: {}
+            })
+        }
+        res.status(201).send({
+            success: true
+        }) 
+    } catch {
+        res.status(500).send({
+            success: false
         })
     }
 })

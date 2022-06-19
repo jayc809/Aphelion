@@ -4,7 +4,8 @@ const bcrypt = require('bcrypt')
 const SALT_WORK_FACTOR = 10;
      
 const UserSchema = new Schema({
-    username: { type: String, required: true, index: { unique: true } },
+    _id: { type: String },
+    username: { type: String, required: true },
     password: { type: String, required: true }
 });
      

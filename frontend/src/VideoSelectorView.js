@@ -12,7 +12,7 @@ import ytLogo from "./images/yt-logo.png"
 import "./VideoSelectorView.css"
 import "./App.css"
 
-const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsObj }) => {
+const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsObj, user, highScoreObj, setHighScoreObj }) => {
 
     const searchKeywordRef = useRef("ghost suisei")
     const [videos, setVideos] = useState([])
@@ -24,6 +24,7 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
 
     const [showView, setShowView] = useState(false)
     useEffect(() => {
+        getHighScores()
         window.addEventListener("keypress", handleKeyPress)
         setVideos(dummyVideoInfo.items)
         hideSettings() //?
@@ -86,6 +87,7 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
         lastSubmittedSearchKeywordRef.current = searchKeywordRef.current
         
         hideSettings()
+
         let firstSearchResult = []
         let secondSearchResult = []
         axios.get("https://www.googleapis.com/youtube/v3/search", {
@@ -122,7 +124,7 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
                     const seconds = parseInt(/\d+(?=S)/.exec(duration))
                     let durationString = null
                     if (hours == null) {
-                        if (minutes != null && minutes <= 6 && minutes >= 1) {
+                        if (minutes != null && minutes <= 5 && minutes >= 1) {
                             if (!Number.isNaN(seconds)) {
                                 if (Math.floor(seconds / 10) == 0) {
                                     durationString = minutes.toString() + ":0" + seconds.toString()
@@ -140,12 +142,35 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
                         secondSearchResult.push({id: {videoId: videoId}, snippet: snippet})
                     }
                 })
+                return secondSearchResult
+            })
+            .then(async (secondSearchResult) => { 
+                if (user != "") {
+                    await getHighScores()
+                } 
                 setVideos(secondSearchResult)
                 setViewKey(viewKey + 1)
                 inputRef.current.value = lastSubmittedSearchKeywordRef.current
                 unfocusInput()
             })
         })
+    }
+
+    const getHighScores = async () => {
+        fetch("https://jayc809-aphelion.com/get-high-scores-user", {
+            method: 'POST', 
+            mode: 'cors', 
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                username: user
+            }) 
+        })
+        .then(res => {
+            return res.json()
+        }) 
+        .then(res => {
+            setHighScoreObj(res.highScoreObj)
+        })   
     }
 
     const unfocusInput = () => {
@@ -287,7 +312,7 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
                     </div>
 
                     <div className="video-info">
-                        <VideoInfo videoInfo={selectedVideo} settingsObj={settingsObj} onMount={onVideoInfoMount}/>
+                        <VideoInfo videoInfo={selectedVideo} settingsObj={settingsObj} onMount={onVideoInfoMount} user={user} highScoreObj={highScoreObj}/>
                     </div>
 
                     <div className="video-buttons" style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>

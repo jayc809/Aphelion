@@ -15,7 +15,7 @@ import bTier from "./images/b-tier.png"
 import cTier from "./images/c-tier.png"
 import fTier from "./images/f-tier.png"
 
-const ResultsView = ({ setView, incrementGameId, resultsObj, settingsObj, videoInfo }) => {
+const ResultsView = ({ setView, incrementGameId, resultsObj, settingsObj, videoInfo, user, highScoreObj }) => {
 
     const [clipRight, setClipRight] = useState(null)
     const [clipLeft, setClipLeft] = useState(null)
@@ -32,6 +32,7 @@ const ResultsView = ({ setView, incrementGameId, resultsObj, settingsObj, videoI
     const backgroundVideo = "https://www.youtube.com/watch?v=jH1LBL_v7Qs"
 
     useEffect(() => {
+        updateHighScore()
         handleResize()
         setThumbnailSrc(`https://img.youtube.com/vi/${videoInfo.id.videoId}/maxresdefault.jpg`)
         setTimeout(() => {
@@ -51,6 +52,27 @@ const ResultsView = ({ setView, incrementGameId, resultsObj, settingsObj, videoI
             window.removeEventListener("resize", handleResize)
         }
     }, [])
+
+    const [showNewHighScore, setShowNewHighScore] = useState(false)
+    const updateHighScore = () => {
+        if ((highScoreObj[videoInfo.id.videoId] && Number(resultsObj.score) > Number(highScoreObj[videoInfo.id.videoId].score)) ||
+            !highScoreObj[videoInfo.id.videoId]) {
+            setShowNewHighScore(true)
+            fetch("https://jayc809-aphelion.com/update-high-scores-user", {
+                method: 'POST', 
+                mode: 'cors', 
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    username: user,
+                    videoId: videoInfo.id.videoId,
+                    score: resultsObj.score,
+                    tier: resultsObj.tier
+                }) 
+            })
+        } else {
+            setShowNewHighScore(false)
+        }
+    }
 
     useEffect(() => {
         if (startAddingScore.current ) {
@@ -163,7 +185,7 @@ const ResultsView = ({ setView, incrementGameId, resultsObj, settingsObj, videoI
                 </button>
                 <div className="results-main-content">
                     <div className="results-tier-wrapper">
-                        <h4>Rank</h4>
+                        <h4 style={showNewHighScore ? {paddingTop: "0.5vh", transform: "rotate(-4deg)", fontFamily: "Futura", fontSize: "3vh", marginBottom: "-2vh"} : {}}>{showNewHighScore ? "New High Score!" : "Rank"}</h4>
                         <img src={getTierSrc()} ref={tierRef} style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}} alt="tier"></img>
                     </div>
                     <div className="results-metrics-wrapper">

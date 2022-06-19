@@ -11,6 +11,10 @@ const LoginView = ({ height, width, x, y, text, fontSize, user, setUser, setCanS
             setResponseCode(201)
             setDisplayText(`User ${user} Logged In`)
         }
+        window.addEventListener("keypress", handleKeyPress)
+        return () => {
+            window.removeEventListener("keypress", handleKeyPress)
+        }
     }, [])
 
     const checkInput = (username, password) => {
@@ -27,6 +31,12 @@ const LoginView = ({ height, width, x, y, text, fontSize, user, setUser, setCanS
         return true
     }
 
+    const handleKeyPress = (e) => {
+        if (e.key == "Enter" && (document.getElementById("username-input-el") == document.activeElement || document.getElementById("password-input-el") == document.activeElement)) {
+            handleLogin()
+        } 
+    }
+
     const handleLogin = () => {
         setCanStartRef(false)
 
@@ -37,7 +47,7 @@ const LoginView = ({ height, width, x, y, text, fontSize, user, setUser, setCanS
             return
         }
 
-        fetch("http://localhost:5000/login-user", {
+        fetch("https://jayc809-aphelion.com/login-user", {
             method: 'POST', 
             mode: 'cors', 
             headers: {"Content-Type": "application/json"},
@@ -46,17 +56,17 @@ const LoginView = ({ height, width, x, y, text, fontSize, user, setUser, setCanS
                 password: password
             }) 
         })
-            .then(res => {
-                setResponseCode(res.status)
-                return res.json()
-            }) 
-            .then(res => {
-                setDisplayText(res.message)
-                if (res.success) {
-                    setUser(res.username)
-                }
-            })
-            setCanStartRef(true)
+        .then(res => {
+            setResponseCode(res.status)
+            return res.json()
+        }) 
+        .then(res => {
+            setDisplayText(res.message)
+            if (res.success) {
+                setUser(res.username)
+            }
+        })
+        setCanStartRef(true)
     }
 
     const handleRegister = () => {
@@ -69,7 +79,7 @@ const LoginView = ({ height, width, x, y, text, fontSize, user, setUser, setCanS
             return
         }
         
-        fetch("http://localhost:5000/register-user", {
+        fetch("https://jayc809-aphelion.com/register-user", {
             method: 'POST', 
             mode: 'cors', 
             headers: {"Content-Type": "application/json"},
@@ -78,13 +88,13 @@ const LoginView = ({ height, width, x, y, text, fontSize, user, setUser, setCanS
                 password: password
             }) 
         })
-            .then(res => {
-                setResponseCode(res.status)
-                return res.json()
-            }) 
-            .then(res => {
-                setDisplayText(res.message)
-            })
+        .then(res => {
+            setResponseCode(res.status)
+            return res.json()
+        }) 
+        .then(res => {
+            setDisplayText(res.message)
+        })
         setCanStartRef(true)
     }
 
