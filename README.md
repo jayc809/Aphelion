@@ -14,6 +14,8 @@
 2. `npm install`
 3. `npm run dev`
 
+### visit http://localhost:3000
+
 
 ## setting up locally (run server on localhost, full controll)
 
@@ -29,3 +31,5 @@
 1. make new terminal
 2. `npm install`
 3. `npm run dev`
+
+### visit http://localhost:5000
