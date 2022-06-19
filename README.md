@@ -19,10 +19,11 @@
 
 ### frontend
 1. go to `AnalyzerView.js` in `frontend` and change `const socket = socketIOClient("https://jayc809-aphelion.com")` to `const socket = socketIOClient("http://localhost:5000")`
-2. make new terminal
-3. `cd frontend`
-4. `npm install`
-5. `npm run build`
+2. add `http://localhost:5000` in front of every `fetch` in `frontend` 
+3. make new terminal
+4. `cd frontend`
+5. `npm install`
+6. `npm run build`
 
 ### backend
 1. make new terminal
