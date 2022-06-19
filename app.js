@@ -33,7 +33,8 @@ app.get("/image", (req, res) => {
     res.sendFile(path.resolve(__dirname, `./public/images/${req.query.fileName}.png`))
 })
 
-mongoose.connect("mongodb+srv://user:chiehyin123@aphelion.rimg6.mongodb.net/?retryWrites=true&w=majority" //process.env.NODE_ENV == "production" ? process.env.DATABASE_URL : "mongodb://localhost/aphelion"
+//"mongodb+srv://user:chiehyin123@aphelion.rimg6.mongodb.net/?retryWrites=true&w=majority" //
+mongoose.connect(process.env.NODE_ENV == "production" ? process.env.DATABASE_URL : "mongodb+srv://user:chiehyin123@aphelion.rimg6.mongodb.net/?retryWrites=true&w=majority"
 , {useNewUrlParser: true})
 const db = mongoose.connection
 const User = require("./models-mongo/user")
