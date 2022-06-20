@@ -5,10 +5,8 @@ const readline = require('readline')
 const ytdl = require('ytdl-core')
 const webAudioApi = require("web-audio-api")
 const MusicTempo = require("music-tempo")
-const { builtinModules } = require("module")
 const fft = require('fft-js').fft
 const fftUtil = require('fft-js').util
-const bcrypt = require("bcryptjs")
 const mongoose = require("mongoose") 
 const cors = require('cors');
 
@@ -224,17 +222,17 @@ io.on("connect", socket => {
         })
         socket.emit("progress-update", "Downloading Video")
         console.log("downloading video")
-        video.on('progress', (chunkLength, downloaded, total) => {
-            const percent = downloaded / total
-            readline.cursorTo(process.stdout, 0)
-            process.stdout.write(`${(percent * 100).toFixed(2)}% downloaded`)
-            process.stdout.write(`(${(downloaded / 1024 / 1024).toFixed(2)}MB of ${(total / 1024 / 1024).toFixed(2)}MB)\n`)
-            readline.moveCursor(process.stdout, 0, -1)
-        })
+        // video.on('progress', (chunkLength, downloaded, total) => {
+        //     const percent = downloaded / total
+        //     readline.cursorTo(process.stdout, 0)
+        //     process.stdout.write(`${(percent * 100).toFixed(2)}% downloaded`)
+        //     process.stdout.write(`(${(downloaded / 1024 / 1024).toFixed(2)}MB of ${(total / 1024 / 1024).toFixed(2)}MB)\n`)
+        //     readline.moveCursor(process.stdout, 0, -1)
+        // })
 
         //analyze audio
         video.on('end', () => {
-            process.stdout.write('\n')
+            // process.stdout.write('\n')
             const data = fs.readFileSync(filePath)
             const buffer = data.buffer
             if (checkADTSValidity(buffer)) {  
@@ -337,17 +335,6 @@ const getBPM = (audioData, buffer, startTime) => {
     if (parseFloat(startTime) > 0) {
        start = parseInt(parseFloat(startTime) * buffer.sampleRate)
     }
-
-    // let startIndex = null
-    // const mtStartIndex = parseInt((mt.beats[0] - 0.053) * buffer.sampleRate) - 1024
-    // for (let i = 0; i < audioData.length; i += 1) {
-    //     if (audioData[i] != 0 && Math.abs(i - mtStartIndex) <= 1) {
-    //         return [parseFloat(mt.tempo), i, i / buffer.sampleRate]
-    //     } else if (audioData[i] != 0 && i - mtStartIndex > 1) {
-    //         return [parseFloat(mt.tempo), i, i / buffer.sampleRate]
-    //     }
-    // }
-    // return [parseFloat(mt.tempo), 0, 0]
 
     let pcmStartIndex = null
     for (let i = start; i < audioData.length; i += 1) {
