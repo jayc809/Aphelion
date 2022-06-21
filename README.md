@@ -1,8 +1,6 @@
 # visit https://jayc809-aphelion.com/
 
-
-
-
+---
 
 ## setting up locally (run server on heroku, no controll server-side)
 
@@ -18,6 +16,8 @@
 3. `npm run dev`
 
 ### visit http://localhost:3000
+
+---
 
 
 ## setting up locally (run server on localhost, full controll)
