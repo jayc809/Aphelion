@@ -83,6 +83,7 @@ const ResultsView = ({ setView, incrementGameId, resultsObj, settingsObj, videoI
                 if ((resultsObj.score - currScore < parseInt(resultsObj.score / intervals)) ||
                     currScore > resultsObj.score) {
                     setScoreDisplay(resultsObj.score)
+                    startAddingScore.current = false
                 } else {
                     setScoreDisplay(currScore)
                 }

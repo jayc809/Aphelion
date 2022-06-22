@@ -15,6 +15,7 @@ import TransitionOutView from "./utilComponents/TransitionOutView"
 const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, setSettingsObj, beatmapObj }) => {
 
   const [showGame, setShowGame] = useState(false)
+  const mouseTimerRef = useRef(null)
   //initialization
   useEffect(() => {
     window.addEventListener("mousemove", handleMouseMove)
@@ -23,6 +24,7 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, set
     }, 700)
     return () => {
       window.removeEventListener("mousemove", handleMouseMove)
+      clearTimeout(mouseTimerRef.current)
     }
   }, [])
 
@@ -33,7 +35,7 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, set
 
   useEffect(() => {
     if (mouseMoved) {
-      setTimeout(() => {
+      mouseTimerRef.current = setTimeout(() => {
         setMouseMoved(false)
       }, 2000)
     }

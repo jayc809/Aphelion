@@ -197,7 +197,7 @@ const MainView = ({ setView, settingsObj, showTransition, setShowTransition, isD
                 ></div>
                 <div className="loading-video-wrapper">
                     <div className="loading-video">
-                        <ReactPlayer url={loadingVideo} width="100%" height="100%" playing={true} loop={true} muted={true} style={{ pointerEvents: "none"}} onPlay={handleVideoReady}></ReactPlayer>
+                        <ReactPlayer url={loadingVideo} width="100%" height="100%" playing={true} loop={true} muted={true} style={{ pointerEvents: "none"}} onReady={handleVideoReady}></ReactPlayer>
                     </div>
                 </div>
                 <div className="background-video-wrapper"> 
