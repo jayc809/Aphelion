@@ -222,17 +222,9 @@ io.on("connect", socket => {
         })
         socket.emit("progress-update", "Downloading Video")
         console.log("downloading video")
-        // video.on('progress', (chunkLength, downloaded, total) => {
-        //     const percent = downloaded / total
-        //     readline.cursorTo(process.stdout, 0)
-        //     process.stdout.write(`${(percent * 100).toFixed(2)}% downloaded`)
-        //     process.stdout.write(`(${(downloaded / 1024 / 1024).toFixed(2)}MB of ${(total / 1024 / 1024).toFixed(2)}MB)\n`)
-        //     readline.moveCursor(process.stdout, 0, -1)
-        // })
-
+        
         //analyze audio
         video.on('end', () => {
-            // process.stdout.write('\n')
             const data = fs.readFileSync(filePath)
             const buffer = data.buffer
             if (checkADTSValidity(buffer)) {  
@@ -257,7 +249,6 @@ io.on("connect", socket => {
             console.log("generating beatmap")
             let beatmap
             let maxCombo
-            const fftMapHalf = getFFTMapHalf(audioData, buffer, startIndex, bpm)
             switch (requestObj.settingsObj.difficulty) {
                 case "Easy":
                     [beatmap, maxCombo] = getBeatmapEasy(fftMap, bpm, requestObj.settingsObj.tileSpeed)
@@ -266,10 +257,10 @@ io.on("connect", socket => {
                     [beatmap, maxCombo] = getBeatmapMedium(fftMap, bpm, requestObj.settingsObj.tileSpeed)
                     break
                 case "Hard":
-                    [beatmap, maxCombo] = getBeatmapHard(fftMap, fftMapHalf, bpm, requestObj.settingsObj.tileSpeed)
+                    [beatmap, maxCombo] = getBeatmapHard(fftMap, bpm, requestObj.settingsObj.tileSpeed)
                     break
                 case "Extreme":
-                    [beatmap, maxCombo] = getBeatmapExtreme(fftMap, fftMapHalf, bpm, requestObj.settingsObj.tileSpeed)
+                    [beatmap, maxCombo] = getBeatmapExtreme(fftMap, bpm, requestObj.settingsObj.tileSpeed)
                     break
             }
 
@@ -398,13 +389,6 @@ const getBPM = (audioData, buffer, startTime) => {
     }
 
 } 
-const getBeatTime = (audioData, buffer, startIndex, bpm) => {
-    const beats = []
-    for (let sample = startIndex; sample < audioData.length - 2048; sample += parseInt(buffer.sampleRate * 60 / bpm)) {
-        beats.push(sample / buffer.sampleRate)
-    }
-    return beats
-}
 const getFFTMap = (audioData, buffer, startIndex, bpm) => {
     const fftMap = []
     for (let sample = startIndex; sample < audioData.length - 2048; sample += parseInt(buffer.sampleRate * 60 / bpm)) {
@@ -693,7 +677,8 @@ const getBeatmapMedium = (fftMap, bpm, tileSpeed) => {
 
     return [beatmap, maxCombo]
 }
-const getBeatmapHard = (fftMap, fftMapHalf, bpm, tileSpeed) => {
+const getBeatmapHard = (fftMap, bpm, tileSpeed) => {
+    const fftMapHalf = getFFTMapHalf(audioData, buffer, startIndex, bpm)
     const frequencies = []
     for (let i = 0; i < fftMap.length; i += 1) {
         for (let j = 0; j < fftMap[i].meta.length; j += 1) {
@@ -878,7 +863,8 @@ const getBeatmapHard = (fftMap, fftMapHalf, bpm, tileSpeed) => {
 
     return [beatmap, maxCombo]
 }
-const getBeatmapExtreme = (fftMap, fftMapHalf, bpm, tileSpeed) => {
+const getBeatmapExtreme = (fftMap, bpm, tileSpeed) => {
+    const fftMapHalf = getFFTMapHalf(audioData, buffer, startIndex, bpm)
     const frequencies = []
     for (let i = 0; i < fftMap.length; i += 1) {
         for (let j = 0; j < fftMap[i].meta.length; j += 1) {

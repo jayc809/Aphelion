@@ -26,10 +26,20 @@ const AnalyzerView = ({ setView, setBeatmapObjRef, settingsObj, videoId }) => {
             setShowAnalyzer(true)
         }, 700)
         socket.on("connected-to-server", () => {
+            const errorTimeout = setTimeout(() => {
+                setDisplayText("ERROR: Process Timed Out")
+                setErrored(true)
+                backButtonRef.current.style.animation = "opacity-0-1 0.7s linear forwards"
+                setTimeout(() => {
+                    setShowBackButton(true)
+                }, 700)
+            }, 60 * 1000)
+
             socket.emit("request-beatmap", {
                 videoUrl: videoUrl,
                 settingsObj: settingsObj
             })
+
             socket.on("progress-update", (message) => {
                 setDisplayText(message)
                 if (message == "ERROR: Decoding Audio Data Failed") {
@@ -42,7 +52,9 @@ const AnalyzerView = ({ setView, setBeatmapObjRef, settingsObj, videoId }) => {
                     setErrored(false)
                 }
             })
+            
             socket.on("respond-beatmap", (beatmapObjRes) => {
+                clearTimeout(errorTimeout)
                 const beatmapObj = beatmapObjRes
                 beatmapObj.refreshRate = 0.01 * 1000
                 beatmapObj.refreshTolerance = 0.008
