@@ -43,10 +43,6 @@ const VideoInfo = ({ videoInfo, settingsObj, onMount, user, highScoreObj }) => {
         }
     }
 
-    useEffect(() => {
-        console.log(user)
-    }, [highScoreObj, user])
-
     return (videoInfo.snippet.thumbnails.high.url != "" ? 
             <div className="video-info-wrapper">
                 <div className="video-tier" style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>

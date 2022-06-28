@@ -14,7 +14,6 @@ const HalfTile = ({ type, tileSpeed, theme, delay, targetTime, onMount, onMiss, 
 
     //initializations
     useEffect(() => {
-        console.log("yee")
         setTimeout(() => {
             setStart(true)
             if (type != "placeholder") {

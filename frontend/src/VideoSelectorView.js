@@ -9,6 +9,7 @@ import TransitionInView from './utilComponents/TransitionInView'
 import TransitionOutView from './utilComponents/TransitionOutView'
 import searchBarBackground from "./images/search-bar.png"
 import ytLogo from "./images/yt-logo.png"
+import TutorialView from './utilComponents/TutorialView'
 import "./VideoSelectorView.css"
 import "./App.css"
 
@@ -270,6 +271,7 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
             <TransitionOutView nextView={
                 nextViewDestinationRef.current == "analyzer" ? nextViewAnalyzer : nextViewMain
             } start={transitionOut} settingsObj={settingsObj}></TransitionOutView>
+            <TutorialView showView={showView} process="videoSelector" showSettings={handleNextButtonClick} hideSettings={handleBackButtonClick}></TutorialView>
             <div className="video-selector-view-wrapper" key={viewKey} style={{opacity: showView ? 1 : 0}}>
                 <div>
                     <div className="search-bar" style={{cursor: "pointer"}}>
