@@ -265,13 +265,18 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
         document.getElementById("search-input-el").focus()
     }
 
+    const [videoInfoMuted, setVideoInfoMuted] = useState(false)
+    const muteVideoInfo = (tf) => {
+        setVideoInfoMuted(tf)
+    }
+
     return (
         <div className="screen-wrapper">
             <TransitionInView delay={1} settingsObj={settingsObj}></TransitionInView>
             <TransitionOutView nextView={
                 nextViewDestinationRef.current == "analyzer" ? nextViewAnalyzer : nextViewMain
             } start={transitionOut} settingsObj={settingsObj}></TransitionOutView>
-            <TutorialView showView={showView} process="videoSelector" showSettings={handleNextButtonClick} hideSettings={handleBackButtonClick}></TutorialView>
+            <TutorialView showView={showView} process="videoSelector" showSettings={handleNextButtonClick} hideSettings={handleBackButtonClick} muteVideoInfo={muteVideoInfo}></TutorialView>
             <div className="video-selector-view-wrapper" key={viewKey} style={{opacity: showView ? 1 : 0}}>
                 <div>
                     <div className="search-bar" style={{cursor: "pointer"}}>
@@ -315,7 +320,7 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
                     </div>
 
                     <div className="video-info">
-                        <VideoInfo videoInfo={selectedVideo} settingsObj={settingsObj} onMount={onVideoInfoMount} user={user} highScoreObj={highScoreObj}/>
+                        <VideoInfo videoInfo={selectedVideo} settingsObj={settingsObj} onMount={onVideoInfoMount} user={user} highScoreObj={highScoreObj} muted={videoInfoMuted}/>
                     </div>
 
                     <div className="video-buttons" style={{filter: `hue-rotate(${settingsObj.uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>

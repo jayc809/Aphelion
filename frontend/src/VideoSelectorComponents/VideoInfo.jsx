@@ -10,7 +10,7 @@ import sTier from "../images/s-tier.png"
 import naTier from "../images/na-tier.png"
 import ReactPlayer from 'react-player';
 
-const VideoInfo = ({ videoInfo, settingsObj, onMount, user, highScoreObj }) => {
+const VideoInfo = ({ videoInfo, settingsObj, onMount, user, highScoreObj, muted }) => {
 
     const [useVideo, setUseVideo] = useState(false)
     const [videoId, setVideoId] = useState(null)
@@ -79,6 +79,7 @@ const VideoInfo = ({ videoInfo, settingsObj, onMount, user, highScoreObj }) => {
                                         height="100%"
                                         volume={0.4}
                                         loop={true}
+                                        muted={muted}
                                     />
                                 </div>
                             </div>

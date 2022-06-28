@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-const TutorialView = ({ showView, process, showSettings, hideSettings }) => {
+const TutorialView = ({ showView, process, showSettings, hideSettings, muteVideoInfo }) => {
 
     const [step, setStep] = useState(0)
-    const maxStep = process == "videoSelector" ? 5 : 3
+    const maxStep = process == "videoSelector" ? 6 : 3
     const [clip, setClip] = useState("")
     const [completed, setCompleted] = useState({
         "videoSelector": localStorage.getItem("completed-video-selector-tutorial") ? true : false,
@@ -12,6 +12,14 @@ const TutorialView = ({ showView, process, showSettings, hideSettings }) => {
     const [nextButtonText, setNextButtonText] = useState("Next")
     const [backButtonText, setBackButtonText] = useState("Exit")
 
+    useEffect(() => {
+        if (localStorage.getItem("completed-video-selector-tutorial")) {
+            muteVideoInfo(false)
+        } else {
+            muteVideoInfo(true)
+        }
+    }, [])
+    
     const showingSettingRef = useRef(false)
     useEffect(() => {
         if (process == "videoSelector") {
@@ -51,6 +59,7 @@ const TutorialView = ({ showView, process, showSettings, hideSettings }) => {
         } else {
             hideSettings()
             localStorage.setItem("completed-video-selector-tutorial", true)
+            muteVideoInfo(false)
             setCompleted(true)
         }
     }, [step])
@@ -83,15 +92,21 @@ const TutorialView = ({ showView, process, showSettings, hideSettings }) => {
             {
                 process == "videoSelector" ? 
                 {
-                    0: <div style={{position: "absolute", zIndex: 30, height: "12vh", width: "100vw", top: "44vh", left: "0vw", color: "white"}}>
-                        <div style={{paddingBottom: "2vh", width: "100%", fontSize: "6vh", textAlign: "center"}}>Welcome to Aphelion!</div>
-                        <div style={{width: "100%", fontSize: "4vh", textAlign: "center"}}>Here's the tutorial to get things going</div>
+                    0: <div style={{position: "absolute", zIndex: 30, height: "20vh", width: "100vw", top: "40vh", left: "0vw", color: "white"}}>
+                        <div style={{paddingBottom: "3vh", width: "100%", fontSize: "6vh", textAlign: "center"}}>Welcome to Aphelion!</div>
+                        <div style={{paddingBottom: "1vh", width: "100%", fontSize: "4vh", textAlign: "center"}}>It seems like it's your first time here,</div>
+                        <div style={{width: "100%", fontSize: "4vh", textAlign: "center"}}>so here's a tutorial for you</div>
                        </div>,
                     1: <div style={{position: "absolute", zIndex: 30, height: "6.5vw", width: "42vw", top: "8vh", left: "58vw", color: "white", display: "flex", placeItems: "center", fontSize: "4vh"}}>1. Search for any song you like</div>,
-                    2: <div style={{position: "absolute", zIndex: 30, height: "6.5vw", width: "30vw", top: "40vh", left: "15vw", color: "white", display: "flex", placeItems: "center", fontSize: "4vh"}}>2. Select your song</div>,
+                    2: <div style={{position: "absolute", zIndex: 30, height: "6.5vw", width: "42vw", top: "44vh", left: "10vw", color: "white", display: "flex", placeItems: "center", fontSize: "4vh"}}>2. Select your song from the list</div>,
                     3: <div style={{position: "absolute", zIndex: 30, height: "6.5vw", width: "42vw", top: "70vh", left: "22vw", color: "white", display: "flex", placeItems: "center", fontSize: "4vh"}}>3. Click Continue to advance</div>,
-                    4: <div style={{position: "absolute", zIndex: 30, height: "6.5vw", width: "42vw", top: "44vh", left: "18vw", color: "white", display: "flex", placeItems: "center", fontSize: "4vh"}}>4. Choose your settings</div>,
+                    4: <div style={{position: "absolute", zIndex: 30, height: "6.5vw", width: "42vw", top: "44vh", left: "24vw", color: "white", display: "flex", placeItems: "center", fontSize: "4vh"}}>4. Choose your settings</div>,
                     5: <div style={{position: "absolute", zIndex: 30, height: "6.5vw", width: "42vw", top: "70vh", left: "22vw", color: "white", display: "flex", placeItems: "center", fontSize: "4vh"}}>5. Click Start to begin game</div>,
+                    6: <div style={{position: "absolute", zIndex: 30, height: "20vh", width: "100vw", top: "40vh", left: "0vw", color: "white"}}>
+                        <div style={{paddingBottom: "3vh", width: "100%", fontSize: "6vh", textAlign: "center"}}>You made it!</div>
+                        <div style={{paddingBottom: "1vh", width: "100%", fontSize: "4vh", textAlign: "center"}}>Go choose your favorite song, and most importantly,</div>
+                        <div style={{width: "100%", fontSize: "4vh", textAlign: "center"}}>have fun with the coolest rhythm game in the world!</div>
+                       </div>,
                 } [step] :
                 {
 
@@ -100,7 +115,7 @@ const TutorialView = ({ showView, process, showSettings, hideSettings }) => {
             {/* <div style={{position: "absolute", zIndex: 30, top: "2.2vh", left: "2.2vh", color: "white", display: "flex", placeItems: "center", fontSize: "4vh"}}>Tutorial</div> */}
             <button className="next-button" onClick={handleStepIncrement} style={{zIndex: 40, height: "8vh", cursor: "pointer", position: "absolute", left: "70vw", top: "88vh"}}>{nextButtonText}</button>
             <button className="back-button" onClick={handleStepDecrement} style={{zIndex: 41, height: "8vh", cursor: "pointer", position: "absolute", right: "70vw", top: "88vh"}}>{backButtonText}</button>
-            <div style={{position: "absolute", zIndex: 10, height: "100vh", width: "100vw", backgroundColor: "black", opacity: step == 0 ? "0.9" : "0.75", clipPath: clip}}></div>
+            <div style={{position: "absolute", zIndex: 10, height: "100vh", width: "100vw", backgroundColor: "black", opacity: step == 0 || step == maxStep ? "0.9" : "0.75", clipPath: clip}}></div>
         </div>
     );
 };
