@@ -189,6 +189,7 @@ function App() {
             "test": <TestView/>
           } [view]
         }
+        {/* <TestView></TestView> */}
       </div>
     </div>
   )

@@ -31,7 +31,7 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
         loadTile()
         // window.addEventListener("keydown", () => {
         //     if (!tapped.current) {
-        //         tapTile("good")
+        //         tapTile("perfect")
         //         tapped.current = true
         //     }
         // })
@@ -110,16 +110,20 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
                     barOutlineClip1.style.clipPath = "polygon(47.1vw 40vh, 22.3vw 100vh, 22.8vw 100vh)"
                     barOutlineClip2.style.clipPath = "polygon(47.3vw 40vh, 26.6vw 100vh, 26.1vw 100vh)"
                     break
-                case "middle-left":
-                    barClip.style.clipPath = "polygon(49.2vw 40vh, 48.8vw 40vh, 39vw 100vh, 44vw 100vh)"
-                    break
-                case "middle-right":
-                    barClip.style.clipPath = "polygon(51.3vw 40vh, 50.9vw 40vh, 56.1vw 100vh, 61.1vw 100vh)"
-                    break
                 case "right":
                     barClip.style.clipPath = "polygon(53.2vw 40vh, 53vw 40vh, 73.6vw 100vh, 77.6vw 100vh)"
                     barOutlineClip1.style.clipPath = "polygon(53vw 40vh, 73.3vw 100vh, 73.8vw 100vh)"
                     barOutlineClip2.style.clipPath = "polygon(53.2vw 40vh, 77.6vw 100vh, 77.1vw 100vh)"
+                    break
+                case "middle-left":
+                    barClip.style.clipPath = "polygon(49.1vw 40vh, 48.9vw 40vh, 39.5vw 100vh, 43.5vw 100vh)"
+                    barOutlineClip1.style.clipPath = "polygon(48.9vw 40vh, 39.2vw 100vh, 39.7vw 100vh)"
+                    barOutlineClip2.style.clipPath = "polygon(49.1vw 40vh, 43.5vw 100vh, 43vw 100vh)"
+                    break
+                case "middle-right":
+                    barClip.style.clipPath = "polygon(51.2vw 40vh, 51vw 40vh, 56.6vw 100vh, 60.5vw 100vh)"
+                    barOutlineClip1.style.clipPath = "polygon(51vw 40vh, 56.3vw 100vh, 56.8vw 100vh)"
+                    barOutlineClip2.style.clipPath = "polygon(51.2vw 40vh, 60.5vw 100vh, 60vw 100vh)"
                     break
                 default:
                     console.log("error in hold tile 1")
@@ -180,14 +184,14 @@ const HoldTile = ({ type, tileSpeed, theme, targetTime, elapseBeatCount, elapseT
                     case "left":
                         animationX.current = "calc(100vw * 386 / 1280)"
                         break
+                    case "right":
+                        animationX.current = "calc(100vw * 896 / 1280)"
+                        break
                     case "middle-left":
                         animationX.current = "calc(100vw * 557 / 1280)"
                         break
                     case "middle-right":
                         animationX.current = "calc(100vw * 725 / 1280)"
-                        break
-                    case "right":
-                        animationX.current = "calc(100vw * 896 / 1280)"
                         break
                     default:
                         console.log("error in hold tile 2")

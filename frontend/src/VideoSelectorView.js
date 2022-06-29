@@ -266,9 +266,6 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
     }
 
     const [videoInfoMuted, setVideoInfoMuted] = useState(false)
-    const muteVideoInfo = (tf) => {
-        setVideoInfoMuted(tf)
-    }
 
     return (
         <div className="screen-wrapper">
@@ -276,7 +273,7 @@ const VideoSelectorView = ({ setView, setVideoInfoRef, settingsObj, setSettingsO
             <TransitionOutView nextView={
                 nextViewDestinationRef.current == "analyzer" ? nextViewAnalyzer : nextViewMain
             } start={transitionOut} settingsObj={settingsObj}></TransitionOutView>
-            <TutorialView showView={showView} process="videoSelector" showSettings={handleNextButtonClick} hideSettings={handleBackButtonClick} muteVideoInfo={muteVideoInfo}></TutorialView>
+            <TutorialView showView={showView} process="videoSelector" showSettings={handleNextButtonClick} hideSettings={handleBackButtonClick} setVideoInfoMuted={setVideoInfoMuted}></TutorialView>
             <div className="video-selector-view-wrapper" key={viewKey} style={{opacity: showView ? 1 : 0}}>
                 <div>
                     <div className="search-bar" style={{cursor: "pointer"}}>

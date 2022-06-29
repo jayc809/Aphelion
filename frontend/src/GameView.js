@@ -11,6 +11,7 @@ import TileGenerator from './GameViewComponents/TileGenerator'
 import PauseMenu from './GameViewComponents/PauseMenu'
 import TransitionInView from './utilComponents/TransitionInView'
 import TransitionOutView from "./utilComponents/TransitionOutView"
+import TutorialView from './utilComponents/TutorialView'
 
 const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, setSettingsObj, beatmapObj }) => {
 
@@ -272,6 +273,8 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, set
     setUiHue(settingsObj.uiHue)
   }, [settingsObj])
 
+  const [inTutorial, setInTutorial] = useState(false)
+
   return (
     <div className="screen-wrapper">
       <TransitionInView delay={1} settingsObj={settingsObj}></TransitionInView>
@@ -280,16 +283,20 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, set
           nextViewDestinationRef.current == "game" ? nextViewGame : nextViewResults
         } 
         start={transitionOut} settingsObj={settingsObj}></TransitionOutView>
+      <TutorialView showView={showGame} process="game" setInTutorial={setInTutorial} settingsObj={settingsObj}></TutorialView>
       <div className="game-view-wrapper" style={{ cursor: mouseMoved ? "default" : "none", opacity: showGame ? 1 : 0}}>
 
         <div className="component" id="ending-black-screen" ref={endingBlackScreenRef}></div>
-        
-        <div className="component" id="pause-menu">
-          <PauseMenu pauseGame={pauseGame} restartGame={restartGame} endGame={endGame} settingsObj={settingsObj} setSettingsObj={setSettingsObj}/>
-        </div>
+        {
+          inTutorial ? 
+          "" :
+          <div className="component" id="pause-menu">
+            <PauseMenu pauseGame={pauseGame} restartGame={restartGame} endGame={endGame} settingsObj={settingsObj} setSettingsObj={setSettingsObj}/>
+          </div>
+        }
 
         <div className="component" id="start-message">
-          <StartMessage getAllowStart={getAllowStart} difficulty={settingsObj.difficulty}/>
+          <StartMessage getAllowStart={getAllowStart} difficulty={settingsObj.difficulty} inTutorial={inTutorial}/>
         </div>
 
         <div className="component" id="score">
@@ -303,24 +310,28 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, set
           <PerfectDisplay onMount={onPerfectDisplayMount} settingsObj={settingsObj}></PerfectDisplay>
         </div>
 
-        <div className="component" id="tile-generator" style={{filter: `hue-rotate(${uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
-          <TileGenerator 
-            beatmapObj={beatmapObj} 
-            onMount={onTileGeneratorMount} 
-            tileSpeed={tileSpeed} 
-            updateScoreAndCombo={updateScoreAndCombo}
-            getAllowStart={getAllowStart}
-            theme={settingsObj.theme}
-            difficulty={settingsObj.difficulty}
-          />
-        </div>
+        {
+          inTutorial ? 
+          "" :
+          <div className="component" id="tile-generator" style={{filter: `hue-rotate(${uiHue}deg) saturate(${settingsObj.uiSaturation}) brightness(${settingsObj.uiBrightness})`}}>
+            <TileGenerator 
+              beatmapObj={beatmapObj} 
+              onMount={onTileGeneratorMount} 
+              tileSpeed={tileSpeed} 
+              updateScoreAndCombo={updateScoreAndCombo}
+              getAllowStart={getAllowStart}
+              theme={settingsObj.theme}
+              difficulty={settingsObj.difficulty}
+            />
+          </div>
+        }
 
         <div className="component" id="platform"> 
           <Platform settingsObj={settingsObj}/>
         </div>
 
         {
-          showVideo ? 
+          showVideo && !inTutorial ? 
           <div className="component" id="video" style={{filter: `saturate(${settingsObj.videoSaturation}) brightness(${settingsObj.videoBrightness})`}}> 
             <Video 
               updateCurrTime={updateCurrTime} 
@@ -332,6 +343,7 @@ const GameView = ({ setView, incrementGameId, setResultsObjRef, settingsObj, set
               onVideoEnd={endGame}
               onMount={onVideoMount}
               blackScreenPresent={blackScreenPresent}
+              inTutorial={inTutorial}
             />
           </div> :
           ""
