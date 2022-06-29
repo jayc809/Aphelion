@@ -137,7 +137,7 @@ const TutorialView = ({ showView, process, showSettings, hideSettings, setVideoI
                     5: <div style={{position: "absolute", zIndex: 30, height: "6.5vw", width: "42vw", top: "70vh", left: "22vw", color: "white", display: "flex", placeItems: "center", fontSize: "4vh"}}>5. Click Start to begin game</div>,
                     6: <div style={{position: "absolute", zIndex: 30, height: "20vh", width: "100vw", top: "44vh", left: "0vw", color: "white"}}>
                         <div style={{paddingBottom: "3vh", width: "100%", fontSize: "6vh", textAlign: "center"}}>You made it!</div>
-                        <div style={{paddingBottom: "1vh", width: "100%", fontSize: "4vh", textAlign: "center"}}>Go choose your favorite song and start the game!</div>
+                        <div style={{paddingBottom: "1vh", width: "100%", fontSize: "4vh", textAlign: "center"}}>Go search for a song (or choose an existing one) and start the game!</div>
                        </div>,
                 } [step] :
                 {
