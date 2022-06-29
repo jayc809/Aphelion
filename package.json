@@ -4,7 +4,8 @@
     "description": "",
     "main": "app",
     "scripts": {
-        "start": "cd frontend && npm install --legacy-peer-deps --only=dev && npm install --legacy-peer-deps && npm run build && cd .. && npm install && node app",
+        "start": "node app",
+        "build": "cd frontend && npm install --legacy-peer-deps --only=dev && npm install --legacy-peer-deps && npm run build && cd .. && npm install",
         "dev": "nodemon app",
         "heroku-postbuild": "cd frontend && npm install --legacy-peer-deps --only=dev && npm install --legacy-peer-deps && npm run build"
     },
