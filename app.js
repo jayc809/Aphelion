@@ -14,10 +14,11 @@ const port = process.env.PORT || 5000
 const app = express()
 
 app.use(cors())
-// app.use(express.static("./public"))
+app.use(express.static(path.resolve(__dirname, "./frontend")))
+app.use(express.static(path.resolve(__dirname, "./public")))
 
 app.get("/", (req, res) => {
-    app.use(express.static("./frontend/build"))
+    console.log("hello woah")
     res.sendFile(path.resolve(__dirname, "./frontend/build/index.html"))
     // res.sendFile(path.resolve(__dirname, "./index.html"))
 })
