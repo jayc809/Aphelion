@@ -17,10 +17,10 @@ app.use(cors())
 app.use(express.static("./frontend/build"))
 // app.use(express.static("./public"))
 
-// app.get("/", (req, res) => {
-//     res.sendFile(path.resolve(__dirname, "./frontend/build/index.html"))
-//     // res.sendFile(path.resolve(__dirname, "./index.html"))
-// })
+app.get("/", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "./frontend/index.html"))
+    // res.sendFile(path.resolve(__dirname, "./index.html"))
+})
 
 app.get("/animation", (req, res) => {
     res.setHeader('Cache-Control', "public, max-age=7200")
