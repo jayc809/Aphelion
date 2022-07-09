@@ -18,11 +18,11 @@ app.use(express.static(path.resolve(__dirname, "./public")))
 const buildPath = path.normalize(path.join(__dirname, './frontend/build'))
 app.use(express.static(buildPath))
 
-// app.get("/", (req, res) => {
-//     console.log("hello woah")
-//     res.sendFile(path.resolve(__dirname, "./frontend/build/index.html"))
-//     // res.sendFile(path.resolve(__dirname, "./index.html"))
-// })
+app.get('/', (req, res) => {
+    console.log("yee")
+    res.sendFile(path.join(buildPath, 'index.html'))
+})
+
 
 app.get("/animation", (req, res) => {
     res.setHeader('Cache-Control', "public, max-age=7200")
@@ -293,12 +293,6 @@ io.on("connect", socket => {
         console.log(`client ${socket.id} has disconnected\n\n`)
     })
 })
-
-const rootRouter = express.Router()
-rootRouter.get('(/*)?', async (req, res, next) => {
-    res.sendFile(path.join(buildPath, 'index.html'))
-})
-app.use(rootRouter)
 
 const checkADTSValidity = (buffer) => {
     const temp = new Uint8Array(buffer)
