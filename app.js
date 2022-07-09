@@ -14,24 +14,22 @@ const port = process.env.PORT || 5000
 const app = express()
 
 app.use(cors())
-app.use(express.static(path.resolve(__dirname, "./public")))
-const buildPath = path.normalize(path.join(__dirname, './frontend/build'))
-app.use(express.static(buildPath))
+app.use(express.static(path.resolve(__dirname, "public")))
+app.use(express.static(path.resolve(__dirname, "frontend/build")))
 
-app.get('/', (req, res) => {
-    console.log("yee")
-    res.sendFile(path.join(buildPath, 'index.html'))
-})
-
+// app.get('/', (req, res) => {
+//     console.log("yee")
+//     res.sendFile(path.join(buildPath, 'index.html'))
+// })
 
 app.get("/animation", (req, res) => {
     res.setHeader('Cache-Control', "public, max-age=7200")
-    res.sendFile(path.resolve(__dirname, `./public/animations/${req.query.dirName}/${req.query.dirName}-${String(req.query.index).padStart(2, "0")}.png`))
+    res.sendFile(path.resolve(__dirname, `public/animations/${req.query.dirName}/${req.query.dirName}-${String(req.query.index).padStart(2, "0")}.png`))
 })
 
 app.get("/image", (req, res) => {
     res.setHeader('Cache-Control', "public, max-age=7200")
-    res.sendFile(path.resolve(__dirname, `./public/images/${req.query.fileName}.png`))
+    res.sendFile(path.resolve(__dirname, `public/images/${req.query.fileName}.png`))
 })
 
 //"mongodb+srv://user:chiehyin123@aphelion.rimg6.mongodb.net/?retryWrites=true&w=majority" //
@@ -292,6 +290,11 @@ io.on("connect", socket => {
         })
         console.log(`client ${socket.id} has disconnected\n\n`)
     })
+})
+
+app.use('*', (req, res) => {
+    console.log("wtffff")
+    res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'))
 })
 
 const checkADTSValidity = (buffer) => {
