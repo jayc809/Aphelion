@@ -14,14 +14,12 @@ const port = process.env.PORT || 5000
 const app = express()
 
 app.use(cors())
-app.use(express.static("./frontend/build"))
+// app.use(express.static("./frontend/build"))
 app.use(express.static("./public"))
 
 app.get("/", (req, res) => {
-    console.log(__dirname)
     // res.sendFile(path.resolve(__dirname, "./frontend/build/index.html"))
-    // res.sendFile(path.resolve(__dirname, "./index.html"))
-    res.send("yee")
+    res.sendFile(path.resolve(__dirname, "./index.html"))
 })
 
 app.get("/animation", (req, res) => {
